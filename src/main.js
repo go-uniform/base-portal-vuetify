@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import vuetify from './plugins/vuetify';
 import App from './app';
-import router from './routes.js'
+import router from '../routes'
 import './registerServiceWorker'
 import {Api} from './services/client';
 import moment from 'moment';
@@ -9,7 +9,7 @@ import Alert from './components/alert';
 import EmptyLayout from './layouts/empty';
 import CookieConsent from 'vue-cookieconsent-component';
 
-Vue.config.productionTip = false
+export const bus = new Vue();
 
 Vue.prototype.$alert = {
   showNotice: false,
