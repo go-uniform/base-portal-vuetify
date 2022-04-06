@@ -132,7 +132,7 @@ export const baseTableHeaders = (repository: any): any[] => {
         }
         response.push({
             text: header.label ?? 'Unknown',
-            align: header.align ?? 'center',
+            align: header.align ?? 'start',
             sortable: header.sortable ?? (!!header.field),
             value: header.field,
         });

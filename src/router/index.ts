@@ -16,6 +16,21 @@ const routes: RouteConfig[] = [
     component: () => import('../views/Otp.vue'),
   },
   {
+    path: '/users/view/:id',
+    name: 'UsersView',
+    component: () => import('../views/UsersView.vue'),
+  },
+  {
+    path: '/users/edit/:id',
+    name: 'UsersEdit',
+    component: () => import('../views/UsersEdit.vue'),
+  },
+  {
+    path: '/users/add',
+    name: 'UsersAdd',
+    component: () => import('../views/UsersEdit.vue'),
+  },
+  {
     path: '/users',
     name: 'Users',
     component: () => import('../views/Users.vue'),
@@ -24,6 +39,11 @@ const routes: RouteConfig[] = [
     path: '/user-roles',
     name: 'UserRoles',
     component: () => import('../views/UserRoles.vue'),
+  },
+  {
+    path: '/user-roles/view/:id',
+    name: 'UserRolesView',
+    component: () => import('../views/UserRolesView.vue'),
   },
   {
     path: '/about',

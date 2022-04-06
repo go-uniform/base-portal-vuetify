@@ -6,6 +6,7 @@ interface UserRoleEntity {
 }
 
 interface UserRole {
+    id: string;
     name: string;
     description: string;
     allowPermissionsByDefault: boolean;
@@ -31,6 +32,7 @@ interface IItemResponse {
 
 const StubList: UserRole[] = [
     {
+        id: '624df0929bc786ddf868f7e8',
         name: 'Administrators',
         description: 'This user role has the highest privileges in the system and can do pretty much anything',
         allowPermissionsByDefault: true,
@@ -47,6 +49,9 @@ const StubRecord: UserRole = StubList[0];
 export const userRoles: any = {
     entity: 'userRoles',
     defaultSortOrder: '-createdAt',
+    listPage: '/user-roles',
+    viewPagePrefix: '/user-roles/view',
+    editPagePrefix: '/user-roles/edit',
     fields: {
         name: {
             label: 'Name',
@@ -62,10 +67,6 @@ export const userRoles: any = {
             editable: false,
         },
     },
-    filters: (): any => {
-        return {
-        };
-    },
     headers: [
         {
             field: 'name',
@@ -80,6 +81,10 @@ export const userRoles: any = {
             align: 'end',
         },
     ],
+    filters: (): any => {
+        return {
+        };
+    },
 
     tableHeaders: (): any[] => {
         return baseTableHeaders(userRoles);
@@ -190,6 +195,8 @@ export const userRoles: any = {
     ): Promise<IItemResponse> => {
         // @ts-ignore
         return new Promise<IItemResponse>((resolve, reject) => {
+            StubList.pop();
+
             resolve({
                 status: 200,
                 headers: new Headers(),

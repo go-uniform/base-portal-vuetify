@@ -1,22 +1,23 @@
 <template>
 
   <div>
-    <EntityList
+    <EntityView
       :repository="require('../services/repositories/userRoles').userRoles"
+      :id="$route.params.id"
     >
-    </EntityList>
+    </EntityView>
   </div>
 
 </template>
 
 <script>
 // @ is an alias to /src
-import EntityList from '../components/EntityList';
+import EntityView from '../components/EntityView';
 
 export default {
-  name: 'UserRoles',
+  name: 'UserRolesView',
   components: {
-    EntityList,
+    EntityView,
   },
 };
 </script>

@@ -1,7 +1,16 @@
 import {baseList, baseCreate, baseRead, baseUpdate, baseDelete, baseTableHeaders} from '../base';
+import {userRoles} from '@/services/repositories/userRoles';
 
 interface User {
-    name: string;
+    id: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+    email: string;
+    password: string;
+    userRoleId: string;
+    userRoleLabel: string;
+    modifiedAt: Date;
     createdAt: Date;
 }
 
@@ -19,7 +28,15 @@ interface IItemResponse {
 
 const StubList: User[] = [
     {
-        name: 'Justin Robertson',
+        id: '624df08c51e0aff721208a9c',
+        firstName: 'Justin',
+        lastName: 'Robertson',
+        username: 'justin@somewhere.co.za',
+        email: 'justin@somewhere.co.za',
+        password: 'password',
+        userRoleId: '624df0929bc786ddf868f7e8',
+        userRoleLabel: 'Administrators',
+        modifiedAt: new Date('2022-04-06T08:31:04.000Z'),
         createdAt: new Date('2022-04-06T08:31:04.000Z'),
     },
 ];
@@ -28,31 +45,78 @@ const StubRecord: User = StubList[0];
 export const users: any = {
     entity: 'users',
     defaultSortOrder: '-createdAt',
+    listPage: '/users',
+    viewPagePrefix: '/users/view',
+    editPagePrefix: '/users/edit',
     fields: {
-        name: {
-            label: 'Name',
+        id: {
+            label: 'Id',
+            type: 'uuid',
+            readonly: true,
+        },
+        firstName: {
+            label: 'First Name',
             type: 'text',
+        },
+        lastName: {
+            label: 'Last Name',
+            type: 'text',
+        },
+        username: {
+            label: 'Username',
+            type: 'text',
+        },
+        email: {
+            label: 'Email',
+            type: 'text',
+        },
+        userRoleId: {
+            label: 'User Role',
+            type: 'linkId',
+            linkLabelField: 'userRoleLabel',
+            linkRepository: userRoles,
+            linkTargetPath: userRoles.viewPagePrefix,
+        },
+        userRoleLabel: {
+            label: 'User Role',
+            type: 'linkLabel',
+            linkIdField: 'userRoleId',
+        },
+        modifiedAt: {
+            label: 'Modified At',
+            type: 'datetime',
+            readonly: true,
         },
         createdAt: {
             label: 'Created At',
             type: 'datetime',
-            editable: false,
+            readonly: true,
         },
     },
+    headers: [
+        {
+            field: 'firstName',
+        },
+        {
+            field: 'lastName',
+        },
+        {
+            field: 'username',
+        },
+        {
+            field: 'email',
+        },
+        {
+            field: 'userRoleId',
+        },
+        {
+            field: 'createdAt',
+        },
+    ],
     filters: (): any => {
         return {
         };
     },
-    headers: [
-        {
-            field: 'name',
-            align: 'start',
-        },
-        {
-            field: 'createdAt',
-            align: 'end',
-        },
-    ],
 
     tableHeaders: (): any[] => {
         return baseTableHeaders(users);
@@ -163,6 +227,8 @@ export const users: any = {
     ): Promise<IItemResponse> => {
         // @ts-ignore
         return new Promise<IItemResponse>((resolve, reject) => {
+            StubList.pop();
+
             resolve({
                 status: 200,
                 headers: new Headers(),

@@ -57,16 +57,25 @@ Vue.filter('format', (text: string, ...args: any[]) => {
   __(text, args);
 });
 
-Vue.filter('boolean', (value: any) => {
+export const formatBoolean = (value: any) => {
   return value ? 'Yes' : 'No';
+};
+Vue.filter('boolean', (value: any) => {
+  return formatBoolean(value);
 });
 
-Vue.filter('date', (value: any) => {
+export const formatDate = (value: any) => {
   return moment(value).local().format('YYYY-MM-DD');
+};
+Vue.filter('date', (value: any) => {
+  return formatDate(value);
 });
 
-Vue.filter('datetime', (value: any) => {
+export const formatDatetime = (value: any) => {
   return moment(value).local().format('YYYY-MM-DD HH:mm:ss');
+};
+Vue.filter('datetime', (value: any) => {
+  return formatDatetime(value);
 });
 
 export default instance;

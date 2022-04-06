@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" data-app>
     <Toast/>
     <div id="nav">
       <router-link to="/">{{ __('Home') }}</router-link> |

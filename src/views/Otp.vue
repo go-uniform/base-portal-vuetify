@@ -1,4 +1,5 @@
 <template>
+
   <v-form
     ref="otp"
     v-model="valid"
@@ -33,12 +34,12 @@
       </v-row>
     </v-container>
   </v-form>
+
 </template>
 
 <script>
 import {auth} from '../services/auth';
 import {bus} from '../services/bus';
-import {__} from '../main';
 
 export default {
   name: 'Otp',
