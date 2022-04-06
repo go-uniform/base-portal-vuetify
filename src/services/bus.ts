@@ -1,16 +1,19 @@
 // This is just a communications bus using observer pub/sub patterns
 
-interface FuncSubscribe {
-    (event: string | string[], callback: Function): void;
-}
+type FuncSubscribe = (
+  event: string | string[],
+  callback: any,
+) => void;
 
-interface FuncPublish {
-    (event: string, ...args: any[]): void;
-}
+type FuncPublish = (
+  event: string,
+  args: any,
+) => void;
 
-interface FuncUnsubscribe {
-    (event?: string | string[], callback?: Function): void;
-}
+type FuncUnsubscribe = (
+  event?: string | string[],
+  callback?: any,
+) => void;
 
 interface IObserver {
     subscribe: FuncSubscribe;
@@ -21,16 +24,32 @@ interface IObserver {
 let observer: IObserver;
 
 export const bus = {
-    set: (wrapper: IObserver) => {
+
+    set: (
+      wrapper: IObserver,
+    ) => {
         observer = wrapper;
     },
-    unsubscribe: (event?: string | string[], callback?: Function): void => {
+
+    unsubscribe: (
+      event?: string | string[],
+      callback?: any,
+    ): void => {
         observer.unsubscribe(event, callback);
     },
-    subscribe: (event: string | string[], callback: Function): void => {
+
+    subscribe: (
+      event: string | string[],
+      callback: any,
+    ): void => {
         observer.subscribe(event, callback);
     },
-    publish: (event: string, ...args: any[]): void => {
+
+    publish: (
+      event: string,
+      args: any,
+    ): void => {
         observer.publish(event, args);
-    }
+    },
+
 };

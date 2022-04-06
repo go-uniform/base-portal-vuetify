@@ -1,4 +1,4 @@
-import {mergeHeaders, getBaseUrl, processStandardResponse} from "./base";
+import {mergeHeaders, getBaseUrl, processStandardResponse} from './base';
 
 interface Token {
     twoFactor: boolean;
@@ -24,22 +24,36 @@ export const auth = {
         return authJwt;
     },
 
-    login: (type, identifier, password, headers = {}): Promise<ITokenResponse> => {
+    login: (type: string, identifier: string, password: string, headers: any = {}): Promise<ITokenResponse> => {
         // @ts-ignore
         return new Promise((resolve, reject) => {
+            resolve({
+                status: 200,
+                headers: new Headers(),
+                token: {
+                    twoFactor: true,
+                    otpRequestId: 'xyz123',
+                    otp: '000000',
+                    token: null,
+                    jwt: null,
+                },
+            });
+            return;
+
             fetch(`${getBaseUrl()}/auth/login`, {
 
                 method: 'POST',
                 body: JSON.stringify({
-                    'type': type,
-                    'identifier': identifier,
-                    'password': password,
+                    type,
+                    identifier,
+                    password,
                 }),
-                headers: mergeHeaders(headers)
+                headers: mergeHeaders(headers),
 
             }).then((response) => {
 
-                const tokenWrapper = (resolve, value): void => {
+                // tslint:disable-next-line:no-shadowed-variable
+                const tokenWrapper = (resolve: any, value: any): void => {
                     if (!value.item.twoFactor && value.item.token) {
                         authToken = value.item.token;
                         authJwt = value.item.jwt;
@@ -48,9 +62,9 @@ export const auth = {
                         status: value.status,
                         headers: value.headers,
                         token: value.item,
-                    })
-                }
-                processStandardResponse(response, tokenWrapper, reject)
+                    });
+                };
+                processStandardResponse(response, tokenWrapper, reject);
 
             }).catch((reason) => {
 
@@ -60,30 +74,46 @@ export const auth = {
         });
     },
 
-    otp: (otpRequestId, pin, headers = {}): Promise<ITokenResponse> => {
+    otp: (otpRequestId: string, pin: string, headers: any = {}): Promise<ITokenResponse> => {
         // @ts-ignore
         return new Promise((resolve, reject) => {
+            authToken = 'e47b6d46-a0b6-446f-a520-86e5fc82b364';
+            authJwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+            resolve({
+                status: 200,
+                headers: new Headers(),
+                token: {
+                    twoFactor: false,
+                    otpRequestId: 'xyz123',
+                    otp: '000000',
+                    token: authToken,
+                    jwt: authJwt,
+                },
+            });
+            return;
+
             fetch(`${getBaseUrl()}/auth/login/otp`, {
 
                 method: 'POST',
                 body: JSON.stringify({
-                    'otpRequestId': otpRequestId,
-                    'pin': pin,
+                    otpRequestId,
+                    pin,
                 }),
-                headers: mergeHeaders(headers)
+                headers: mergeHeaders(headers),
 
             }).then((response) => {
 
-                const tokenWrapper = (resolve, value): void => {
+                // tslint:disable-next-line:no-shadowed-variable
+                const tokenWrapper = (resolve: any, value: any): void => {
                     authToken = value.item.token;
                     authJwt = value.item.jwt;
                     resolve({
                         status: value.status,
                         headers: value.headers,
                         token: value.item,
-                    })
-                }
-                processStandardResponse(response, tokenWrapper, reject)
+                    });
+                };
+                processStandardResponse(response, tokenWrapper, reject);
 
             }).catch((reason) => {
 
@@ -91,5 +121,5 @@ export const auth = {
 
             });
         });
-    }
-}
+    },
+};

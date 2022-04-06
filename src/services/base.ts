@@ -1,31 +1,36 @@
 import { bus } from './bus';
-import {auth} from "./auth";
+import {auth} from './auth';
+
+interface IListResponse {
+    status: number;
+    headers: Headers;
+    items: any[];
+}
+
+interface IItemResponse {
+    status: number;
+    headers: Headers;
+    item: any;
+}
 
 let baseUrl: string = '/api';
 
 export const getBaseUrl = (): string => {
     return baseUrl;
-}
+};
 
-export const setBaseUrl = (url): void => {
+export const setBaseUrl = (
+  url: string,
+): void => {
     baseUrl = url.replace(/\/+$/, ''); // rtrim('/')
     baseUrl = baseUrl.replace(/\\+$/, ''); // rtrim('\')
-}
+};
 
-interface IListResponse {
-    status: number,
-    headers: Headers,
-    items: any[],
-}
-
-interface IItemResponse {
-    status: number,
-    headers: Headers,
-    item: any,
-}
-
-export const compileListQueryParameters = (order: string, filters: any): string => {
-    let parts = [];
+export const compileListQueryParameters = (
+  order: string,
+  filters: any,
+): string => {
+    const parts = [];
 
     if (order) {
         parts.push(`-order=${encodeURI(order)}`);
@@ -44,8 +49,10 @@ export const compileListQueryParameters = (order: string, filters: any): string 
     return `?${parts.join('&')}`;
 };
 
-export const mergeHeaders = (headers: any): Headers => {
-    let response = new Headers();
+export const mergeHeaders = (
+  headers: any,
+): Headers => {
+    const response = new Headers();
 
     let hasContentType = false;
     let hasAuthorization = false;
@@ -56,7 +63,7 @@ export const mergeHeaders = (headers: any): Headers => {
                 hasContentType = true;
             }
             if (k.toLowerCase() === 'authorization') {
-                hasContentType = true;
+                hasAuthorization = true;
             }
             response.append(k, headers[k]);
         });
@@ -66,7 +73,7 @@ export const mergeHeaders = (headers: any): Headers => {
         response.append('Content-Type', 'application/json');
     }
     if (!hasAuthorization) {
-        let token = auth.getToken()
+        const token = auth.getToken();
         if (token !== null && token !== '') {
             response.append('Authorization', `Bearer ${token}`);
         }
@@ -75,17 +82,27 @@ export const mergeHeaders = (headers: any): Headers => {
     return response;
 };
 
-export const processStandardResponse = (response, resolve, reject): void => {
+export const processStandardResponse = (
+  response: Response,
+  resolve: any,
+  reject: any,
+): void => {
 
     if (response.status !== 200) {
-        let message = response.headers.get("Message") ?? 'Something went wrong.';
+        const message = response.headers.get('Message') ?? 'Something went wrong.';
         bus.publish('toast.show', {
-            type: 'success',
-            message: message,
+            color: 'error',
+            message,
         });
 
         if (response.status === 400) {
-            bus.publish('validation.errors', response.item);
+            response.json().then((body) => {
+
+                bus.publish('validation.errors', body);
+                reject(message);
+
+            });
+            return;
         }
 
         reject(message);
@@ -94,11 +111,11 @@ export const processStandardResponse = (response, resolve, reject): void => {
 
     response.json().then((body) => {
 
-        let message = response.headers.get("Message") ?? '';
+        const message = response.headers.get('Message') ?? '';
         if (message !== '') {
             bus.publish('toast.show', {
                 type: 'success',
-                message: message,
+                message,
             });
         }
         resolve(body);
@@ -107,7 +124,13 @@ export const processStandardResponse = (response, resolve, reject): void => {
 
 };
 
-export const baseList = (entity: string, order: string, filters: any = {}, pageIndex: number = 1, pageSize: number = 50): Promise<IListResponse> => {
+export const baseList = (
+  entity: string,
+  order: string,
+  filters: any = {},
+  pageIndex: number = 1,
+  pageSize: number = 50,
+): Promise<IListResponse> => {
     // @ts-ignore
     return new Promise<any[]>((resolve, reject) => {
         fetch(`${baseUrl}/${entity}${compileListQueryParameters(order, filters)}`, {
@@ -116,11 +139,11 @@ export const baseList = (entity: string, order: string, filters: any = {}, pageI
             headers: mergeHeaders({
                 'Page-Size': pageSize,
                 'Page-Index': pageIndex,
-            })
+            }),
 
         }).then((response) => {
 
-            processStandardResponse(response, resolve, reject)
+            processStandardResponse(response, resolve, reject);
 
         }).catch((reason) => {
 
@@ -128,9 +151,12 @@ export const baseList = (entity: string, order: string, filters: any = {}, pageI
 
         });
     });
-}
+};
 
-export const baseCreate = (entity: string, document: any): Promise<IItemResponse> => {
+export const baseCreate = (
+  entity: string,
+  document: any,
+): Promise<IItemResponse> => {
     // @ts-ignore
     return new Promise<any[]>((resolve, reject) => {
 
@@ -138,11 +164,11 @@ export const baseCreate = (entity: string, document: any): Promise<IItemResponse
 
             method: 'POST',
             body: JSON.stringify(document),
-            headers: mergeHeaders({})
+            headers: mergeHeaders({}),
 
         }).then((response) => {
 
-            processStandardResponse(response, resolve, reject)
+            processStandardResponse(response, resolve, reject);
 
         }).catch((reason) => {
 
@@ -150,19 +176,22 @@ export const baseCreate = (entity: string, document: any): Promise<IItemResponse
 
         });
     });
-}
+};
 
-export const baseRead = (entity: string, id: string): Promise<IItemResponse> => {
+export const baseRead = (
+  entity: string,
+  id: string,
+): Promise<IItemResponse> => {
     // @ts-ignore
     return new Promise<any[]>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/${id}`, {
 
             method: 'GET',
-            headers: mergeHeaders({})
+            headers: mergeHeaders({}),
 
         }).then((response) => {
 
-            processStandardResponse(response, resolve, reject)
+            processStandardResponse(response, resolve, reject);
 
         }).catch((reason) => {
 
@@ -170,20 +199,24 @@ export const baseRead = (entity: string, id: string): Promise<IItemResponse> => 
 
         });
     });
-}
+};
 
-export const baseUpdate = (entity: string, id: string, document: any): Promise<IItemResponse> => {
+export const baseUpdate = (
+  entity: string,
+  id: string,
+  document: any,
+): Promise<IItemResponse> => {
     // @ts-ignore
     return new Promise<any[]>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/${id}`, {
 
             method: 'PUT',
             body: JSON.stringify(document),
-            headers: mergeHeaders({})
+            headers: mergeHeaders({}),
 
         }).then((response) => {
 
-            processStandardResponse(response, resolve, reject)
+            processStandardResponse(response, resolve, reject);
 
         }).catch((reason) => {
 
@@ -191,19 +224,22 @@ export const baseUpdate = (entity: string, id: string, document: any): Promise<I
 
         });
     });
-}
+};
 
-export const baseDelete = (entity: string, id: string): Promise<IItemResponse> => {
+export const baseDelete = (
+  entity: string,
+  id: string,
+): Promise<IItemResponse> => {
     // @ts-ignore
     return new Promise<any[]>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/${id}`, {
 
             method: 'DELETE',
-            headers: mergeHeaders({})
+            headers: mergeHeaders({}),
 
         }).then((response) => {
 
-            processStandardResponse(response, resolve, reject)
+            processStandardResponse(response, resolve, reject);
 
         }).catch((reason) => {
 
@@ -211,21 +247,26 @@ export const baseDelete = (entity: string, id: string): Promise<IItemResponse> =
 
         });
     });
-}
+};
 
 // a custom against executed on an entity list level and returns a list response
-export const baseEntityActionListResponse = (entity: string, action: string, payload: any = {}, headers: any = {}): Promise<IListResponse> => {
+export const baseEntityActionListResponse = (
+  entity: string,
+  action: string,
+  payload: any = {},
+  headers: any = {},
+): Promise<IListResponse> => {
     // @ts-ignore
     return new Promise<any[]>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/actions/${action}`, {
 
             method: 'POST',
             body: JSON.stringify(payload),
-            headers: mergeHeaders(headers)
+            headers: mergeHeaders(headers),
 
         }).then((response) => {
 
-            processStandardResponse(response, resolve, reject)
+            processStandardResponse(response, resolve, reject);
 
         }).catch((reason) => {
 
@@ -233,21 +274,26 @@ export const baseEntityActionListResponse = (entity: string, action: string, pay
 
         });
     });
-}
+};
 
 // a custom against executed on an entity list level and returns a single item response
-export const baseEntityActionItemResponse = (entity: string, action: string, payload: any = {}, headers: any = {}): Promise<IItemResponse> => {
+export const baseEntityActionItemResponse = (
+  entity: string,
+  action: string,
+  payload: any = {},
+  headers: any = {},
+): Promise<IItemResponse> => {
     // @ts-ignore
     return new Promise<any[]>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/actions/${action}`, {
 
             method: 'POST',
             body: JSON.stringify(payload),
-            headers: mergeHeaders(headers)
+            headers: mergeHeaders(headers),
 
         }).then((response) => {
 
-            processStandardResponse(response, resolve, reject)
+            processStandardResponse(response, resolve, reject);
 
         }).catch((reason) => {
 
@@ -255,21 +301,27 @@ export const baseEntityActionItemResponse = (entity: string, action: string, pay
 
         });
     });
-}
+};
 
 // a custom against executed against a single entity record level and returns a list response
-export const baseRecordActionListResponse = (entity: string, action: string, id: string, payload: any = {}, headers: any = {}): Promise<IListResponse> => {
+export const baseRecordActionListResponse = (
+  entity: string,
+  action: string,
+  id: string,
+  payload: any = {},
+  headers: any = {},
+): Promise<IListResponse> => {
     // @ts-ignore
     return new Promise<any[]>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/${id}/actions/${action}`, {
 
             method: 'POST',
             body: JSON.stringify(payload),
-            headers: mergeHeaders(headers)
+            headers: mergeHeaders(headers),
 
         }).then((response) => {
 
-            processStandardResponse(response, resolve, reject)
+            processStandardResponse(response, resolve, reject);
 
         }).catch((reason) => {
 
@@ -277,21 +329,27 @@ export const baseRecordActionListResponse = (entity: string, action: string, id:
 
         });
     });
-}
+};
 
 // a custom against executed on an entity list level and returns a single item response
-export const baseRecordActionItemResponse = (entity: string, action: string, id: string, payload: any = {}, headers: any = {}): Promise<IItemResponse> => {
+export const baseRecordActionItemResponse = (
+  entity: string,
+  action: string,
+  id: string,
+  payload: any = {},
+  headers: any = {},
+): Promise<IItemResponse> => {
     // @ts-ignore
     return new Promise<any[]>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/${id}/actions/${action}`, {
 
             method: 'POST',
             body: JSON.stringify(payload),
-            headers: mergeHeaders(headers)
+            headers: mergeHeaders(headers),
 
         }).then((response) => {
 
-            processStandardResponse(response, resolve, reject)
+            processStandardResponse(response, resolve, reject);
 
         }).catch((reason) => {
 
@@ -299,4 +357,4 @@ export const baseRecordActionItemResponse = (entity: string, action: string, id:
 
         });
     });
-}
+};
