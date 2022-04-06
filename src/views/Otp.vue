@@ -27,7 +27,7 @@
             class="mr-4"
             @click="validate"
           >
-            Validate
+            {{ __('Validate') }}
           </v-btn>
         </v-col>
       </v-row>
@@ -38,7 +38,7 @@
 <script>
 import {auth} from '../services/auth';
 import {bus} from '../services/bus';
-import {format} from '../main';
+import {__} from '../main';
 
 export default {
   name: 'Otp',
@@ -81,7 +81,7 @@ export default {
           default:
             bus.publish('toast.show', {
               type: 'error',
-              message: format('Unknown otp type \'{0}\' detected', [this.type]),
+              message: __('Unknown otp type \'{0}\' detected', [this.type]),
             });
             break;
           case 'auth':

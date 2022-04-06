@@ -11,18 +11,6 @@ import Toast from '@/components/Toast.vue';
 
 Vue.config.productionTip = false;
 
-export const format = (text: string, args: any[]) => {
-    return text.replace(/{(\d+)}/g, (match, index) => {
-      return typeof args[index] !== 'undefined' ? args[index] : match;
-  });
-};
-
-Vue.mixin({
-  methods: {
-    format,
-  },
-});
-
 bus.set(vueBus);
 
 Vue.component('Toast', Toast);

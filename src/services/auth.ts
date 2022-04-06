@@ -1,4 +1,6 @@
 import {mergeHeaders, getBaseUrl, processStandardResponse} from './base';
+import {bus} from '@/services/bus';
+import {__} from '@/plugins/vuetify';
 
 interface Token {
     twoFactor: boolean;
@@ -77,6 +79,14 @@ export const auth = {
     otp: (otpRequestId: string, pin: string, headers: any = {}): Promise<ITokenResponse> => {
         // @ts-ignore
         return new Promise((resolve, reject) => {
+            if (pin !== '000000') {
+                const message = __('Incorrect pin supplied', []);
+                bus.publish('toast.show', {
+                    type: 'error',
+                    message,
+                });
+                return;
+            }
             authToken = 'e47b6d46-a0b6-446f-a520-86e5fc82b364';
             authJwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
             resolve({

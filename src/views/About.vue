@@ -1,6 +1,5 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="about" v-html="__('$vuetify.custom.about.content')">
   </div>
 </template>
 

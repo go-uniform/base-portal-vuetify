@@ -12,7 +12,7 @@
             md="3"
           >
             <v-text-field
-              label="Email"
+              :label="__('Email')"
               v-model="email"
               :rules="[rules.required, rules.email]"
             ></v-text-field>
@@ -27,7 +27,7 @@
               :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[rules.required]"
               :type="passwordShow ? 'text' : 'password'"
-              label="Password"
+              :label="__('Password')"
               @click:append="passwordShow = !passwordShow"
             ></v-text-field>
           </v-col>
@@ -40,7 +40,7 @@
               class="mr-4"
               @click="login"
             >
-              Login
+              {{ __('Login') }}
             </v-btn>
           </v-col>
         </v-row>
