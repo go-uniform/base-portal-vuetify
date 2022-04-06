@@ -3,13 +3,13 @@ import vuetify from './plugins/vuetify';
 import App from './app';
 import router from '../routes'
 import './registerServiceWorker'
-import {Api} from './services/client';
 import moment from 'moment';
 import Alert from './components/alert';
 import EmptyLayout from './layouts/empty';
 import CookieConsent from 'vue-cookieconsent-component';
+import {bus} from "./services/bus.ts";
 
-export const bus = new Vue();
+bus.set(new Vue());
 
 Vue.prototype.$alert = {
   showNotice: false,
@@ -19,17 +19,17 @@ Vue.prototype.$alert = {
 };
 
 let timer = setInterval(function() {
-  bus.$emit('refresh.tick');
+  bus.publish('refresh.tick');
 }, 60000);
-bus.$on('refresh.clear', () => {
+bus.subscribe('refresh.clear', () => {
   clearInterval(timer);
   timer = setInterval(function() {
-    bus.$emit('refresh.tick');
+    bus.publish('refresh.tick');
   }, 60000);
 });
 
 router.beforeEach((to, from, next) => {
-  bus.$emit('refresh.clear');
+  bus.publish('refresh.clear');
   if (to.path != '/login'
       && to.path != '/password-reset-request'
       && to.path != '/password-reset-complete'
@@ -52,7 +52,7 @@ Vue.component("empty-layout", EmptyLayout);
 Vue.component('cookie-consent', CookieConsent)
 
 export const hasPermission = function (tag) {
-  let jwt = JSON.parse(atob(Api.getAccessToken().split('.')[1]));
+  let jwt = auth.getJwt();
   let inverted = jwt['permissions.inverted'];
   let tags = jwt['permissions.tags'];
   if (tags.includes(tag)) {

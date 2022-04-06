@@ -66,9 +66,9 @@
 </template>
 
 <script>
-import {Api} from "../services/client";
-import {bus} from '../main';
 import EmptyLayout from "../layouts/empty"
+import {auth} from "../services/base";
+import {bus} from "../services/bus";
 
 export default {
     components: {
@@ -84,29 +84,22 @@ export default {
     }),
     methods: {
         login() {
-            bus.$emit('alert.clear');
+            bus.publish('toast.clear');
             this.loading = true;
 
-            Api.auth
-                .login("administrator", this.email, this.password)
-                .then((r) => {
-                    let res = r.res;
-                    if (res.status !== 200) {
-                        bus.$emit('alert.error', res.headers.get("Message"));
-                        return;
-                    }
-                    if (r.body['two-factor']) {
-                        this.$router.push({ path: "/validate", query: { token: r.body.token, redirect: this.$route.query.redirect }});
-                        return;
-                    }
-                    this.$router.push(this.$route.query.redirect || "/");
-                })
-                .catch(() => {
-                    bus.$emit('alert.error', "Server unreachable");
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+            auth.login('user', this.email, this.password).then((response) => {
+
+              if (response.token.twoFactor) {
+                this.$router.push({ path: "/otp", query: { type: 'auth', optRequestId: response.token.otpRequestId, otp: response.token.otp }});
+              } else if (this.$route.query.redirect != null) {
+                this.$router.push(this.$route.query.redirect.toString());
+              } else {
+                this.$router.push('/');
+              }
+
+            }).finally(() => {
+              this.loading = false;
+            });
         }
     }
 };
