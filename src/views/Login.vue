@@ -81,7 +81,7 @@ export default {
           } else if (this.$route.query.redirect != null) {
             this.$router.push(this.$route.query.redirect.toString());
           } else {
-            this.$router.push('/');
+            this.$router.push('/users');
           }
         }).finally(() => {
           this.loading = false;

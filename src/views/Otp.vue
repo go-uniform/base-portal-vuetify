@@ -68,7 +68,7 @@ export default {
         if (this.$route.query.redirect != null) {
           this.$router.push(this.$route.query.redirect.toString());
         } else {
-          this.$router.push('/');
+          this.$router.push('/users');
         }
       }).finally(() => {
         this.loading = false;
@@ -81,7 +81,7 @@ export default {
           default:
             bus.publish('toast.show', {
               type: 'error',
-              message: __('Unknown otp type \'{0}\' detected', [this.type]),
+              message: __('custom.errors.unknownOtpType', [this.type]),
             });
             break;
           case 'auth':

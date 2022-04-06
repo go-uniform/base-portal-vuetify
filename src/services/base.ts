@@ -124,6 +124,22 @@ export const processStandardResponse = (
 
 };
 
+export const baseTableHeaders = (repository: any): any[] => {
+    const response: any[] = [];
+    repository.headers.forEach((header: any) => {
+        if (!header.label && header.field) {
+            header.label = repository.fields[header.field].label;
+        }
+        response.push({
+            text: header.label ?? 'Unknown',
+            align: header.align ?? 'center',
+            sortable: header.sortable ?? (!!header.field),
+            value: header.field,
+        });
+    });
+    return response;
+};
+
 export const baseList = (
   entity: string,
   order: string,

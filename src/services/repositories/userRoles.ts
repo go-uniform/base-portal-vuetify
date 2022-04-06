@@ -1,37 +1,60 @@
 import {baseList, baseCreate, baseRead, baseUpdate, baseDelete, baseTableHeaders} from '../base';
 
-interface User {
+interface UserRoleEntity {
+    type: string;
+    id: string;
+}
+
+interface UserRole {
     name: string;
+    description: string;
+    allowPermissionsByDefault: boolean;
+    permissionsAllowed: string[];
+    permissionsDenied: string[];
+    allowEntitiesByDefault: boolean;
+    entitiesAllowed: UserRoleEntity[];
+    entitiesDenied: UserRoleEntity[];
     createdAt: Date;
 }
 
 interface IListResponse {
     status: number;
     headers: Headers;
-    items: User[];
+    items: UserRole[];
 }
 
 interface IItemResponse {
     status: number;
     headers: Headers;
-    item: User;
+    item: UserRole;
 }
 
-const StubList: User[] = [
+const StubList: UserRole[] = [
     {
-        name: 'Justin Robertson',
+        name: 'Administrators',
+        description: 'This user role has the highest privileges in the system and can do pretty much anything',
+        allowPermissionsByDefault: true,
+        permissionsAllowed: [],
+        permissionsDenied: [],
+        allowEntitiesByDefault: true,
+        entitiesAllowed: [],
+        entitiesDenied: [],
         createdAt: new Date('2022-04-06T08:31:04.000Z'),
     },
 ];
-const StubRecord: User = StubList[0];
+const StubRecord: UserRole = StubList[0];
 
-export const users: any = {
-    entity: 'users',
+export const userRoles: any = {
+    entity: 'userRoles',
     defaultSortOrder: '-createdAt',
     fields: {
         name: {
             label: 'Name',
             type: 'text',
+        },
+        description: {
+            label: 'Description',
+            type: 'textarea',
         },
         createdAt: {
             label: 'Created At',
@@ -49,17 +72,21 @@ export const users: any = {
             align: 'start',
         },
         {
+            field: 'description',
+            align: 'start',
+        },
+        {
             field: 'createdAt',
             align: 'end',
         },
     ],
 
     tableHeaders: (): any[] => {
-        return baseTableHeaders(users);
+        return baseTableHeaders(userRoles);
     },
 
     list: (
-      order: string = users.defaultSortOrder,
+      order: string = userRoles.defaultSortOrder,
       filters: any = {},
       pageIndex: number = 1,
       pageSize: number = 50,
@@ -73,7 +100,7 @@ export const users: any = {
             });
             return;
 
-            baseList(users.entity, order, filters, pageIndex, pageSize).then((response) => {
+            baseList(userRoles.entity, order, filters, pageIndex, pageSize).then((response) => {
                 resolve({
                     status: response.status,
                     headers: response.headers,
@@ -86,7 +113,7 @@ export const users: any = {
     },
 
     create: (
-      document: User,
+      document: UserRole,
     ): Promise<IItemResponse> => {
         // @ts-ignore
         return new Promise<IItemResponse>((resolve, reject) => {
@@ -97,7 +124,7 @@ export const users: any = {
             });
             return;
 
-            baseCreate(users.entity, document).then((response) => {
+            baseCreate(userRoles.entity, document).then((response) => {
                 resolve({
                     status: response.status,
                     headers: response.headers,
@@ -121,7 +148,7 @@ export const users: any = {
             });
             return;
 
-            baseRead(users.entity, id).then((response) => {
+            baseRead(userRoles.entity, id).then((response) => {
                 resolve({
                     status: response.status,
                     headers: response.headers,
@@ -135,7 +162,7 @@ export const users: any = {
 
     update: (
       id: string,
-      document: User,
+      document: UserRole,
     ): Promise<IItemResponse> => {
         // @ts-ignore
         return new Promise<IItemResponse>((resolve, reject) => {
@@ -146,7 +173,7 @@ export const users: any = {
             });
             return;
 
-            baseUpdate(users.entity, id, document).then((response) => {
+            baseUpdate(userRoles.entity, id, document).then((response) => {
                 resolve({
                     status: response.status,
                     headers: response.headers,
@@ -170,7 +197,7 @@ export const users: any = {
             });
             return;
 
-            baseDelete(users.entity, id).then((response) => {
+            baseDelete(userRoles.entity, id).then((response) => {
                 resolve({
                     status: response.status,
                     headers: response.headers,

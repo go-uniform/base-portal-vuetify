@@ -80,7 +80,7 @@ export const auth = {
         // @ts-ignore
         return new Promise((resolve, reject) => {
             if (pin !== '000000') {
-                const message = __('Incorrect pin supplied', []);
+                const message = __('custom.errors.incorrectOtpPin', []);
                 bus.publish('toast.show', {
                     type: 'error',
                     message,

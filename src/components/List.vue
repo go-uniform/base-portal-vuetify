@@ -1,61 +1,70 @@
 <template>
 
   <div>
-    Hello World!
-    <v-snackbar
-      v-model="show"
-      content-class="light-blue"
-      :timeout="timeout"
-      top
+    <v-data-table
+      :items="records"
+      :headers="headers"
     >
-
-      {{ message }}
-
-      <template v-slot:action="{ attrs }">
+      <template v-slot:item.createdAt="{item}">
+        {{ item.createdAt | datetime }}
+      </template>
+      <template v-slot:item.actions="{item}">
         <v-btn
           icon
-          color="red"
-          v-bind="attrs"
-          @click="show = false;"
         >
-
-          <v-icon small>
-            mdi-close
+          <v-icon>
+            mdi-eye
           </v-icon>
-
+        </v-btn>
+        <v-btn
+          icon
+        >
+          <v-icon>
+            mdi-pencil
+          </v-icon>
+        </v-btn>
+        <v-btn
+          icon
+        >
+          <v-icon>
+            mdi-delete
+          </v-icon>
         </v-btn>
       </template>
-
-    </v-snackbar>
+    </v-data-table>
   </div>
-
 
 </template>
 
 <script>
-import {bus} from '@/services/bus';
+import {users} from '../services/repositories/users';
 
 export default {
-  name: 'Toast',
-  data: () => ({
-    show: true,
-    color: 'light-blue',
-    timeout: 30000,
-    message: 'Test',
-  }),
-  created() {
-    bus.subscribe('toast.show',  function(toast) {
-      this.show = false;
-      if (toast.message && toast.message.length > 0) {
-        this.color = toast.color ?? 'light-blue';
-        this.message = toast.message;
-        this.timeout = toast.timeout ?? 30000;
-        this.show = true;
-      }
-    });
-    bus.subscribe('toast.clear', () => {
-      this.show = false;
-    });
+  name: 'List',
+  props: {
+    repository: null,
   },
+  data: () => ({
+    records: [],
+    headers: [],
+  }),
+  methods: {
+    load() {
+      console.log(this.repository);
+      this.headers = this.repository.tableHeaders();
+      this.headers.push({
+        text: 'Actions',
+        value: 'actions',
+        align: 'end',
+        sortable: false,
+      })
+      this.repository.list().then((response) => {
+        this.records = response.items;
+      })
+    }
+  },
+  mounted() {
+    this.load();
+  }
 };
 </script>

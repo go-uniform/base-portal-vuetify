@@ -16,6 +16,16 @@ const routes: RouteConfig[] = [
     component: () => import('../views/Otp.vue'),
   },
   {
+    path: '/users',
+    name: 'Users',
+    component: () => import('../views/Users.vue'),
+  },
+  {
+    path: '/user-roles',
+    name: 'UserRoles',
+    component: () => import('../views/UserRoles.vue'),
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting

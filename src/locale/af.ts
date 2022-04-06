@@ -9,11 +9,13 @@ phrases.raw = {
   Home: 'Tuis',
   About: 'Oor',
   Validate: 'Valideer',
-  'Unknown otp type \'{0}\' detected': 'Onbekende otp tipe \'{0}\' bespeur',
-  'Incorrect pin supplied': 'Verkeerde pin verskaf',
 };
 
 phrases.custom = {
+  errors: {
+    unknownOtpType: 'Unknown otp type \'{0}\' detected',
+    incorrectOtpPin: 'Incorrect pin supplied',
+  },
   about: {
     content: '<h1>Meer oor ons</h1><p>Ons is \'n jong en opkomende maatskappy wat jou in soveel aspekte sal blaas.</p>',
   },

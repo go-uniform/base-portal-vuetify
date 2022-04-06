@@ -2,13 +2,15 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 import colors from 'vuetify/lib/util/colors';
 import af from '@/locale/af';
+import en from '@/locale/en';
+import moment from 'moment';
 
 Vue.use(Vuetify);
 
 const instance = new Vuetify({
   lang: {
-    locales: { af },
-    current: 'af',
+    locales: { en },
+    current: 'en',
   },
   theme: {
     themes: {
@@ -53,6 +55,18 @@ Vue.mixin({
 
 Vue.filter('format', (text: string, ...args: any[]) => {
   __(text, args);
+});
+
+Vue.filter('boolean', (value: any) => {
+  return value ? 'Yes' : 'No';
+});
+
+Vue.filter('date', (value: any) => {
+  return moment(value).local().format('YYYY-MM-DD');
+});
+
+Vue.filter('datetime', (value: any) => {
+  return moment(value).local().format('YYYY-MM-DD HH:mm:ss');
 });
 
 export default instance;
