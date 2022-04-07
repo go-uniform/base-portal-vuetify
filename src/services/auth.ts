@@ -27,7 +27,6 @@ export const auth = {
     },
 
     login: (type: string, identifier: string, password: string, headers: any = {}): Promise<ITokenResponse> => {
-        // @ts-ignore
         return new Promise((resolve, reject) => {
             resolve({
                 status: 200,
@@ -77,7 +76,6 @@ export const auth = {
     },
 
     otp: (otpRequestId: string, pin: string, headers: any = {}): Promise<ITokenResponse> => {
-        // @ts-ignore
         return new Promise((resolve, reject) => {
             if (pin !== '000000') {
                 const message = __('custom.errors.incorrectOtpPin', []);

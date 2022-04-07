@@ -4,6 +4,7 @@
     <table>
       <tr
         v-for="(field, key) in fields"
+        :key="key"
       >
         <td
           class="text-left"

@@ -1,31 +1,22 @@
 <template>
 
-  <v-snackbar
-    v-model="show"
-    :type="type"
-    :color="color"
-    :timeout="timeout"
-    top
+  <div
+    v-if="messages.length > 0"
+    class="toast-container"
+    @click="backgroundInteraction"
   >
+    <v-alert
+      v-for="message in messages"
+      @input="alertClosed(message.key)"
+      v-bind:key="message.key"
+      :type="message.type"
+      dismissible
+    >
 
-    {{ message }}
+      {{ message.text }}
 
-    <template v-slot:action="{ attrs }">
-      <v-btn
-        icon
-        color="red"
-        v-bind="attrs"
-        @click="show = false;"
-      >
-
-        <v-icon small>
-          mdi-close
-        </v-icon>
-
-      </v-btn>
-    </template>
-
-  </v-snackbar>
+    </v-alert>
+  </div>
 
 </template>
 
@@ -33,31 +24,62 @@
 import {bus} from '@/services/bus';
 
 export default {
-  name: 'Toast',
+  name: 'ToastComponent',
   data: () => ({
-    show: false,
-    type: 'info',
-    color: 'red',
-    timeout: 30000,
-    message: '',
+    counter: 0,
+    messages: [],
   }),
+  methods: {
+    alertClosed(key) {
+      const index = this.messages.findIndex(message => message.key === key);
+      if (index > -1) {
+        this.messages.splice(index, 1);
+      }
+    },
+    backgroundInteraction() {
+      if (this.messages.length > 0) {
+        this.messages.pop();
+      }
+    }
+  },
   created() {
-    bus.subscribe('toast.show',  (toast) => {
-      this.show = true;
-      if (toast.message && toast.message.length > 0) {
-        this.type = toast.type ?? 'info';
-        if (!toast.color) {
-          toast.color = toast.type;
-        }
-        this.color = toast.color;
-        this.message = toast.message;
-        this.timeout = toast.timeout ?? 30000;
-        this.show = true;
+    bus.subscribe('toast.show', (toast) => {
+      const key = this.counter++;
+      const index = this.messages.findIndex(message => message.key === key);
+      const message = {
+        key: key,
+        type: toast.type,
+        text: toast.message,
+      };
+      if (index > -1) {
+        this.messages[index] = message;
+      } else {
+        this.messages.push(message);
       }
     });
     bus.subscribe('toast.clear', () => {
       this.show = false;
     });
   },
+  mounted() {
+    window.addEventListener('keypress', (ev) => {
+      if (['Enter','Space','NumpadEnter'].includes(ev.key)) {
+        this.backgroundInteraction(ev);
+      }
+    });
+  }
 };
 </script>
+
+<style lang="scss" scoped>
+.toast-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  padding: 16px;
+}
+</style>

@@ -4,6 +4,7 @@
     <v-container>
       <v-row
         v-for="(field, key) in fields"
+        :key="key"
       >
         <v-autocomplete
           v-if="field.type === 'linkId'"

@@ -13,7 +13,7 @@ interface IItemResponse {
     item: any;
 }
 
-let baseUrl: string = '/api';
+let baseUrl = '/api';
 
 export const getBaseUrl = (): string => {
     return baseUrl;
@@ -144,11 +144,10 @@ export const baseList = (
   entity: string,
   order: string,
   filters: any = {},
-  pageIndex: number = 1,
-  pageSize: number = 50,
+  pageIndex = 1,
+  pageSize = 50,
 ): Promise<IListResponse> => {
-    // @ts-ignore
-    return new Promise<any[]>((resolve, reject) => {
+    return new Promise<IListResponse>((resolve, reject) => {
         fetch(`${baseUrl}/${entity}${compileListQueryParameters(order, filters)}`, {
 
             method: 'GET',
@@ -173,8 +172,7 @@ export const baseCreate = (
   entity: string,
   document: any,
 ): Promise<IItemResponse> => {
-    // @ts-ignore
-    return new Promise<any[]>((resolve, reject) => {
+    return new Promise<IItemResponse>((resolve, reject) => {
 
         return fetch(`${baseUrl}/${entity}`, {
 
@@ -198,8 +196,7 @@ export const baseRead = (
   entity: string,
   id: string,
 ): Promise<IItemResponse> => {
-    // @ts-ignore
-    return new Promise<any[]>((resolve, reject) => {
+    return new Promise<IItemResponse>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/${id}`, {
 
             method: 'GET',
@@ -222,8 +219,7 @@ export const baseUpdate = (
   id: string,
   document: any,
 ): Promise<IItemResponse> => {
-    // @ts-ignore
-    return new Promise<any[]>((resolve, reject) => {
+    return new Promise<IItemResponse>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/${id}`, {
 
             method: 'PUT',
@@ -246,8 +242,7 @@ export const baseDelete = (
   entity: string,
   id: string,
 ): Promise<IItemResponse> => {
-    // @ts-ignore
-    return new Promise<any[]>((resolve, reject) => {
+    return new Promise<IItemResponse>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/${id}`, {
 
             method: 'DELETE',
@@ -272,8 +267,7 @@ export const baseEntityActionListResponse = (
   payload: any = {},
   headers: any = {},
 ): Promise<IListResponse> => {
-    // @ts-ignore
-    return new Promise<any[]>((resolve, reject) => {
+    return new Promise<IListResponse>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/actions/${action}`, {
 
             method: 'POST',
@@ -299,8 +293,7 @@ export const baseEntityActionItemResponse = (
   payload: any = {},
   headers: any = {},
 ): Promise<IItemResponse> => {
-    // @ts-ignore
-    return new Promise<any[]>((resolve, reject) => {
+    return new Promise<IItemResponse>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/actions/${action}`, {
 
             method: 'POST',
@@ -327,8 +320,7 @@ export const baseRecordActionListResponse = (
   payload: any = {},
   headers: any = {},
 ): Promise<IListResponse> => {
-    // @ts-ignore
-    return new Promise<any[]>((resolve, reject) => {
+    return new Promise<IListResponse>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/${id}/actions/${action}`, {
 
             method: 'POST',
@@ -355,8 +347,7 @@ export const baseRecordActionItemResponse = (
   payload: any = {},
   headers: any = {},
 ): Promise<IItemResponse> => {
-    // @ts-ignore
-    return new Promise<any[]>((resolve, reject) => {
+    return new Promise<IItemResponse>((resolve, reject) => {
         return fetch(`${baseUrl}/${entity}/${id}/actions/${action}`, {
 
             method: 'POST',

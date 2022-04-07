@@ -6,8 +6,8 @@
       :headers="headers"
     >
       <template
-        v-for="column in columns()"
-        v-slot:[column]="{header, item, isMobile}"
+        v-for="(column, index) in columns()"
+        v-slot:[column]="{header, item}"
       >
 
         <slot
@@ -16,7 +16,10 @@
           :item="item"
           :header="header"
         >
-          <a :href="`${repository.fields[header.value].linkTargetPath}/${item.id}`">
+          <a
+            :key="index"
+            :href="`${repository.fields[header.value].linkTargetPath}/${item.id}`"
+          >
             {{ item[repository.fields[header.value].linkLabelField] }}
           </a>
         </slot>
@@ -26,76 +29,84 @@
           :item="item"
           :header="header"
         >
-          {{ doFormat(header, item) }}
+          <div
+            :key="index"
+          >
+            {{ doFormat(header, item) }}
+          </div>
         </slot>
         <slot
           v-else-if="column === 'item.actions'"
         >
-          <slot
-            name="actions.wrapper"
-            :item="item"
+          <div
+            :key="index"
           >
-            <v-menu>
-              <template
-                v-slot:activator="{ on, attrs }"
-              >
-                <v-btn
-                  color="primary"
-                  v-bind="attrs"
-                  v-on="on"
+            <slot
+              name="actions.wrapper"
+              :item="item"
+            >
+              <v-menu>
+                <template
+                  v-slot:activator="{ on, attrs }"
                 >
-                  <v-icon>
-                    mdi-dots-vertical
-                  </v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item>
-                  <slot
-                    name="actions"
-                    :item="item"
+                  <v-btn
+                    color="primary"
+                    v-bind="attrs"
+                    v-on="on"
                   >
-                  </slot>
-                  <slot
-                    name="actions.delete"
-                    :item="item"
-                  >
-                    <v-btn
-                      class="ma-2"
-                      color="danger"
-                      @click="remove(item)"
+                    <v-icon>
+                      mdi-dots-vertical
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item>
+                    <slot
+                      name="actions"
+                      :item="item"
                     >
-                      <v-icon>mdi-delete</v-icon>&nbsp;{{ __('Delete') }}
-                    </v-btn>
-                  </slot>
-                  <slot
-                    name="actions.edit"
-                    :item="item"
-                  >
-                    <v-btn
-                      class="ma-2"
-                      color="accent"
-                      @click="edit(item)"
+                    </slot>
+                    <slot
+                      name="actions.delete"
+                      :item="item"
                     >
-                      <v-icon>mdi-pencil</v-icon>&nbsp;{{ __('Edit') }}
-                    </v-btn>
-                  </slot>
-                  <slot
-                    name="actions.view"
-                    :item="item"
-                  >
-                    <v-btn
-                      class="ma-2"
-                      color="primary"
-                      @click="view(item)"
+                      <v-btn
+                        class="ma-2"
+                        color="danger"
+                        @click="remove(item)"
+                      >
+                        <v-icon>mdi-delete</v-icon>&nbsp;{{ __('Delete') }}
+                      </v-btn>
+                    </slot>
+                    <slot
+                      name="actions.edit"
+                      :item="item"
                     >
-                      <v-icon>mdi-eye</v-icon>&nbsp;{{ __('View') }}
-                    </v-btn>
-                  </slot>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </slot>
+                      <v-btn
+                        class="ma-2"
+                        color="accent"
+                        @click="edit(item)"
+                      >
+                        <v-icon>mdi-pencil</v-icon>&nbsp;{{ __('Edit') }}
+                      </v-btn>
+                    </slot>
+                    <slot
+                      name="actions.view"
+                      :item="item"
+                    >
+                      <v-btn
+                        class="ma-2"
+                        color="primary"
+                        @click="view(item)"
+                      >
+                        <v-icon>mdi-eye</v-icon>&nbsp;{{ __('View') }}
+                      </v-btn>
+                    </slot>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </slot>
+          </div>
         </slot>
       </template>
     </v-data-table>
@@ -156,7 +167,6 @@ export default {
         return newArray;
       }
 
-      console.log(this.repository);
       this.headers = this.repository.tableHeaders();
       if (this.prefixHeaders) {
         this.headers = prepend(this.headers, this.prefixHeaders);

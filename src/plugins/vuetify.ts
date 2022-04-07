@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import colors from 'vuetify/lib/util/colors';
 import af from '@/locale/af';
 import en from '@/locale/en';
 import moment from 'moment';
@@ -9,17 +8,8 @@ Vue.use(Vuetify);
 
 const instance = new Vuetify({
   lang: {
-    locales: { en },
+    locales: { en, af },
     current: 'en',
-  },
-  theme: {
-    themes: {
-      light: {
-        primary: colors.red.darken1, // #E53935
-        secondary: colors.red.lighten4, // #FFCDD2
-        accent: colors.indigo.base, // #3F51B5
-      },
-    },
   },
 });
 

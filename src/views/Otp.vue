@@ -16,7 +16,9 @@
             v-model="otp"
             length="6"
             :rules="[rules.required]"
-
+            autofocus
+            @finish="validate"
+            @keypress="keypress"
           ></v-otp-input>
         </v-col>
       </v-row>
@@ -40,9 +42,10 @@
 <script>
 import {auth} from '../services/auth';
 import {bus} from '../services/bus';
+import {__} from '../plugins/vuetify';
 
 export default {
-  name: 'Otp',
+  name: 'OtpView',
   components: {},
   data: () => ({
     type: null,
@@ -64,6 +67,11 @@ export default {
     this.otp = this.$route.query.otp;
   },
   methods: {
+    keypress(ev) {
+      if (['Enter','NumpadEnter'].includes(ev.key)) {
+        this.validate();
+      }
+    },
     otpAuth() {
       auth.otp(this.otpRequestId, this.otp).then((response) => {
         if (this.$route.query.redirect != null) {

@@ -54,7 +54,7 @@
 import {auth} from '@/services/auth';
 
 export default {
-  name: 'Login',
+  name: 'LoginView',
   components: {},
   data: () => ({
     valid: true,

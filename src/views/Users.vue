@@ -14,7 +14,7 @@
 import EntityList from '../components/EntityList';
 
 export default {
-  name: 'Users',
+  name: 'UsersView',
   components: {
     EntityList,
   },

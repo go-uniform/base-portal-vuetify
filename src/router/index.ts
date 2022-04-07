@@ -1,64 +1,64 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
-import Login from '../views/Login.vue';
+import Vue from 'vue'
+import VueRouter, { RouteConfig } from 'vue-router'
+import Login from '../views/Login.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
-const routes: RouteConfig[] = [
+const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'Login',
+    name: 'login',
     component: Login,
   },
   {
     path: '/otp',
-    name: 'Otp',
+    name: 'otp',
     component: () => import('../views/Otp.vue'),
   },
   {
     path: '/users/view/:id',
-    name: 'UsersView',
+    name: 'users-view',
     component: () => import('../views/UsersView.vue'),
   },
   {
     path: '/users/edit/:id',
-    name: 'UsersEdit',
+    name: 'users-edit',
     component: () => import('../views/UsersEdit.vue'),
   },
   {
     path: '/users/add',
-    name: 'UsersAdd',
+    name: 'users-add',
     component: () => import('../views/UsersEdit.vue'),
   },
   {
     path: '/users',
-    name: 'Users',
+    name: 'users',
     component: () => import('../views/Users.vue'),
   },
   {
     path: '/user-roles',
-    name: 'UserRoles',
+    name: 'users-roles',
     component: () => import('../views/UserRoles.vue'),
   },
   {
     path: '/user-roles/view/:id',
-    name: 'UserRolesView',
+    name: 'user-roles-view',
     component: () => import('../views/UserRolesView.vue'),
   },
   {
     path: '/about',
-    name: 'About',
+    name: 'about',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  },
-];
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  }
+]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router

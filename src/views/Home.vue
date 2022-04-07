@@ -5,13 +5,9 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import Toast from '@/components/Toast.vue';
-
 export default {
-  name: 'Home',
+  name: 'HomeView',
   components: {
-    Toast,
   },
 };
 </script>

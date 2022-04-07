@@ -125,10 +125,9 @@ export const users: any = {
     list: (
       order: string = users.defaultSortOrder,
       filters: any = {},
-      pageIndex: number = 1,
-      pageSize: number = 50,
+      pageIndex = 1,
+      pageSize = 50,
     ): Promise<IListResponse> => {
-        // @ts-ignore
         return new Promise<IListResponse>((resolve, reject) => {
             resolve({
                 status: 200,
@@ -152,7 +151,6 @@ export const users: any = {
     create: (
       document: User,
     ): Promise<IItemResponse> => {
-        // @ts-ignore
         return new Promise<IItemResponse>((resolve, reject) => {
             resolve({
                 status: 200,
@@ -176,7 +174,6 @@ export const users: any = {
     read: (
       id: string,
     ): Promise<IItemResponse> => {
-        // @ts-ignore
         return new Promise<IItemResponse>((resolve, reject) => {
             resolve({
                 status: 200,
@@ -201,7 +198,6 @@ export const users: any = {
       id: string,
       document: User,
     ): Promise<IItemResponse> => {
-        // @ts-ignore
         return new Promise<IItemResponse>((resolve, reject) => {
             resolve({
                 status: 200,
@@ -225,7 +221,6 @@ export const users: any = {
     delete: (
       id: string,
     ): Promise<IItemResponse> => {
-        // @ts-ignore
         return new Promise<IItemResponse>((resolve, reject) => {
             StubList.pop();
 
