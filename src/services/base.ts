@@ -95,6 +95,11 @@ export const processStandardResponse = (
             message,
         });
 
+        if (response.status === 401) {
+            window.location.assign('/login');
+            return;
+        }
+
         if (response.status === 400) {
             response.json().then((body) => {
 

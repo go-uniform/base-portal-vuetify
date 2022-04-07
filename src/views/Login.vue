@@ -76,7 +76,8 @@ export default {
               query: {
                 type: 'auth',
                 optRequestId: response.token.otpRequestId,
-                otp: response.token.otp
+                otp: response.token.otp,
+                redirect: this.$route.query.redirect,
               }
             });
           } else if (this.$route.query.redirect != null) {

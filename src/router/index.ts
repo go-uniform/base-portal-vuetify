@@ -1,19 +1,35 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Login from '../views/Login.vue'
+import Home from '../views/Home.vue'
+import {NavigationGuard} from 'vue-router/types/router';
+import {auth} from '@/services/auth';
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
     path: '/',
+    name: 'home',
+    component: Home,
+    meta: {
+      permissions: [],
+    }
+  },
+  {
+    path: '/login',
     name: 'login',
-    component: Login,
+    component: () => import('../views/Login.vue'),
+    meta: {
+      public: true,
+    }
   },
   {
     path: '/otp',
     name: 'otp',
     component: () => import('../views/Otp.vue'),
+    meta: {
+      public: true,
+    }
   },
   {
     path: '/users/view/:id',
@@ -48,10 +64,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('../views/About.vue')
   }
 ]
 
@@ -60,5 +73,19 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+const AuthGuard: NavigationGuard = (to, from, next) => {
+  if (to.name !== 'login' && !(to.meta && to.meta.public)) {
+    if (!auth.isAuthenticated()) {
+      let query = {};
+      if (to.path && to.path !== '/') {
+        query = { redirect: encodeURI(to.fullPath) };
+      }
+      next({ name: 'login', query: query });
+    }
+  }
+  next();
+};
+router.beforeEach(AuthGuard);
 
 export default router
