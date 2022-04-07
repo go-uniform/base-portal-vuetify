@@ -1,21 +1,25 @@
 <template>
 
-  <div>
-    <EntityList
+  <main-layout>
+
+    <entity-list
       :repository="require('../services/repositories/userRoles').userRoles"
     >
-    </EntityList>
-  </div>
+    </entity-list>
+
+  </main-layout>
 
 </template>
 
 <script>
 // @ is an alias to /src
 import EntityList from '../components/EntityList';
+import MainLayout from '../layouts/Main';
 
 export default {
   name: 'UserRoles',
   components: {
+    MainLayout,
     EntityList,
   },
 };

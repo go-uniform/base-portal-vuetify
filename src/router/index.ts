@@ -24,6 +24,14 @@ const routes: Array<RouteConfig> = [
     }
   },
   {
+    path: '/logout',
+    name: 'logout',
+    component: () => import('../views/Logout.vue'),
+    meta: {
+      public: true,
+    }
+  },
+  {
     path: '/otp',
     name: 'otp',
     component: () => import('../views/Otp.vue'),
@@ -62,17 +70,22 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/UserRolesView.vue'),
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/About.vue')
-  }
-]
+    path: '/user-roles/edit/:id',
+    name: 'user-roles-edit',
+    component: () => import('../views/UserRolesEdit.vue'),
+  },
+  {
+    path: '/user-roles/add',
+    name: 'user-roles-add',
+    component: () => import('../views/UserRolesEdit.vue'),
+  },
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
 
 const AuthGuard: NavigationGuard = (to, from, next) => {
   if (to.name !== 'login' && !(to.meta && to.meta.public)) {

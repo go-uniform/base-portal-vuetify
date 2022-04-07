@@ -1,7 +1,11 @@
 <template>
 
-  <div>
-    <table>
+  <div
+    class="pa-8 text-center"
+  >
+    <table
+      class="mx-auto"
+    >
       <tr
         v-for="(field, key) in fields"
         :key="key"
@@ -38,6 +42,14 @@
         </td>
       </tr>
     </table>
+    <br>
+    <v-btn
+      class="ma-2"
+      color="accent"
+      @click="edit(item)"
+    >
+      <v-icon>mdi-pencil</v-icon>&nbsp;{{ __('Edit') }}
+    </v-btn>
   </div>
 
 </template>
@@ -46,7 +58,7 @@
 import {formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 
 export default {
-  name: 'EntityView',
+  name: 'entity-view',
   props: {
     repository: null,
     id: null,
@@ -93,6 +105,9 @@ export default {
           break
       }
       return value;
+    },
+    edit(item) {
+      this.$router.push(`${this.repository.editPagePrefix}/${item.id}`);
     },
   },
   mounted() {

@@ -1,22 +1,26 @@
 <template>
 
-  <div>
-    <EntityEdit
+  <main-layout>
+
+    <entity-edit
       :repository="require('../services/repositories/userRoles').userRoles"
       :id="$route.params.id"
     >
-    </EntityEdit>
-  </div>
+    </entity-edit>
+
+  </main-layout>
 
 </template>
 
 <script>
 // @ is an alias to /src
 import EntityEdit from '../components/EntityEdit';
+import MainLayout from '../layouts/Main';
 
 export default {
   name: 'UserRolesEdit',
   components: {
+    MainLayout,
     EntityEdit,
   },
 };

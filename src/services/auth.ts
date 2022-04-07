@@ -17,6 +17,7 @@ interface ITokenResponse {
 }
 let authToken: string | null = null;
 let authJwt: string | null = null;
+let authJwtMeta: object | null = null;
 
 const storeAuthDetails = () => {
     if (window && window.sessionStorage) {
@@ -56,6 +57,27 @@ export const auth = {
     },
     getJwt: (): string | null => {
         return authJwt;
+    },
+    meta: (): any => {
+        if (authJwtMeta !== null) {
+            return authJwtMeta;
+        }
+        if (authJwt !== null && authJwt.length > 0) {
+            try {
+                console.log(authJwt);
+                authJwtMeta = JSON.parse(atob(authJwt.split('.')[1]));
+                if (authJwtMeta !== null) {
+                    return authJwtMeta;
+                }
+            } catch (e) {
+                console.log(e);
+                bus.publish('toast.show', {
+                    type: 'error',
+                    message: __('Unable to decode your token locally, please try to logout and back in again.'),
+                })
+            }
+        }
+        return {};
     },
 
     logout: (): Promise<ITokenResponse> => {

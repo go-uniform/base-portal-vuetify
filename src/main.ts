@@ -4,13 +4,13 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import {bus} from '@/services/bus';
 import {vueBus} from '@/plugins/vue-bus';
-import Toast from '@/components/Toast.vue';
+import ToastBar from '@/components/ToastBar.vue';
 
 Vue.config.productionTip = false
 
 bus.set(vueBus);
 
-Vue.component('ToastComponent', Toast);
+Vue.component('toast-bar', ToastBar);
 
 new Vue({
   router,

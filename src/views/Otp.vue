@@ -1,41 +1,62 @@
 <template>
 
-  <v-form
-    ref="otp"
-    v-model="valid"
-    lazy-validation
-  >
-    <v-container>
-      <v-row>
-        <v-col
-          cols="12"
-          sm="6"
-          md="3"
+  <empty-layout>
+
+    <v-form
+      ref="otp"
+      v-model="valid"
+      lazy-validation
+      class="text-center"
+      style="max-width:320px"
+    >
+      <v-container>
+        <v-row
+          class="py-8"
         >
-          <v-otp-input
-            v-model="otp"
-            length="6"
-            :rules="[rules.required]"
-            autofocus
-            @finish="validate"
-            @keypress="keypress"
-          ></v-otp-input>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-btn
-            :disabled="!valid || !isFilled"
-            color="success"
-            class="mr-4"
-            @click="validate"
+          <v-img
+            alt="Vuetify Name"
+            contain
+            src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-light.png"
+            style="max-height:100px"
+          />
+        </v-row>
+        <v-row>
+          <v-col
+            cols="12"
           >
-            {{ __('Validate') }}
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-form>
+            Enter your one-time-pin
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            cols="12"
+          >
+            <v-otp-input
+              v-model="otp"
+              length="6"
+              :rules="[rules.required]"
+              autofocus
+              @finish="validate"
+              @keypress="keypress"
+            ></v-otp-input>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-btn
+              :disabled="!valid || !isFilled"
+              color="success"
+              class="mr-4"
+              @click="validate"
+            >
+              {{ __('Validate') }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+
+  </empty-layout>
 
 </template>
 
@@ -43,10 +64,13 @@
 import {auth} from '../services/auth';
 import {bus} from '../services/bus';
 import {__} from '../plugins/vuetify';
+import EmptyLayout from '../layouts/Empty';
 
 export default {
   name: 'OtpView',
-  components: {},
+  components: {
+    EmptyLayout,
+  },
   data: () => ({
     type: null,
     otpRequestId: null,

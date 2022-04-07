@@ -118,7 +118,7 @@
 import {formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 
 export default {
-  name: 'EntityList',
+  name: 'entity-list',
   props: {
     repository: null,
     hideHeaders: [],

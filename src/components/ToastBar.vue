@@ -24,7 +24,7 @@
 import {bus} from '@/services/bus';
 
 export default {
-  name: 'ToastComponent',
+  name: 'toast-bar',
   data: () => ({
     counter: 0,
     messages: [],

@@ -1,6 +1,8 @@
 <template>
 
-  <v-form>
+  <v-form
+    class="pa-8"
+  >
     <v-container>
       <v-row
         v-for="(field, key) in fields"
@@ -24,7 +26,7 @@
 
 <script>
 export default {
-  name: 'EntityEdit',
+  name: 'entity-edit',
   props: {
     repository: null,
     id: null,

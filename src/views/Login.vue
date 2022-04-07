@@ -1,61 +1,82 @@
 <template>
 
-  <v-form
-    ref="login"
-    v-model="valid"
-    lazy-validation
-  >
-    <v-container>
-      <v-row>
-        <v-col
-          cols="12"
-          sm="6"
-          md="3"
+  <empty-layout>
+
+    <v-form
+      ref="login"
+      v-model="valid"
+      lazy-validation
+      class="text-center"
+      style="max-width:320px"
+    >
+      <v-container>
+        <v-row
+          class="py-8"
         >
-          <v-text-field
-            :label="__('Email')"
-            v-model="email"
-            :rules="[rules.required, rules.email]"
-          ></v-text-field>
-        </v-col>
-        <v-col
-          cols="12"
-          sm="6"
-          md="3"
-        >
-          <v-text-field
-            v-model="password"
-            :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required]"
-            :type="passwordShow ? 'text' : 'password'"
-            :label="__('Password')"
-            @click:append="passwordShow = !passwordShow"
-          ></v-text-field>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            @click="login"
+            <v-img
+              alt="Vuetify Name"
+              contain
+              src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-light.png"
+              style="max-height:100px"
+            />
+        </v-row>
+        <v-row>
+          <v-col
+            cols="12"
           >
-            {{ __('Login') }}
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-form>
+            Log into your account
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            cols="12"
+          >
+            <v-text-field
+              :label="__('Username or Email')"
+              v-model="email"
+              :rules="[rules.required, rules.email]"
+              autofocus
+            ></v-text-field>
+          </v-col>
+          <v-col
+            cols="12"
+          >
+            <v-text-field
+              v-model="password"
+              :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required]"
+              :type="passwordShow ? 'text' : 'password'"
+              :label="__('Password')"
+              @click:append="passwordShow = !passwordShow"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-btn
+              :disabled="!valid"
+              color="success"
+              class="mr-4"
+              @click="login"
+            >
+              {{ __('Login') }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+
+  </empty-layout>
 
 </template>
 
 <script>
 import {auth} from '@/services/auth';
+import EmptyLayout from '../layouts/Empty';
 
 export default {
   name: 'LoginView',
-  components: {},
+  components: {EmptyLayout},
   data: () => ({
     valid: true,
     email: null,
