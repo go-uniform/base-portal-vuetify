@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
+import VueRouter, {Route, RouteConfig} from 'vue-router';
 import Home from '../views/Home.vue'
 import {NavigationGuard} from 'vue-router/types/router';
 import {auth} from '@/services/auth';
@@ -19,6 +19,14 @@ const routes: Array<RouteConfig> = [
     path: '/login',
     name: 'login',
     component: () => import('../views/Login.vue'),
+    meta: {
+      public: true,
+    }
+  },
+  {
+    path: '/password-reset',
+    name: 'password-reset',
+    component: () => import('../views/PasswordReset.vue'),
     meta: {
       public: true,
     }

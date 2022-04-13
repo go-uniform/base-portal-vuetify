@@ -44,6 +44,7 @@
         <v-row>
           <v-col>
             <v-btn
+              block
               :disabled="!valid || !isFilled"
               color="success"
               class="mr-4"
@@ -101,7 +102,7 @@ export default {
         if (this.$route.query.redirect != null) {
           this.$router.push(this.$route.query.redirect.toString());
         } else {
-          this.$router.push('/users');
+          this.$router.push('/');
         }
       }).finally(() => {
         this.loading = false;

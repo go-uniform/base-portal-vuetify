@@ -20,18 +20,18 @@ let authJwt: string | null = null;
 let authJwtMeta: object | null = null;
 
 const storeAuthDetails = () => {
-    if (window && window.sessionStorage) {
+    if (window && window.localStorage) {
         if (authToken !== null && authJwt !== null) {
-            window.sessionStorage.setItem('auth.token', authToken);
-            window.sessionStorage.setItem('auth.jwt', authJwt);
+            window.localStorage.setItem('auth.token', authToken);
+            window.localStorage.setItem('auth.jwt', authJwt);
         }
     }
 }
 
 const loadAuthDetails = () => {
-    if (window && window.sessionStorage) {
-        const token = window.sessionStorage.getItem('auth.token');
-        const jwt = window.sessionStorage.getItem('auth.jwt');
+    if (window && window.localStorage) {
+        const token = window.localStorage.getItem('auth.token');
+        const jwt = window.localStorage.getItem('auth.jwt');
         if (token !== null && token.length > 0 && jwt !== null && jwt.length > 0) {
             authToken = token;
             authJwt = jwt;
@@ -40,9 +40,9 @@ const loadAuthDetails = () => {
 }
 
 const clearAuthDetails = () => {
-    if (window && window.sessionStorage) {
-        window.sessionStorage.removeItem('auth.token');
-        window.sessionStorage.removeItem('auth.jwt');
+    if (window && window.localStorage) {
+        window.localStorage.removeItem('auth.token');
+        window.localStorage.removeItem('auth.jwt');
     }
 }
 
@@ -64,10 +64,11 @@ export const auth = {
         }
         if (authJwt !== null && authJwt.length > 0) {
             try {
-                console.log(authJwt);
                 authJwtMeta = JSON.parse(atob(authJwt.split('.')[1]));
                 if (authJwtMeta !== null) {
                     return authJwtMeta;
+                } else {
+                    throw 'Failed to parse JWT data';
                 }
             } catch (e) {
                 console.log(e);

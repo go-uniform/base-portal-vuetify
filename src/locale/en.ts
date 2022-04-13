@@ -9,6 +9,9 @@ phrases.raw = {
   Home: 'Home',
   About: 'About',
   Validate: 'Validate',
+  Edit: 'Edit',
+  View: 'View',
+  Delete: 'Delete',
 };
 
 phrases.custom = {

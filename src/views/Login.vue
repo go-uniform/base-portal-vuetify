@@ -52,8 +52,11 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col>
+          <v-col
+            cols="12"
+          >
             <v-btn
+              block
               :disabled="!valid"
               color="success"
               class="mr-4"
@@ -61,6 +64,11 @@
             >
               {{ __('Login') }}
             </v-btn>
+          </v-col>
+          <v-col
+            cols="12"
+          >
+            <a href="/password-reset">Forgot password?</a>
           </v-col>
         </v-row>
       </v-container>
@@ -104,7 +112,7 @@ export default {
           } else if (this.$route.query.redirect != null) {
             this.$router.push(this.$route.query.redirect.toString());
           } else {
-            this.$router.push('/users');
+            this.$router.push('/');
           }
         }).finally(() => {
           this.loading = false;

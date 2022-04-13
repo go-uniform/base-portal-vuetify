@@ -86,10 +86,6 @@ export const userRoles: any = {
         };
     },
 
-    tableHeaders: (): any[] => {
-        return baseTableHeaders(userRoles);
-    },
-
     list: (
       order: string = userRoles.defaultSortOrder,
       filters: any = {},

@@ -45,10 +45,28 @@
     <br>
     <v-btn
       class="ma-2"
-      color="accent"
+      color="warning"
       @click="edit(item)"
     >
-      <v-icon>mdi-pencil</v-icon>&nbsp;{{ __('Edit') }}
+      <v-icon
+        class="mr-2"
+      >
+        mdi-pencil
+      </v-icon>
+      {{ __('Edit') }}
+    </v-btn>
+    <br>
+    <v-btn
+      class="ma-2"
+      color="error"
+      @click="remove(item)"
+    >
+      <v-icon
+        class="mr-2"
+      >
+        mdi-delete
+      </v-icon>
+      {{ __('Delete') }}
     </v-btn>
   </div>
 
@@ -108,6 +126,12 @@ export default {
     },
     edit(item) {
       this.$router.push(`${this.repository.editPagePrefix}/${item.id}`);
+    },
+    remove(item) {
+      // todo: show confirmation box
+      this.repository.delete(item.id).then(() => {
+        this.$router.push(`${this.repository.listPage}`);
+      });
     },
   },
   mounted() {

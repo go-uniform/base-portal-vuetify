@@ -7,6 +7,9 @@ import moment from 'moment';
 Vue.use(Vuetify);
 
 const instance = new Vuetify({
+  theme: {
+    dark: true,
+  },
   lang: {
     locales: { en, af },
     current: 'en',

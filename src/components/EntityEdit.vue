@@ -19,6 +19,44 @@
           :label="__(field.label)"
         ></v-text-field>
       </v-row>
+      <v-row>
+        <v-col
+          cols="6"
+        >
+          <v-btn
+            class="ma-2"
+            color="success"
+            @click="save(item)"
+            large
+            block
+          >
+            <v-icon
+              class="mr-2"
+            >
+              mdi-content-save
+            </v-icon>
+            {{ __('Save') }}
+          </v-btn>
+        </v-col>
+        <v-col
+          cols="6"
+        >
+          <v-btn
+            class="ma-2"
+            color="grey"
+            :to="'/users/view/'+ this.$route.params.id"
+            large
+            block
+          >
+            <v-icon
+              class="mr-2"
+            >
+              mdi-close-circle
+            </v-icon>
+            {{ __('Cancel') }}
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </v-form>
 

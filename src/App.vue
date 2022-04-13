@@ -1,5 +1,7 @@
 <template>
-  <router-view></router-view>
+
+  <router-view/>
+
 </template>
 
 <script lang="ts">
@@ -9,3 +11,9 @@ export default Vue.extend({
   name: 'App',
 });
 </script>
+
+<style lang="scss">
+a i.v-icon.v-icon {
+  color: inherit;
+}
+</style>

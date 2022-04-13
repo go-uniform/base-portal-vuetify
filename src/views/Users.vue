@@ -1,6 +1,9 @@
 <template>
 
-  <main-layout>
+  <main-layout
+    :crumbs="crumbs"
+    :actions="actions"
+  >
 
     <entity-list
       :repository="require('../services/repositories/users').users"
@@ -22,5 +25,27 @@ export default {
     MainLayout,
     EntityList,
   },
+
+  data: () => ({
+    crumbs: [
+      {
+        icon: 'mdi-home',
+        title: 'Dashboard',
+        location: '/',
+      },
+      {
+        title: 'Users',
+      },
+    ],
+
+    actions: [
+      {
+        icon: 'mdi-plus-box',
+        color: 'success',
+        title: 'New',
+        location: '/users/add',
+      },
+    ],
+  }),
 };
 </script>

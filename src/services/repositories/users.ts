@@ -118,10 +118,6 @@ export const users: any = {
         };
     },
 
-    tableHeaders: (): any[] => {
-        return baseTableHeaders(users);
-    },
-
     list: (
       order: string = users.defaultSortOrder,
       filters: any = {},

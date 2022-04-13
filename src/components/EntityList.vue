@@ -72,10 +72,15 @@
                     >
                       <v-btn
                         class="ma-2"
-                        color="danger"
+                        color="error"
                         @click="remove(item)"
                       >
-                        <v-icon>mdi-delete</v-icon>&nbsp;{{ __('Delete') }}
+                        <v-icon
+                          class="mr-2"
+                        >
+                          mdi-delete
+                        </v-icon>
+                        {{ __('Delete') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -84,10 +89,15 @@
                     >
                       <v-btn
                         class="ma-2"
-                        color="accent"
+                        color="warning"
                         @click="edit(item)"
                       >
-                        <v-icon>mdi-pencil</v-icon>&nbsp;{{ __('Edit') }}
+                        <v-icon
+                          class="mr-2"
+                        >
+                          mdi-pencil
+                        </v-icon>
+                        {{ __('Edit') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -96,10 +106,15 @@
                     >
                       <v-btn
                         class="ma-2"
-                        color="primary"
+                        color="info"
                         @click="view(item)"
                       >
-                        <v-icon>mdi-eye</v-icon>&nbsp;{{ __('View') }}
+                        <v-icon
+                          class="mr-2"
+                        >
+                          mdi-eye
+                        </v-icon>
+                        {{ __('View') }}
                       </v-btn>
                     </slot>
                   </v-list-item>
@@ -116,6 +131,7 @@
 
 <script>
 import {formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import {baseTableHeaders} from '../services/base';
 
 export default {
   name: 'entity-list',
@@ -167,7 +183,7 @@ export default {
         return newArray;
       }
 
-      this.headers = this.repository.tableHeaders();
+      this.headers = baseTableHeaders(this.repository);
       if (this.prefixHeaders) {
         this.headers = prepend(this.headers, this.prefixHeaders);
       }

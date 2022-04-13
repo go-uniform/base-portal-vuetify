@@ -2,7 +2,9 @@
 
   <empty-layout>
 
-    <p>
+    <p
+      class="pa-8 text-center"
+    >
       You have been successfully logged out of the system. <a href="/login">Go back to login</a>
     </p>
 
