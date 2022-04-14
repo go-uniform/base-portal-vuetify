@@ -19,7 +19,7 @@
 // @ is an alias to /src
 import EntityView from '../components/EntityView';
 import MainLayout from '../layouts/Main';
-import {__} from '../plugins/vuetify';
+import {formatString} from '../plugins/vuetify';
 
 export default {
   name: 'UsersView',
@@ -33,15 +33,15 @@ export default {
       return [
         {
           icon: 'mdi-home',
-          title: __('Dashboard'),
+          title: formatString('Dashboard'),
           location: '/',
         },
         {
-          title: __('Users'),
+          title: formatString('Users'),
           location: '/users'
         },
         {
-          title: __('View'),
+          title: formatString('View'),
         },
       ];
     },
@@ -51,14 +51,20 @@ export default {
         {
           icon: 'mdi-delete',
           color: 'error',
-          title: __('Delete'),
+          title: formatString('Delete'),
           location: '/users/add',
         },
         {
           icon: 'mdi-pencil',
           color: 'warning',
-          title: __('Edit'),
+          title: formatString('Edit'),
           location: '/users/edit/' + this.$route.params.id,
+        },
+        {
+          icon: 'mdi-view-list',
+          color: 'info',
+          title: formatString('List'),
+          location: `/users`,
         },
       ];
     },

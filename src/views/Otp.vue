@@ -64,7 +64,7 @@
 <script>
 import {auth} from '../services/auth';
 import {bus} from '../services/bus';
-import {__} from '../plugins/vuetify';
+import {formatString} from '../plugins/vuetify';
 import EmptyLayout from '../layouts/Empty';
 
 export default {
@@ -115,7 +115,7 @@ export default {
           default:
             bus.publish('toast.show', {
               type: 'error',
-              message: __('custom.errors.unknownOtpType', [this.type]),
+              message: formatString('custom.errors.unknownOtpType', [this.type]),
             });
             break;
           case 'auth':

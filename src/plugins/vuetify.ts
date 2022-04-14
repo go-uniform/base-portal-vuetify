@@ -17,7 +17,7 @@ const instance = new Vuetify({
 });
 
 // __ is shorthand for format string function
-export const __ = (text: string, ...args: any[]) => {
+export const formatString = (text: string, ...args: any[]) => {
   let key = `${text}`;
   if (text.startsWith('$vuetify.')) {
     key = `${text}`;
@@ -42,12 +42,12 @@ export const __ = (text: string, ...args: any[]) => {
 
 Vue.mixin({
   methods: {
-    __,
+    __: formatString,
   },
 });
 
 Vue.filter('format', (text: string, ...args: any[]) => {
-  __(text, args);
+  formatString(text, args);
 });
 
 export const formatBoolean = (value: any) => {

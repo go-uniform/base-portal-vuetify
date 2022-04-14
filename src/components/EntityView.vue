@@ -43,31 +43,65 @@
       </tr>
     </table>
     <br>
-    <v-btn
-      class="ma-2"
-      color="warning"
-      @click="edit(item)"
-    >
-      <v-icon
-        class="mr-2"
+    <v-row>
+      <v-col
+        class="text-center"
+        cols="4"
       >
-        mdi-pencil
-      </v-icon>
-      {{ __('Edit') }}
-    </v-btn>
-    <br>
-    <v-btn
-      class="ma-2"
-      color="error"
-      @click="remove(item)"
-    >
-      <v-icon
-        class="mr-2"
+        <v-btn
+          class="ma-2"
+          color="error"
+          @click="remove(item)"
+          large
+          block
+        >
+          <v-icon
+            class="mr-2"
+          >
+            mdi-delete
+          </v-icon>
+          {{ __('Delete') }}
+        </v-btn>
+      </v-col>
+      <v-col
+        class="text-center"
+        cols="4"
       >
-        mdi-delete
-      </v-icon>
-      {{ __('Delete') }}
-    </v-btn>
+        <v-btn
+          class="ma-2"
+          color="warning"
+          @click="edit(item)"
+          large
+          block
+        >
+          <v-icon
+            class="mr-2"
+          >
+            mdi-pencil
+          </v-icon>
+          {{ __('Edit') }}
+        </v-btn>
+      </v-col>
+      <v-col
+        class="text-center"
+        cols="4"
+      >
+        <v-btn
+          class="ma-2"
+          color="info"
+          @click="list"
+          large
+          block
+        >
+          <v-icon
+            class="mr-2"
+          >
+            mdi-view-list
+          </v-icon>
+          {{ __('List') }}
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 
 </template>
@@ -133,6 +167,9 @@ export default {
         this.$router.push(`${this.repository.listPage}`);
       });
     },
+    list() {
+      this.$router.push(`${this.repository.listPage}`);
+    }
   },
   mounted() {
     this.repository.read(this.id).then((response) => {

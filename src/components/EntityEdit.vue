@@ -26,7 +26,7 @@
           <v-btn
             class="ma-2"
             color="success"
-            @click="save(item)"
+            @click="save"
             large
             block
           >
@@ -44,7 +44,7 @@
           <v-btn
             class="ma-2"
             color="grey"
-            :to="'/users/view/'+ this.$route.params.id"
+            @click="cancel"
             large
             block
           >
@@ -93,6 +93,23 @@ export default {
   data: () => ({
     item: {},
   }),
+  methods: {
+    save() {
+      if (this.$route.params.id) {
+
+        this.$router.push(`${this.repository.viewPagePrefix}/${this.$route.params.id}`);
+        return;
+      }
+      this.$router.push(`${this.repository.listPage}`);
+    },
+    cancel() {
+      if (this.$route.params.id) {
+        this.$router.push(`${this.repository.viewPagePrefix}/${this.$route.params.id}`);
+        return;
+      }
+      this.$router.push(`${this.repository.listPage}`);
+    }
+  },
   mounted() {
     // todo: prepare form fields with default values
     if (this.id) {

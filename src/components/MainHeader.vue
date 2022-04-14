@@ -62,6 +62,17 @@
         dense
       >
         <v-list-item
+          @click="toggleThemeMode"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-theme-light-dark</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>
+            {{ $vuetify.theme.dark ? __('Light Mode') : __('Dark Mode') }}
+          </v-list-item-title>
+        </v-list-item>
+        <v-divider></v-divider>
+        <v-list-item
           to="/users/edit/me"
         >
           <v-list-item-icon>
@@ -113,6 +124,10 @@ export default {
 
     menuOpen() {
       bus.publish('menu.open', null);
+    },
+
+    toggleThemeMode() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
 
     logout() {

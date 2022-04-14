@@ -87,6 +87,11 @@ const routes: Array<RouteConfig> = [
     name: 'user-roles-add',
     component: () => import('../views/UserRolesEdit.vue'),
   },
+  {
+    path: '*',
+    name: 'not-found',
+    component: () => import('../views/NotFound.vue'),
+  },
 ];
 
 const router = new VueRouter({

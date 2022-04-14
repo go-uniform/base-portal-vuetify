@@ -19,7 +19,7 @@
 // @ is an alias to /src
 import EntityEdit from '../components/EntityEdit';
 import MainLayout from '../layouts/Main';
-import {__} from '../plugins/vuetify';
+import {formatString} from '../plugins/vuetify';
 
 export default {
   name: 'UsersEdit',
@@ -30,39 +30,59 @@ export default {
 
   computed: {
     crumbs: function() {
+      if (this.$route.params.id) {
+        return [
+          {
+            icon: 'mdi-home',
+            title: formatString('Dashboard'),
+            location: '/',
+          },
+          {
+            title: formatString('Users'),
+            location: '/users'
+          },
+          {
+            title: formatString('View'),
+            location: '/users/view/'+ this.$route.params.id,
+          },
+          {
+            title: formatString('Edit'),
+          },
+        ];
+      }
       return [
         {
           icon: 'mdi-home',
-          title: __('Dashboard'),
+          title: formatString('Dashboard'),
           location: '/',
         },
         {
-          title: __('Users'),
+          title: formatString('Users'),
           location: '/users'
         },
         {
-          title: __('View'),
-          location: '/users/view/'+ this.$route.params.id,
-        },
-        {
-          title: __('Edit'),
+          title: formatString('New'),
         },
       ];
     },
 
     actions: function() {
+      let cancelUrl = '/users';
+      if (this.$route.params.id) {
+        cancelUrl = '/users/view/'+ this.$route.params.id;
+      }
       return [
         {
           icon: 'mdi-content-save',
           color: 'success',
-          title: __('Save'),
-          location: '',
+          title: formatString('Save'),
+          location: cancelUrl,
         },
         {
           icon: 'mdi-close-circle',
           color: 'grey',
-          title: __('Cancel'),
-          location: '/users/view/'+ this.$route.params.id,
+          title: formatString('Cancel'),
+          location: cancelUrl,
         },
       ];
     },
