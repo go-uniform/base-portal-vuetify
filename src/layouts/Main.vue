@@ -4,7 +4,9 @@
 
     <main-header/>
     <main-menu/>
-    <v-main>
+    <v-main
+      v-scroll="onScroll"
+    >
 
       <main-toolbar
         :crumbs="crumbs"
@@ -41,6 +43,7 @@ import MainFooter from '@/components/MainFooter.vue';
 import MainHeader from '@/components/MainHeader.vue';
 import MainMenu from '@/components/MainMenu.vue';
 import MainToolbar from '@/components/MainToolbar.vue';
+import {bus} from '@/services/bus';
 
 export default Vue.extend({
   name: 'main-layout',
@@ -49,6 +52,21 @@ export default Vue.extend({
   props: {
     crumbs: Array,
     actions: Array,
+  },
+
+  methods: {
+    onScroll (e) {
+      if (typeof window === 'undefined') {
+        return;
+      }
+      const top = window.pageYOffset || e.target.scrollTop || 0;
+      const showScrollTopBtn = top > 20;
+
+      if ((window.showScrollTopBtn && !showScrollTopBtn) || (!window.showScrollTopBtn && showScrollTopBtn)) {
+        window.showScrollTopBtn = showScrollTopBtn;
+        bus.publish('window.scrollTopBtn', showScrollTopBtn);
+      }
+    }
   },
 });
 </script>

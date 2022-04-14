@@ -73,7 +73,7 @@
         </v-list-item>
         <v-divider></v-divider>
         <v-list-item
-          to="/users/edit/me"
+          to="/my-account"
         >
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
