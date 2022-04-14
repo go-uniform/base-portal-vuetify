@@ -19,7 +19,7 @@
 // @ is an alias to /src
 import EntityEdit from '../components/EntityEdit';
 import MainLayout from '../layouts/Main';
-import {formatString} from '../plugins/vuetify';
+import {format} from '../plugins/vuetify';
 
 export default {
   name: 'UserRolesEdit',
@@ -34,34 +34,34 @@ export default {
         return [
           {
             icon: 'mdi-home',
-            title: formatString('Dashboard'),
+            title: format('Home'),
             location: '/',
           },
           {
-            title: formatString('User Roles'),
+            title: format('User Roles'),
             location: '/user-roles'
           },
           {
-            title: formatString('View'),
+            title: format('View'),
             location: '/user-roles/view/'+ this.$route.params.id,
           },
           {
-            title: formatString('Edit'),
+            title: format('Edit'),
           },
         ];
       }
       return [
         {
           icon: 'mdi-home',
-          title: formatString('Dashboard'),
+          title: format('Home'),
           location: '/',
         },
         {
-          title: formatString('User Roles'),
+          title: format('User Roles'),
           location: '/user-roles'
         },
         {
-          title: formatString('New'),
+          title: format('New'),
         },
       ];
     },
@@ -75,13 +75,14 @@ export default {
         {
           icon: 'mdi-content-save',
           color: 'success',
-          title: formatString('Save'),
+          title: format('Save'),
           location: cancelUrl,
         },
         {
           icon: 'mdi-close-circle',
+          class: 'white--text',
           color: 'grey',
-          title: formatString('Cancel'),
+          title: format('Cancel'),
           location: cancelUrl,
         },
       ];

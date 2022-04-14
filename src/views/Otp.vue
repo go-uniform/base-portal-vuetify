@@ -50,7 +50,7 @@
               class="mr-4"
               @click="validate"
             >
-              {{ __('Validate') }}
+              {{ format('Validate') }}
             </v-btn>
           </v-col>
         </v-row>
@@ -64,7 +64,7 @@
 <script>
 import {auth} from '../services/auth';
 import {bus} from '../services/bus';
-import {formatString} from '../plugins/vuetify';
+import {format} from '../plugins/vuetify';
 import EmptyLayout from '../layouts/Empty';
 
 export default {
@@ -115,7 +115,7 @@ export default {
           default:
             bus.publish('toast.show', {
               type: 'error',
-              message: formatString('custom.errors.unknownOtpType', [this.type]),
+              message: format('custom.errors.unknownOtpType', [this.type]),
             });
             break;
           case 'auth':

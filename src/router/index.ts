@@ -88,9 +88,20 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/UserRolesEdit.vue'),
   },
   {
+    path: '/policies/cookie',
+    name: 'cookie-policy',
+    component: () => import('../views/CookiePolicy.vue'),
+    meta: {
+      public: true
+    }
+  },
+  {
     path: '*',
     name: 'not-found',
     component: () => import('../views/NotFound.vue'),
+    meta: {
+      public: true
+    }
   },
 ];
 

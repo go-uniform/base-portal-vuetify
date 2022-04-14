@@ -89,7 +89,7 @@ export default {
     mini: false,
     items: [
       {
-        title: 'Dashboard',
+        title: 'Home',
         icon: 'mdi-home',
         location: '/'
       },

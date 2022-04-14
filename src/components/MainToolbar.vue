@@ -26,7 +26,7 @@
             >
               {{ item.icon }}
             </v-icon>
-            {{ __(item.title) }}
+            {{ format(item.title) }}
           </v-breadcrumbs-item>
 
         </template>
@@ -41,6 +41,7 @@
           :color="action.color"
           :to="action.location"
           tile
+          :class="action.class"
         >
           <v-icon
             v-if="action.icon"
@@ -48,7 +49,7 @@
           >
             {{ action.icon }}
           </v-icon>
-          {{ __(action.title) }}
+          {{ format(action.title) }}
         </v-btn>
       </template>
 

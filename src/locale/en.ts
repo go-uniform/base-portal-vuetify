@@ -19,8 +19,10 @@ phrases.custom = {
     unknownOtpType: 'Unknown otp type \'{0}\' detected',
     incorrectOtpPin: 'Incorrect pin supplied',
   },
-  about: {
-    content: '<h1>About Us</h1><p>We are a young and upcoming company that will blow your mind in so many aspects.</p>',
+  cookie: {
+    consentTitle: 'Your privacy',
+    consentBody: 'By clicking "Accept all cookies", you agree we may store cookies on your device and disclose information in accordance with our <a href="/policies/cookie">Cookie Policy.<a/>',
+    consentBtn: 'Accept all cookies',
   },
 };
 

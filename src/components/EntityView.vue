@@ -17,7 +17,7 @@
             :name="labelName(key)"
           >
             <strong>
-              {{ __(field.label) }}:
+              {{ format(field.label) }}:
             </strong>
           </slot>
         </td>
@@ -60,7 +60,7 @@
           >
             mdi-delete
           </v-icon>
-          {{ __('Delete') }}
+          {{ format('Delete') }}
         </v-btn>
       </v-col>
       <v-col
@@ -79,7 +79,7 @@
           >
             mdi-pencil
           </v-icon>
-          {{ __('Edit') }}
+          {{ format('Edit') }}
         </v-btn>
       </v-col>
       <v-col
@@ -98,7 +98,7 @@
           >
             mdi-view-list
           </v-icon>
-          {{ __('List') }}
+          {{ format('List') }}
         </v-btn>
       </v-col>
     </v-row>

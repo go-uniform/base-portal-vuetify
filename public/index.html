@@ -8,6 +8,12 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+    <script>
+      // we will not be supporting any of the old IE variants
+      if (navigator.userAgent.includes('MSIE') || navigator.userAgent.includes('Trident')) {
+        window.location = '/incompatible.html';
+      }
+    </script>
   </head>
   <body>
     <noscript>

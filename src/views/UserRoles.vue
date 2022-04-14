@@ -30,7 +30,7 @@ export default {
     crumbs: [
       {
         icon: 'mdi-home',
-        title: 'Dashboard',
+        title: 'Home',
         location: '/',
       },
       {

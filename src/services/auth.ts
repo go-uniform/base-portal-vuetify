@@ -1,6 +1,6 @@
 import {mergeHeaders, getBaseUrl, processStandardResponse} from './base';
 import {bus} from '@/services/bus';
-import {formatString} from '@/plugins/vuetify';
+import {format} from '@/plugins/vuetify';
 
 interface Token {
     twoFactor: boolean;
@@ -74,7 +74,7 @@ export const auth = {
                 console.log(e);
                 bus.publish('toast.show', {
                     type: 'error',
-                    message: formatString('Unable to decode your token locally, please try to logout and back in again.'),
+                    message: format('Unable to decode your token locally, please try to logout and back in again.'),
                 })
             }
         }
@@ -179,7 +179,7 @@ export const auth = {
     otp: (otpRequestId: string, pin: string, headers: any = {}): Promise<ITokenResponse> => {
         return new Promise((resolve, reject) => {
             if (pin !== '000000') {
-                const message = formatString('custom.errors.incorrectOtpPin', []);
+                const message = format('custom.errors.incorrectOtpPin', []);
                 bus.publish('toast.show', {
                     type: 'error',
                     message,

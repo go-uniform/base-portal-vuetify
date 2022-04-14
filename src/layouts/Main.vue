@@ -25,6 +25,8 @@
     </v-main>
     <main-footer/>
     <toast-bar/>
+    <cookie-consent/>
+    <connection-lost/>
 
   </v-app>
 
@@ -44,10 +46,12 @@ import MainHeader from '@/components/MainHeader.vue';
 import MainMenu from '@/components/MainMenu.vue';
 import MainToolbar from '@/components/MainToolbar.vue';
 import {bus} from '@/services/bus';
+import CookieConsent from '@/components/CookieConsent.vue';
+import ConnectionLost from '@/components/ConnectionLost.vue';
 
 export default Vue.extend({
   name: 'main-layout',
-  components: {MainToolbar, MainHeader, MainFooter, MainMenu},
+  components: {ConnectionLost, MainToolbar, MainHeader, MainFooter, MainMenu, CookieConsent},
 
   props: {
     crumbs: Array,
@@ -55,7 +59,7 @@ export default Vue.extend({
   },
 
   methods: {
-    onScroll (e) {
+    onScroll(e) {
       if (typeof window === 'undefined') {
         return;
       }

@@ -80,7 +80,7 @@
                         >
                           mdi-delete
                         </v-icon>
-                        {{ __('Delete') }}
+                        {{ format('Delete') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -97,7 +97,7 @@
                         >
                           mdi-pencil
                         </v-icon>
-                        {{ __('Edit') }}
+                        {{ format('Edit') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -114,7 +114,7 @@
                         >
                           mdi-eye
                         </v-icon>
-                        {{ __('View') }}
+                        {{ format('View') }}
                       </v-btn>
                     </slot>
                   </v-list-item>

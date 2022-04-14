@@ -11,12 +11,12 @@
         <v-autocomplete
           v-if="field.type === 'linkId'"
           v-model="item[key]"
-          :label="__(field.label)"
+          :label="format(field.label)"
         ></v-autocomplete>
         <v-text-field
           v-else
           v-model="item[key]"
-          :label="__(field.label)"
+          :label="format(field.label)"
         ></v-text-field>
       </v-row>
       <v-row>
@@ -35,15 +35,14 @@
             >
               mdi-content-save
             </v-icon>
-            {{ __('Save') }}
+            {{ format('Save') }}
           </v-btn>
         </v-col>
         <v-col
           cols="6"
         >
           <v-btn
-            class="ma-2"
-            color="grey"
+            class="ma-2 grey white--text"
             @click="cancel"
             large
             block
@@ -53,7 +52,7 @@
             >
               mdi-close-circle
             </v-icon>
-            {{ __('Cancel') }}
+            {{ format('Cancel') }}
           </v-btn>
         </v-col>
       </v-row>

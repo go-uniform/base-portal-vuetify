@@ -68,7 +68,7 @@
             <v-icon>mdi-theme-light-dark</v-icon>
           </v-list-item-icon>
           <v-list-item-title>
-            {{ $vuetify.theme.dark ? __('Light Mode') : __('Dark Mode') }}
+            {{ $vuetify.theme.dark ? format('Light Mode') : format('Dark Mode') }}
           </v-list-item-title>
         </v-list-item>
         <v-divider></v-divider>
@@ -128,6 +128,9 @@ export default {
 
     toggleThemeMode() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+      if (window && window.localStorage) {
+        window.localStorage.setItem('theme.dark', this.$vuetify.theme.dark.toString());
+      }
     },
 
     logout() {
