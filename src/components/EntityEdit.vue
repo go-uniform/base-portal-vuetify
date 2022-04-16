@@ -13,6 +13,9 @@
           v-if="field.type === 'linkId'"
           v-model="item[key]"
           :label="format(field.label)"
+          :items="linkItems[key]"
+          :multiple="field.multiple"
+          clearable
         ></v-autocomplete>
         <v-text-field
           v-else
@@ -91,6 +94,10 @@ export default {
           return;
         }
         response[key] = this.repository.fields[key];
+
+        if (field.type === 'linkId') {
+          this.links(key, field);
+        }
       });
 
       return response;
@@ -99,6 +106,8 @@ export default {
   data: () => ({
     item: {
     },
+    linkItems: {
+    }
   }),
   methods: {
     save() {
@@ -182,11 +191,23 @@ export default {
           location: cancelUrl,
         },
       ];
+    },
+
+    links(key, field) {
+      field.linkRepository.list('-createdAt').then((response) => {
+        this.linkItems[key] = response.items.map((item) => {
+          return {
+            value: item.id,
+            text: item.name,
+          }
+        });
+        this.$forceUpdate();
+      });
     }
   },
 
   mounted() {
-    this.item = this.repository.default;
+    this.item = {...this.repository.default};
     if (this.id) {
       this.repository.read(this.id).then((response) => {
         // merge two objects together with second object taking priority

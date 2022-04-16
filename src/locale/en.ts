@@ -25,10 +25,16 @@ phrases.raw = {
   Users: 'Users',
   'User Role': 'User Role',
   'User Roles': 'User Roles',
+  Bulk: 'Bulk',
+  Id: 'Id',
   List: 'List',
   Name: 'Name',
   Description: 'Description',
   'Created At': 'Created At',
+  'Modified At': 'Modified At',
+  'First Name': 'First Name',
+  'Last Name': 'Last Name',
+  'Username': 'Username',
 };
 
 phrases.custom = {

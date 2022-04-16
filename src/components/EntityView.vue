@@ -1,53 +1,75 @@
 <template>
 
-  <div
-    class="pa-8 text-center"
-  >
-    <table
-      class="mx-auto"
+  <div>
+    <v-row
+      class="mb-2"
     >
-      <tr
-        v-for="(field, key) in fields"
-        :key="key"
+      <v-expansion-panels
+        accordion
+        multiple
+        :value="[0]"
       >
-        <td
-          class="text-left"
+        <v-col
+          cols="12"
+          :lg="section.lg || 4"
+          :md="section.md || 6"
+          :sm="section.sm || 12"
+          v-for="(section,i) in repository.sections"
+          :key="i"
         >
-          <slot
-            :name="labelName(key)"
+        <v-expansion-panel>
+          <v-expansion-panel-header
+            color="primary"
           >
-            <strong>
-              {{ format(field.label) }}:
-            </strong>
-          </slot>
-        </td>
-        <td
-          class="text-right"
-        >
-          <slot
-            :name="valueName(key)"
+            {{ section.title }}
+          </v-expansion-panel-header>
+          <v-expansion-panel-content
+            class="pa-8 fill-height"
           >
-            <a
-              v-if="field.type === 'linkId'"
-              :href="`${repository.fields[key].linkTargetPath}/${item.id}`"
+            <slot
+              :name="'section-'+ kebabCase(section.title)"
             >
-              {{ item[repository.fields[key].linkLabelField] }}
-            </a>
-            <span
-              v-else
-            >
-              {{ doFormat(key, field, item) }}
-            </span>
-          </slot>
-        </td>
-      </tr>
-    </table>
-    <br>
+              <slot
+                v-for="fieldKey in section.fields"
+                :name="fieldKey"
+                :fieldKey="fieldKey"
+                :field="repository.fields[fieldKey]"
+                :item="item"
+              >
+                <div
+                  class="mt-4"
+                  v-bind:key="fieldKey"
+                >
+                  <div>
+                  <strong>{{ repository.fields[fieldKey].label }}</strong>
+                  </div>
+                  <div
+                    v-if="repository.fields[fieldKey].type === 'linkId'"
+                  >
+                    <a
+                      :href="`${repository.fields[fieldKey].linkTargetPath}/${item[fieldKey]}`"
+                    >
+                      {{ item[repository.fields[fieldKey].linkLabelField] }}
+                    </a>
+                  </div>
+                  <div
+                    v-else
+                  >
+                    {{ doFormat(fieldKey, repository.fields[fieldKey], item) }}
+                  </div>
+                </div>
+              </slot>
+            </slot>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        </v-col>
+      </v-expansion-panels>
+    </v-row>
     <v-row>
       <v-col
         cols="12"
         md="4"
-        class="text-center pa-0 pa-md-4"
+        class="text-center pa-0 pa-md-4 pr-4"
       >
         <v-btn
           class="ma-2"
@@ -67,7 +89,7 @@
       <v-col
         cols="12"
         md="4"
-        class="text-center pa-0 pa-md-4"
+        class="text-center pa-0 pa-md-4 pr-4"
       >
         <v-btn
           class="ma-2"
@@ -87,7 +109,7 @@
       <v-col
         cols="12"
         md="4"
-        class="text-center pa-0 pa-md-4"
+        class="text-center pa-0 pa-md-4 pr-4"
       >
         <v-btn
           class="ma-2"

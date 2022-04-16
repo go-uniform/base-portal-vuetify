@@ -52,6 +52,30 @@ const StubList: UserRole[] = [
         entitiesDenied: [],
         createdAt: new Date('2022-04-06T08:31:04.000Z'),
     },
+    {
+        id: '625ae8cdc7cee73e4d177ecc',
+        name: 'Editors',
+        description: 'This user role can edit most data',
+        allowPermissionsByDefault: true,
+        permissionsAllowed: [],
+        permissionsDenied: [],
+        allowEntitiesByDefault: true,
+        entitiesAllowed: [],
+        entitiesDenied: [],
+        createdAt: new Date('2022-04-08T08:31:04.000Z'),
+    },
+    {
+        id: '625ae8e197304b98b929f1f7',
+        name: 'Viewers',
+        description: 'This user role can view most data',
+        allowPermissionsByDefault: true,
+        permissionsAllowed: [],
+        permissionsDenied: [],
+        allowEntitiesByDefault: true,
+        entitiesAllowed: [],
+        entitiesDenied: [],
+        createdAt: new Date('2022-04-08T08:31:04.000Z'),
+    },
 ];
 const StubRecord: UserRole = StubList[0];
 const entity = 'userRoles';
@@ -70,6 +94,11 @@ export const userRoles: any = {
     default: {
     },
     fields: {
+        id: {
+            label: 'Id',
+            type: 'uuid',
+            readonly: true,
+        },
         name: {
             label: 'Name',
             type: 'text',
@@ -78,10 +107,15 @@ export const userRoles: any = {
             label: 'Description',
             type: 'textarea',
         },
+        modifiedAt: {
+            label: 'Modified At',
+            type: 'datetime',
+            readonly: true,
+        },
         createdAt: {
             label: 'Created At',
             type: 'datetime',
-            editable: false,
+            readonly: true,
         },
     },
     headers: [
@@ -96,6 +130,19 @@ export const userRoles: any = {
         {
             field: 'createdAt',
             align: 'end',
+        },
+    ],
+    sections: [
+        {
+            lg: 12,
+            md: 12,
+            title: 'General',
+            fields: [
+                'id',
+                'name',
+                'description',
+                'createdAt',
+            ],
         },
     ],
     filters: (): any => {
