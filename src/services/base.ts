@@ -142,7 +142,6 @@ export const baseTableHeaders = (repository: any): any[] => {
 
 interface IListPromise<T> {
   (
-    entity: string,
     order: string,
     filters: any,
     pageIndex: number,
@@ -150,9 +149,8 @@ interface IListPromise<T> {
   ): Promise<T>;
 }
 
-export const baseList = <T>(): IListPromise<T> => {
+export const baseList = <T>(entity: string): IListPromise<T> => {
   return (
-    entity: string,
     order: string,
     filters: any = {},
     pageIndex = 1,
@@ -182,14 +180,12 @@ export const baseList = <T>(): IListPromise<T> => {
 
 interface ICreatePromise<T> {
   (
-    entity: string,
     document: any,
   ): Promise<T>;
 }
 
-export const baseCreate = <T>(): ICreatePromise<T> => {
+export const baseCreate = <T>(entity: string): ICreatePromise<T> => {
   return (
-    entity: string,
     document: any,
   ): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
@@ -208,14 +204,12 @@ export const baseCreate = <T>(): ICreatePromise<T> => {
 
 interface IReadPromise<T> {
   (
-    entity: string,
     id: string,
   ): Promise<T>;
 }
 
-export const baseRead = <T>(): IReadPromise<T> => {
+export const baseRead = <T>(entity: string): IReadPromise<T> => {
   return (
-    entity: string,
     id: string,
   ): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
@@ -233,15 +227,13 @@ export const baseRead = <T>(): IReadPromise<T> => {
 
 interface IUpdatePromise<T> {
   (
-    entity: string,
     id: string,
     document: any,
   ): Promise<T>;
 }
 
-export const baseUpdate = <T>(): IUpdatePromise<T> => {
+export const baseUpdate = <T>(entity: string): IUpdatePromise<T> => {
   return (
-    entity: string,
     id: string,
     document: any,
   ): Promise<T> => {
@@ -266,9 +258,8 @@ interface IDeletePromise<T> {
   ): Promise<T>;
 }
 
-export const baseDelete = <T>(): IDeletePromise<T> => {
+export const baseDelete = <T>(entity: string): IDeletePromise<T> => {
   return (
-    entity: string,
     id: string,
   ): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
@@ -391,66 +382,61 @@ export const baseRecordActionItemResponse = (
 };
 
 
-export const baseListStub = <T>(response: T): IListPromise<T> => {
+export const baseListStub = <T>(entity: string, response: T): IListPromise<T> => {
   return (
-    entity: string,
     order: string,
     filters: any = {},
     pageIndex = 1,
     pageSize = 50,
   ): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
-      alert(`list`);
+      console.log('list', entity, order, filters, pageIndex, pageSize);
       resolve(response);
     });
   };
 };
 
-export const baseCreateStub = <T>(response: T): ICreatePromise<T> => {
+export const baseCreateStub = <T>(entity: string, response: T): ICreatePromise<T> => {
   return (
-    entity: string,
     document: any,
   ): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
-      alert(`create`);
+      console.log('create', entity, document);
       resolve(response);
     });
   };
 };
 
-export const baseReadStub = <T>(response: T): IReadPromise<T> => {
+export const baseReadStub = <T>(entity: string, response: T): IReadPromise<T> => {
   return (
-    entity: string,
     id: string,
   ): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
-      alert(`read`);
+      console.log('read', entity, id);
       resolve(response);
     });
   };
 };
 
-export const baseUpdateStub = <T>(response: T): IUpdatePromise<T> => {
+export const baseUpdateStub = <T>(entity: string, response: T): IUpdatePromise<T> => {
   return (
-    entity: string,
     id: string,
     document: any,
   ): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
-      alert(`update`);
+      console.log('update', entity, id, document);
       resolve(response);
     });
   };
 };
 
-export const baseDeleteStub = <T>(list: any[], response: T): IDeletePromise<T> => {
+export const baseDeleteStub = <T>(entity: string, list: any[], response: T): IDeletePromise<T> => {
   return (
-    entity: string,
     id: string,
   ): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
       list.pop();
-      alert(`delete`);
+      console.log('delete', entity, id);
       resolve(response);
     });
   };

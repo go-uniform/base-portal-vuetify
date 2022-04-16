@@ -2,6 +2,8 @@ import en from 'vuetify/src/locale/en';
 const phrases: any = en;
 
 phrases.raw = {
+  'Username or Email': 'Username or Email',
+  Reset: 'Reset ',
   Email: 'Email',
   Password: 'Password',
   Login: 'Login',
@@ -12,6 +14,21 @@ phrases.raw = {
   Edit: 'Edit',
   View: 'View',
   Delete: 'Delete',
+  'Light Mode': 'Light Mode',
+  'Dark Mode': 'Dark Mode',
+  Yes: 'Yes',
+  No: 'No',
+  Save: 'Save',
+  Cancel: 'Cancel',
+  New: 'New',
+  User: 'User',
+  Users: 'Users',
+  'User Role': 'User Role',
+  'User Roles': 'User Roles',
+  List: 'List',
+  Name: 'Name',
+  Description: 'Description',
+  'Created At': 'Created At',
 };
 
 phrases.custom = {

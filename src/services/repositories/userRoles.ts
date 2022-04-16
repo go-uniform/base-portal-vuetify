@@ -54,9 +54,10 @@ const StubList: UserRole[] = [
     },
 ];
 const StubRecord: UserRole = StubList[0];
+const entity = 'userRoles';
 
 export const userRoles: any = {
-    entity: 'userRoles',
+    entity: entity,
     title: {
         singular: 'User Role',
         plural: 'User Roles',
@@ -102,10 +103,10 @@ export const userRoles: any = {
         };
     },
 
-    list: baseListStub<IListResponse>({status:200,headers: new Headers(),items:StubList}),
-    create: baseCreateStub<IItemResponse>({status:200,headers: new Headers(),item:StubRecord}),
-    read: baseReadStub<IItemResponse>({status:200,headers: new Headers(),item:StubRecord}),
-    update: baseUpdateStub<IItemResponse>({status:200,headers: new Headers(),item:StubRecord}),
-    delete: baseDeleteStub<IItemResponse>(StubList,{status:200,headers: new Headers(),item:StubRecord}),
+    list: baseListStub<IListResponse>(entity, {status:200,headers: new Headers(),items:StubList}),
+    create: baseCreateStub<IItemResponse>(entity, {status:200,headers: new Headers(),item:StubRecord}),
+    read: baseReadStub<IItemResponse>(entity, {status:200,headers: new Headers(),item:StubRecord}),
+    update: baseUpdateStub<IItemResponse>(entity, {status:200,headers: new Headers(),item:StubRecord}),
+    delete: baseDeleteStub<IItemResponse>(entity, StubList,{status:200,headers: new Headers(),item:StubRecord}),
 
 };

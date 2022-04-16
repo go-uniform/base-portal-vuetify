@@ -93,10 +93,13 @@ export default {
     },
   },
   data: () => ({
-    item: {},
+    item: {
+      test: true,
+    },
   }),
   methods: {
     save() {
+      console.log(this.item);
       if (this.$refs.form.validate()) {
         if (this.$route.params.id) {
           this.repository.update(this.$route.params.id, this.item).then(() => {
@@ -181,10 +184,15 @@ export default {
   },
 
   mounted() {
+    console.log('default', this.repository.default);
     this.item = this.repository.default;
     if (this.id) {
       this.repository.read(this.id).then((response) => {
-        this.item = Object.assign(this.repository.default, response.item);
+        // merge two objects together with second object taking priority
+        this.item = {
+          ...this.repository.default,
+          ...response.item
+        };
         this.$forceUpdate();
       }).catch(() => {
         this.$router.push(`${this.repository.listPage}`);
