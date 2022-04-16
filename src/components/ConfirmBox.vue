@@ -35,7 +35,7 @@
 
         <v-spacer/>
         <v-btn
-          color="primary darken-1"
+          :color="options.color"
           text
           @click.native="agree"
         >

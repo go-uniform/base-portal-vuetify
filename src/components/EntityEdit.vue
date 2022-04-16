@@ -98,12 +98,10 @@ export default {
   },
   data: () => ({
     item: {
-      test: true,
     },
   }),
   methods: {
     save() {
-      console.log(this.item);
       if (this.$refs.form.validate()) {
         if (this.$route.params.id) {
           this.repository.update(this.$route.params.id, this.item).then(() => {
@@ -188,7 +186,6 @@ export default {
   },
 
   mounted() {
-    console.log('default', this.repository.default);
     this.item = this.repository.default;
     if (this.id) {
       this.repository.read(this.id).then((response) => {

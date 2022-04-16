@@ -3,6 +3,8 @@
   <main-layout
     :crumbs="crumbs"
     :actions="actions"
+    :bulk-actions="bulkActions"
+    :bulk-action-handler="bulkActionHandler"
   >
 
     <entity-list
@@ -30,11 +32,15 @@ export default {
   data: () => ({
     crumbs: [],
     actions: [],
+    bulkActions: [],
+    bulkActionHandler: null,
   }),
 
   mounted() {
     this.crumbs = this.$refs.list.defaultCrumbs();
     this.actions = this.$refs.list.defaultActions();
+    this.bulkActions = this.$refs.list.defaultBulkActions();
+    this.bulkActionHandler = this.$refs.list.bulkActionHandler;
   },
 };
 </script>

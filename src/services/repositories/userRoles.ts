@@ -6,7 +6,7 @@ import {
     baseDelete,
     baseTableHeaders,
     baseListStub,
-    baseCreateStub, baseReadStub, baseUpdateStub, baseDeleteStub
+    baseCreateStub, baseReadStub, baseUpdateStub, baseDeleteStub, baseBulkStub
 } from '../base';
 
 interface UserRoleEntity {
@@ -102,11 +102,19 @@ export const userRoles: any = {
         return {
         };
     },
+    bulkActions: [
+        {
+            color: 'error',
+            icon: 'mdi-delete',
+            key: 'delete',
+            title: 'Delete'
+        },
+    ],
 
     list: baseListStub<IListResponse>(entity, {status:200,headers: new Headers(),items:StubList}),
     create: baseCreateStub<IItemResponse>(entity, {status:200,headers: new Headers(),item:StubRecord}),
     read: baseReadStub<IItemResponse>(entity, {status:200,headers: new Headers(),item:StubRecord}),
     update: baseUpdateStub<IItemResponse>(entity, {status:200,headers: new Headers(),item:StubRecord}),
     delete: baseDeleteStub<IItemResponse>(entity, StubList,{status:200,headers: new Headers(),item:StubRecord}),
-
+    bulk: baseBulkStub(entity, {status:200,headers: new Headers(),item:{}})
 };

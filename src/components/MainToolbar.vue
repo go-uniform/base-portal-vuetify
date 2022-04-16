@@ -57,27 +57,90 @@
             {{ format(action.title) }}
           </v-btn>
         </template>
-        </div>
+
+        <v-menu
+          offset-y
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="grey"
+              :disabled="!selected || selected.length === 0"
+              v-if="bulkActions && bulkActions.length > 0"
+              tile
+              v-bind="attrs"
+              v-on="on"
+            >
+              {{ format('Bulk') }}
+              <v-icon
+                right
+                dark
+              >
+                mdi-chevron-down
+              </v-icon>
+            </v-btn>
+          </template>
+          <v-list
+            dense
+          >
+            <v-list-item
+              v-for="(bulkAction, index) in bulkActions"
+              v-bind:key="index"
+            >
+              <v-btn
+                :color="bulkAction.color"
+                @click="bulk(bulkAction)"
+                block
+              >
+                <v-icon
+                  class="mr-2"
+                  v-if="bulkAction.icon"
+                >
+                  {{ bulkAction.icon }}
+                </v-icon>
+                {{ format(bulkAction.title) }}
+              </v-btn>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </div>
 
     </v-toolbar>
 
 </template>
 
 <script>
+import {bus} from '@/services/bus';
+
 export default {
   name: 'main-toolbar',
 
   props: {
     crumbs: Array,
     actions: Array,
+    bulkActions: Array,
+    bulkActionHandler: Function,
   },
+
+  data: () => ({
+    selected: [],
+  }),
 
   methods: {
     callback: (handler) => {
       if (handler) {
         handler();
       }
+    },
+
+    bulk(action) {
+      this.bulkActionHandler(action, this.selected)
     }
+  },
+
+  created() {
+    bus.subscribe('list.selected', (value) => {
+      this.selected = value;
+    });
   }
 }
 </script>

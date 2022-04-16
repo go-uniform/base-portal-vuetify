@@ -52,7 +52,7 @@ export const deleteConfirmation = (callback: any) => {
   });
 };
 
-export const confirmation = (callback: any, title: string, body: string, options: any) => {
+export const confirmation = (callback: any, title: string, body: string, options: any = {}) => {
   bus.publish('confirm', {
     callback: callback,
     title: title,
@@ -74,7 +74,7 @@ export const format = (text: string, ...args: any[]) => {
     key = `$vuetify.raw.${text}`;
   }
   const translated = instance.framework.lang.t(key);
-  if (translated !== key) {
+  if (translated !== key && !translated.startsWith('$vuetify.')) {
     text = translated;
   }
   if (args != null && args.length === 1 && args[0].isArray) {

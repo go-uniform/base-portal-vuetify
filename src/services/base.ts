@@ -253,7 +253,6 @@ export const baseUpdate = <T>(entity: string): IUpdatePromise<T> => {
 
 interface IDeletePromise<T> {
   (
-    entity: string,
     id: string,
   ): Promise<T>;
 }
@@ -265,6 +264,35 @@ export const baseDelete = <T>(entity: string): IDeletePromise<T> => {
     return new Promise<T>((resolve, reject) => {
       return fetch(`${baseUrl}/${entity}/${id}`, {
         method: 'DELETE',
+        headers: mergeHeaders({}),
+      }).then((response) => {
+        processStandardResponse(response, resolve, reject);
+      }).catch((reason) => {
+        reject(reason);
+      });
+    });
+  };
+};
+
+interface IBulkPromise<T> {
+  (
+    action: string,
+    ids: string[]
+  ): Promise<T>;
+}
+
+export const baseBulk = <T>(entity: string): IBulkPromise<T> => {
+  return (
+    action: string,
+    ids: string[]
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      return fetch(`${baseUrl}/${entity}/bulk`, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: action,
+          ids: ids,
+        }),
         headers: mergeHeaders({}),
       }).then((response) => {
         processStandardResponse(response, resolve, reject);
@@ -437,6 +465,18 @@ export const baseDeleteStub = <T>(entity: string, list: any[], response: T): IDe
     return new Promise<T>((resolve, reject) => {
       list.pop();
       console.log('delete', entity, id);
+      resolve(response);
+    });
+  };
+};
+
+export const baseBulkStub = <T>(entity: string, response: T): IBulkPromise<T> => {
+  return (
+    action: string,
+    ids: string[],
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      console.log('bulk', entity, action, ids);
       resolve(response);
     });
   };

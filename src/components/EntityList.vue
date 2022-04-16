@@ -17,10 +17,11 @@
     </v-btn>
 
     <v-data-table
-      :show-select="!disableSelection && !$vuetify.breakpoint.mobile"
+      :show-select="showSelect"
       :items="records"
       :headers="headers"
       mobile-breakpoint="sm"
+      v-model="selectedIds"
     >
       <template
         v-for="(column, index) in columns()"
@@ -234,8 +235,9 @@
 </style>
 
 <script>
-import {deleteConfirmation, format, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import {confirmation, deleteConfirmation, format, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 import {baseTableHeaders} from '../services/base';
+import {bus} from '../services/bus';
 
 export default {
   name: 'entity-list',
@@ -250,6 +252,25 @@ export default {
     records: [],
     headers: [],
   }),
+  computed: {
+    showSelect() {
+      const bulkActions = this.repository.bulkActions;
+      const hasBulkActions = bulkActions && bulkActions.length > 0;
+      return !this.disableSelection && !this.$vuetify.breakpoint.mobile && hasBulkActions;
+    },
+    selectedIds: {
+      // getter
+      get: function () {
+        return this.value;
+      },
+      // setter
+      set: function (newValue) {
+        this.value = newValue;
+        this.$emit('input', this.value);
+        bus.publish('list.selected', this.value);
+      }
+    }
+  },
   methods: {
     isLink(header) {
       const field = this.repository.fields[header.value];
@@ -349,15 +370,26 @@ export default {
           title: format('New'),
           location: `${this.repository.addPage}`,
         },
-        {
-          icon: 'mdi-chevron-down',
-          color: 'grey',
-          title: format('Bulk'),
-          callback: () => {
-            alert('bulk!');
-          },
-        }
       ];
+    },
+
+    defaultBulkActions() {
+      return this.repository.bulkActions;
+    },
+
+    bulkActionHandler(action, items) {
+      const ids = items.map((item) => {
+        return item.id;
+      });
+      confirmation((confirmed) => {
+        if (confirmed) {
+          this.repository.bulk(action.key, ids).then(() => {
+            this.load();
+          });
+        }
+      }, 'Are you sure?', format('You are about to {0} {1} record(s), are you sure you want to do this?', action.title.toLowerCase(), ids.length), {
+        color: action.color ?? 'info',
+      })
     }
   },
   mounted() {

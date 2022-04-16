@@ -11,6 +11,8 @@
       <main-toolbar
         :crumbs="crumbs"
         :actions="actions"
+        :bulk-actions="bulkActions"
+        :bulk-action-handler="bulkActionHandler"
       />
       <div
         class="pa-8"
@@ -61,6 +63,8 @@ export default Vue.extend({
   props: {
     crumbs: Array,
     actions: Array,
+    bulkActions: Array,
+    bulkActionHandler: Function,
   },
 
   methods: {
