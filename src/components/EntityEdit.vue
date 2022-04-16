@@ -10,7 +10,7 @@
       <v-expansion-panels
         accordion
         multiple
-        :value="[0]"
+        :value="panels"
         class="justify-start"
       >
         <v-col
@@ -28,7 +28,7 @@
             <v-expansion-panel-header
               color="primary white--text"
             >
-              {{ section.title }}
+              <strong>{{ section.title }}</strong>
             </v-expansion-panel-header>
             <v-expansion-panel-content
               class="pa-8 fill-height"
@@ -39,9 +39,10 @@
                 <v-row>
                   <slot
                     v-for="fieldKey in editableFields(section.fields)"
+                    :set="field = repository.fields[fieldKey]"
                     :name="fieldKey"
                     :fieldKey="fieldKey"
-                    :field="repository.fields[fieldKey]"
+                    :field="field"
                     :item="item"
                   >
                     <v-col
@@ -54,22 +55,37 @@
                       v-bind:key="fieldKey"
                     >
                       <div
-                        v-if="repository.fields[fieldKey].type === 'linkId'"
+                        v-if="field.type === 'linkId'"
                       >
                         <v-autocomplete
                           v-model="item[fieldKey]"
-                          :label="format(repository.fields[fieldKey].label)"
+                          :label="format(field.label)"
                           :items="linkItems[fieldKey]"
-                          :multiple="repository.fields[fieldKey].multiple"
+                          :multiple="field.multiple"
                           clearable
+                          :rules="[rules.required(field.optional)]"
                         ></v-autocomplete>
+                      </div>
+                      <div
+                        v-else-if="field.type === 'textarea'"
+                      >
+                        <v-textarea
+                          v-model="item[fieldKey]"
+                          :counter="field.length"
+                          :maxlength="field.length"
+                          :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternErrorMessage),rules.length(field.length)]"
+                        >
+                        </v-textarea>
                       </div>
                       <div
                         v-else
                       >
                         <v-text-field
                           v-model="item[fieldKey]"
-                          :label="format(repository.fields[fieldKey].label)"
+                          :label="format(field.label)"
+                          :counter="field.length"
+                          :maxlength="field.length"
+                          :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternErrorMessage),rules.length(field.length)]"
                         ></v-text-field>
                       </div>
                     </v-col>
@@ -136,9 +152,27 @@ export default {
     id: null,
   },
   data: () => ({
+    panels: [0],
     item: {
     },
     linkItems: {
+    },
+    rules: {
+      required: (optional) => {
+        return value => optional === true || !!value || 'May not be empty.';
+      },
+      pattern: (expression, message) => {
+        if (expression && message) {
+          return value => !value || expression.test(value) || message;
+        }
+        return () => true;
+      },
+      length: (max) => {
+        if (max) {
+          return value => !value || value.length <= max || format('May not be more than {0} characters long.', max);
+        }
+        return () => true;
+      }
     }
   }),
   methods: {
@@ -249,7 +283,7 @@ export default {
     },
 
     links(key, field) {
-      field.linkRepository.list('-createdAt').then((response) => {
+      field.linkRepository.list().then((response) => {
         this.linkItems[key] = response.items.map((item) => {
           return {
             value: item.id,

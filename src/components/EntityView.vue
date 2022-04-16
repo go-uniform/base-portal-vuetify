@@ -7,7 +7,7 @@
       <v-expansion-panels
         accordion
         multiple
-        :value="[0]"
+        :value="panels"
         class="justify-start"
       >
         <v-col
@@ -24,7 +24,7 @@
           <v-expansion-panel-header
             color="primary white--text"
           >
-            {{ section.title }}
+            <strong>{{ section.title }}</strong>
           </v-expansion-panel-header>
           <v-expansion-panel-content
             class="pa-8 fill-height"
@@ -169,6 +169,7 @@ export default {
     },
   },
   data: () => ({
+    panels: [0],
     item: {},
   }),
 

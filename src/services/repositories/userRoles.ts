@@ -106,6 +106,7 @@ export const userRoles: any = {
         description: {
             label: 'Description',
             type: 'textarea',
+            optional: true,
         },
         modifiedAt: {
             label: 'Modified At',
