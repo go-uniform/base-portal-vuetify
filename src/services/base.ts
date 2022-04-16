@@ -1,5 +1,6 @@
 import { bus } from './bus';
 import {auth} from './auth';
+import {toastError, toastSuccess} from '@/plugins/vuetify';
 
 interface IListResponse {
     status: number;
@@ -90,10 +91,7 @@ export const processStandardResponse = (
 
     if (response.status !== 200) {
         const message = response.headers.get('Message') ?? 'Something went wrong.';
-        bus.publish('toast.show', {
-            color: 'error',
-            message,
-        });
+        toastError(message);
 
         if (response.status === 401) {
             window.location.assign('/login');
@@ -118,10 +116,7 @@ export const processStandardResponse = (
 
         const message = response.headers.get('Message') ?? '';
         if (message !== '') {
-            bus.publish('toast.show', {
-                type: 'success',
-                message,
-            });
+            toastSuccess(message);
         }
         resolve(body);
 

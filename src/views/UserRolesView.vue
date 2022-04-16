@@ -6,6 +6,7 @@
   >
 
     <entity-view
+      ref="viewer"
       :repository="require('../services/repositories/userRoles').userRoles"
       :id="$route.params.id"
     >
@@ -19,7 +20,6 @@
 // @ is an alias to /src
 import EntityView from '../components/EntityView';
 import MainLayout from '../layouts/Main';
-import {format} from '../plugins/vuetify';
 
 export default {
   name: 'UserRolesView',
@@ -28,46 +28,14 @@ export default {
     EntityView,
   },
 
-  computed: {
-    crumbs: function() {
-      return [
-        {
-          icon: 'mdi-home',
-          title: format('Home'),
-          location: '/',
-        },
-        {
-          title: format('User Roles'),
-          location: '/user-roles'
-        },
-        {
-          title: format('View'),
-        },
-      ];
-    },
+  data: () => ({
+    crumbs: [],
+    actions: [],
+  }),
 
-    actions: function() {
-      return [
-        {
-          icon: 'mdi-delete',
-          color: 'error',
-          title: format('Delete'),
-          location: '/user-roles',
-        },
-        {
-          icon: 'mdi-pencil',
-          color: 'warning',
-          title: format('Edit'),
-          location: '/user-roles/edit/' + this.$route.params.id,
-        },
-        {
-          icon: 'mdi-view-list',
-          color: 'info',
-          title: format('List'),
-          location: `/user-roles`,
-        },
-      ];
-    },
+  mounted() {
+    this.crumbs = this.$refs.viewer.defaultCrumbs();
+    this.actions = this.$refs.viewer.defaultActions();
   },
 };
 </script>

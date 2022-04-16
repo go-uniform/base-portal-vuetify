@@ -44,6 +44,10 @@ const StubRecord: User = StubList[0];
 
 export const users: any = {
     entity: 'users',
+    title: {
+        singular: 'User',
+        plural: 'Users',
+    },
     defaultSortOrder: '-createdAt',
     listPage: '/users',
     viewPagePrefix: '/users/view',

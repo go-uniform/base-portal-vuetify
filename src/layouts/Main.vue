@@ -27,6 +27,7 @@
     <toast-bar/>
     <cookie-consent/>
     <connection-lost/>
+    <confirm-box/>
 
   </v-app>
 
@@ -48,10 +49,14 @@ import MainToolbar from '@/components/MainToolbar.vue';
 import {bus} from '@/services/bus';
 import CookieConsent from '@/components/CookieConsent.vue';
 import ConnectionLost from '@/components/ConnectionLost.vue';
+import ConfirmBox from '@/components/ConfirmBox.vue';
+import ToastBar from '@/components/ToastBar.vue';
+
+let globalShowScrollTopBtn = false;
 
 export default Vue.extend({
   name: 'main-layout',
-  components: {ConnectionLost, MainToolbar, MainHeader, MainFooter, MainMenu, CookieConsent},
+  components: {ToastBar, ConfirmBox, ConnectionLost, MainToolbar, MainHeader, MainFooter, MainMenu, CookieConsent},
 
   props: {
     crumbs: Array,
@@ -59,16 +64,16 @@ export default Vue.extend({
   },
 
   methods: {
-    onScroll(e) {
+    onScroll(e: { target: { scrollTop: any; }; }) {
       if (typeof window === 'undefined') {
         return;
       }
       const top = window.pageYOffset || e.target.scrollTop || 0;
       const showScrollTopBtn = top > 20;
 
-      if ((window.showScrollTopBtn && !showScrollTopBtn) || (!window.showScrollTopBtn && showScrollTopBtn)) {
-        window.showScrollTopBtn = showScrollTopBtn;
-        bus.publish('window.scrollTopBtn', showScrollTopBtn);
+      if ((globalShowScrollTopBtn && !showScrollTopBtn) || (!globalShowScrollTopBtn && showScrollTopBtn)) {
+        globalShowScrollTopBtn = showScrollTopBtn;
+        bus.publish('window.scrollTopBtn', globalShowScrollTopBtn);
       }
     }
   },

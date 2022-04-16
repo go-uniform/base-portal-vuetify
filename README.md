@@ -32,3 +32,9 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### Dependencies
+
+Vuetify 2.x
+vuetify-confirm-box (npm package)

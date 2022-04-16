@@ -3,6 +3,7 @@ import Vuetify from 'vuetify';
 import af from '@/locale/af';
 import en from '@/locale/en';
 import moment from 'moment';
+import {bus} from '@/services/bus';
 
 Vue.use(Vuetify);
 
@@ -15,6 +16,47 @@ const instance = new Vuetify({
     current: 'en',
   },
 });
+
+export const toastError = (text: string, ...args: any[]) => {
+  bus.publish('toast.show', {
+    type: 'error',
+    message: format(text, ...args),
+  });
+}
+
+export const toastSuccess = (text: string, ...args: any[]) => {
+  bus.publish('toast.show', {
+    type: 'success',
+    message: format(text, ...args),
+  });
+}
+
+export const toastCustom = (type: string, text: string, ...args: any[]) => {
+  bus.publish('toast.show', {
+    type: type,
+    message: format(text, ...args),
+  });
+}
+
+export const deleteConfirmation = (callback: any) => {
+  bus.publish('confirm', {
+    callback: callback,
+    title: 'Are you sure?',
+    body: 'Are you sure you wish to delete the selected record?',
+    options: {
+      color: 'error'
+    },
+  });
+};
+
+export const confirmation = (callback: any, title: string, body: string, options: any) => {
+  bus.publish('confirm', {
+    callback: callback,
+    title: title,
+    body: body,
+    options: options,
+  });
+};
 
 // __ is shorthand for format string function
 export const format = (text: string, ...args: any[]) => {

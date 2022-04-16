@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import {formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import {deleteConfirmation, format, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 
 export default {
   name: 'entity-view',
@@ -136,6 +136,7 @@ export default {
   data: () => ({
     item: {},
   }),
+
   methods: {
     labelName(key) {
       return `label.${key}`;
@@ -162,15 +163,65 @@ export default {
       this.$router.push(`${this.repository.editPagePrefix}/${item.id}`);
     },
     remove(item) {
-      // todo: show confirmation box
-      this.repository.delete(item.id).then(() => {
-        this.$router.push(`${this.repository.listPage}`);
+      deleteConfirmation((confirmed) => {
+        if (confirmed) {
+          this.repository.delete(item.id).then(() => {
+            this.$router.push(`${this.repository.listPage}`);
+          });
+        }
       });
     },
     list() {
       this.$router.push(`${this.repository.listPage}`);
+    },
+
+    defaultCrumbs() {
+      return [
+        {
+          icon: 'mdi-home',
+          title: format('Home'),
+          location: '/',
+        },
+        {
+          title: format(this.repository.title.plural),
+          location: this.repository.listPage,
+        },
+        {
+          title: format('View'),
+        },
+      ];
+    },
+
+    defaultActions() {
+      return [
+        {
+          icon: 'mdi-delete',
+          color: 'error',
+          title: format('Delete'),
+          callback: () => {
+            this.remove(this.item);
+          }
+        },
+        {
+          icon: 'mdi-pencil',
+          color: 'warning',
+          title: format('Edit'),
+          callback: () => {
+            this.edit(this.item);
+          }
+        },
+        {
+          icon: 'mdi-view-list',
+          color: 'info',
+          title: format('List'),
+          callback: () => {
+            this.list();
+          }
+        },
+      ];
     }
   },
+
   mounted() {
     this.repository.read(this.id).then((response) => {
       this.item = response.item;

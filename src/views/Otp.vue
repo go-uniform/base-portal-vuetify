@@ -64,7 +64,7 @@
 <script>
 import {auth} from '../services/auth';
 import {bus} from '../services/bus';
-import {format} from '../plugins/vuetify';
+import {format, toastError} from '../plugins/vuetify';
 import EmptyLayout from '../layouts/Empty';
 
 export default {
@@ -113,10 +113,7 @@ export default {
       if (this.$refs.otp.validate()) {
         switch (this.type.toLowerCase()) {
           default:
-            bus.publish('toast.show', {
-              type: 'error',
-              message: format('custom.errors.unknownOtpType', [this.type]),
-            });
+            toastError('custom.errors.unknownOtpType', this.type);
             break;
           case 'auth':
             this.otpAuth();

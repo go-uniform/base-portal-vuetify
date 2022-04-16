@@ -15,10 +15,11 @@
         <template v-slot:item="{ item }">
 
           <v-breadcrumbs-item
-            :to="item.location"
+            :to="item.location ? item.location : (item.callback ? '#' : null)"
             class="text-subtitle-2 crumb-item"
             :disabled="item.disabled"
             exact
+            @click="callback(item.callback)"
           >
             <v-icon
               v-if="item.icon"
@@ -42,6 +43,7 @@
           :to="action.location"
           tile
           :class="action.class"
+          @click="callback(action.callback)"
         >
           <v-icon
             v-if="action.icon"
@@ -65,5 +67,13 @@ export default {
     crumbs: Array,
     actions: Array,
   },
+
+  methods: {
+    callback: (handler) => {
+      if (handler) {
+        handler();
+      }
+    }
+  }
 }
 </script>

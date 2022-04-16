@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import {formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import {deleteConfirmation, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 import {baseTableHeaders} from '../services/base';
 
 export default {
@@ -208,10 +208,13 @@ export default {
       })
     },
     remove(item) {
-      // todo: show confirmation box
-      this.repository.delete(item.id).then(() => {
-        this.load();
-      });
+      deleteConfirmation((confirmed) => {
+        if (confirmed) {
+          this.repository.delete(item.id).then(() => {
+            this.load();
+          });
+        }
+      })
     },
     edit(item) {
       this.$router.push(`${this.repository.editPagePrefix}/${item.id}`);
@@ -222,6 +225,6 @@ export default {
   },
   mounted() {
     this.load();
-  }
+  },
 };
 </script>
