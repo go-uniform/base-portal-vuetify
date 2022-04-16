@@ -131,8 +131,8 @@ export const users: any = {
   ],
   sections: [
     {
-      lg: 12,
-      md: 12,
+      cols: 12,
+      childMd: 6,
       title: 'General',
       fields: [
         'id',
@@ -143,6 +143,7 @@ export const users: any = {
       ],
     },
     {
+      cols: 12,
       lg: 6,
       title: 'Links',
       fields: [
@@ -150,7 +151,9 @@ export const users: any = {
       ],
     },
     {
+      cols: 12,
       lg: 6,
+      childMd: 6,
       title: 'Time Based',
       fields: [
         'modifiedAt',

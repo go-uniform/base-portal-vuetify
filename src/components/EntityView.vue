@@ -8,12 +8,15 @@
         accordion
         multiple
         :value="[0]"
+        class="justify-start"
       >
         <v-col
-          cols="12"
-          :lg="section.lg || 4"
-          :md="section.md || 6"
-          :sm="section.sm || 12"
+          :cols="section.cols || 12"
+          :xl="section.xl || section.lg || section.md || section.sm || section.xs || section.cols || 3"
+          :lg="section.lg || section.md || section.sm || section.xs || section.cols || 4"
+          :md="section.md || section.sm || section.xs || section.cols || 6"
+          :sm="section.sm || section.xs || section.cols || 12"
+          :xs="section.xs || section.cols || 12"
           v-for="(section,i) in repository.sections"
           :key="i"
         >
@@ -29,6 +32,7 @@
             <slot
               :name="'section-'+ kebabCase(section.title)"
             >
+              <v-row>
               <slot
                 v-for="fieldKey in section.fields"
                 :name="fieldKey"
@@ -36,12 +40,17 @@
                 :field="repository.fields[fieldKey]"
                 :item="item"
               >
-                <div
-                  class="mt-4"
+                <v-col
+                  :cols="section.childCols || 12"
+                  :xl="section.childXl || section.childLg || section.childMd || section.childSm || section.childXs || section.childCols || 12"
+                  :lg="section.childLg || section.childMd || section.childSm || section.childXs || section.childCols || 12"
+                  :md="section.childMd || section.childSm || section.childXs || section.childCols || 12"
+                  :sm="section.childSm || section.childXs || section.childCols || 12"
+                  :xs="section.childXs || section.childCols || 12"
                   v-bind:key="fieldKey"
                 >
                   <div>
-                  <strong>{{ repository.fields[fieldKey].label }}</strong>
+                    <strong>{{ repository.fields[fieldKey].label }}</strong>
                   </div>
                   <div
                     v-if="repository.fields[fieldKey].type === 'linkId'"
@@ -57,8 +66,9 @@
                   >
                     {{ doFormat(fieldKey, repository.fields[fieldKey], item) }}
                   </div>
-                </div>
+                </v-col>
               </slot>
+              </v-row>
             </slot>
           </v-expansion-panel-content>
         </v-expansion-panel>
