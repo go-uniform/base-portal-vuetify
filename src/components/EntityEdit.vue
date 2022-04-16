@@ -4,67 +4,124 @@
     ref="form"
     class="pa-8"
   >
-    <v-container>
-      <v-row
-        v-for="(field, key) in fields"
-        :key="key"
+    <v-row
+      class="mb-2"
+    >
+      <v-expansion-panels
+        accordion
+        multiple
+        :value="[0]"
+        class="justify-start"
       >
-        <v-autocomplete
-          v-if="field.type === 'linkId'"
-          v-model="item[key]"
-          :label="format(field.label)"
-          :items="linkItems[key]"
-          :multiple="field.multiple"
-          clearable
-        ></v-autocomplete>
-        <v-text-field
-          v-else
-          v-model="item[key]"
-          :label="format(field.label)"
-        ></v-text-field>
-      </v-row>
-      <v-row>
         <v-col
-          cols="12"
-          md="6"
-          class="pa-0 pa-md-4"
+          :cols="section.cols || 12"
+          :xl="section.xl || section.lg || section.md || section.sm || section.xs || section.cols || 3"
+          :lg="section.lg || section.md || section.sm || section.xs || section.cols || 4"
+          :md="section.md || section.sm || section.xs || section.cols || 6"
+          :sm="section.sm || section.xs || section.cols || 12"
+          :xs="section.xs || section.cols || 12"
+          v-for="(section,i) in editableSections(repository.sections)"
+          :key="i"
         >
-          <v-btn
-            class="ma-2"
-            color="success"
-            @click="save"
-            large
-            block
+          <v-expansion-panel
           >
-            <v-icon
-              class="mr-2"
+            <v-expansion-panel-header
+              color="primary white--text"
             >
-              mdi-content-save
-            </v-icon>
-            {{ format('Save') }}
-          </v-btn>
+              {{ section.title }}
+            </v-expansion-panel-header>
+            <v-expansion-panel-content
+              class="pa-8 fill-height"
+            >
+              <slot
+                :name="'section-'+ kebabCase(section.title)"
+              >
+                <v-row>
+                  <slot
+                    v-for="fieldKey in editableFields(section.fields)"
+                    :name="fieldKey"
+                    :fieldKey="fieldKey"
+                    :field="repository.fields[fieldKey]"
+                    :item="item"
+                  >
+                    <v-col
+                      :cols="section.childCols || 12"
+                      :xl="section.childXl || section.childLg || section.childMd || section.childSm || section.childXs || section.childCols || 12"
+                      :lg="section.childLg || section.childMd || section.childSm || section.childXs || section.childCols || 12"
+                      :md="section.childMd || section.childSm || section.childXs || section.childCols || 12"
+                      :sm="section.childSm || section.childXs || section.childCols || 12"
+                      :xs="section.childXs || section.childCols || 12"
+                      v-bind:key="fieldKey"
+                    >
+                      <div
+                        v-if="repository.fields[fieldKey].type === 'linkId'"
+                      >
+                        <v-autocomplete
+                          v-model="item[fieldKey]"
+                          :label="format(repository.fields[fieldKey].label)"
+                          :items="linkItems[fieldKey]"
+                          :multiple="repository.fields[fieldKey].multiple"
+                          clearable
+                        ></v-autocomplete>
+                      </div>
+                      <div
+                        v-else
+                      >
+                        <v-text-field
+                          v-model="item[fieldKey]"
+                          :label="format(repository.fields[fieldKey].label)"
+                        ></v-text-field>
+                      </div>
+                    </v-col>
+                  </slot>
+                </v-row>
+              </slot>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
         </v-col>
-        <v-col
-          cols="12"
-          md="6"
-          class="pa-0 pa-md-4"
+      </v-expansion-panels>
+    </v-row>
+    <v-row>
+      <v-col
+        cols="12"
+        md="6"
+        class="pa-0 pa-md-4"
+      >
+        <v-btn
+          class="ma-2"
+          color="success"
+          @click="save"
+          large
+          block
         >
-          <v-btn
-            class="ma-2 grey white--text"
-            @click="cancel"
-            large
-            block
+          <v-icon
+            class="mr-2"
           >
-            <v-icon
-              class="mr-2"
-            >
-              mdi-close-circle
-            </v-icon>
-            {{ format('Cancel') }}
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
+            mdi-content-save
+          </v-icon>
+          {{ format('Save') }}
+        </v-btn>
+      </v-col>
+      <v-col
+        cols="12"
+        md="6"
+        class="pa-0 pa-md-4"
+      >
+        <v-btn
+          class="ma-2 grey white--text"
+          @click="cancel"
+          large
+          block
+        >
+          <v-icon
+            class="mr-2"
+          >
+            mdi-close-circle
+          </v-icon>
+          {{ format('Cancel') }}
+        </v-btn>
+      </v-col>
+    </v-row>
   </v-form>
 
 </template>
@@ -78,31 +135,6 @@ export default {
     repository: null,
     id: null,
   },
-  computed: {
-    fields() {
-      if (!this.repository) {
-        return {};
-      }
-
-      let response = {};
-      Object.keys(this.repository.fields).map((key, index) => {
-        const field = this.repository.fields[key];
-        if (['linkLabel'].includes(field.type)) {
-          return;
-        }
-        if (field.readonly) {
-          return;
-        }
-        response[key] = this.repository.fields[key];
-
-        if (field.type === 'linkId') {
-          this.links(key, field);
-        }
-      });
-
-      return response;
-    },
-  },
   data: () => ({
     item: {
     },
@@ -110,8 +142,31 @@ export default {
     }
   }),
   methods: {
+    editableSections(sections) {
+      return sections.filter((section) => {
+        return this.editableFields(section.fields).length > 0;
+      });
+    },
+    editableFields(fieldKeys) {
+      return fieldKeys.filter((fieldKey) => {
+        const field = this.repository.fields[fieldKey];
+        return !field.readonly;
+      });
+    },
+    linkedFields() {
+      return Object.keys(this.repository.fields).filter((key) => {
+        const field = this.repository.fields[key];
+        return field.type === 'linkId';
+      });
+    },
     save() {
       if (this.$refs.form.validate()) {
+        Object.keys(this.item).forEach((key) => {
+          const field = this.repository.fields[key];
+          if (!field || field.readonly) {
+            delete(this.item[key]);
+          }
+        });
         if (this.$route.params.id) {
           this.repository.update(this.$route.params.id, this.item).then(() => {
             this.$router.push(`${this.repository.viewPagePrefix}/${this.$route.params.id}`);
@@ -216,8 +271,15 @@ export default {
           ...response.item
         };
         this.$forceUpdate();
+        this.linkedFields().forEach((key) => {
+          this.links(key, this.repository.fields[key]);
+        });
       }).catch(() => {
         this.$router.push(`${this.repository.listPage}`);
+      });
+    } else {
+      this.linkedFields().forEach((key) => {
+        this.links(key, this.repository.fields[key]);
       });
     }
   }

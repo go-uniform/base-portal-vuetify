@@ -97,6 +97,7 @@ export const users: any = {
       label: 'User Role',
       type: 'linkLabel',
       linkIdField: 'userRoleId',
+      readonly: true,
     },
     modifiedAt: {
       label: 'Modified At',
