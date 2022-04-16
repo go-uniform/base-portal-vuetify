@@ -134,10 +134,18 @@ export const users: any = {
         return {
         };
     },
+    bulkActions: [
+        {
+            title: 'Delete'
+        }
+    ],
 
     list: baseListStub<IListResponse>(entity, {status:200,headers: new Headers(),items:StubList}),
     create: baseCreateStub<IItemResponse>(entity, {status:200,headers: new Headers(),item:StubRecord}),
     read: baseReadStub<IItemResponse>(entity, {status:200,headers: new Headers(),item:StubRecord}),
     update: baseUpdateStub<IItemResponse>(entity, {status:200,headers: new Headers(),item:StubRecord}),
     delete: baseDeleteStub<IItemResponse>(entity, StubList,{status:200,headers: new Headers(),item:StubRecord}),
+    bulk: () => {
+        alert('bulk');
+    }
 };

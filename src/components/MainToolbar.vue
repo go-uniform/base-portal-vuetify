@@ -34,26 +34,30 @@
 
       </v-breadcrumbs>
       <v-spacer/>
-      <template
-        v-for="(action, index) in actions"
+      <div
+        v-if="!$vuetify.breakpoint.mobile"
       >
-        <v-btn
-          v-bind:key="index"
-          :color="action.color"
-          :to="action.location"
-          tile
-          :class="action.class"
-          @click="callback(action.callback)"
+        <template
+          v-for="(action, index) in actions"
         >
-          <v-icon
-            v-if="action.icon"
-            class="mr-2"
+          <v-btn
+            v-bind:key="index"
+            :color="action.color"
+            :to="action.location"
+            tile
+            :class="action.class"
+            @click="callback(action.callback)"
           >
-            {{ action.icon }}
-          </v-icon>
-          {{ format(action.title) }}
-        </v-btn>
-      </template>
+            <v-icon
+              v-if="action.icon"
+              class="mr-2"
+            >
+              {{ action.icon }}
+            </v-icon>
+            {{ format(action.title) }}
+          </v-btn>
+        </template>
+        </div>
 
     </v-toolbar>
 

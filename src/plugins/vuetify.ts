@@ -8,6 +8,9 @@ import {bus} from '@/services/bus';
 Vue.use(Vuetify);
 
 const instance = new Vuetify({
+  breakpoint: {
+    mobileBreakpoint: "sm"
+  },
   theme: {
     dark: true,
   },

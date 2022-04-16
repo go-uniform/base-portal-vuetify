@@ -22,7 +22,9 @@
       </v-row>
       <v-row>
         <v-col
-          cols="6"
+          cols="12"
+          md="6"
+          class="pa-0 pa-md-4"
         >
           <v-btn
             class="ma-2"
@@ -40,7 +42,9 @@
           </v-btn>
         </v-col>
         <v-col
-          cols="6"
+          cols="12"
+          md="6"
+          class="pa-0 pa-md-4"
         >
           <v-btn
             class="ma-2 grey white--text"

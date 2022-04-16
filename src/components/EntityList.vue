@@ -1,9 +1,26 @@
 <template>
 
   <div>
+    <v-btn
+      class="mb-8 hidden-md-and-up"
+      color="success"
+      :to="this.repository.addPage"
+      block
+      large
+    >
+      <v-icon
+        class="mr-2"
+      >
+        mdi-plus-box
+      </v-icon>
+      {{ format('New') }}
+    </v-btn>
+
     <v-data-table
+      :show-select="!disableSelection && !$vuetify.breakpoint.mobile"
       :items="records"
       :headers="headers"
+      mobile-breakpoint="sm"
     >
       <template
         v-for="(column, index) in columns()"
@@ -39,6 +56,7 @@
           v-else-if="column === 'item.actions'"
         >
           <div
+            v-if="!$vuetify.breakpoint.mobile"
             :key="index"
           >
             <slot
@@ -74,6 +92,8 @@
                         class="ma-2"
                         color="error"
                         @click="remove(item)"
+                        :block="$vuetify.breakpoint.mobile"
+                        :large="$vuetify.breakpoint.mobile"
                       >
                         <v-icon
                           class="mr-2"
@@ -91,6 +111,8 @@
                         class="ma-2"
                         color="warning"
                         @click="edit(item)"
+                        :block="$vuetify.breakpoint.mobile"
+                        :large="$vuetify.breakpoint.mobile"
                       >
                         <v-icon
                           class="mr-2"
@@ -108,6 +130,8 @@
                         class="ma-2"
                         color="info"
                         @click="view(item)"
+                        :block="$vuetify.breakpoint.mobile"
+                        :large="$vuetify.breakpoint.mobile"
                       >
                         <v-icon
                           class="mr-2"
@@ -122,12 +146,92 @@
               </v-menu>
             </slot>
           </div>
+          <div
+            v-else
+            :key="index"
+            class="pr-4"
+            >
+            <slot
+              name="actions"
+              :item="item"
+            >
+            </slot>
+            <slot
+              name="actions.delete"
+              :item="item"
+            >
+              <v-btn
+                class="ma-2"
+                color="error"
+                @click="remove(item)"
+                :block="$vuetify.breakpoint.mobile"
+                :large="$vuetify.breakpoint.mobile"
+              >
+                <v-icon
+                  class="mr-2"
+                >
+                  mdi-delete
+                </v-icon>
+                {{ format('Delete') }}
+              </v-btn>
+            </slot>
+            <slot
+              name="actions.edit"
+              :item="item"
+            >
+              <v-btn
+                class="ma-2"
+                color="warning"
+                @click="edit(item)"
+                :block="$vuetify.breakpoint.mobile"
+                :large="$vuetify.breakpoint.mobile"
+              >
+                <v-icon
+                  class="mr-2"
+                >
+                  mdi-pencil
+                </v-icon>
+                {{ format('Edit') }}
+              </v-btn>
+            </slot>
+            <slot
+              name="actions.view"
+              :item="item"
+            >
+              <v-btn
+                class="ma-2"
+                color="info"
+                @click="view(item)"
+                :block="$vuetify.breakpoint.mobile"
+                :large="$vuetify.breakpoint.mobile"
+              >
+                <v-icon
+                  class="mr-2"
+                >
+                  mdi-eye
+                </v-icon>
+                {{ format('View') }}
+              </v-btn>
+            </slot>
+          </div>
         </slot>
       </template>
     </v-data-table>
   </div>
 
 </template>
+
+<style lang="scss">
+.v-data-table__mobile-row {
+  flex-direction: column !important;
+  align-items: start !important;
+  margin-top: 20px !important;
+}
+.v-data-table__mobile-row__cell {
+  text-align: left !important;
+  width:100%;
+}
+</style>
 
 <script>
 import {deleteConfirmation, format, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
@@ -136,6 +240,7 @@ import {baseTableHeaders} from '../services/base';
 export default {
   name: 'entity-list',
   props: {
+    disableSelection: Boolean,
     repository: null,
     hideHeaders: [],
     prefixHeaders: [],
@@ -244,6 +349,14 @@ export default {
           title: format('New'),
           location: `${this.repository.addPage}`,
         },
+        {
+          icon: 'mdi-chevron-down',
+          color: 'grey',
+          title: format('Bulk'),
+          callback: () => {
+            alert('bulk!');
+          },
+        }
       ];
     }
   },

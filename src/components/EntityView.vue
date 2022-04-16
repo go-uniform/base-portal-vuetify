@@ -45,8 +45,9 @@
     <br>
     <v-row>
       <v-col
-        class="text-center"
-        cols="4"
+        cols="12"
+        md="4"
+        class="text-center pa-0 pa-md-4"
       >
         <v-btn
           class="ma-2"
@@ -64,8 +65,9 @@
         </v-btn>
       </v-col>
       <v-col
-        class="text-center"
-        cols="4"
+        cols="12"
+        md="4"
+        class="text-center pa-0 pa-md-4"
       >
         <v-btn
           class="ma-2"
@@ -83,8 +85,9 @@
         </v-btn>
       </v-col>
       <v-col
-        class="text-center"
-        cols="4"
+        cols="12"
+        md="4"
+        class="text-center pa-0 pa-md-4"
       >
         <v-btn
           class="ma-2"
