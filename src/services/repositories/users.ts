@@ -53,6 +53,8 @@ export const users: any = {
     addPage: '/users/add',
     viewPagePrefix: '/users/view',
     editPagePrefix: '/users/edit',
+    default: {
+    },
     fields: {
         id: {
             label: 'Id',

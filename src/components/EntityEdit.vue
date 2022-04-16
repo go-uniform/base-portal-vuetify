@@ -1,6 +1,7 @@
 <template>
 
   <v-form
+    ref="form"
     class="pa-8"
   >
     <v-container>
@@ -96,12 +97,17 @@ export default {
   }),
   methods: {
     save() {
-      if (this.$route.params.id) {
-
-        this.$router.push(`${this.repository.viewPagePrefix}/${this.$route.params.id}`);
-        return;
+      if (this.$refs.form.validate()) {
+        if (this.$route.params.id) {
+          this.repository.update(this.$route.params.id, this.item).then(() => {
+            this.$router.push(`${this.repository.viewPagePrefix}/${this.$route.params.id}`);
+          });
+          return;
+        }
+        this.repository.create(this.item).then((response) => {
+          this.$router.push(`${this.repository.viewPagePrefix}/${response.id}`);
+        });
       }
-      this.$router.push(`${this.repository.listPage}`);
     },
 
     cancel() {
@@ -159,7 +165,9 @@ export default {
           icon: 'mdi-content-save',
           color: 'success',
           title: format('Save'),
-          location: cancelUrl,
+          callback: () => {
+            this.save();
+          }
         },
         {
           icon: 'mdi-close-circle',
@@ -171,11 +179,12 @@ export default {
       ];
     }
   },
+
   mounted() {
-    // todo: prepare form fields with default values
+    this.item = this.repository.default;
     if (this.id) {
       this.repository.read(this.id).then((response) => {
-        this.item = response.item;
+        this.item = Object.assign(this.repository.default, response.item);
       }).catch(() => {
         this.$router.push(`${this.repository.listPage}`);
       });

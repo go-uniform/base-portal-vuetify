@@ -57,6 +57,8 @@ export const userRoles: any = {
     addPage: '/user-roles/add',
     viewPagePrefix: '/user-roles/view',
     editPagePrefix: '/user-roles/edit',
+    default: {
+    },
     fields: {
         name: {
             label: 'Name',
