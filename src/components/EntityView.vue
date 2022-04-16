@@ -22,7 +22,7 @@
         >
         <v-expansion-panel>
           <v-expansion-panel-header
-            color="primary"
+            color="primary white--text"
           >
             {{ section.title }}
           </v-expansion-panel-header>
