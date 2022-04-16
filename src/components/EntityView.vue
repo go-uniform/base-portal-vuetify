@@ -159,13 +159,13 @@ export default {
       }
       return value;
     },
-    edit(item) {
-      this.$router.push(`${this.repository.editPagePrefix}/${item.id}`);
+    edit() {
+      this.$router.push(`${this.repository.editPagePrefix}/${this.id}`);
     },
-    remove(item) {
+    remove() {
       deleteConfirmation((confirmed) => {
         if (confirmed) {
-          this.repository.delete(item.id).then(() => {
+          this.repository.delete(this.id).then(() => {
             this.$router.push(`${this.repository.listPage}`);
           });
         }

@@ -50,6 +50,7 @@ export const users: any = {
     },
     defaultSortOrder: '-createdAt',
     listPage: '/users',
+    addPage: '/users/add',
     viewPagePrefix: '/users/view',
     editPagePrefix: '/users/edit',
     fields: {
@@ -129,6 +130,7 @@ export const users: any = {
       pageSize = 50,
     ): Promise<IListResponse> => {
         return new Promise<IListResponse>((resolve, reject) => {
+            alert(`list users`);
             resolve({
                 status: 200,
                 headers: new Headers(),
@@ -152,6 +154,7 @@ export const users: any = {
       document: User,
     ): Promise<IItemResponse> => {
         return new Promise<IItemResponse>((resolve, reject) => {
+            alert(`create user`);
             resolve({
                 status: 200,
                 headers: new Headers(),
@@ -175,6 +178,7 @@ export const users: any = {
       id: string,
     ): Promise<IItemResponse> => {
         return new Promise<IItemResponse>((resolve, reject) => {
+            alert(`read user`);
             resolve({
                 status: 200,
                 headers: new Headers(),
@@ -199,6 +203,7 @@ export const users: any = {
       document: User,
     ): Promise<IItemResponse> => {
         return new Promise<IItemResponse>((resolve, reject) => {
+            alert(`update user`);
             resolve({
                 status: 200,
                 headers: new Headers(),
@@ -222,6 +227,7 @@ export const users: any = {
       id: string,
     ): Promise<IItemResponse> => {
         return new Promise<IItemResponse>((resolve, reject) => {
+            alert(`delete user`);
             StubList.pop();
 
             resolve({

@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import {deleteConfirmation, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import {deleteConfirmation, format, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 import {baseTableHeaders} from '../services/base';
 
 export default {
@@ -221,6 +221,30 @@ export default {
     },
     view(item) {
       this.$router.push(`${this.repository.viewPagePrefix}/${item.id}`);
+    },
+
+    defaultCrumbs() {
+      return [
+        {
+          icon: 'mdi-home',
+          title: format('Home'),
+          location: '/',
+        },
+        {
+          title: format(this.repository.title.plural),
+        },
+      ];
+    },
+
+    defaultActions() {
+      return [
+        {
+          icon: 'mdi-plus-box',
+          color: 'success',
+          title: format('New'),
+          location: `${this.repository.addPage}`,
+        },
+      ];
     }
   },
   mounted() {

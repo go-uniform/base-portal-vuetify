@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import {format} from '../plugins/vuetify';
+
 export default {
   name: 'entity-edit',
   props: {
@@ -101,12 +103,72 @@ export default {
       }
       this.$router.push(`${this.repository.listPage}`);
     },
+
     cancel() {
       if (this.$route.params.id) {
         this.$router.push(`${this.repository.viewPagePrefix}/${this.$route.params.id}`);
         return;
       }
       this.$router.push(`${this.repository.listPage}`);
+    },
+
+    defaultCrumbs() {
+      if (this.$route.params.id) {
+        return [
+          {
+            icon: 'mdi-home',
+            title: format('Home'),
+            location: '/',
+          },
+          {
+            title: format(this.repository.title.plural),
+            location: this.repository.listPage,
+          },
+          {
+            title: format('View'),
+            location: `${this.repository.viewPagePrefix}/${this.$route.params.id}`,
+          },
+          {
+            title: format('Edit'),
+          },
+        ];
+      }
+      return [
+        {
+          icon: 'mdi-home',
+          title: format('Home'),
+          location: '/',
+        },
+        {
+          title: format(this.repository.title.plural),
+          location: this.repository.listPage,
+        },
+        {
+          title: format('New'),
+        },
+      ];
+    },
+
+    defaultActions() {
+      let cancelUrl = this.repository.listPage;
+      if (this.$route.params.id) {
+        cancelUrl = `${this.repository.viewPagePrefix}/${this.$route.params.id}`;
+      }
+      return [
+        {
+          icon: 'mdi-content-save',
+          color: 'success',
+          title: format('Save'),
+          location: cancelUrl,
+        },
+        {
+          icon: 'mdi-close-circle',
+          class: 'white--text',
+          color: 'grey',
+          title: format('Cancel'),
+          location: cancelUrl,
+        },
+      ];
     }
   },
   mounted() {

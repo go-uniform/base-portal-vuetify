@@ -6,6 +6,7 @@
   >
 
     <entity-list
+      ref="list"
       :repository="require('../services/repositories/userRoles').userRoles"
     >
     </entity-list>
@@ -27,25 +28,13 @@ export default {
   },
 
   data: () => ({
-    crumbs: [
-      {
-        icon: 'mdi-home',
-        title: 'Home',
-        location: '/',
-      },
-      {
-        title: 'User Roles',
-      },
-    ],
-
-    actions: [
-      {
-        icon: 'mdi-plus-box',
-        color: 'success',
-        title: 'New',
-        location: '/user-roles/add',
-      },
-    ],
+    crumbs: [],
+    actions: [],
   }),
+
+  mounted() {
+    this.crumbs = this.$refs.list.defaultCrumbs();
+    this.actions = this.$refs.list.defaultActions();
+  },
 };
 </script>

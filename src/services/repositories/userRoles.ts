@@ -54,6 +54,7 @@ export const userRoles: any = {
     },
     defaultSortOrder: '-createdAt',
     listPage: '/user-roles',
+    addPage: '/user-roles/add',
     viewPagePrefix: '/user-roles/view',
     editPagePrefix: '/user-roles/edit',
     fields: {
@@ -97,6 +98,7 @@ export const userRoles: any = {
       pageSize = 50,
     ): Promise<IListResponse> => {
         return new Promise<IListResponse>((resolve, reject) => {
+            alert(`list user roles`);
             resolve({
                 status: 200,
                 headers: new Headers(),
@@ -120,6 +122,7 @@ export const userRoles: any = {
       document: UserRole,
     ): Promise<IItemResponse> => {
         return new Promise<IItemResponse>((resolve, reject) => {
+            alert(`create user role`);
             resolve({
                 status: 200,
                 headers: new Headers(),
@@ -143,6 +146,7 @@ export const userRoles: any = {
       id: string,
     ): Promise<IItemResponse> => {
         return new Promise<IItemResponse>((resolve, reject) => {
+            alert(`read user role`);
             resolve({
                 status: 200,
                 headers: new Headers(),
@@ -167,6 +171,7 @@ export const userRoles: any = {
       document: UserRole,
     ): Promise<IItemResponse> => {
         return new Promise<IItemResponse>((resolve, reject) => {
+            alert(`update user role`);
             resolve({
                 status: 200,
                 headers: new Headers(),
@@ -190,6 +195,7 @@ export const userRoles: any = {
       id: string,
     ): Promise<IItemResponse> => {
         return new Promise<IItemResponse>((resolve, reject) => {
+            alert(`delete user role`);
             StubList.pop();
 
             resolve({

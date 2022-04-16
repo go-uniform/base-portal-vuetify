@@ -6,6 +6,7 @@
   >
 
     <entity-edit
+      ref="editor"
       :repository="require('../services/repositories/users').users"
       :id="$route.params.id"
     >
@@ -19,7 +20,6 @@
 // @ is an alias to /src
 import EntityEdit from '../components/EntityEdit';
 import MainLayout from '../layouts/Main';
-import {format} from '../plugins/vuetify';
 
 export default {
   name: 'UsersEdit',
@@ -28,65 +28,14 @@ export default {
     EntityEdit,
   },
 
-  computed: {
-    crumbs: function() {
-      if (this.$route.params.id) {
-        return [
-          {
-            icon: 'mdi-home',
-            title: format('Home'),
-            location: '/',
-          },
-          {
-            title: format('Users'),
-            location: '/users'
-          },
-          {
-            title: format('View'),
-            location: '/users/view/'+ this.$route.params.id,
-          },
-          {
-            title: format('Edit'),
-          },
-        ];
-      }
-      return [
-        {
-          icon: 'mdi-home',
-          title: format('Home'),
-          location: '/',
-        },
-        {
-          title: format('Users'),
-          location: '/users'
-        },
-        {
-          title: format('New'),
-        },
-      ];
-    },
+  data: () => ({
+    crumbs: [],
+    actions: [],
+  }),
 
-    actions: function() {
-      let cancelUrl = '/users';
-      if (this.$route.params.id) {
-        cancelUrl = '/users/view/'+ this.$route.params.id;
-      }
-      return [
-        {
-          icon: 'mdi-content-save',
-          color: 'success',
-          title: format('Save'),
-          location: cancelUrl,
-        },
-        {
-          icon: 'mdi-close-circle',
-          class: 'white--text',
-          color: 'grey',
-          title: format('Cancel'),
-          location: cancelUrl,
-        },
-      ];
-    },
+  mounted() {
+    this.crumbs = this.$refs.editor.defaultCrumbs();
+    this.actions = this.$refs.editor.defaultActions();
   },
 };
 </script>
