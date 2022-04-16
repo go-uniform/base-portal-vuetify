@@ -16,6 +16,106 @@
       {{ format('New') }}
     </v-btn>
 
+    <slot
+      name="filters"
+      v-if="repository.filters && repository.filters.length > 0 || repository.freeTextSearch"
+    >
+      <v-expansion-panels
+        :value="0"
+        class="justify-start mb-8"
+      >
+        <v-expansion-panel>
+          <v-expansion-panel-header
+            color="primary white--text"
+          >
+            <strong>
+              {{ format('Filters') }}
+            </strong>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col
+                cols="12"
+              >
+                <v-text-field
+                  v-if="repository.freeTextSearch"
+                >
+                </v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+              >
+                <v-menu
+                  v-model="datePicker"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                >
+                  <template
+                    v-slot:activator="{ on, attrs }"
+                  >
+                    <v-text-field
+                      :value="dates.join(' - ')"
+                      label="Created At"
+                      readonly
+                      clearable
+                      filled
+                      v-bind="attrs"
+                      v-on="on"
+                      @click:clear="dates = null"
+                    >
+                    </v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="dates"
+                    range
+                  >
+                  </v-date-picker>
+                </v-menu>
+              </v-col>
+              <v-col
+                cols="12"
+              >
+                <v-divider></v-divider>
+              </v-col>
+              <v-col
+                cols="6"
+                class="text-left"
+              >
+                <v-btn
+                  color="orange white--text"
+                  tile
+                  @click="reset"
+                >
+                  <v-icon>
+                    mdi-close-thick
+                  </v-icon>
+                  {{ format('Reset') }}
+                </v-btn>
+              </v-col>
+              <v-col
+                cols="6"
+                class="text-right"
+              >
+                <v-btn
+                  color="success"
+                  tile
+                  @click="search"
+                >
+                  <v-icon>
+                    mdi-magnify
+                  </v-icon>
+                  {{ format('Search') }}
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </slot>
+
     <v-data-table
       :show-select="showSelect"
       :items="records"
@@ -251,6 +351,8 @@ export default {
   data: () => ({
     records: [],
     headers: [],
+    datePicker: false,
+    dates: [],
   }),
   computed: {
     showSelect() {
@@ -272,6 +374,14 @@ export default {
     }
   },
   methods: {
+    reset() {
+      // todo: reset filters
+      alert('reset!');
+    },
+    search() {
+      // todo: search filters
+      alert('search!');
+    },
     isLink(header) {
       const field = this.repository.fields[header.value];
       if (!field) {

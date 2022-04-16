@@ -81,6 +81,7 @@ const StubRecord: UserRole = StubList[0];
 const entity = 'userRoles';
 
 export const userRoles: any = {
+    freeTextSearch: true,
     entity: entity,
     title: {
         singular: 'User Role',
@@ -117,6 +118,7 @@ export const userRoles: any = {
             label: 'Created At',
             type: 'datetime',
             readonly: true,
+            filterable: true,
         },
     },
     headers: [
@@ -146,10 +148,6 @@ export const userRoles: any = {
             ],
         },
     ],
-    filters: (): any => {
-        return {
-        };
-    },
     bulkActions: [
         {
             color: 'error',

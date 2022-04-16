@@ -10,6 +10,7 @@
     <entity-list
       ref="list"
       :repository="require('../services/repositories/users').users"
+      @filter="filter"
     >
     </entity-list>
 

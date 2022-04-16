@@ -101,7 +101,7 @@
       <v-col
         cols="12"
         md="6"
-        class="pa-0 pa-md-4"
+        class="text-center pa-0 pa-md-4 pr-4"
       >
         <v-btn
           class="ma-2"
@@ -121,7 +121,7 @@
       <v-col
         cols="12"
         md="6"
-        class="pa-0 pa-md-4"
+        class="text-center pa-0 pa-md-4 pr-4"
       >
         <v-btn
           class="ma-2 grey white--text"

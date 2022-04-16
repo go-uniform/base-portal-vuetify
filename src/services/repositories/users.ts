@@ -164,9 +164,6 @@ export const users: any = {
       ],
     }
   ],
-  filters: (): any => {
-    return {};
-  },
   bulkActions: [
     {
       color: 'error',
