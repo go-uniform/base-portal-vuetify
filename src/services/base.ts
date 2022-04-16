@@ -1,86 +1,86 @@
-import { bus } from './bus';
+import {bus} from './bus';
 import {auth} from './auth';
 import {toastError, toastSuccess} from '@/plugins/vuetify';
 
 interface IListResponse {
-    status: number;
-    headers: Headers;
-    items: any[];
+  status: number;
+  headers: Headers;
+  items: any[];
 }
 
 interface IItemResponse {
-    status: number;
-    headers: Headers;
-    item: any;
+  status: number;
+  headers: Headers;
+  item: any;
 }
 
 let baseUrl = '/api';
 
 export const getBaseUrl = (): string => {
-    return baseUrl;
+  return baseUrl;
 };
 
 export const setBaseUrl = (
   url: string,
 ): void => {
-    baseUrl = url.replace(/\/+$/, ''); // rtrim('/')
-    baseUrl = baseUrl.replace(/\\+$/, ''); // rtrim('\')
+  baseUrl = url.replace(/\/+$/, ''); // rtrim('/')
+  baseUrl = baseUrl.replace(/\\+$/, ''); // rtrim('\')
 };
 
 export const compileListQueryParameters = (
   order: string,
   filters: any,
 ): string => {
-    const parts = [];
+  const parts = [];
 
-    if (order) {
-        parts.push(`-order=${encodeURI(order)}`);
-    }
+  if (order) {
+    parts.push(`-order=${encodeURI(order)}`);
+  }
 
-    if (filters != null) {
-        Object.keys(filters).forEach((k) => {
-            parts.push(`${k}=${filters[k]}`);
-        });
-    }
+  if (filters != null) {
+    Object.keys(filters).forEach((k) => {
+      parts.push(`${k}=${filters[k]}`);
+    });
+  }
 
-    if (parts.length <= 0) {
-        return '';
-    }
+  if (parts.length <= 0) {
+    return '';
+  }
 
-    return `?${parts.join('&')}`;
+  return `?${parts.join('&')}`;
 };
 
 export const mergeHeaders = (
   headers: any,
 ): Headers => {
-    const response = new Headers();
+  const response = new Headers();
 
-    let hasContentType = false;
-    let hasAuthorization = false;
+  let hasContentType = false;
+  let hasAuthorization = false;
 
-    if (headers != null) {
-        Object.keys(headers).forEach((k) => {
-            if (k.toLowerCase() === 'content-type') {
-                hasContentType = true;
-            }
-            if (k.toLowerCase() === 'authorization') {
-                hasAuthorization = true;
-            }
-            response.append(k, headers[k]);
-        });
+  if (headers != null) {
+    Object.keys(headers).forEach((k) => {
+      if (k.toLowerCase() === 'content-type') {
+        hasContentType = true;
+      }
+      if (k.toLowerCase() === 'authorization') {
+        hasAuthorization = true;
+      }
+      response.append(k, headers[k]);
+    });
+  }
+
+  if (!hasContentType) {
+    response.append('Content-Type', 'application/json');
+  }
+  if (!hasAuthorization) {
+    const token = auth.getToken();
+    if (token !== null && token !== '') {
+      response.append('Authorization', `Bearer ${token}`);
     }
+  }
 
-    if (!hasContentType) {
-        response.append('Content-Type', 'application/json');
-    }
-    if (!hasAuthorization) {
-        const token = auth.getToken();
-        if (token !== null && token !== '') {
-            response.append('Authorization', `Bearer ${token}`);
-        }
-    }
-
-    return response;
+  return response;
 };
 
 export const processStandardResponse = (
@@ -89,175 +89,199 @@ export const processStandardResponse = (
   reject: any,
 ): void => {
 
-    if (response.status !== 200) {
-        const message = response.headers.get('Message') ?? 'Something went wrong.';
-        toastError(message);
+  if (response.status !== 200) {
+    const message = response.headers.get('Message') ?? 'Something went wrong.';
+    toastError(message);
 
-        if (response.status === 401) {
-            window.location.assign('/login');
-            return;
-        }
-
-        if (response.status === 400) {
-            response.json().then((body) => {
-
-                bus.publish('validation.errors', body);
-                reject(message);
-
-            });
-            return;
-        }
-
-        reject(message);
-        return;
+    if (response.status === 401) {
+      window.location.assign('/login');
+      return;
     }
 
-    response.json().then((body) => {
+    if (response.status === 400) {
+      response.json().then((body) => {
 
-        const message = response.headers.get('Message') ?? '';
-        if (message !== '') {
-            toastSuccess(message);
-        }
-        resolve(body);
+        bus.publish('validation.errors', body);
+        reject(message);
 
-    });
+      });
+      return;
+    }
+
+    reject(message);
+    return;
+  }
+
+  response.json().then((body) => {
+
+    const message = response.headers.get('Message') ?? '';
+    if (message !== '') {
+      toastSuccess(message);
+    }
+    resolve(body);
+
+  });
 
 };
 
 export const baseTableHeaders = (repository: any): any[] => {
-    const response: any[] = [];
-    repository.headers.forEach((header: any) => {
-        if (!header.label && header.field) {
-            header.label = repository.fields[header.field].label;
-        }
-        response.push({
-            text: header.label ?? 'Unknown',
-            align: header.align ?? 'start',
-            sortable: header.sortable ?? (!!header.field),
-            value: header.field,
-        });
+  const response: any[] = [];
+  repository.headers.forEach((header: any) => {
+    if (!header.label && header.field) {
+      header.label = repository.fields[header.field].label;
+    }
+    response.push({
+      text: header.label ?? 'Unknown',
+      align: header.align ?? 'start',
+      sortable: header.sortable ?? (!!header.field),
+      value: header.field,
     });
-    return response;
+  });
+  return response;
 };
 
-export const baseList = (
-  entity: string,
-  order: string,
-  filters: any = {},
-  pageIndex = 1,
-  pageSize = 50,
-): Promise<IListResponse> => {
-    return new Promise<IListResponse>((resolve, reject) => {
-        fetch(`${baseUrl}/${entity}${compileListQueryParameters(order, filters)}`, {
+interface IListPromise<T> {
+  (
+    entity: string,
+    order: string,
+    filters: any,
+    pageIndex: number,
+    pageSize: number,
+  ): Promise<T>;
+}
 
-            method: 'GET',
-            headers: mergeHeaders({
-                'Page-Size': pageSize,
-                'Page-Index': pageIndex,
-            }),
+export const baseList = <T>(): IListPromise<T> => {
+  return (
+    entity: string,
+    order: string,
+    filters: any = {},
+    pageIndex = 1,
+    pageSize = 50,
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      fetch(`${baseUrl}/${entity}${compileListQueryParameters(order, filters)}`, {
 
-        }).then((response) => {
+        method: 'GET',
+        headers: mergeHeaders({
+          'Page-Size': pageSize,
+          'Page-Index': pageIndex,
+        }),
 
-            processStandardResponse(response, resolve, reject);
+      }).then((response) => {
 
-        }).catch((reason) => {
+        processStandardResponse(response, resolve, reject);
 
-            reject(reason);
+      }).catch((reason) => {
 
-        });
+        reject(reason);
+
+      });
     });
+  };
 };
 
-export const baseCreate = (
-  entity: string,
-  document: any,
-): Promise<IItemResponse> => {
-    return new Promise<IItemResponse>((resolve, reject) => {
+interface ICreatePromise<T> {
+  (
+    entity: string,
+    document: any,
+  ): Promise<T>;
+}
 
-        return fetch(`${baseUrl}/${entity}`, {
-
-            method: 'POST',
-            body: JSON.stringify(document),
-            headers: mergeHeaders({}),
-
-        }).then((response) => {
-
-            processStandardResponse(response, resolve, reject);
-
-        }).catch((reason) => {
-
-            reject(reason);
-
-        });
+export const baseCreate = <T>(): ICreatePromise<T> => {
+  return (
+    entity: string,
+    document: any,
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      return fetch(`${baseUrl}/${entity}`, {
+        method: 'POST',
+        body: JSON.stringify(document),
+        headers: mergeHeaders({}),
+      }).then((response) => {
+        processStandardResponse(response, resolve, reject);
+      }).catch((reason) => {
+        reject(reason);
+      });
     });
+  };
 };
 
-export const baseRead = (
-  entity: string,
-  id: string,
-): Promise<IItemResponse> => {
-    return new Promise<IItemResponse>((resolve, reject) => {
-        return fetch(`${baseUrl}/${entity}/${id}`, {
+interface IReadPromise<T> {
+  (
+    entity: string,
+    id: string,
+  ): Promise<T>;
+}
 
-            method: 'GET',
-            headers: mergeHeaders({}),
-
-        }).then((response) => {
-
-            processStandardResponse(response, resolve, reject);
-
-        }).catch((reason) => {
-
-            reject(reason);
-
-        });
+export const baseRead = <T>(): IReadPromise<T> => {
+  return (
+    entity: string,
+    id: string,
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      return fetch(`${baseUrl}/${entity}/${id}`, {
+        method: 'GET',
+        headers: mergeHeaders({}),
+      }).then((response) => {
+        processStandardResponse(response, resolve, reject);
+      }).catch((reason) => {
+        reject(reason);
+      });
     });
+  };
 };
 
-export const baseUpdate = (
-  entity: string,
-  id: string,
-  document: any,
-): Promise<IItemResponse> => {
-    return new Promise<IItemResponse>((resolve, reject) => {
-        return fetch(`${baseUrl}/${entity}/${id}`, {
+interface IUpdatePromise<T> {
+  (
+    entity: string,
+    id: string,
+    document: any,
+  ): Promise<T>;
+}
 
-            method: 'PUT',
-            body: JSON.stringify(document),
-            headers: mergeHeaders({}),
-
-        }).then((response) => {
-
-            processStandardResponse(response, resolve, reject);
-
-        }).catch((reason) => {
-
-            reject(reason);
-
-        });
+export const baseUpdate = <T>(): IUpdatePromise<T> => {
+  return (
+    entity: string,
+    id: string,
+    document: any,
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      return fetch(`${baseUrl}/${entity}/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(document),
+        headers: mergeHeaders({}),
+      }).then((response) => {
+        processStandardResponse(response, resolve, reject);
+      }).catch((reason) => {
+        reject(reason);
+      });
     });
+  };
 };
 
-export const baseDelete = (
-  entity: string,
-  id: string,
-): Promise<IItemResponse> => {
-    return new Promise<IItemResponse>((resolve, reject) => {
-        return fetch(`${baseUrl}/${entity}/${id}`, {
+interface IDeletePromise<T> {
+  (
+    entity: string,
+    id: string,
+  ): Promise<T>;
+}
 
-            method: 'DELETE',
-            headers: mergeHeaders({}),
-
-        }).then((response) => {
-
-            processStandardResponse(response, resolve, reject);
-
-        }).catch((reason) => {
-
-            reject(reason);
-
-        });
+export const baseDelete = <T>(): IDeletePromise<T> => {
+  return (
+    entity: string,
+    id: string,
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      return fetch(`${baseUrl}/${entity}/${id}`, {
+        method: 'DELETE',
+        headers: mergeHeaders({}),
+      }).then((response) => {
+        processStandardResponse(response, resolve, reject);
+      }).catch((reason) => {
+        reject(reason);
+      });
     });
+  };
 };
 
 // a custom against executed on an entity list level and returns a list response
@@ -267,23 +291,23 @@ export const baseEntityActionListResponse = (
   payload: any = {},
   headers: any = {},
 ): Promise<IListResponse> => {
-    return new Promise<IListResponse>((resolve, reject) => {
-        return fetch(`${baseUrl}/${entity}/actions/${action}`, {
+  return new Promise<IListResponse>((resolve, reject) => {
+    return fetch(`${baseUrl}/${entity}/actions/${action}`, {
 
-            method: 'POST',
-            body: JSON.stringify(payload),
-            headers: mergeHeaders(headers),
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: mergeHeaders(headers),
 
-        }).then((response) => {
+    }).then((response) => {
 
-            processStandardResponse(response, resolve, reject);
+      processStandardResponse(response, resolve, reject);
 
-        }).catch((reason) => {
+    }).catch((reason) => {
 
-            reject(reason);
+      reject(reason);
 
-        });
     });
+  });
 };
 
 // a custom against executed on an entity list level and returns a single item response
@@ -293,23 +317,23 @@ export const baseEntityActionItemResponse = (
   payload: any = {},
   headers: any = {},
 ): Promise<IItemResponse> => {
-    return new Promise<IItemResponse>((resolve, reject) => {
-        return fetch(`${baseUrl}/${entity}/actions/${action}`, {
+  return new Promise<IItemResponse>((resolve, reject) => {
+    return fetch(`${baseUrl}/${entity}/actions/${action}`, {
 
-            method: 'POST',
-            body: JSON.stringify(payload),
-            headers: mergeHeaders(headers),
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: mergeHeaders(headers),
 
-        }).then((response) => {
+    }).then((response) => {
 
-            processStandardResponse(response, resolve, reject);
+      processStandardResponse(response, resolve, reject);
 
-        }).catch((reason) => {
+    }).catch((reason) => {
 
-            reject(reason);
+      reject(reason);
 
-        });
     });
+  });
 };
 
 // a custom against executed against a single entity record level and returns a list response
@@ -320,23 +344,23 @@ export const baseRecordActionListResponse = (
   payload: any = {},
   headers: any = {},
 ): Promise<IListResponse> => {
-    return new Promise<IListResponse>((resolve, reject) => {
-        return fetch(`${baseUrl}/${entity}/${id}/actions/${action}`, {
+  return new Promise<IListResponse>((resolve, reject) => {
+    return fetch(`${baseUrl}/${entity}/${id}/actions/${action}`, {
 
-            method: 'POST',
-            body: JSON.stringify(payload),
-            headers: mergeHeaders(headers),
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: mergeHeaders(headers),
 
-        }).then((response) => {
+    }).then((response) => {
 
-            processStandardResponse(response, resolve, reject);
+      processStandardResponse(response, resolve, reject);
 
-        }).catch((reason) => {
+    }).catch((reason) => {
 
-            reject(reason);
+      reject(reason);
 
-        });
     });
+  });
 };
 
 // a custom against executed on an entity list level and returns a single item response
@@ -347,21 +371,87 @@ export const baseRecordActionItemResponse = (
   payload: any = {},
   headers: any = {},
 ): Promise<IItemResponse> => {
-    return new Promise<IItemResponse>((resolve, reject) => {
-        return fetch(`${baseUrl}/${entity}/${id}/actions/${action}`, {
+  return new Promise<IItemResponse>((resolve, reject) => {
+    return fetch(`${baseUrl}/${entity}/${id}/actions/${action}`, {
 
-            method: 'POST',
-            body: JSON.stringify(payload),
-            headers: mergeHeaders(headers),
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: mergeHeaders(headers),
 
-        }).then((response) => {
+    }).then((response) => {
 
-            processStandardResponse(response, resolve, reject);
+      processStandardResponse(response, resolve, reject);
 
-        }).catch((reason) => {
+    }).catch((reason) => {
 
-            reject(reason);
+      reject(reason);
 
-        });
     });
+  });
+};
+
+
+export const baseListStub = <T>(response: T): IListPromise<T> => {
+  return (
+    entity: string,
+    order: string,
+    filters: any = {},
+    pageIndex = 1,
+    pageSize = 50,
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      alert(`list`);
+      resolve(response);
+    });
+  };
+};
+
+export const baseCreateStub = <T>(response: T): ICreatePromise<T> => {
+  return (
+    entity: string,
+    document: any,
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      alert(`create`);
+      resolve(response);
+    });
+  };
+};
+
+export const baseReadStub = <T>(response: T): IReadPromise<T> => {
+  return (
+    entity: string,
+    id: string,
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      alert(`read`);
+      resolve(response);
+    });
+  };
+};
+
+export const baseUpdateStub = <T>(response: T): IUpdatePromise<T> => {
+  return (
+    entity: string,
+    id: string,
+    document: any,
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      alert(`update`);
+      resolve(response);
+    });
+  };
+};
+
+export const baseDeleteStub = <T>(list: any[], response: T): IDeletePromise<T> => {
+  return (
+    entity: string,
+    id: string,
+  ): Promise<T> => {
+    return new Promise<T>((resolve, reject) => {
+      list.pop();
+      alert(`delete`);
+      resolve(response);
+    });
+  };
 };

@@ -1,4 +1,13 @@
-import {baseList, baseCreate, baseRead, baseUpdate, baseDelete, baseTableHeaders} from '../base';
+import {
+    baseList,
+    baseCreate,
+    baseRead,
+    baseUpdate,
+    baseDelete,
+    baseTableHeaders,
+    baseListStub,
+    baseCreateStub, baseReadStub, baseUpdateStub, baseDeleteStub
+} from '../base';
 import {userRoles} from '@/services/repositories/userRoles';
 
 interface User {
@@ -125,130 +134,9 @@ export const users: any = {
         };
     },
 
-    list: (
-      order: string = users.defaultSortOrder,
-      filters: any = {},
-      pageIndex = 1,
-      pageSize = 50,
-    ): Promise<IListResponse> => {
-        return new Promise<IListResponse>((resolve, reject) => {
-            alert(`list users`);
-            resolve({
-                status: 200,
-                headers: new Headers(),
-                items: StubList,
-            });
-            return;
-
-            baseList(users.entity, order, filters, pageIndex, pageSize).then((response) => {
-                resolve({
-                    status: response.status,
-                    headers: response.headers,
-                    items: response.items,
-                });
-            }).catch((reason) => {
-                reject(reason);
-            });
-        });
-    },
-
-    create: (
-      document: User,
-    ): Promise<IItemResponse> => {
-        return new Promise<IItemResponse>((resolve, reject) => {
-            alert(`create user`);
-            resolve({
-                status: 200,
-                headers: new Headers(),
-                item: StubRecord,
-            });
-            return;
-
-            baseCreate(users.entity, document).then((response) => {
-                resolve({
-                    status: response.status,
-                    headers: response.headers,
-                    item: response.item,
-                });
-            }).catch((reason) => {
-                reject(reason);
-            });
-        });
-    },
-
-    read: (
-      id: string,
-    ): Promise<IItemResponse> => {
-        return new Promise<IItemResponse>((resolve, reject) => {
-            alert(`read user`);
-            resolve({
-                status: 200,
-                headers: new Headers(),
-                item: StubRecord,
-            });
-            return;
-
-            baseRead(users.entity, id).then((response) => {
-                resolve({
-                    status: response.status,
-                    headers: response.headers,
-                    item: response.item,
-                });
-            }).catch((reason) => {
-                reject(reason);
-            });
-        });
-    },
-
-    update: (
-      id: string,
-      document: User,
-    ): Promise<IItemResponse> => {
-        return new Promise<IItemResponse>((resolve, reject) => {
-            alert(`update user`);
-            resolve({
-                status: 200,
-                headers: new Headers(),
-                item: StubRecord,
-            });
-            return;
-
-            baseUpdate(users.entity, id, document).then((response) => {
-                resolve({
-                    status: response.status,
-                    headers: response.headers,
-                    item: response.item,
-                });
-            }).catch((reason) => {
-                reject(reason);
-            });
-        });
-    },
-
-    delete: (
-      id: string,
-    ): Promise<IItemResponse> => {
-        return new Promise<IItemResponse>((resolve, reject) => {
-            alert(`delete user`);
-            StubList.pop();
-
-            resolve({
-                status: 200,
-                headers: new Headers(),
-                item: StubRecord,
-            });
-            return;
-
-            baseDelete(users.entity, id).then((response) => {
-                resolve({
-                    status: response.status,
-                    headers: response.headers,
-                    item: response.item,
-                });
-            }).catch((reason) => {
-                reject(reason);
-            });
-        });
-    },
-
+    list: baseListStub<IListResponse>({status:200,headers: new Headers(),items:StubList}),
+    create: baseCreateStub<IItemResponse>({status:200,headers: new Headers(),item:StubRecord}),
+    read: baseReadStub<IItemResponse>({status:200,headers: new Headers(),item:StubRecord}),
+    update: baseUpdateStub<IItemResponse>({status:200,headers: new Headers(),item:StubRecord}),
+    delete: baseDeleteStub<IItemResponse>(StubList,{status:200,headers: new Headers(),item:StubRecord}),
 };

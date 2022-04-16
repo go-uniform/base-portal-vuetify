@@ -185,6 +185,7 @@ export default {
     if (this.id) {
       this.repository.read(this.id).then((response) => {
         this.item = Object.assign(this.repository.default, response.item);
+        this.$forceUpdate();
       }).catch(() => {
         this.$router.push(`${this.repository.listPage}`);
       });
