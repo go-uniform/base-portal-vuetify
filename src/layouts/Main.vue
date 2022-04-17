@@ -48,7 +48,7 @@ import MainFooter from '@/components/MainFooter.vue';
 import MainHeader from '@/components/MainHeader.vue';
 import MainMenu from '@/components/MainMenu.vue';
 import MainToolbar from '@/components/MainToolbar.vue';
-import {bus} from '@/services/bus';
+import {bus} from '@/services/base/bus';
 import CookieConsent from '@/components/CookieConsent.vue';
 import ConnectionLost from '@/components/ConnectionLost.vue';
 import ConfirmBox from '@/components/ConfirmBox.vue';

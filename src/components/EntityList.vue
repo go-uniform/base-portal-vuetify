@@ -130,15 +130,16 @@
 
         <slot
           v-if="isLink(header)"
+          :set="field = repository.fields[header.value]"
           :name="column"
           :item="item"
           :header="header"
         >
           <a
             :key="index"
-            :href="`${repository.fields[header.value].linkTargetPath}/${item.id}`"
+            :href="`${field.linkRepository.viewPagePrefix}/${item.id}`"
           >
-            {{ item[repository.fields[header.value].linkLabelField] }}
+            {{ item[field.linkLabelFieldKey] }}
           </a>
         </slot>
         <slot
@@ -336,8 +337,8 @@
 
 <script>
 import {confirmation, deleteConfirmation, format, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
-import {baseTableHeaders} from '../services/base';
-import {bus} from '../services/bus';
+import {baseTableHeaders} from '../services/base/base';
+import {bus} from '../services/base/bus';
 
 export default {
   name: 'entity-list',
@@ -391,17 +392,20 @@ export default {
     },
     doFormat(header, item) {
       let value = item[header.value];
-      const fieldType = this.repository.fields[header.value].type;
-      switch (fieldType) {
-        case "boolean":
-          value = formatBoolean(value);
-          break
-        case "date":
-          value = formatDate(value);
-          break
-        case "datetime":
-          value = formatDatetime(value);
-          break
+      const field = this.repository.fields[header.value];
+      if (field) {
+        const fieldType = field.type;
+        switch (fieldType) {
+          case "boolean":
+            value = formatBoolean(value);
+            break
+          case "date":
+            value = formatDate(value);
+            break
+          case "datetime":
+            value = formatDatetime(value);
+            break
+        }
       }
       return value;
     },

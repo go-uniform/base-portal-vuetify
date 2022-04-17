@@ -62,9 +62,8 @@
 </template>
 
 <script>
-import {auth} from '../services/auth';
-import {bus} from '../services/bus';
-import {format, toastError} from '../plugins/vuetify';
+import {auth} from '../services/base/auth';
+import {toastError} from '../plugins/vuetify';
 import EmptyLayout from '../layouts/Empty';
 
 export default {
@@ -98,7 +97,7 @@ export default {
       }
     },
     otpAuth() {
-      auth.otp(this.otpRequestId, this.otp).then((response) => {
+      auth.otp(this.otpRequestId, this.otp).then(() => {
         if (this.$route.query.redirect != null) {
           this.$router.push(this.$route.query.redirect.toString());
         } else {

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter, {Route, RouteConfig} from 'vue-router';
 import Home from '../views/Home.vue'
 import {NavigationGuard} from 'vue-router/types/router';
-import {auth} from '@/services/auth';
+import {auth} from '@/services/base/auth';
 import {crudRoutes} from '@/services/crud';
 
 Vue.use(VueRouter)

@@ -3,7 +3,7 @@ import Vuetify from 'vuetify';
 import af from '@/locale/af';
 import en from '@/locale/en';
 import moment from 'moment';
-import {bus} from '@/services/bus';
+import {bus} from '@/services/base/bus';
 
 Vue.use(Vuetify);
 

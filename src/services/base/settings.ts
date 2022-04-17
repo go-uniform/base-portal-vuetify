@@ -1,4 +1,4 @@
-let store: any | null = null;
+const store: any | null = null;
 
 export const settings = {
   store: () => {

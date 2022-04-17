@@ -15,9 +15,9 @@
       >
         <v-col
           :cols="section.cols || 12"
-          :xl="section.xl || section.lg || section.md || section.sm || section.xs || section.cols || 3"
-          :lg="section.lg || section.md || section.sm || section.xs || section.cols || 4"
-          :md="section.md || section.sm || section.xs || section.cols || 6"
+          :xl="section.xl || section.lg || section.md || section.sm || section.xs || section.cols || 12"
+          :lg="section.lg || section.md || section.sm || section.xs || section.cols || 12"
+          :md="section.md || section.sm || section.xs || section.cols || 12"
           :sm="section.sm || section.xs || section.cols || 12"
           :xs="section.xs || section.cols || 12"
           v-for="(section,i) in editableSections(repository.sections)"
@@ -38,7 +38,7 @@
               >
                 <v-row>
                   <slot
-                    v-for="fieldKey in editableFields(section.fields)"
+                    v-for="fieldKey in editableFields(section.fieldKeys)"
                     :set="field = repository.fields[fieldKey]"
                     :name="fieldKey"
                     :fieldKey="fieldKey"
@@ -73,7 +73,7 @@
                           v-model="item[fieldKey]"
                           :counter="field.length"
                           :maxlength="field.length"
-                          :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternErrorMessage),rules.length(field.length)]"
+                          :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
                         >
                         </v-textarea>
                       </div>
@@ -85,7 +85,7 @@
                           :label="format(field.label)"
                           :counter="field.length"
                           :maxlength="field.length"
-                          :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternErrorMessage),rules.length(field.length)]"
+                          :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
                         ></v-text-field>
                       </div>
                     </v-col>
@@ -178,7 +178,7 @@ export default {
   methods: {
     editableSections(sections) {
       return sections.filter((section) => {
-        return this.editableFields(section.fields).length > 0;
+        return this.editableFields(section.fieldKeys).length > 0;
       });
     },
     editableFields(fieldKeys) {

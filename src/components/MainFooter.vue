@@ -53,7 +53,7 @@
 
 <script>
 import goTo from 'vuetify/lib/services/goto'
-import {bus} from '@/services/bus';
+import {bus} from '@/services/base/bus';
 
 export default {
   name: 'main-footer',

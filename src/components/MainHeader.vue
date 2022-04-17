@@ -105,8 +105,8 @@
 </template>
 
 <script>
-import {bus} from '@/services/bus';
-import {auth} from '@/services/auth';
+import {bus} from '@/services/base/bus';
+import {auth} from '@/services/base/auth';
 
 export default {
   name: 'main-header',

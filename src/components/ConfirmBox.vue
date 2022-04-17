@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import {bus} from '@/services/bus';
+import {bus} from '@/services/base/bus';
 
 export default {
   name: 'confirm-box',

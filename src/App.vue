@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {bus} from '@/services/bus';
+import {bus} from '@/services/base/bus';
 
 let isConnected = true;
 

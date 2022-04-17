@@ -12,9 +12,9 @@
       >
         <v-col
           :cols="section.cols || 12"
-          :xl="section.xl || section.lg || section.md || section.sm || section.xs || section.cols || 3"
-          :lg="section.lg || section.md || section.sm || section.xs || section.cols || 4"
-          :md="section.md || section.sm || section.xs || section.cols || 6"
+          :xl="section.xl || section.lg || section.md || section.sm || section.xs || section.cols || 12"
+          :lg="section.lg || section.md || section.sm || section.xs || section.cols || 12"
+          :md="section.md || section.sm || section.xs || section.cols || 12"
           :sm="section.sm || section.xs || section.cols || 12"
           :xs="section.xs || section.cols || 12"
           v-for="(section,i) in repository.sections"
@@ -34,10 +34,11 @@
             >
               <v-row>
               <slot
-                v-for="fieldKey in section.fields"
+                v-for="fieldKey in section.fieldKeys"
+                :set="field = repository.fields[fieldKey]"
                 :name="fieldKey"
                 :fieldKey="fieldKey"
-                :field="repository.fields[fieldKey]"
+                :field="field"
                 :item="item"
               >
                 <v-col
@@ -50,21 +51,21 @@
                   v-bind:key="fieldKey"
                 >
                   <div>
-                    <strong>{{ repository.fields[fieldKey].label }}</strong>
+                    <strong>{{ field.label }}</strong>
                   </div>
                   <div
-                    v-if="repository.fields[fieldKey].type === 'linkId'"
+                    v-if="field.type === 'linkId'"
                   >
                     <a
-                      :href="`${repository.fields[fieldKey].linkTargetPath}/${item[fieldKey]}`"
+                      :href="`${field.linkRepository.viewPagePrefix}/${item[fieldKey]}`"
                     >
-                      {{ item[repository.fields[fieldKey].linkLabelField] }}
+                      {{ item[field.linkLabelFieldKey] }}
                     </a>
                   </div>
                   <div
                     v-else
                   >
-                    {{ doFormat(fieldKey, repository.fields[fieldKey], item) }}
+                    {{ doFormat(fieldKey, field, item) }}
                   </div>
                 </v-col>
               </slot>

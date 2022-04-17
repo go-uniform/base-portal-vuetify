@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import {bus} from '@/services/bus';
+import {bus} from '@/services/base/bus';
 import {mainMenuItems} from '@/services/menu';
 
 export default {

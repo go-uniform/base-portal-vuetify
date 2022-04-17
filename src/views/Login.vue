@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import {auth} from '@/services/auth';
+import {auth} from '@/services/base/auth';
 import EmptyLayout from '../layouts/Empty';
 
 export default {

@@ -1,39 +1,14 @@
-import {
-  baseList,
-  baseCreate,
-  baseRead,
-  baseUpdate,
-  baseDelete,
-  baseTableHeaders,
-  baseListStub,
-  baseCreateStub, baseReadStub, baseUpdateStub, baseDeleteStub, baseBulk, baseBulkStub
-} from '../base';
 import {userRoles} from '@/services/repositories/userRoles';
-
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  username: string;
-  email: string;
-  password: string;
-  userRoleId: string;
-  userRoleLabel: string;
-  modifiedAt: Date;
-  createdAt: Date;
-}
-
-interface IListResponse {
-  status: number;
-  headers: Headers;
-  items: User[];
-}
-
-interface IItemResponse {
-  status: number;
-  headers: Headers;
-  item: User;
-}
+import {IRepository} from '@/services/base/global.interfaces';
+import {EnumFieldType} from '@/services/base/global.enums';
+import {
+  baseBulkStub,
+  baseCreateStub,
+  baseDeleteStub,
+  baseListStub,
+  baseReadStub,
+  baseUpdateStub, stubScenario
+} from '@/services/base/stub';
 
 const StubList: User[] = [
   {
@@ -50,9 +25,23 @@ const StubList: User[] = [
   },
 ];
 const StubRecord: User = StubList[0];
+
+interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  password: string;
+  userRoleId: string;
+  userRoleLabel: string;
+  modifiedAt: Date;
+  createdAt: Date;
+}
+
 const entity = 'users';
 
-export const users: any = {
+export const users: IRepository<User> = {
   entity: entity,
   title: {
     singular: 'User',
@@ -67,116 +56,90 @@ export const users: any = {
   fields: {
     id: {
       label: 'Id',
-      type: 'uuid',
+      type: EnumFieldType.Uuid,
       readonly: true,
     },
     firstName: {
       label: 'First Name',
-      type: 'text',
+      type: EnumFieldType.Text,
     },
     lastName: {
       label: 'Last Name',
-      type: 'text',
+      type: EnumFieldType.Text,
     },
     username: {
       label: 'Username',
-      type: 'text',
+      type: EnumFieldType.Text,
     },
     email: {
       label: 'Email',
-      type: 'text',
+      type: EnumFieldType.Text,
       pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      patternErrorMessage: 'Must be a valid e-mail address.',
+      patternMessage: 'Must be a valid e-mail address.',
     },
     userRoleId: {
       label: 'User Role',
-      type: 'linkId',
-      linkLabelField: 'userRoleLabel',
+      type: EnumFieldType.LinkId,
+      linkLabelFieldKey: 'userRoleLabel',
       linkRepository: userRoles,
-      linkTargetPath: userRoles.viewPagePrefix,
     },
     userRoleLabel: {
       label: 'User Role',
-      type: 'linkLabel',
-      linkIdField: 'userRoleId',
+      type: EnumFieldType.LinkLabel,
+      linkIdFieldKey: 'userRoleId',
       readonly: true,
     },
     modifiedAt: {
       label: 'Modified At',
-      type: 'datetime',
+      type: EnumFieldType.DateTime,
       readonly: true,
     },
     createdAt: {
       label: 'Created At',
-      type: 'datetime',
+      type: EnumFieldType.DateTime,
       readonly: true,
     },
   },
   headers: [
     {
-      field: 'firstName',
+      fieldKey: 'firstName',
     },
     {
-      field: 'lastName',
+      fieldKey: 'lastName',
     },
     {
-      field: 'username',
+      fieldKey: 'username',
     },
     {
-      field: 'email',
+      fieldKey: 'email',
     },
     {
-      field: 'userRoleId',
+      fieldKey: 'userRoleId',
     },
     {
-      field: 'createdAt',
+      fieldKey: 'createdAt',
     },
   ],
   sections: [
     {
-      cols: 12,
-      childMd: 6,
       title: 'General',
-      fields: [
+      fieldKeys: [
         'id',
         'firstName',
         'lastName',
         'username',
         'email',
-      ],
-    },
-    {
-      cols: 12,
-      lg: 6,
-      title: 'Links',
-      fields: [
         'userRoleId',
-      ],
-    },
-    {
-      cols: 12,
-      lg: 6,
-      childMd: 6,
-      title: 'Time Based',
-      fields: [
         'modifiedAt',
         'createdAt',
-      ],
+      ]
     }
   ],
-  bulkActions: [
-    {
-      color: 'error',
-      icon: 'mdi-delete',
-      key: 'delete',
-      title: 'Delete'
-    },
-  ],
 
-  list: baseListStub<IListResponse>(entity, {status: 200, headers: new Headers(), items: StubList}),
-  create: baseCreateStub<IItemResponse>(entity, {status: 200, headers: new Headers(), item: StubRecord}),
-  read: baseReadStub<IItemResponse>(entity, {status: 200, headers: new Headers(), item: StubRecord}),
-  update: baseUpdateStub<IItemResponse>(entity, {status: 200, headers: new Headers(), item: StubRecord}),
-  delete: baseDeleteStub<IItemResponse>(entity, StubList, {status: 200, headers: new Headers(), item: StubRecord}),
-  bulk: baseBulkStub(entity, {status: 200, headers: new Headers(), item: {}})
+  list: baseListStub<User>(stubScenario(StubList), entity),
+  create: baseCreateStub<User>(stubScenario(StubRecord), entity),
+  read: baseReadStub<User>(stubScenario(StubRecord), entity),
+  update: baseUpdateStub<User>(stubScenario(StubRecord), entity),
+  delete: baseDeleteStub<User>(stubScenario(StubRecord), StubList, entity),
+  bulk: baseBulkStub(stubScenario(StubRecord), entity),
 };
