@@ -8,7 +8,7 @@ import {
   IReadPromise,
   IUpdatePromise
 } from './global.interfaces';
-import {processStandardItemResponse, processStandardListResponse} from '@/services/base/base';
+import {getBaseUrl, mergeHeaders, processStandardItemResponse, processStandardListResponse} from '@/services/base/base';
 import {generic} from '@/services/base/global.types';
 import {EnumHttpMethod} from '@/services/base/global.enums';
 
@@ -35,14 +35,36 @@ export const stubScenario = (body: any, status = 200, headers: Headers = new Hea
   };
 };
 
+const wrapperResolve = <T>(callbackResolve: any, resolve: any, reject: any) => {
+  return <T>(value: IItem<T>) => {
+    if (callbackResolve) {
+      if (!callbackResolve(value)) {
+        reject('failed callback');
+      }
+    }
+    resolve(value);
+  };
+};
+
+const wrapperReject = <T>(callbackReject: any, reject: any) => {
+  return <T>(reason?: any) => {
+    if (callbackReject) {
+      callbackReject(reason);
+    }
+    reject(reason);
+  };
+};
+
 export const baseRestItemStub = <T>(scenario: IStubScenario, callbackResolve: any, callbackReject: any, method: EnumHttpMethod, path: string, payload: generic = {}, headers = new Headers()): Promise<IItem<T>> => {
   return new Promise<IItem<T>>((resolve, reject) => {
     console.log('rest-item', method, path, payload, headers);
+    processStandardItemResponse<T>(scenario, wrapperResolve(callbackResolve, resolve, reject), wrapperReject(callbackReject, reject));
   });
 };
 export const baseRestListStub = <T>(scenario: IStubScenario, callbackResolve: any, callbackReject: any, method: EnumHttpMethod, path: string, payload: generic = {}, headers = new Headers()): Promise<IList<T>> => {
   return new Promise<IList<T>>((resolve, reject) => {
     console.log('rest-list', method, path, payload, headers);
+    processStandardItemResponse<T>(scenario, wrapperResolve(callbackResolve, resolve, reject), wrapperReject(callbackReject, reject));
   });
 };
 

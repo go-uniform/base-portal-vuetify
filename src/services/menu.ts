@@ -1,7 +1,8 @@
 import {users} from '@/services/repositories/users';
 import {userRoles} from '@/services/repositories/userRoles';
+import {IRepository} from '@/services/base/global.interfaces';
 
-const generateMenuItem = (repository: any): object => {
+const generateMenuItem = <T>(repository: IRepository<T>): object => {
   return {
     title: repository.title.plural,
     location: repository.listPage,

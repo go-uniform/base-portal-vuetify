@@ -68,7 +68,7 @@ export default Vue.extend({
   },
 
   methods: {
-    onScroll(e: { target: { scrollTop: any; }; }) {
+    onScroll(e: { target: { scrollTop: number; }; }) {
       if (typeof window === 'undefined') {
         return;
       }

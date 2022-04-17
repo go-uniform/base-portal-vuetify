@@ -7,7 +7,8 @@ import {
   baseDeleteStub,
   baseListStub,
   baseReadStub,
-  baseUpdateStub, stubScenario
+  baseUpdateStub,
+  stubScenario,
 } from '@/services/base/stub';
 
 const StubList: User[] = [

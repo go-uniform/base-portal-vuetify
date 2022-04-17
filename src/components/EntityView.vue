@@ -158,7 +158,7 @@ export default {
       }
 
       let response = {};
-      Object.keys(this.repository.fields).map((key, index) => {
+      Object.keys(this.repository.fields).map((key) => {
         const field = this.repository.fields[key];
         if (['linkLabel'].includes(field.type)) {
           return;

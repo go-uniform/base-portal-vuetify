@@ -96,11 +96,14 @@ export const auth: IAuthRepository =  {
         return baseRestItemStub<AuthTokenJwt>(stubScenario({
             token: 'e47b6d46-a0b6-446f-a520-86e5fc82b364',
             jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
-        }), () => {
+        }), (value: IItem<AuthTokenJwt>) => {
             if (pin !== '000000') {
                 toastError('custom.errors.incorrectOtpPin', []);
                 return false;
             }
+            authToken = value.item.token;
+            authJwt = value.item.jwt;
+            storeAuthDetails();
             return true;
         }, null, EnumHttpMethod.Post, 'auth/login/otp', {
             otpRequestId,

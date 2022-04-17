@@ -99,13 +99,13 @@ export default {
     login() {
       if (this.$refs.login.validate()) {
         auth.login('user', this.email, this.password).then((response) => {
-          if (response.token.twoFactor) {
+          if (response.item.twoFactor) {
             this.$router.push({
               path: "/otp",
               query: {
                 type: 'auth',
-                optRequestId: response.token.otpRequestId,
-                otp: response.token.otp,
+                optRequestId: response.item.otpRequestId,
+                otp: response.item.otp,
                 redirect: this.$route.query.redirect,
               }
             });
