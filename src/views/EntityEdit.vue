@@ -5,12 +5,12 @@
     :actions="actions"
   >
 
-    <entity-view
-      ref="viewer"
-      :repository="require('../services/repositories/userRoles').userRoles"
+    <entity-edit
+      ref="editor"
+      :repository="$route.meta.repository"
       :id="$route.params.id"
     >
-    </entity-view>
+    </entity-edit>
 
   </main-layout>
 
@@ -18,14 +18,14 @@
 
 <script>
 // @ is an alias to /src
-import EntityView from '../components/EntityView';
+import EntityEdit from '../components/EntityEdit';
 import MainLayout from '../layouts/Main';
 
 export default {
-  name: 'UserRolesView',
+  name: 'EntityEditPage',
   components: {
     MainLayout,
-    EntityView,
+    EntityEdit,
   },
 
   data: () => ({
@@ -34,8 +34,8 @@ export default {
   }),
 
   mounted() {
-    this.crumbs = this.$refs.viewer.defaultCrumbs();
-    this.actions = this.$refs.viewer.defaultActions();
+    this.crumbs = this.$refs.editor.defaultCrumbs();
+    this.actions = this.$refs.editor.defaultActions();
   },
 };
 </script>

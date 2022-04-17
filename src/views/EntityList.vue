@@ -9,8 +9,7 @@
 
     <entity-list
       ref="list"
-      :repository="require('../services/repositories/userRoles').userRoles"
-      @filter="filter"
+      :repository="$route.meta.repository"
     >
     </entity-list>
 
@@ -24,7 +23,7 @@ import EntityList from '../components/EntityList';
 import MainLayout from '../layouts/Main';
 
 export default {
-  name: 'UserRoles',
+  name: 'EntityListPage',
   components: {
     MainLayout,
     EntityList,

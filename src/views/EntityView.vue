@@ -7,7 +7,7 @@
 
     <entity-view
       ref="viewer"
-      :repository="require('../services/repositories/users').users"
+      :repository="$route.meta.repository"
       :id="$route.params.id"
     >
     </entity-view>
@@ -22,7 +22,7 @@ import EntityView from '../components/EntityView';
 import MainLayout from '../layouts/Main';
 
 export default {
-  name: 'UsersView',
+  name: 'EntityViewPage',
   components: {
     MainLayout,
     EntityView,

@@ -3,6 +3,7 @@ import VueRouter, {Route, RouteConfig} from 'vue-router';
 import Home from '../views/Home.vue'
 import {NavigationGuard} from 'vue-router/types/router';
 import {auth} from '@/services/auth';
+import {crudRoutes} from '@/services/crud';
 
 Vue.use(VueRouter)
 
@@ -48,46 +49,6 @@ const routes: Array<RouteConfig> = [
     }
   },
   {
-    path: '/users/view/:id',
-    name: 'users-view',
-    component: () => import('../views/UsersView.vue'),
-  },
-  {
-    path: '/users/edit/:id',
-    name: 'users-edit',
-    component: () => import('../views/UsersEdit.vue'),
-  },
-  {
-    path: '/users/add',
-    name: 'users-add',
-    component: () => import('../views/UsersEdit.vue'),
-  },
-  {
-    path: '/users',
-    name: 'users',
-    component: () => import('../views/Users.vue'),
-  },
-  {
-    path: '/user-roles',
-    name: 'users-roles',
-    component: () => import('../views/UserRoles.vue'),
-  },
-  {
-    path: '/user-roles/view/:id',
-    name: 'user-roles-view',
-    component: () => import('../views/UserRolesView.vue'),
-  },
-  {
-    path: '/user-roles/edit/:id',
-    name: 'user-roles-edit',
-    component: () => import('../views/UserRolesEdit.vue'),
-  },
-  {
-    path: '/user-roles/add',
-    name: 'user-roles-add',
-    component: () => import('../views/UserRolesEdit.vue'),
-  },
-  {
     path: '/policies/cookie',
     name: 'cookie-policy',
     component: () => import('../views/CookiePolicy.vue'),
@@ -95,15 +56,18 @@ const routes: Array<RouteConfig> = [
       public: true
     }
   },
-  {
-    path: '*',
-    name: 'not-found',
-    component: () => import('../views/NotFound.vue'),
-    meta: {
-      public: true
-    }
-  },
 ];
+
+routes.push(...crudRoutes)
+
+routes.push({
+  path: '*',
+  name: 'not-found',
+  component: () => import('../views/NotFound.vue'),
+  meta: {
+    public: true
+  }
+});
 
 const router = new VueRouter({
   mode: 'history',

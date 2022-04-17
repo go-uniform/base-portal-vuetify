@@ -80,6 +80,7 @@
 
 <script>
 import {bus} from '@/services/bus';
+import {mainMenuItems} from '@/services/menu';
 
 export default {
   name: 'main-menu',
@@ -87,29 +88,7 @@ export default {
   data: () => ({
     drawer: false,
     mini: false,
-    items: [
-      {
-        title: 'Home',
-        icon: 'mdi-home',
-        location: '/'
-      },
-      {
-        title: 'Users',
-        icon: 'mdi-account',
-        children: [
-          {
-            title: 'Users',
-            icon: '',
-            location: '/users',
-          },
-          {
-            title: 'User Roles',
-            icon: '',
-            location: '/user-roles',
-          },
-        ],
-      },
-    ],
+    items: mainMenuItems
   }),
 
   methods: {
