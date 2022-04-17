@@ -357,8 +357,11 @@ export default {
   }),
   computed: {
     showSelect() {
-      const bulkActions = this.repository.bulkActions;
-      const hasBulkActions = bulkActions && bulkActions.length > 0;
+      let hasBulkActions = false;
+      if (this.repository) {
+        const bulkActions = this.repository.bulkActions;
+        hasBulkActions = bulkActions && bulkActions.length > 0;
+      }
       return !this.disableSelection && !this.$vuetify.breakpoint.mobile && hasBulkActions;
     },
     selectedIds: {

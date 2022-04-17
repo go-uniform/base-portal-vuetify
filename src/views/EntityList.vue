@@ -8,6 +8,7 @@
   >
 
     <entity-list
+      :key="$route.path"
       ref="list"
       :repository="$route.meta.repository"
     >
