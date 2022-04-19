@@ -159,6 +159,19 @@ export interface ISection {
   childMd?: number;
   childSm?: number;
   childXs?: number;
+
+  getCols: () => number;
+  getXl: () => number;
+  getLg: () => number;
+  getMd: () => number;
+  getSm: () => number;
+  getXs: () => number;
+  getChildCols: () => number;
+  getChildXl: () => number;
+  getChildLg: () => number;
+  getChildMd: () => number;
+  getChildSm: () => number;
+  getChildXs: () => number;
 }
 
 export interface IBulkActionButton {
@@ -199,8 +212,11 @@ export interface IRepository<T> {
 
 export interface IAuthRepository {
   isAuthenticated(): boolean;
+
   getToken(): string | null;
+
   getJwt(): string | null;
+
   meta(): object;
 
   logout: ILogoutPromise;

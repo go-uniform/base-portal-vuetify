@@ -3,6 +3,7 @@
   <div
     class="fill-width"
   >
+
     <v-btn
       class="mb-8 hidden-md-and-up"
       color="success"
@@ -11,23 +12,28 @@
       large
       v-if="!this.repository.disableCreation"
     >
+
       <v-icon
         class="mr-2"
       >
         mdi-plus-box
       </v-icon>
       {{ translate('custom.entityList.buttonNew') }}
+
     </v-btn>
 
     <slot
       name="filters"
       v-if="repository.filters && repository.filters.length > 0 || repository.freeTextSearch"
     >
+
       <v-expansion-panels
         class="justify-start mb-8"
         v-model="filerPanelValue"
       >
+
         <v-expansion-panel>
+
           <v-expansion-panel-header
             color="primary white--text"
           >
@@ -38,6 +44,7 @@
             </strong>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
+
             <v-row
               class="pt-8 pb-0"
             >

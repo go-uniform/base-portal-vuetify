@@ -96,16 +96,26 @@ export const formatString = (text: string, ...args: any[]) => {
 };
 
 export const translate = (text: string, ...args: any[]) => {
-  let key = text;
+  if (!text) {
+    return text;
+  }
+  let key = null;
   if (text.startsWith('$vuetify.')) {
     key = `${text}`;
   } else if (text.startsWith('custom.')) {
     key = `$vuetify.${text}`;
-  } else if (text.startsWith('raw.')) {
-    key = `$vuetify.${text}`;
-  } else {
-    key = `$vuetify.raw.${text}`;
   }
+  if (key) {
+    const translated = instance.framework.lang.t(key, ...args);
+    if (translated !== key && !translated.startsWith('$vuetify.')) {
+      text = translated;
+    }
+  }
+  return text;
+};
+
+export const translateRaw = (text: string, ...args: any[]) => {
+  const key = `$vuetify.raw.${text}`;
   const translated = instance.framework.lang.t(key, ...args);
   if (translated !== key && !translated.startsWith('$vuetify.')) {
     text = translated;

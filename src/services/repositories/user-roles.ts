@@ -9,6 +9,7 @@ import {
 } from '@/services/base/stub';
 import {IRepository} from '@/services/base/global.interfaces';
 import {EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
+import {Section} from '@/services/base/global.classes.section';
 
 interface UserRole {
   id: string;
@@ -96,16 +97,13 @@ export const userRoles: IRepository<UserRole> = {
     },
   ],
   sections: [
-    {
-      title: 'General',
-      fieldKeys: [
-        'id',
-        'name',
-        'description',
-        'modifiedAt',
-        'createdAt',
-      ]
-    }
+    new Section('General', [
+      'id',
+      'name',
+      'description',
+      'modifiedAt',
+      'createdAt',
+    ]),
   ],
   bulkActions: [
     {

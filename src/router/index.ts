@@ -100,7 +100,9 @@ router.beforeEach(AuthGuard);
 const PageTitle: NavigationGuard = (to, from, next) => {
   let title = translate('custom.app.title');
   if (to.meta && to.meta.title) {
-    title = `${translate(to.meta.title)} | ${title}`;
+    if (!to.meta.repository) {
+      title = `${translate(to.meta.title)} | ${title}`;
+    }
   }
   document.title = title;
   next();

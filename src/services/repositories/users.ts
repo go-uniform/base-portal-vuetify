@@ -11,6 +11,7 @@ import {
   generateUuid,
   stubScenario,
 } from '@/services/base/stub';
+import {Section} from '@/services/base/global.classes.section';
 
 const StubList: User[] = [
   {
@@ -127,19 +128,16 @@ export const users: IRepository<User> = {
     },
   ],
   sections: [
-    {
-      title: 'General',
-      fieldKeys: [
-        'id',
-        'firstName',
-        'lastName',
-        'username',
-        'email',
-        'userRoleId',
-        'modifiedAt',
-        'createdAt',
-      ]
-    }
+    new Section('General', [
+      'id',
+      'firstName',
+      'lastName',
+      'username',
+      'email',
+      'userRoleId',
+      'modifiedAt',
+      'createdAt',
+    ]),
   ],
   bulkActions: [
     {
