@@ -17,22 +17,19 @@
       class="d-flex align-center"
     >
       <v-img
-        alt="Vuetify Logo"
-        class="shrink mr-2"
+        :alt="formatString('custom.app.smallLogoAlt')"
+        class="shrink"
         contain
-        src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+        :src="formatString('custom.app.smallLogoUrl')"
         transition="scale-transition"
-        width="40"
+        max-width="40"
       />
 
-      <v-img
-        alt="Vuetify Name"
-        class="shrink mt-1 hidden-sm-and-down"
-        contain
-        min-width="100"
-        src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-        width="100"
-      />
+      <strong
+        class="display-1 ml-4 hidden-sm-and-down"
+      >
+        {{ formatString('custom.app.headerTitle') }}
+      </strong>
     </div>
 
     <v-spacer></v-spacer>
@@ -68,7 +65,7 @@
             <v-icon>mdi-theme-light-dark</v-icon>
           </v-list-item-icon>
           <v-list-item-title>
-            {{ $vuetify.theme.dark ? formatString('Light Mode') : formatString('Dark Mode') }}
+            {{ $vuetify.theme.dark ? formatString('custom.app.lightMode') : formatString('custom.app.darkMode') }}
           </v-list-item-title>
         </v-list-item>
         <v-divider></v-divider>
@@ -95,7 +92,7 @@
           <v-list-item-icon>
             <v-icon>mdi-lock-open</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Log Out</v-list-item-title>
+          <v-list-item-title>{{ formatString('custom.app.logout') }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>

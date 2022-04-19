@@ -67,7 +67,6 @@
 
 <script>
 import EmptyLayout from '../layouts/Empty';
-import {formatString} from '../plugins/vuetify';
 
 export default {
   name: 'CookiePolicy',
@@ -78,11 +77,11 @@ export default {
     crumbs: [
       {
         icon: 'mdi-home',
-        title: formatString('Home'),
+        title: 'custom.home.pageTitle',
         location: '/',
       },
       {
-        title: 'Cookie Consent'
+        title: 'custom.cookieConsent.pageTitle',
       }
     ],
   }),

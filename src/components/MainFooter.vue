@@ -5,6 +5,7 @@
     class="text-center"
     fixed
   >
+    <language-selector/>
     <v-btn
       v-if="showScrollTopBtn"
       class="scroll-top"
@@ -54,10 +55,11 @@
 <script>
 import goTo from 'vuetify/lib/services/goto'
 import {bus} from '@/services/base/bus';
+import LanguageSelector from '@/components/LanguageSelector';
 
 export default {
   name: 'main-footer',
-
+  components: {LanguageSelector},
   data: () => ({
     showScrollTopBtn: false,
   }),

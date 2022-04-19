@@ -12,12 +12,13 @@
         <v-row
           class="py-8"
         >
-            <v-img
-              alt="Vuetify Name"
-              contain
-              src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-light.png"
-              height="100"
-            />
+          <v-img
+            :alt="formatString('custom.app.smallLogoAlt')"
+            contain
+            :src="formatString('custom.app.smallLogoUrl')"
+            transition="scale-transition"
+            max-height="100"
+          />
         </v-row>
         <v-row>
           <v-col

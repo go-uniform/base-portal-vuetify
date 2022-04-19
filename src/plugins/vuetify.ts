@@ -7,16 +7,37 @@ import {bus} from '@/services/base/bus';
 
 Vue.use(Vuetify);
 
+// remember to import these languages and add to Vuetify locales if you add more
+export const languages = [
+  {
+    value: 'en',
+    text: 'English',
+  },
+  {
+    value: 'af',
+    text: 'Afrikaans',
+  }
+];
+
+// set the language based on browser localStorage flag
+let currentLang = 'en';
+if (window && window.localStorage) {
+  const lang = window.localStorage.getItem('lang') ?? 'en';
+  if (languages.filter(language => language.value === lang).length > 0) {
+    currentLang = lang;
+  }
+}
+
 const instance = new Vuetify({
   breakpoint: {
-    mobileBreakpoint: "sm"
+    mobileBreakpoint: 'sm'
   },
   theme: {
     dark: true,
   },
   lang: {
-    locales: { en, af },
-    current: 'en',
+    locales: {en, af},
+    current: currentLang,
   },
 });
 
@@ -29,21 +50,21 @@ export const toastError = (text: string, ...args: any[]) => {
     type: 'error',
     message: formatString(text, ...args),
   });
-}
+};
 
 export const toastSuccess = (text: string, ...args: any[]) => {
   bus.publish('toast.show', {
     type: 'success',
     message: formatString(text, ...args),
   });
-}
+};
 
 export const toastCustom = (type: string, text: string, ...args: any[]) => {
   bus.publish('toast.show', {
     type: type,
     message: formatString(text, ...args),
   });
-}
+};
 
 export const deleteConfirmation = (callback: any) => {
   bus.publish('confirm', {
@@ -73,7 +94,7 @@ export const formatString = (text: string, ...args: any[]) => {
   } else if (text.startsWith('custom.')) {
     key = `$vuetify.${text}`;
   } else if (text.startsWith('raw.')) {
-      key = `$vuetify.${text}`;
+    key = `$vuetify.${text}`;
   } else {
     key = `$vuetify.raw.${text}`;
   }
@@ -120,5 +141,8 @@ export const formatDatetime = (value: any) => {
 Vue.filter('datetime', (value: any) => {
   return formatDatetime(value);
 });
+
+// set main application title
+document.title = formatString('custom.app.title');
 
 export default instance;

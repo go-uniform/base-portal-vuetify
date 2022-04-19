@@ -37,7 +37,6 @@ phrases.raw = {
   'Username': 'Username',
   'Filters': 'Filters',
   'Search': 'Search',
-  'Cookie Consent': 'Cookie Consent',
 };
 
 phrases.custom = {
@@ -45,13 +44,29 @@ phrases.custom = {
     unknownOtpType: 'Unknown otp type \'{0}\' detected',
     incorrectOtpPin: 'Incorrect pin supplied',
   },
+  app: {
+    title: 'Uniform',
+    headerTitle: 'Uniform',
+    logoAlt: 'Uniform',
+    logoUrl: 'https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png',
+    smallLogoAlt: 'Uniform',
+    smallLogoUrl: 'https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png',
+    lightMode: 'Light Mode',
+    darkMode: 'Dark Mode',
+    logout: 'Log Out',
+  },
+  home: {
+    pageTitle: 'Home',
+  },
   cookieConsent: {
     popUpTitle: 'Your privacy',
     popUpBody: 'By clicking "Accept all cookies", you agree we may store cookies on your device and disclose information in accordance with our <a href="/policies/cookie">Cookie Policy.<a/>',
     popUpBtn: 'Accept all cookies',
+    pageTitle: 'Cookie Consent',
     pageHtml: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet sem dapibus, placerat orci a, euismod lacus. Mauris eget eros id ex convallis dictum sit amet vel felis. Donec lectus quam, mattis quis velit faucibus, congue finibus metus. In neque mi, tristique nec mattis ac, tristique vel dolor. Donec posuere justo orci, congue vehicula nibh luctus sit amet. Integer mi mi, dapibus ultrices tortor et, sollicitudin posuere sapien. Nulla facilisi. Proin congue arcu vel mattis molestie. Phasellus felis quam, tincidunt non eros eu, tempus sodales ligula. In euismod consectetur porta.</p>',
   },
   connection: {
+    pageTitle: '',
     pageHtml: '<p class="display-2">You are offline.</p><p>Try:</p><ul><li>Turning off airplane mode</li><li>Turning on mobile data or Wi-Fi</li><li>Checking the signal in your area</li></ul><br><p>This message will automatically close once your connection is restored.</p>'
   }
 };
