@@ -27,7 +27,7 @@
             >
               {{ item.icon }}
             </v-icon>
-            {{ formatString(item.title) }}
+            {{ translate(item.title) }}
           </v-breadcrumbs-item>
 
         </template>
@@ -54,7 +54,7 @@
             >
               {{ action.icon }}
             </v-icon>
-            {{ formatString(action.title) }}
+            {{ translate(action.title) }}
           </v-btn>
         </template>
 
@@ -70,7 +70,7 @@
               v-bind="attrs"
               v-on="on"
             >
-              {{ formatString('custom.entityList.buttonBulk') }}
+              {{ translate('custom.entityList.buttonBulk') }}
               <v-icon
                 right
                 dark
@@ -97,7 +97,7 @@
                 >
                   {{ bulkAction.icon }}
                 </v-icon>
-                {{ formatString(bulkAction.title) }}
+                {{ translate(bulkAction.title) }}
               </v-btn>
             </v-list-item>
           </v-list>

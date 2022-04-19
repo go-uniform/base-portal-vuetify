@@ -4,10 +4,10 @@
 
     <div
       class="pa-8 text-center"
-      v-html="formatString('custom.notFound.pageHtml')"
+      v-html="translate('custom.notFound.pageHtml')"
     >
     </div>
-    <a href="/">{{ formatString('custom.app.backSafety') }}</a>
+    <a href="/">{{ translate('custom.app.backSafety') }}</a>
 
   </empty-layout>
 

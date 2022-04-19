@@ -16,7 +16,7 @@
         <v-list-item-title
           class="text-uppercase"
         >
-          {{ formatString('custom.app.mainMenu') }}
+          {{ translate('custom.app.mainMenu') }}
         </v-list-item-title>
       </v-list-item-content>
       <v-list-item-icon

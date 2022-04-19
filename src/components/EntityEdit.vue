@@ -28,7 +28,7 @@
             <v-expansion-panel-header
               color="primary white--text"
             >
-              <strong>{{ formatString(section.title) }}</strong>
+              <strong>{{ translate(section.title) }}</strong>
             </v-expansion-panel-header>
             <v-expansion-panel-content
               class="pa-8 fill-height"
@@ -59,7 +59,7 @@
                       >
                         <v-autocomplete
                           v-model="item[fieldKey]"
-                          :label="formatString(field.label)"
+                          :label="translate(field.label)"
                           :items="linkItems[fieldKey]"
                           :multiple="field.multiple"
                           clearable
@@ -71,7 +71,7 @@
                       >
                         <v-textarea
                           v-model="item[fieldKey]"
-                          :label="formatString(field.label)"
+                          :label="translate(field.label)"
                           :counter="field.length"
                           :maxlength="field.length"
                           :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
@@ -83,7 +83,7 @@
                       >
                         <v-text-field
                           v-model="item[fieldKey]"
-                          :label="formatString(field.label)"
+                          :label="translate(field.label)"
                           :counter="field.length"
                           :maxlength="field.length"
                           :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
@@ -116,7 +116,7 @@
           >
             mdi-content-save
           </v-icon>
-          {{ formatString('custom.app.save') }}
+          {{ translate('custom.app.save') }}
         </v-btn>
       </v-col>
       <v-col
@@ -135,7 +135,7 @@
           >
             mdi-close-circle
           </v-icon>
-          {{ formatString('custom.app.cancel') }}
+          {{ translate('custom.app.cancel') }}
         </v-btn>
       </v-col>
     </v-row>
@@ -144,7 +144,7 @@
 </template>
 
 <script>
-import {formatString} from '../plugins/vuetify';
+import {translate} from '../plugins/vuetify';
 import {validations} from '../services/base/validations';
 
 export default {
@@ -216,34 +216,34 @@ export default {
         return [
           {
             icon: 'mdi-home',
-            title: formatString('custom.home.pageTitle'),
+            title: translate('custom.home.pageTitle'),
             location: '/',
           },
           {
-            title: formatString(this.repository.title.plural),
+            title: translate(this.repository.title.plural),
             location: this.repository.listPage,
           },
           {
-            title: formatString('custom.entityEdit.view'),
+            title: translate('custom.entityEdit.view'),
             location: `${this.repository.viewPagePrefix}/${this.$route.params.id}`,
           },
           {
-            title: formatString('custom.entityEdit.edit'),
+            title: translate('custom.entityEdit.edit'),
           },
         ];
       }
       return [
         {
           icon: 'mdi-home',
-          title: formatString('custom.home.pageTitle'),
+          title: translate('custom.home.pageTitle'),
           location: '/',
         },
         {
-          title: formatString(this.repository.title.plural),
+          title: translate(this.repository.title.plural),
           location: this.repository.listPage,
         },
         {
-          title: formatString('custom.entityEdit.new'),
+          title: translate('custom.entityEdit.new'),
         },
       ];
     },
@@ -257,7 +257,7 @@ export default {
         {
           icon: 'mdi-content-save',
           color: 'success',
-          title: formatString('custom.app.save'),
+          title: translate('custom.app.save'),
           callback: () => {
             this.save();
           }
@@ -266,7 +266,7 @@ export default {
           icon: 'mdi-close-circle',
           class: 'white--text',
           color: 'grey',
-          title: formatString('custom.app.cancel'),
+          title: translate('custom.app.cancel'),
           location: cancelUrl,
         },
       ];

@@ -28,7 +28,7 @@
               >
                 {{ item.icon }}
               </v-icon>
-              {{ formatString(item.title) }}
+              {{ translate(item.title) }}
 
             </v-breadcrumbs-item>
 
@@ -44,7 +44,7 @@
     >
 
       <div
-        v-html="formatString('custom.cookieConsent.pageHtml')"
+        v-html="translate('custom.cookieConsent.pageHtml')"
       >
       </div>
       <div

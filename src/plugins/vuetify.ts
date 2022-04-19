@@ -48,21 +48,21 @@ export const kebabCase = (str: any) => {
 export const toastError = (text: string, ...args: any[]) => {
   bus.publish('toast.show', {
     type: 'error',
-    message: formatString(text, ...args),
+    message: translate(text, ...args),
   });
 };
 
 export const toastSuccess = (text: string, ...args: any[]) => {
   bus.publish('toast.show', {
     type: 'success',
-    message: formatString(text, ...args),
+    message: translate(text, ...args),
   });
 };
 
 export const toastCustom = (type: string, text: string, ...args: any[]) => {
   bus.publish('toast.show', {
     type: type,
-    message: formatString(text, ...args),
+    message: translate(text, ...args),
   });
 };
 
@@ -86,8 +86,16 @@ export const confirmation = (callback: any, title: string, body: string, options
   });
 };
 
-// __ is shorthand for format string function
 export const formatString = (text: string, ...args: any[]) => {
+  if (args != null && args.length === 1 && args[0].isArray) {
+    args = args[0];
+  }
+  return text.replace(/{(\d+)}/g, (match, index) => {
+    return typeof args[index] !== 'undefined' ? args[index] : match;
+  });
+};
+
+export const translate = (text: string, ...args: any[]) => {
   let key = text;
   if (text.startsWith('$vuetify.')) {
     key = `${text}`;
@@ -102,23 +110,19 @@ export const formatString = (text: string, ...args: any[]) => {
   if (translated !== key && !translated.startsWith('$vuetify.')) {
     text = translated;
   }
-  if (args != null && args.length === 1 && args[0].isArray) {
-    args = args[0];
-  }
-  return text.replace(/{(\d+)}/g, (match, index) => {
-    return typeof args[index] !== 'undefined' ? args[index] : match;
-  });
+  return text;
 };
 
 Vue.mixin({
   methods: {
     formatString: formatString,
+    translate: translate,
     kebabCase: kebabCase,
   },
 });
 
 Vue.filter('format', (text: string, ...args: any[]) => {
-  formatString(text, args);
+  translate(text, args);
 });
 
 export const formatBoolean = (value: any) => {
@@ -143,6 +147,6 @@ Vue.filter('datetime', (value: any) => {
 });
 
 // set main application title
-document.title = formatString('custom.app.title');
+document.title = translate('custom.app.title');
 
 export default instance;

@@ -94,7 +94,7 @@
           >
             mdi-delete
           </v-icon>
-          {{ formatString('custom.entityView.delete') }}
+          {{ translate('custom.entityView.delete') }}
         </v-btn>
       </v-col>
       <v-col
@@ -114,7 +114,7 @@
           >
             mdi-pencil
           </v-icon>
-          {{ formatString('custom.entityView.edit') }}
+          {{ translate('custom.entityView.edit') }}
         </v-btn>
       </v-col>
       <v-col
@@ -134,7 +134,7 @@
           >
             mdi-view-list
           </v-icon>
-          {{ formatString('custom.entityView.list') }}
+          {{ translate('custom.entityView.list') }}
         </v-btn>
       </v-col>
     </v-row>
@@ -143,7 +143,7 @@
 </template>
 
 <script>
-import {deleteConfirmation, formatString, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import {deleteConfirmation, translate, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 
 export default {
   name: 'entity-view',
@@ -216,15 +216,15 @@ export default {
       return [
         {
           icon: 'mdi-home',
-          title: formatString('custom.home.pageTitle'),
+          title: translate('custom.home.pageTitle'),
           location: '/',
         },
         {
-          title: formatString(this.repository.title.plural),
+          title: translate(this.repository.title.plural),
           location: this.repository.listPage,
         },
         {
-          title: formatString('custom.entityView.view'),
+          title: translate('custom.entityView.view'),
         },
       ];
     },
@@ -234,7 +234,7 @@ export default {
         {
           icon: 'mdi-delete',
           color: 'error',
-          title: formatString('custom.entityView.delete'),
+          title: translate('custom.entityView.delete'),
           callback: () => {
             this.remove(this.item);
           }
@@ -242,7 +242,7 @@ export default {
         {
           icon: 'mdi-pencil',
           color: 'warning',
-          title: formatString('custom.entityView.edit'),
+          title: translate('custom.entityView.edit'),
           callback: () => {
             this.edit(this.item);
           }
@@ -250,7 +250,7 @@ export default {
         {
           icon: 'mdi-view-list',
           color: 'info',
-          title: formatString('custom.entityView.list'),
+          title: translate('custom.entityView.list'),
           callback: () => {
             this.list();
           }

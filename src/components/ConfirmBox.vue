@@ -19,7 +19,7 @@
         <v-toolbar-title
           class="white--text"
         >
-          {{ formatString(title) }}
+          {{ translate(title) }}
         </v-toolbar-title>
 
       </v-toolbar>
@@ -27,7 +27,7 @@
         v-show="!!message"
         class="pa-4"
       >
-        {{ formatString(message) }}
+        {{ translate(message) }}
       </v-card-text>
       <v-card-actions
         class="pt-0"
@@ -39,14 +39,14 @@
           text
           @click.native="agree"
         >
-          {{ formatString(options.agreeTitle) }}
+          {{ translate(options.agreeTitle) }}
         </v-btn>
         <v-btn
           color="grey"
           text
           @click.native="cancel"
         >
-          {{ formatString(options.disagreeTitle) }}
+          {{ translate(options.disagreeTitle) }}
         </v-btn>
 
       </v-card-actions>

@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import {NavigationGuard} from 'vue-router/types/router';
 import {auth} from '@/services/base/auth';
 import {crudRoutes} from '@/services/crud';
-import {formatString} from '@/plugins/vuetify';
+import {translate} from '@/plugins/vuetify';
 
 Vue.use(VueRouter)
 
@@ -98,9 +98,9 @@ const AuthGuard: NavigationGuard = (to, from, next) => {
 router.beforeEach(AuthGuard);
 
 const PageTitle: NavigationGuard = (to, from, next) => {
-  let title = formatString('custom.app.title');
+  let title = translate('custom.app.title');
   if (to.meta && to.meta.title) {
-    title = `${formatString(to.meta.title)} | ${title}`;
+    title = `${translate(to.meta.title)} | ${title}`;
   }
   document.title = title;
   next();

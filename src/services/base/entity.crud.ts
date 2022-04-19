@@ -15,7 +15,7 @@ import {
   processStandardListResponse
 } from '@/services/base/base';
 import {RouteConfig} from 'vue-router';
-import {formatString} from '@/plugins/vuetify';
+import {translate} from '@/plugins/vuetify';
 
 export const baseList = <T>(entity: string): IListPromise<T> => {
   return (
@@ -124,12 +124,12 @@ export const baseDelete = <T>(entity: string): IDeletePromise<T> => {
 };
 
 const generateRepositoryCrudRoutes = (repository: any): RouteConfig[] => {
-  const plural = formatString(repository.title.plural);
-  const singular = formatString(repository.title.singular);
-  const titleList = formatString('custom.entity.list', plural);
-  const titleNew = formatString('custom.entity.new', singular);
-  const titleEdit = formatString('custom.entity.edit', singular);
-  const titleView = formatString('custom.entity.view', singular);
+  const plural = translate(repository.title.plural);
+  const singular = translate(repository.title.singular);
+  const titleList = translate('custom.entity.list', plural);
+  const titleNew = translate('custom.entity.new', singular);
+  const titleEdit = translate('custom.entity.edit', singular);
+  const titleView = translate('custom.entity.view', singular);
   return [
     {
       path: `${repository.listPage}`,

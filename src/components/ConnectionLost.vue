@@ -10,7 +10,7 @@
   >
 
     <div
-      v-html="formatString('custom.connection.pageHtml')"
+      v-html="translate('custom.connection.pageHtml')"
     >
     </div>
 

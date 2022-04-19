@@ -14,7 +14,7 @@
       >
         mdi-plus-box
       </v-icon>
-      {{ formatString('custom.entityList.buttonNew') }}
+      {{ translate('custom.entityList.buttonNew') }}
     </v-btn>
 
     <slot
@@ -32,7 +32,7 @@
             <strong
               class="text-uppercase"
             >
-              {{ formatString('custom.entityFilters.title') }}
+              {{ translate('custom.entityFilters.title') }}
             </strong>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -104,7 +104,7 @@
                   <v-icon>
                     mdi-close-thick
                   </v-icon>
-                  {{ formatString('Reset') }}
+                  {{ translate('Reset') }}
                 </v-btn>
               </v-col>
               <v-col
@@ -119,7 +119,7 @@
                   <v-icon>
                     mdi-magnify
                   </v-icon>
-                  {{ formatString('Search') }}
+                  {{ translate('Search') }}
                 </v-btn>
               </v-col>
             </v-row>
@@ -218,7 +218,7 @@
                         >
                           mdi-delete
                         </v-icon>
-                        {{ formatString('custom.entityList.buttonDelete') }}
+                        {{ translate('custom.entityList.buttonDelete') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -237,7 +237,7 @@
                         >
                           mdi-pencil
                         </v-icon>
-                        {{ formatString('custom.entityList.buttonEdit') }}
+                        {{ translate('custom.entityList.buttonEdit') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -256,7 +256,7 @@
                         >
                           mdi-eye
                         </v-icon>
-                        {{ formatString('custom.entityList.buttonView') }}
+                        {{ translate('custom.entityList.buttonView') }}
                       </v-btn>
                     </slot>
                   </v-list-item>
@@ -290,7 +290,7 @@
                 >
                   mdi-delete
                 </v-icon>
-                {{ formatString('Delete') }}
+                {{ translate('Delete') }}
               </v-btn>
             </slot>
             <slot
@@ -309,7 +309,7 @@
                 >
                   mdi-pencil
                 </v-icon>
-                {{ formatString('Edit') }}
+                {{ translate('Edit') }}
               </v-btn>
             </slot>
             <slot
@@ -328,7 +328,7 @@
                 >
                   mdi-eye
                 </v-icon>
-                {{ formatString('View') }}
+                {{ translate('View') }}
               </v-btn>
             </slot>
           </div>
@@ -352,7 +352,7 @@
 </style>
 
 <script>
-import {confirmation, deleteConfirmation, formatString, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import {confirmation, deleteConfirmation, translate, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 import {baseTableHeaders} from '../services/base/base';
 import {bus} from '../services/base/bus';
 
@@ -458,7 +458,7 @@ export default {
         });
       }
       this.headers.push({
-        text: formatString('custom.entityList.headerActions'),
+        text: translate('custom.entityList.headerActions'),
         value: 'actions',
         align: 'end',
         sortable: false,
@@ -501,11 +501,11 @@ export default {
       return [
         {
           icon: 'mdi-home',
-          title: formatString('custom.home.pageTitle'),
+          title: translate('custom.home.pageTitle'),
           location: '/',
         },
         {
-          title: formatString(this.repository.title.plural),
+          title: translate(this.repository.title.plural),
         },
       ];
     },
@@ -518,7 +518,7 @@ export default {
         {
           icon: 'mdi-plus-box',
           color: 'success',
-          title: formatString('custom.entityList.buttonNew'),
+          title: translate('custom.entityList.buttonNew'),
           location: `${this.repository.addPage}`,
         },
       ];
@@ -538,7 +538,7 @@ export default {
             this.load();
           });
         }
-      }, 'custom.entityList.bulkActionConfirmationTitle', formatString('custom.entityList.bulkActionConfirmationMessage', formatString(action.title).toLowerCase(), ids.length), {
+      }, 'custom.entityList.bulkActionConfirmationTitle', translate('custom.entityList.bulkActionConfirmationMessage', translate(action.title).toLowerCase(), ids.length), {
         color: action.color ?? 'info',
       })
     }

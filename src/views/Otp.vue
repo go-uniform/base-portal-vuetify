@@ -13,9 +13,9 @@
           class="py-8"
         >
           <v-img
-            :alt="formatString('custom.app.smallLogoAlt')"
+            :alt="translate('custom.app.smallLogoAlt')"
             contain
-            :src="formatString('custom.app.smallLogoUrl')"
+            :src="translate('custom.app.smallLogoUrl')"
             transition="scale-transition"
             max-height="100"
           />
@@ -24,7 +24,7 @@
           <v-col
             cols="12"
           >
-            {{ formatString('custom.otp.title') }}
+            {{ translate('custom.otp.title') }}
           </v-col>
         </v-row>
         <v-row>
@@ -52,7 +52,7 @@
               class="mr-4"
               @click="validate"
             >
-              {{ formatString('custom.otp.validate') }}
+              {{ translate('custom.otp.validate') }}
             </v-btn>
           </v-col>
           <v-col
@@ -65,7 +65,7 @@
               class="mr-4"
               @click="resend"
             >
-              {{ formatString('custom.otp.resend') }}
+              {{ translate('custom.otp.resend') }}
             </v-btn>
           </v-col>
           <v-col
@@ -86,7 +86,7 @@
 
 <script>
 import {auth} from '../services/base/auth';
-import {confirmation, formatString, toastError} from '../plugins/vuetify';
+import {confirmation, translate, toastError} from '../plugins/vuetify';
 import EmptyLayout from '../layouts/Empty';
 
 export default {
@@ -125,7 +125,7 @@ export default {
       case 'auth':
         this.backHidden = false;
         this.backLocation = ['/login'];
-        this.backText = formatString('custom.app.backLogin');
+        this.backText = translate('custom.app.backLogin');
         break;
     }
   },
@@ -167,7 +167,7 @@ export default {
         if (confirmed) {
           alert('resend code');
         }
-      }, 'Are you sure?', formatString('Resending will generate a new code and invalidate the previously sent code, only use this if you have not received the code in a timely fashion. Are you still sure you wish to resend yourself a new code?'), {
+      }, 'Are you sure?', translate('Resending will generate a new code and invalidate the previously sent code, only use this if you have not received the code in a timely fashion. Are you still sure you wish to resend yourself a new code?'), {
         color: 'accent'
       })
     },
