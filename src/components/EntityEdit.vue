@@ -4,6 +4,7 @@
     ref="form"
     class="fill-width"
   >
+
     <v-row
       class="mb-2"
     >
@@ -73,7 +74,6 @@
       </v-expansion-panels>
     </v-row>
     <v-row>
-
       <v-col
         cols="12"
         md="6"
@@ -81,7 +81,6 @@
         v-for="(action, index) in actions"
         v-bind:key="index"
       >
-
         <v-btn
           class="ma-2"
           :color="action.color"
@@ -90,7 +89,6 @@
           large
           block
         >
-
           <v-icon
             v-if="action.icon"
             class="mr-2"
@@ -98,11 +96,8 @@
             {{ action.icon }}
           </v-icon>
           {{ action.title }}
-
         </v-btn>
-
       </v-col>
-
     </v-row>
 
   </v-form>

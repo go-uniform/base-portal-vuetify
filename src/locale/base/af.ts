@@ -89,6 +89,9 @@ phrases.base = {
   },
   entityFilters: {
     title: 'Filtreer',
+    freeTextSearch: 'Soek Terme',
+    search: 'Soek',
+    reset: 'Herstel',
   },
   notFound: {
     pageTitle: 'Bladsy Nie Gevind Nie',

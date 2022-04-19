@@ -40,6 +40,9 @@
       :sort-desc.sync="sortDesc"
       :page.sync="page"
       :items-per-page.sync="pageSize"
+      @update:sort-by="load"
+      @update:sort-desc="load"
+      @update:items-per-page="load"
     >
       <template
         v-for="(column, index) in columns()"
@@ -223,10 +226,9 @@ export default {
       if (this.sortBy) {
         order = `${this.sortDesc ? '-' : ''}${this.sortBy}`;
       }
+      console.log(order);
 
-      console.log(this.filters);
-
-      this.repository.list(order, this.filters).then((response) => {
+      this.repository.list(order, this.filters, this.page, this.pageSize).then((response) => {
         this.records = response.items;
       });
     },

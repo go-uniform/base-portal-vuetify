@@ -90,6 +90,9 @@ phrases.base = {
   },
   entityFilters: {
     title: 'Filter',
+    freeTextSearch: 'Search Terms',
+    search: 'Search',
+    reset: 'Reset',
   },
   notFound: {
     pageTitle: 'Page Not Found',

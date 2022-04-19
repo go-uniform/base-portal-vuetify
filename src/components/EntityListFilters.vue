@@ -1,7 +1,7 @@
 <template>
 
   <v-expansion-panels
-    v-if="repository.filters && repository.filters.length > 0 || repository.freeTextSearch"
+    v-if="filterableFieldKeys.length > 0 || repository.freeTextSearch"
     class="justify-start mb-8"
     v-model="filterPanelValue"
   >
@@ -19,7 +19,7 @@
       </v-expansion-panel-header>
       <v-expansion-panel-content>
         <v-form
-          ref="search"
+          ref="form"
         >
 
           <v-row
@@ -28,11 +28,12 @@
             <v-col
               cols="12"
               md="6"
+              xl="4"
             >
               <v-text-field
                 v-if="repository.freeTextSearch"
                 v-model="freeTextSearch"
-                label="Search Terms"
+                :label="translate('base.entityFilters.freeTextSearch')"
                 filled
               >
               </v-text-field>
@@ -40,36 +41,15 @@
             <v-col
               cols="12"
               md="6"
+              xl="4"
+              v-for="fieldKey in filterableFieldKeys"
+              v-bind:key="fieldKey"
             >
-              <v-menu
-                v-model="datePicker"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="290px"
-              >
-                <template
-                  v-slot:activator="{ on, attrs }"
-                >
-                  <v-text-field
-                    :value="dates.join(' - ')"
-                    label="Created At"
-                    readonly
-                    clearable
-                    filled
-                    v-bind="attrs"
-                    v-on="on"
-                    @click:clear="dates = null"
-                  >
-                  </v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="dates"
-                  range
-                >
-                </v-date-picker>
-              </v-menu>
+              <entity-list-filter-field
+                ref="createdAt"
+                :field="repository.fields[fieldKey]"
+                v-model="filters[fieldKey]"
+              />
             </v-col>
           </v-row>
           <v-row>
@@ -90,7 +70,7 @@
                 <v-icon>
                   mdi-close-thick
                 </v-icon>
-                {{ translate('Reset') }}
+                {{ translate('base.entityFilters.reset') }}
               </v-btn>
             </v-col>
             <v-col
@@ -105,7 +85,7 @@
                 <v-icon>
                   mdi-magnify
                 </v-icon>
-                {{ translate('Search') }}
+                {{ translate('base.entityFilters.search') }}
               </v-btn>
             </v-col>
           </v-row>
@@ -117,47 +97,59 @@
 
 </template>
 <script>
+import EntityListFilterField from './EntityListFilterField';
+import {bus} from '../services/base/bus';
 export default {
   name: 'entity-list-filters',
+  components: {EntityListFilterField},
   props: {
     repository: null,
     value: null,
   },
 
   data: () => ({
-    datePicker: false,
     freeTextSearch: null,
-    dates: [],
     filterPanelValue: null,
+    filters: {},
   }),
 
-  watch: {
-    filterPanelValue: function() {
-      // check if filter panel is closed
-      if (!this.filterPanelValue) {
-        this.search();
+  computed: {
+    filterableFieldKeys() {
+      if (!this.repository) {
+        return [];
       }
-    }
+
+      const fieldKeys = [];
+      Object.keys(this.repository.fields).forEach((key) => {
+        const field = this.repository.fields[key];
+        if (field.filterable) {
+          fieldKeys.push(key);
+        }
+      })
+
+      return fieldKeys;
+    },
   },
 
   methods: {
     reset() {
       this.freeTextSearch = null;
-      this.dates = [];
+      this.filters = {};
+      this.$refs.form.reset();
+      bus.publish('filters.reset', {})
+      this.search();
     },
 
     search() {
-      let value = {};
-      if (this.freeTextSearch) {
-        value["-text"] = this.freeTextSearch;
+      if (this.$refs.form.validate()) {
+        let value = this.filters;
+        if (this.freeTextSearch) {
+          value["-text"] = this.freeTextSearch;
+        }
+        this.filterPanelValue = null;
+        this.$emit('input', value);
+        this.$emit('change', value);
       }
-      if (this.dates) {
-        value["created-at>"] = this.dates[0];
-        value["created-at<"] = this.dates[1];
-      }
-      this.filterPanelValue = null;
-      this.$emit('input', value);
-      this.$emit('change', value);
     },
   },
 }
