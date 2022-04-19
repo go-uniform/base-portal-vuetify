@@ -4,10 +4,10 @@
 
     <div
       class="pa-8 text-center"
-      v-html="translate('custom.logout.pageHtml')"
+      v-html="translate('base.logout.pageHtml')"
     >
     </div>
-    <a href="/login">{{ translate('custom.app.backLogin') }}</a>
+    <a href="/login">{{ translate('base.app.backLogin') }}</a>
 
   </empty-layout>
 

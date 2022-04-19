@@ -13,9 +13,9 @@
           class="py-8"
         >
           <v-img
-            :alt="translate('custom.app.smallLogoAlt')"
+            :alt="translate('base.app.smallLogoAlt')"
             contain
-            :src="translate('custom.app.smallLogoUrl')"
+            :src="translate('base.app.smallLogoUrl')"
             transition="scale-transition"
             max-height="100"
           />
@@ -24,7 +24,7 @@
           <v-col
             cols="12"
           >
-            {{ translate('custom.passwordReset.title') }}
+            {{ translate('base.passwordReset.title') }}
           </v-col>
         </v-row>
         <v-row>
@@ -32,7 +32,7 @@
             cols="12"
           >
             <v-text-field
-              :label="translate('custom.passwordReset.identifier')"
+              :label="translate('base.passwordReset.identifier')"
               v-model="email"
               :rules="[rules.required, rules.email]"
               autofocus
@@ -50,13 +50,13 @@
               class="mr-4"
               @click="reset"
             >
-              {{ translate('custom.passwordReset.button') }}
+              {{ translate('base.passwordReset.button') }}
             </v-btn>
           </v-col>
           <v-col
             cols="12"
           >
-            <a href="/login">{{ translate('custom.app.backLogin') }}</a>
+            <a href="/login">{{ translate('base.app.backLogin') }}</a>
           </v-col>
         </v-row>
       </v-container>

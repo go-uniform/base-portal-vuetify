@@ -11,11 +11,11 @@
     >
 
       <v-card-title>
-        {{ translate('custom.cookieConsent.popUpTitle') }}
+        {{ translate('base.cookieConsent.popUpTitle') }}
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text
-        v-html="translate('custom.cookieConsent.popUpBody')"
+        v-html="translate('base.cookieConsent.popUpBody')"
       >
       </v-card-text>
       <v-divider></v-divider>
@@ -26,7 +26,7 @@
           block
           @click="accept"
         >
-          {{ translate('custom.cookieConsent.popUpBtn') }}
+          {{ translate('base.cookieConsent.popUpBtn') }}
         </v-btn>
       </v-card-actions>
 

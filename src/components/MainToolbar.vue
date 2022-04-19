@@ -70,7 +70,7 @@
               v-bind="attrs"
               v-on="on"
             >
-              {{ translate('custom.entityList.buttonBulk') }}
+              {{ translate('base.entityList.buttonBulk') }}
               <v-icon
                 right
                 dark

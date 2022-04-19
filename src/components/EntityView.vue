@@ -31,7 +31,7 @@
               color="primary white--text"
             >
               <strong>
-                {{ section.title }}
+                {{ translate(section.title) }}
               </strong>
             </v-expansion-panel-header>
             <v-expansion-panel-content
@@ -61,23 +61,14 @@
 
                       <div>
                         <strong>
-                          {{ field.label }}
+                          {{ translate(field.label) }}
                         </strong>
                       </div>
-                      <div
-                        v-if="field.type === 'linkId'"
-                      >
-                        <a
-                          :href="`${field.linkRepository.viewPagePrefix}/${item[fieldKey]}`"
-                        >
-                          {{ item[field.linkLabelFieldKey] }}
-                        </a>
-                      </div>
-                      <div
-                        v-else
-                      >
-                        {{ doFormat(fieldKey, field, item) }}
-                      </div>
+                      <entity-field-view
+                        :fieldKey="fieldKey"
+                        :field="field"
+                        :item="item"
+                      />
 
                     </v-col>
                   </slot>
@@ -105,7 +96,7 @@
         <v-btn
           class="ma-2"
           :color="button.color"
-          @click="button.handler(item)"
+          @click="button.callback(item)"
           large
           block
         >
@@ -129,14 +120,20 @@
 </template>
 
 <script>
-import {deleteConfirmation, translate, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import {deleteConfirmation, translate} from '../plugins/vuetify';
+import EntityFieldView from './EntityFieldView';
+import {defaultViewActions} from '../services/base/entity.helper.default-view-actions';
+import {defaultViewCrumbs} from '../services/base/entity.helper.default-view-crumbs';
 
 export default {
   name: 'entity-view',
+  components: {EntityFieldView},
+
   props: {
     repository: null,
     id: null,
   },
+
   computed: {
     fields() {
       if (!this.repository) {
@@ -154,57 +151,17 @@ export default {
 
       return response;
     },
+    buttons() {
+      return defaultViewActions(this.remove, this.edit, this.list);
+    }
   },
+
   data: () => ({
     panels: [0],
     item: {},
-    buttons: [
-      {
-        icon: 'mdi-delete',
-        title: translate('custom.entityView.delete'),
-        color: 'error',
-        handler: (item) => { this.remove(item) },
-      },
-      {
-        icon: 'mdi-pencil',
-        title: translate('custom.entityView.edit'),
-        color: 'warning',
-        handler: (item) => { this.edit(item) },
-      },
-      {
-        icon: 'mdi-view-list',
-        title: translate('custom.entityView.list'),
-        color: 'info',
-        handler: () => { this.list() },
-      },
-    ]
   }),
 
   methods: {
-    sectionCols() {
-      return
-    },
-
-    valueName(key) {
-      return `item.${key}`;
-    },
-
-    doFormat(key, field, item) {
-      let value = item[key];
-      switch (field.type) {
-        case "boolean":
-          value = formatBoolean(value);
-          break
-        case "date":
-          value = formatDate(value);
-          break
-        case "datetime":
-          value = formatDatetime(value);
-          break
-      }
-      return value;
-    },
-
     edit() {
       this.$router.push(`${this.repository.editPagePrefix}/${this.id}`);
     },
@@ -224,49 +181,11 @@ export default {
     },
 
     defaultCrumbs() {
-      return [
-        {
-          icon: 'mdi-home',
-          title: translate('custom.home.pageTitle'),
-          location: '/',
-        },
-        {
-          title: translate(this.repository.title.plural),
-          location: this.repository.listPage,
-        },
-        {
-          title: translate('custom.entityView.view'),
-        },
-      ];
+      return defaultViewCrumbs(this.repository);
     },
 
     defaultActions() {
-      return [
-        {
-          icon: 'mdi-delete',
-          color: 'error',
-          title: translate('custom.entityView.delete'),
-          callback: () => {
-            this.remove(this.item);
-          }
-        },
-        {
-          icon: 'mdi-pencil',
-          color: 'warning',
-          title: translate('custom.entityView.edit'),
-          callback: () => {
-            this.edit(this.item);
-          }
-        },
-        {
-          icon: 'mdi-view-list',
-          color: 'info',
-          title: translate('custom.entityView.list'),
-          callback: () => {
-            this.list();
-          }
-        },
-      ];
+      return defaultViewActions(this.remove, this.edit, this.list);
     }
   },
 

@@ -116,7 +116,7 @@
           >
             mdi-content-save
           </v-icon>
-          {{ translate('custom.app.save') }}
+          {{ translate('base.app.save') }}
         </v-btn>
       </v-col>
       <v-col
@@ -135,7 +135,7 @@
           >
             mdi-close-circle
           </v-icon>
-          {{ translate('custom.app.cancel') }}
+          {{ translate('base.app.cancel') }}
         </v-btn>
       </v-col>
     </v-row>
@@ -216,7 +216,7 @@ export default {
         return [
           {
             icon: 'mdi-home',
-            title: translate('custom.home.pageTitle'),
+            title: translate('base.home.pageTitle'),
             location: '/',
           },
           {
@@ -224,18 +224,18 @@ export default {
             location: this.repository.listPage,
           },
           {
-            title: translate('custom.entityEdit.view'),
+            title: translate('base.entityEdit.view'),
             location: `${this.repository.viewPagePrefix}/${this.$route.params.id}`,
           },
           {
-            title: translate('custom.entityEdit.edit'),
+            title: translate('base.entityEdit.edit'),
           },
         ];
       }
       return [
         {
           icon: 'mdi-home',
-          title: translate('custom.home.pageTitle'),
+          title: translate('base.home.pageTitle'),
           location: '/',
         },
         {
@@ -243,7 +243,7 @@ export default {
           location: this.repository.listPage,
         },
         {
-          title: translate('custom.entityEdit.new'),
+          title: translate('base.entityEdit.new'),
         },
       ];
     },
@@ -257,7 +257,7 @@ export default {
         {
           icon: 'mdi-content-save',
           color: 'success',
-          title: translate('custom.app.save'),
+          title: translate('base.app.save'),
           callback: () => {
             this.save();
           }
@@ -266,7 +266,7 @@ export default {
           icon: 'mdi-close-circle',
           class: 'white--text',
           color: 'grey',
-          title: translate('custom.app.cancel'),
+          title: translate('base.app.cancel'),
           location: cancelUrl,
         },
       ];

@@ -17,10 +17,10 @@
       class="d-flex align-center"
     >
       <v-img
-        :alt="translate('custom.app.smallLogoAlt')"
+        :alt="translate('base.app.smallLogoAlt')"
         class="shrink"
         contain
-        :src="translate('custom.app.smallLogoUrl')"
+        :src="translate('base.app.smallLogoUrl')"
         transition="scale-transition"
         max-width="40"
       />
@@ -28,7 +28,7 @@
       <strong
         class="display-1 ml-4 hidden-sm-and-down"
       >
-        {{ translate('custom.app.headerTitle') }}
+        {{ translate('base.app.headerTitle') }}
       </strong>
     </div>
 
@@ -65,7 +65,7 @@
             <v-icon>mdi-theme-light-dark</v-icon>
           </v-list-item-icon>
           <v-list-item-title>
-            {{ $vuetify.theme.dark ? translate('custom.app.lightMode') : translate('custom.app.darkMode') }}
+            {{ $vuetify.theme.dark ? translate('base.app.lightMode') : translate('base.app.darkMode') }}
           </v-list-item-title>
         </v-list-item>
         <v-divider></v-divider>
@@ -92,7 +92,7 @@
           <v-list-item-icon>
             <v-icon>mdi-lock-open</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>{{ translate('custom.app.logout') }}</v-list-item-title>
+          <v-list-item-title>{{ translate('base.app.logout') }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>

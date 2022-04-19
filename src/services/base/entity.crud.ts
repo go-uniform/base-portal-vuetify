@@ -126,10 +126,10 @@ export const baseDelete = <T>(entity: string): IDeletePromise<T> => {
 const generateRepositoryCrudRoutes = (repository: any): RouteConfig[] => {
   const plural = translate(repository.title.plural);
   const singular = translate(repository.title.singular);
-  const titleList = translate('custom.entity.list', plural);
-  const titleNew = translate('custom.entity.new', singular);
-  const titleEdit = translate('custom.entity.edit', singular);
-  const titleView = translate('custom.entity.view', singular);
+  const titleList = translate('base.entity.list', plural);
+  const titleNew = translate('base.entity.new', singular);
+  const titleEdit = translate('base.entity.edit', singular);
+  const titleView = translate('base.entity.view', singular);
   return [
     {
       path: `${repository.listPage}`,

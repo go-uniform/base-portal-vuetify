@@ -98,7 +98,7 @@ export const auth: IAuthRepository =  {
             jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
         }), (value: IItem<AuthTokenJwt>) => {
             if (pin !== '000000') {
-                toastError('custom.errors.incorrectOtpPin', []);
+                toastError('base.errors.incorrectOtpPin', []);
                 return false;
             }
             authToken = value.item.token;

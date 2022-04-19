@@ -74,8 +74,8 @@ export default {
       color: 'primary',
       width: 290,
       zIndex: 200,
-      agreeTitle: 'custom.app.agreeTitle',
-      disagreeTitle: 'custom.app.disagreeTitle',
+      agreeTitle: 'base.app.agreeTitle',
+      disagreeTitle: 'base.app.disagreeTitle',
     }
   }),
 

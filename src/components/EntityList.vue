@@ -18,7 +18,7 @@
       >
         mdi-plus-box
       </v-icon>
-      {{ translate('custom.entityList.buttonNew') }}
+      {{ translate('base.entityList.buttonNew') }}
 
     </v-btn>
 
@@ -40,7 +40,7 @@
             <strong
               class="text-uppercase"
             >
-              {{ translate('custom.entityFilters.title') }}
+              {{ translate('base.entityFilters.title') }}
             </strong>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -227,7 +227,7 @@
                         >
                           mdi-delete
                         </v-icon>
-                        {{ translate('custom.entityList.buttonDelete') }}
+                        {{ translate('base.entityList.buttonDelete') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -246,7 +246,7 @@
                         >
                           mdi-pencil
                         </v-icon>
-                        {{ translate('custom.entityList.buttonEdit') }}
+                        {{ translate('base.entityList.buttonEdit') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -265,7 +265,7 @@
                         >
                           mdi-eye
                         </v-icon>
-                        {{ translate('custom.entityList.buttonView') }}
+                        {{ translate('base.entityList.buttonView') }}
                       </v-btn>
                     </slot>
                   </v-list-item>
@@ -467,7 +467,7 @@ export default {
         });
       }
       this.headers.push({
-        text: translate('custom.entityList.headerActions'),
+        text: translate('base.entityList.headerActions'),
         value: 'actions',
         align: 'end',
         sortable: false,
@@ -510,7 +510,7 @@ export default {
       return [
         {
           icon: 'mdi-home',
-          title: translate('custom.home.pageTitle'),
+          title: translate('base.home.pageTitle'),
           location: '/',
         },
         {
@@ -527,7 +527,7 @@ export default {
         {
           icon: 'mdi-plus-box',
           color: 'success',
-          title: translate('custom.entityList.buttonNew'),
+          title: translate('base.entityList.buttonNew'),
           location: `${this.repository.addPage}`,
         },
       ];
@@ -547,7 +547,7 @@ export default {
             this.load();
           });
         }
-      }, 'custom.entityList.bulkActionConfirmationTitle', translate('custom.entityList.bulkActionConfirmationMessage', translate(action.title).toLowerCase(), ids.length), {
+      }, 'base.entityList.bulkActionConfirmationTitle', translate('base.entityList.bulkActionConfirmationMessage', translate(action.title).toLowerCase(), ids.length), {
         color: action.color ?? 'info',
       })
     }

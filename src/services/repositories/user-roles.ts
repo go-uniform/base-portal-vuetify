@@ -49,8 +49,8 @@ export const userRoles: IRepository<UserRole> = {
   freeTextSearch: true,
   entity: entity,
   title: {
-    singular: 'User Role',
-    plural: 'User Roles',
+    singular: 'custom.userRoles.singular',
+    plural: 'custom.userRoles.plural',
   },
   defaultSortOrder: '-createdAt',
   listPage: '/user-roles',
@@ -59,26 +59,26 @@ export const userRoles: IRepository<UserRole> = {
   editPagePrefix: '/user-roles/edit',
   fields: {
     id: {
-      label: 'Id',
+      label: 'custom.userRoles.fields.id',
       type: EnumFieldType.Uuid,
       readonly: true,
     },
     name: {
-      label: 'Name',
+      label: 'custom.userRoles.fields.name',
       type: EnumFieldType.Text,
     },
     description: {
-      label: 'Description',
+      label: 'custom.userRoles.fields.description',
       type: EnumFieldType.TextArea,
       optional: true,
     },
     modifiedAt: {
-      label: 'Modified At',
+      label: 'custom.userRoles.fields.modifiedAt',
       type: EnumFieldType.DateTime,
       readonly: true,
     },
     createdAt: {
-      label: 'Created At',
+      label: 'custom.userRoles.fields.createdAt',
       type: EnumFieldType.DateTime,
       readonly: true,
       filterable: true,
@@ -97,7 +97,7 @@ export const userRoles: IRepository<UserRole> = {
     },
   ],
   sections: [
-    new Section('General', [
+    new Section('custom.userRoles.sections.general', [
       'id',
       'name',
       'description',
@@ -109,7 +109,7 @@ export const userRoles: IRepository<UserRole> = {
     {
       color: 'error',
       icon: 'mdi-delete',
-      title: 'custom.entityList.buttonDelete',
+      title: 'base.entityList.buttonDelete',
       key: 'delete'
     }
   ],

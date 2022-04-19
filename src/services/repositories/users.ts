@@ -48,8 +48,8 @@ export const users: IRepository<User> = {
   freeTextSearch: true,
   entity: entity,
   title: {
-    singular: 'User',
-    plural: 'Users',
+    singular: 'custom.users.singular',
+    plural: 'custom.users.plural',
   },
   defaultSortOrder: '-createdAt',
   listPage: '/users',
@@ -59,48 +59,48 @@ export const users: IRepository<User> = {
   default: {},
   fields: {
     id: {
-      label: 'Id',
+      label: 'custom.users.fields.id',
       type: EnumFieldType.Uuid,
       readonly: true,
     },
     firstName: {
-      label: 'First Name',
+      label: 'custom.users.fields.firstName',
       type: EnumFieldType.Text,
     },
     lastName: {
-      label: 'Last Name',
+      label: 'custom.users.fields.lastName',
       type: EnumFieldType.Text,
     },
     username: {
-      label: 'Username',
+      label: 'custom.users.fields.username',
       type: EnumFieldType.Text,
     },
     email: {
-      label: 'Email',
+      label: 'custom.users.fields.email',
       type: EnumFieldType.Text,
       pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      patternMessage: 'custom.validations.email',
+      patternMessage: 'base.validations.email',
       optional: true,
     },
     userRoleId: {
-      label: 'User Role',
+      label: 'custom.users.fields.userRoleId',
       type: EnumFieldType.LinkId,
       linkLabelFieldKey: 'userRoleLabel',
       linkRepository: userRoles,
     },
     userRoleLabel: {
-      label: 'User Role',
+      label: 'custom.users.fields.userRoleId',
       type: EnumFieldType.LinkLabel,
       linkIdFieldKey: 'userRoleId',
       readonly: true,
     },
     modifiedAt: {
-      label: 'Modified At',
+      label: 'custom.users.fields.modifiedAt',
       type: EnumFieldType.DateTime,
       readonly: true,
     },
     createdAt: {
-      label: 'Created At',
+      label: 'custom.users.fields.createdAt',
       type: EnumFieldType.DateTime,
       filterable: true,
       readonly: true,
@@ -128,7 +128,7 @@ export const users: IRepository<User> = {
     },
   ],
   sections: [
-    new Section('General', [
+    new Section('custom.users.sections.general', [
       'id',
       'firstName',
       'lastName',
@@ -143,7 +143,7 @@ export const users: IRepository<User> = {
     {
       color: 'error',
       icon: 'mdi-delete',
-      title: 'custom.entityList.buttonDelete',
+      title: 'base.entityList.buttonDelete',
       key: 'delete'
     }
   ],

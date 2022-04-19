@@ -13,9 +13,9 @@
           class="py-8"
         >
           <v-img
-            :alt="translate('custom.app.smallLogoAlt')"
+            :alt="translate('base.app.smallLogoAlt')"
             contain
-            :src="translate('custom.app.smallLogoUrl')"
+            :src="translate('base.app.smallLogoUrl')"
             transition="scale-transition"
             max-height="100"
           />
@@ -24,7 +24,7 @@
           <v-col
             cols="12"
           >
-            {{ translate('custom.otp.title') }}
+            {{ translate('base.otp.title') }}
           </v-col>
         </v-row>
         <v-row>
@@ -52,7 +52,7 @@
               class="mr-4"
               @click="validate"
             >
-              {{ translate('custom.otp.validate') }}
+              {{ translate('base.otp.validate') }}
             </v-btn>
           </v-col>
           <v-col
@@ -65,7 +65,7 @@
               class="mr-4"
               @click="resend"
             >
-              {{ translate('custom.otp.resend') }}
+              {{ translate('base.otp.resend') }}
             </v-btn>
           </v-col>
           <v-col
@@ -121,12 +121,12 @@ export default {
     this.otp = this.$route.query.otp;
     switch (this.type.toLowerCase()) {
       default:
-        toastError('custom.errors.unknownOtpType', this.type);
+        toastError('base.errors.unknownOtpType', this.type);
         break;
       case 'auth':
         this.backHidden = false;
         this.backLocation = ['/login'];
-        this.backText = translate('custom.app.backLogin');
+        this.backText = translate('base.app.backLogin');
         break;
     }
   },
@@ -154,7 +154,7 @@ export default {
       if (this.$refs.otp.validate()) {
         switch (this.type.toLowerCase()) {
           default:
-            toastError('custom.errors.unknownOtpType', this.type);
+            toastError('base.errors.unknownOtpType', this.type);
             break;
           case 'auth':
             this.otpAuth();
@@ -168,7 +168,7 @@ export default {
         if (confirmed) {
           alert('resend code');
         }
-      }, translate('custom.otp.resendConfirmationTitle'), translate('custom.otp.resendConfirmationMessage'), {
+      }, translate('base.otp.resendConfirmationTitle'), translate('base.otp.resendConfirmationMessage'), {
         color: 'accent'
       })
     },

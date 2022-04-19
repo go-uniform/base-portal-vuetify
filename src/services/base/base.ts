@@ -1,6 +1,6 @@
 import {bus} from './bus';
 import {auth} from './auth';
-import {toastError, toastSuccess} from '@/plugins/vuetify';
+import {toastError, toastSuccess, translate} from '@/plugins/vuetify';
 import {IStubScenario} from './stub';
 import {
   IErrorResponse,
@@ -250,7 +250,7 @@ export const baseTableHeaders = (repository: IRepository<any>): object[] => {
         }
       }
       response.push({
-        text: header.title ?? 'Unknown',
+        text: translate(header.title) ?? 'Unknown',
         align: header.align ?? EnumHeaderAlign.Start,
         sortable: header.sortable ?? (!!value),
         filterable: header.filterable ?? false,

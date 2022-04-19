@@ -69,8 +69,8 @@ export const toastCustom = (type: string, text: string, ...args: any[]) => {
 export const deleteConfirmation = (callback: any) => {
   bus.publish('confirm', {
     callback: callback,
-    title: 'custom.app.deleteConfirmationTitle',
-    body: 'custom.app.deleteConfirmationMessage',
+    title: 'base.app.deleteConfirmationTitle',
+    body: 'base.app.deleteConfirmationMessage',
     options: {
       color: 'error'
     },
@@ -95,13 +95,15 @@ export const formatString = (text: string, ...args: any[]) => {
   });
 };
 
-export const translate = (text: string, ...args: any[]) => {
+export const translate = (text: string | null | undefined, ...args: any[]): string => {
   if (!text) {
-    return text;
+    return '';
   }
   let key = null;
   if (text.startsWith('$vuetify.')) {
     key = `${text}`;
+  } else if (text.startsWith('base.')) {
+    key = `$vuetify.${text}`;
   } else if (text.startsWith('custom.')) {
     key = `$vuetify.${text}`;
   }
@@ -110,15 +112,6 @@ export const translate = (text: string, ...args: any[]) => {
     if (translated !== key && !translated.startsWith('$vuetify.')) {
       text = translated;
     }
-  }
-  return text;
-};
-
-export const translateRaw = (text: string, ...args: any[]) => {
-  const key = `$vuetify.raw.${text}`;
-  const translated = instance.framework.lang.t(key, ...args);
-  if (translated !== key && !translated.startsWith('$vuetify.')) {
-    text = translated;
   }
   return text;
 };
@@ -157,6 +150,6 @@ Vue.filter('datetime', (value: any) => {
 });
 
 // set main application title
-document.title = translate('custom.app.title');
+document.title = translate('base.app.title');
 
 export default instance;

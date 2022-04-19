@@ -44,7 +44,7 @@
     >
 
       <div
-        v-html="translate('custom.cookieConsent.pageHtml')"
+        v-html="translate('base.cookieConsent.pageHtml')"
       >
       </div>
       <div
@@ -77,11 +77,11 @@ export default {
     crumbs: [
       {
         icon: 'mdi-home',
-        title: 'custom.home.pageTitle',
+        title: 'base.home.pageTitle',
         location: '/',
       },
       {
-        title: 'custom.cookieConsent.pageTitle',
+        title: 'base.cookieConsent.pageTitle',
       }
     ],
   }),

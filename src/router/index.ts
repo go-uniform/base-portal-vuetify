@@ -14,7 +14,7 @@ const routes: Array<RouteConfig> = [
     name: 'home',
     component: Home,
     meta: {
-      title: 'custom.home.pageTitle',
+      title: 'base.home.pageTitle',
       permissions: [],
     }
   },
@@ -23,7 +23,7 @@ const routes: Array<RouteConfig> = [
     name: 'login',
     component: () => import('../views/Login.vue'),
     meta: {
-      title: 'custom.login.pageTitle',
+      title: 'base.login.pageTitle',
       public: true,
     }
   },
@@ -32,7 +32,7 @@ const routes: Array<RouteConfig> = [
     name: 'password-reset',
     component: () => import('../views/PasswordReset.vue'),
     meta: {
-      title: 'custom.passwordReset.pageTitle',
+      title: 'base.passwordReset.pageTitle',
       public: true,
     }
   },
@@ -41,7 +41,7 @@ const routes: Array<RouteConfig> = [
     name: 'logout',
     component: () => import('../views/Logout.vue'),
     meta: {
-      title: 'custom.logout.pageTitle',
+      title: 'base.logout.pageTitle',
       public: true,
     }
   },
@@ -50,7 +50,7 @@ const routes: Array<RouteConfig> = [
     name: 'otp',
     component: () => import('../views/Otp.vue'),
     meta: {
-      title: 'custom.otp.pageTitle',
+      title: 'base.otp.pageTitle',
       public: true,
     }
   },
@@ -59,7 +59,7 @@ const routes: Array<RouteConfig> = [
     name: 'cookie-policy',
     component: () => import('../views/CookiePolicy.vue'),
     meta: {
-      title: 'custom.cookieConsent.pageTitle',
+      title: 'base.cookieConsent.pageTitle',
       public: true
     }
   },
@@ -72,7 +72,7 @@ routes.push({
   name: 'not-found',
   component: () => import('../views/NotFound.vue'),
   meta: {
-    title: 'custom.notFound.pageTitle',
+    title: 'base.notFound.pageTitle',
     public: true
   }
 });
@@ -98,9 +98,11 @@ const AuthGuard: NavigationGuard = (to, from, next) => {
 router.beforeEach(AuthGuard);
 
 const PageTitle: NavigationGuard = (to, from, next) => {
-  let title = translate('custom.app.title');
+  let title = translate('base.app.title');
   if (to.meta && to.meta.title) {
     if (!to.meta.repository) {
+      title = `${to.meta.title} | ${title}`;
+    } else {
       title = `${translate(to.meta.title)} | ${title}`;
     }
   }
