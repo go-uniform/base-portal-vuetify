@@ -14,7 +14,7 @@
       >
         mdi-plus-box
       </v-icon>
-      {{ formatString('New') }}
+      {{ formatString('custom.entityList.buttonNew') }}
     </v-btn>
 
     <slot
@@ -29,8 +29,10 @@
           <v-expansion-panel-header
             color="primary white--text"
           >
-            <strong>
-              {{ formatString('Filters') }}
+            <strong
+              class="text-uppercase"
+            >
+              {{ formatString('custom.entityFilters.title') }}
             </strong>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -216,7 +218,7 @@
                         >
                           mdi-delete
                         </v-icon>
-                        {{ formatString('Delete') }}
+                        {{ formatString('custom.entityList.buttonDelete') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -235,7 +237,7 @@
                         >
                           mdi-pencil
                         </v-icon>
-                        {{ formatString('Edit') }}
+                        {{ formatString('custom.entityList.buttonEdit') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -254,7 +256,7 @@
                         >
                           mdi-eye
                         </v-icon>
-                        {{ formatString('View') }}
+                        {{ formatString('custom.entityList.buttonView') }}
                       </v-btn>
                     </slot>
                   </v-list-item>
@@ -456,7 +458,7 @@ export default {
         });
       }
       this.headers.push({
-        text: 'Actions',
+        text: formatString('custom.entityList.headerActions'),
         value: 'actions',
         align: 'end',
         sortable: false,
@@ -499,7 +501,7 @@ export default {
       return [
         {
           icon: 'mdi-home',
-          title: formatString('Home'),
+          title: formatString('custom.home.pageTitle'),
           location: '/',
         },
         {
@@ -516,7 +518,7 @@ export default {
         {
           icon: 'mdi-plus-box',
           color: 'success',
-          title: formatString('New'),
+          title: formatString('custom.entityList.buttonNew'),
           location: `${this.repository.addPage}`,
         },
       ];
@@ -536,7 +538,7 @@ export default {
             this.load();
           });
         }
-      }, 'Are you sure?', formatString('You are about to {0} {1} record(s), are you sure you want to do this?', action.title.toLowerCase(), ids.length), {
+      }, 'custom.entityList.bulkActionConfirmationTitle', formatString('custom.entityList.bulkActionConfirmationMessage', formatString(action.title).toLowerCase(), ids.length), {
         color: action.color ?? 'info',
       })
     }

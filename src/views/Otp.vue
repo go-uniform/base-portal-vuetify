@@ -24,7 +24,7 @@
           <v-col
             cols="12"
           >
-            Enter your one-time-pin
+            {{ formatString('custom.otp.title') }}
           </v-col>
         </v-row>
         <v-row>
@@ -52,7 +52,7 @@
               class="mr-4"
               @click="validate"
             >
-              {{ formatString('Validate') }}
+              {{ formatString('custom.otp.validate') }}
             </v-btn>
           </v-col>
           <v-col
@@ -65,7 +65,7 @@
               class="mr-4"
               @click="resend"
             >
-              {{ formatString('Resend') }}
+              {{ formatString('custom.otp.resend') }}
             </v-btn>
           </v-col>
           <v-col
@@ -73,7 +73,7 @@
             v-if="!backHidden"
           >
             <a :href="backLocation">
-              {{ formatString(backText) }}
+              {{ backText }}
             </a>
           </v-col>
         </v-row>
@@ -125,7 +125,7 @@ export default {
       case 'auth':
         this.backHidden = false;
         this.backLocation = ['/login'];
-        this.backText = 'Back to login';
+        this.backText = formatString('custom.app.backLogin');
         break;
     }
   },

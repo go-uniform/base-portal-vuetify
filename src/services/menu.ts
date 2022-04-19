@@ -1,22 +1,23 @@
 import {users} from '@/services/repositories/users';
-import {userRoles} from '@/services/repositories/userRoles';
+import {userRoles} from '@/services/repositories/user-roles';
 import {IRepository} from '@/services/base/global.interfaces';
+import {formatString} from '@/plugins/vuetify';
 
 const generateMenuItem = <T>(repository: IRepository<T>): object => {
   return {
-    title: repository.title.plural,
+    title: formatString(repository.title.plural),
     location: repository.listPage,
   };
 }
 
 export const mainMenuItems = [
   {
-    title: 'Home',
+    title: formatString('custom.home.pageTitle'),
     icon: 'mdi-home',
     location: '/'
   },
   {
-    title: 'Users',
+    title: formatString('Users'),
     icon: 'mdi-account',
     children: [
       generateMenuItem(users),

@@ -70,7 +70,7 @@
               v-bind="attrs"
               v-on="on"
             >
-              {{ formatString('Bulk') }}
+              {{ formatString('custom.entityList.buttonBulk') }}
               <v-icon
                 right
                 dark

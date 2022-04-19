@@ -24,7 +24,7 @@
           <v-col
             cols="12"
           >
-            Log into your account
+            {{ formatString('custom.login.title') }}
           </v-col>
         </v-row>
         <v-row>
@@ -32,7 +32,7 @@
             cols="12"
           >
             <v-text-field
-              :label="formatString('Username or Email')"
+              :label="formatString('custom.login.identifier')"
               v-model="email"
               :rules="[rules.required, rules.email]"
               autofocus
@@ -46,7 +46,7 @@
               :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[rules.required]"
               :type="passwordShow ? 'text' : 'password'"
-              :label="formatString('Password')"
+              :label="formatString('custom.login.password')"
               @click:append="passwordShow = !passwordShow"
             ></v-text-field>
           </v-col>
@@ -62,13 +62,13 @@
               class="mr-4"
               @click="login"
             >
-              {{ formatString('Login') }}
+              {{ formatString('custom.login.button') }}
             </v-btn>
           </v-col>
           <v-col
             cols="12"
           >
-            <a href="/password-reset">Forgot password?</a>
+            <a href="/password-reset">{{ formatString('custom.login.forgot') }}</a>
           </v-col>
         </v-row>
       </v-container>
@@ -81,6 +81,7 @@
 <script>
 import {auth} from '@/services/base/auth';
 import EmptyLayout from '../layouts/Empty';
+import {validations} from '../services/base/validations';
 
 export default {
   name: 'LoginView',
@@ -91,8 +92,7 @@ export default {
     password: null,
     passwordShow: false,
     rules: {
-      required: value => !!value || 'Required.',
-      email: value => !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'Must be a valid email address'
+      required: validations.required(false),
     },
   }),
   methods: {

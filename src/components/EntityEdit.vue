@@ -28,7 +28,7 @@
             <v-expansion-panel-header
               color="primary white--text"
             >
-              <strong>{{ section.title }}</strong>
+              <strong>{{ formatString(section.title) }}</strong>
             </v-expansion-panel-header>
             <v-expansion-panel-content
               class="pa-8 fill-height"
@@ -71,6 +71,7 @@
                       >
                         <v-textarea
                           v-model="item[fieldKey]"
+                          :label="formatString(field.label)"
                           :counter="field.length"
                           :maxlength="field.length"
                           :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
@@ -115,7 +116,7 @@
           >
             mdi-content-save
           </v-icon>
-          {{ formatString('Save') }}
+          {{ formatString('custom.app.save') }}
         </v-btn>
       </v-col>
       <v-col
@@ -134,7 +135,7 @@
           >
             mdi-close-circle
           </v-icon>
-          {{ formatString('Cancel') }}
+          {{ formatString('custom.app.cancel') }}
         </v-btn>
       </v-col>
     </v-row>
@@ -144,6 +145,7 @@
 
 <script>
 import {formatString} from '../plugins/vuetify';
+import {validations} from '../services/base/validations';
 
 export default {
   name: 'entity-edit',
@@ -158,21 +160,9 @@ export default {
     linkItems: {
     },
     rules: {
-      required: (optional) => {
-        return value => optional === true || !!value || 'May not be empty.';
-      },
-      pattern: (expression, message) => {
-        if (expression && message) {
-          return value => !value || expression.test(value) || message;
-        }
-        return () => true;
-      },
-      length: (max) => {
-        if (max) {
-          return value => !value || value.length <= max || formatString('May not be more than {0} characters long.', max);
-        }
-        return () => true;
-      }
+      required: validations.required,
+      pattern: validations.pattern,
+      length: validations.length,
     }
   }),
   methods: {
@@ -226,7 +216,7 @@ export default {
         return [
           {
             icon: 'mdi-home',
-            title: formatString('Home'),
+            title: formatString('custom.home.pageTitle'),
             location: '/',
           },
           {
@@ -234,18 +224,18 @@ export default {
             location: this.repository.listPage,
           },
           {
-            title: formatString('View'),
+            title: formatString('custom.entityEdit.view'),
             location: `${this.repository.viewPagePrefix}/${this.$route.params.id}`,
           },
           {
-            title: formatString('Edit'),
+            title: formatString('custom.entityEdit.edit'),
           },
         ];
       }
       return [
         {
           icon: 'mdi-home',
-          title: formatString('Home'),
+          title: formatString('custom.home.pageTitle'),
           location: '/',
         },
         {
@@ -253,7 +243,7 @@ export default {
           location: this.repository.listPage,
         },
         {
-          title: formatString('New'),
+          title: formatString('custom.entityEdit.new'),
         },
       ];
     },
@@ -267,7 +257,7 @@ export default {
         {
           icon: 'mdi-content-save',
           color: 'success',
-          title: formatString('Save'),
+          title: formatString('custom.app.save'),
           callback: () => {
             this.save();
           }
@@ -276,7 +266,7 @@ export default {
           icon: 'mdi-close-circle',
           class: 'white--text',
           color: 'grey',
-          title: formatString('Cancel'),
+          title: formatString('custom.app.cancel'),
           location: cancelUrl,
         },
       ];

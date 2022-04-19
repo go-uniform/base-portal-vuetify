@@ -24,7 +24,7 @@
           <v-col
             cols="12"
           >
-            Reset password
+            {{ formatString('custom.passwordReset.title') }}
           </v-col>
         </v-row>
         <v-row>
@@ -32,7 +32,7 @@
             cols="12"
           >
             <v-text-field
-              :label="formatString('Username or Email')"
+              :label="formatString('custom.passwordReset.identifier')"
               v-model="email"
               :rules="[rules.required, rules.email]"
               autofocus
@@ -50,13 +50,13 @@
               class="mr-4"
               @click="reset"
             >
-              {{ formatString('Reset') }}
+              {{ formatString('custom.passwordReset.button') }}
             </v-btn>
           </v-col>
           <v-col
             cols="12"
           >
-            <a href="/login">Back to login</a>
+            <a href="/login">{{ formatString('custom.app.backLogin') }}</a>
           </v-col>
         </v-row>
       </v-container>
@@ -68,6 +68,7 @@
 
 <script>
 import EmptyLayout from '../layouts/Empty';
+import {validations} from '../services/base/validations';
 
 export default {
   name: 'PasswordResetView',
@@ -78,8 +79,7 @@ export default {
     password: null,
     passwordShow: false,
     rules: {
-      required: value => !!value || 'Required.',
-      email: value => !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'Must be a valid email address'
+      required: validations.required(false),
     },
   }),
   methods: {

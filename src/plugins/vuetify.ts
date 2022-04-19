@@ -69,8 +69,8 @@ export const toastCustom = (type: string, text: string, ...args: any[]) => {
 export const deleteConfirmation = (callback: any) => {
   bus.publish('confirm', {
     callback: callback,
-    title: 'Are you sure?',
-    body: 'Are you sure you wish to delete the selected record?',
+    title: 'custom.app.deleteConfirmationTitle',
+    body: 'custom.app.deleteConfirmationMessage',
     options: {
       color: 'error'
     },
@@ -88,7 +88,7 @@ export const confirmation = (callback: any, title: string, body: string, options
 
 // __ is shorthand for format string function
 export const formatString = (text: string, ...args: any[]) => {
-  let key = `${text}`;
+  let key = text;
   if (text.startsWith('$vuetify.')) {
     key = `${text}`;
   } else if (text.startsWith('custom.')) {
@@ -98,7 +98,7 @@ export const formatString = (text: string, ...args: any[]) => {
   } else {
     key = `$vuetify.raw.${text}`;
   }
-  const translated = instance.framework.lang.t(key);
+  const translated = instance.framework.lang.t(key, ...args);
   if (translated !== key && !translated.startsWith('$vuetify.')) {
     text = translated;
   }

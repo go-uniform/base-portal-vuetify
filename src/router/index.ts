@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import {NavigationGuard} from 'vue-router/types/router';
 import {auth} from '@/services/base/auth';
 import {crudRoutes} from '@/services/crud';
+import {formatString} from '@/plugins/vuetify';
 
 Vue.use(VueRouter)
 
@@ -13,6 +14,7 @@ const routes: Array<RouteConfig> = [
     name: 'home',
     component: Home,
     meta: {
+      title: 'custom.home.pageTitle',
       permissions: [],
     }
   },
@@ -21,6 +23,7 @@ const routes: Array<RouteConfig> = [
     name: 'login',
     component: () => import('../views/Login.vue'),
     meta: {
+      title: 'custom.login.pageTitle',
       public: true,
     }
   },
@@ -29,6 +32,7 @@ const routes: Array<RouteConfig> = [
     name: 'password-reset',
     component: () => import('../views/PasswordReset.vue'),
     meta: {
+      title: 'custom.passwordReset.pageTitle',
       public: true,
     }
   },
@@ -37,6 +41,7 @@ const routes: Array<RouteConfig> = [
     name: 'logout',
     component: () => import('../views/Logout.vue'),
     meta: {
+      title: 'custom.logout.pageTitle',
       public: true,
     }
   },
@@ -45,6 +50,7 @@ const routes: Array<RouteConfig> = [
     name: 'otp',
     component: () => import('../views/Otp.vue'),
     meta: {
+      title: 'custom.otp.pageTitle',
       public: true,
     }
   },
@@ -53,6 +59,7 @@ const routes: Array<RouteConfig> = [
     name: 'cookie-policy',
     component: () => import('../views/CookiePolicy.vue'),
     meta: {
+      title: 'custom.cookieConsent.pageTitle',
       public: true
     }
   },
@@ -65,6 +72,7 @@ routes.push({
   name: 'not-found',
   component: () => import('../views/NotFound.vue'),
   meta: {
+    title: 'custom.notFound.pageTitle',
     public: true
   }
 });
@@ -88,5 +96,15 @@ const AuthGuard: NavigationGuard = (to, from, next) => {
   next();
 };
 router.beforeEach(AuthGuard);
+
+const PageTitle: NavigationGuard = (to, from, next) => {
+  let title = formatString('custom.app.title');
+  if (to.meta && to.meta.title) {
+    title = `${formatString(to.meta.title)} | ${title}`;
+  }
+  document.title = title;
+  next();
+};
+router.beforeEach(PageTitle);
 
 export default router

@@ -13,7 +13,11 @@
       class="main-menu-header"
     >
       <v-list-item-content v-if="!mini">
-        <v-list-item-title>MAIN MENU</v-list-item-title>
+        <v-list-item-title
+          class="text-uppercase"
+        >
+          {{ formatString('custom.app.mainMenu') }}
+        </v-list-item-title>
       </v-list-item-content>
       <v-list-item-icon
         @click.stop="toggle"

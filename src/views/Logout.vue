@@ -2,11 +2,12 @@
 
   <empty-layout>
 
-    <p
+    <div
       class="pa-8 text-center"
+      v-html="formatString('custom.logout.pageHtml')"
     >
-      You have been successfully logged out of the system. <a href="/login">Go back to login</a>
-    </p>
+    </div>
+    <a href="/login">{{ formatString('custom.app.backLogin') }}</a>
 
   </empty-layout>
 

@@ -65,11 +65,12 @@ export default {
           this.$vuetify.lang.current = lang;
           this.language = lang;
           this.languageText = languages.filter(language => language.value === this.language)[0].text;
-          console.log(this.languageText);
 
           if (window && window.localStorage) {
             window.localStorage.setItem('lang', lang);
           }
+
+          location.reload();
         }
       }
     },
@@ -79,7 +80,6 @@ export default {
     this.language = this.$vuetify.lang.current;
     this.languages = languages;
     this.languageText = languages.filter(language => language.value === this.language)[0].text;
-    console.log(this.languageText);
   }
 }
 </script>

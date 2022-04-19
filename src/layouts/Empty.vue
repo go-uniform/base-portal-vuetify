@@ -11,11 +11,16 @@
         justify-center
         align-center
         fill-height
+        column
       >
 
         <slot></slot>
 
       </v-layout>
+      <div
+        class="footer-placeholder"
+      >
+      </div>
 
     </v-main>
     <main-footer/>
@@ -29,6 +34,11 @@
 </template>
 
 <style lang="scss">
+// since footer is floating we need to ensure that we hold a space for it to float into once fully scrolled down
+.footer-placeholder {
+  height: 62px;
+}
+
 form.mw-320 {
   max-width: 320px;
 }

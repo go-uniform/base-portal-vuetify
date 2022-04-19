@@ -94,7 +94,7 @@
           >
             mdi-delete
           </v-icon>
-          {{ formatString('Delete') }}
+          {{ formatString('custom.entityView.delete') }}
         </v-btn>
       </v-col>
       <v-col
@@ -114,7 +114,7 @@
           >
             mdi-pencil
           </v-icon>
-          {{ formatString('Edit') }}
+          {{ formatString('custom.entityView.edit') }}
         </v-btn>
       </v-col>
       <v-col
@@ -134,7 +134,7 @@
           >
             mdi-view-list
           </v-icon>
-          {{ formatString('List') }}
+          {{ formatString('custom.entityView.list') }}
         </v-btn>
       </v-col>
     </v-row>
@@ -216,7 +216,7 @@ export default {
       return [
         {
           icon: 'mdi-home',
-          title: formatString('Home'),
+          title: formatString('custom.home.pageTitle'),
           location: '/',
         },
         {
@@ -224,7 +224,7 @@ export default {
           location: this.repository.listPage,
         },
         {
-          title: formatString('View'),
+          title: formatString('custom.entityView.view'),
         },
       ];
     },
@@ -234,7 +234,7 @@ export default {
         {
           icon: 'mdi-delete',
           color: 'error',
-          title: formatString('Delete'),
+          title: formatString('custom.entityView.delete'),
           callback: () => {
             this.remove(this.item);
           }
@@ -242,7 +242,7 @@ export default {
         {
           icon: 'mdi-pencil',
           color: 'warning',
-          title: formatString('Edit'),
+          title: formatString('custom.entityView.edit'),
           callback: () => {
             this.edit(this.item);
           }
@@ -250,7 +250,7 @@ export default {
         {
           icon: 'mdi-view-list',
           color: 'info',
-          title: formatString('List'),
+          title: formatString('custom.entityView.list'),
           callback: () => {
             this.list();
           }

@@ -19,7 +19,7 @@
         <v-toolbar-title
           class="white--text"
         >
-          {{ title }}
+          {{ formatString(title) }}
         </v-toolbar-title>
 
       </v-toolbar>
@@ -27,7 +27,7 @@
         v-show="!!message"
         class="pa-4"
       >
-        {{ message }}
+        {{ formatString(message) }}
       </v-card-text>
       <v-card-actions
         class="pt-0"
@@ -46,7 +46,7 @@
           text
           @click.native="cancel"
         >
-          {{ formatString(options.cancelTitle) }}
+          {{ formatString(options.disagreeTitle) }}
         </v-btn>
 
       </v-card-actions>
@@ -72,8 +72,8 @@ export default {
       color: 'primary',
       width: 290,
       zIndex: 200,
-      agreeTitle: 'Yes',
-      cancelTitle: 'No',
+      agreeTitle: 'custom.app.agreeTitle',
+      disagreeTitle: 'custom.app.disagreeTitle',
     }
   }),
 

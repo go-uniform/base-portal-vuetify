@@ -1,6 +1,6 @@
-import {userRoles} from '@/services/repositories/userRoles';
+import {userRoles} from '@/services/repositories/user-roles';
 import {IRepository} from '@/services/base/global.interfaces';
-import {EnumFieldType} from '@/services/base/global.enums';
+import {EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {
   baseBulkStub,
   baseCreateStub,
@@ -8,12 +8,13 @@ import {
   baseListStub,
   baseReadStub,
   baseUpdateStub,
+  generateUuid,
   stubScenario,
 } from '@/services/base/stub';
 
 const StubList: User[] = [
   {
-    id: '624df08c51e0aff721208a9c',
+    id: generateUuid(),
     firstName: 'Justin',
     lastName: 'Robertson',
     username: 'justin@somewhere.co.za',
@@ -21,8 +22,8 @@ const StubList: User[] = [
     password: 'password',
     userRoleId: '624df0929bc786ddf868f7e8',
     userRoleLabel: 'Administrators',
-    modifiedAt: new Date('2022-04-06T08:31:04.000Z'),
-    createdAt: new Date('2022-04-06T08:31:04.000Z'),
+    modifiedAt: new Date(),
+    createdAt: new Date(),
   },
 ];
 const StubRecord: User = StubList[0];
@@ -77,7 +78,8 @@ export const users: IRepository<User> = {
       label: 'Email',
       type: EnumFieldType.Text,
       pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      patternMessage: 'Must be a valid e-mail address.',
+      patternMessage: 'custom.validations.email',
+      optional: true,
     },
     userRoleId: {
       label: 'User Role',
@@ -121,6 +123,7 @@ export const users: IRepository<User> = {
     },
     {
       fieldKey: 'createdAt',
+      align: EnumHeaderAlign.End,
     },
   ],
   sections: [
@@ -142,7 +145,7 @@ export const users: IRepository<User> = {
     {
       color: 'error',
       icon: 'mdi-delete',
-      title: 'Delete',
+      title: 'custom.entityList.buttonDelete',
       key: 'delete'
     }
   ],

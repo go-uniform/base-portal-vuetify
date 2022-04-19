@@ -23,22 +23,22 @@ const StubList: UserRole[] = [
     id: '624df0929bc786ddf868f7e8',
     name: 'Administrators',
     description: 'This user role has the highest privileges in the system and can do pretty much anything',
-    modifiedAt: new Date('2022-04-06T08:31:04.000Z'),
-    createdAt: new Date('2022-04-06T08:31:04.000Z'),
+    modifiedAt: new Date(),
+    createdAt: new Date(),
   },
   {
     id: '625ae8cdc7cee73e4d177ecc',
     name: 'Editors',
     description: 'This user role can edit most data',
-    modifiedAt: new Date('2022-04-08T08:31:04.000Z'),
-    createdAt: new Date('2022-04-08T08:31:04.000Z'),
+    modifiedAt: new Date(),
+    createdAt: new Date(),
   },
   {
     id: '625ae8e197304b98b929f1f7',
     name: 'Viewers',
     description: 'This user role can view most data',
-    modifiedAt: new Date('2022-04-08T08:31:04.000Z'),
-    createdAt: new Date('2022-04-08T08:31:04.000Z'),
+    modifiedAt: new Date(),
+    createdAt: new Date(),
   },
 ];
 const StubRecord: UserRole = StubList[0];
@@ -111,7 +111,7 @@ export const userRoles: IRepository<UserRole> = {
     {
       color: 'error',
       icon: 'mdi-delete',
-      title: 'Delete',
+      title: 'custom.entityList.buttonDelete',
       key: 'delete'
     }
   ],

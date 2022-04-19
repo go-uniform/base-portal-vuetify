@@ -2,11 +2,12 @@
 
   <empty-layout>
 
-    <p
+    <div
       class="pa-8 text-center"
+      v-html="formatString('custom.notFound.pageHtml')"
     >
-      The page you are looking for can't be found. <a href="/">Go back to safety</a>
-    </p>
+    </div>
+    <a href="/">{{ formatString('custom.app.backSafety') }}</a>
 
   </empty-layout>
 
