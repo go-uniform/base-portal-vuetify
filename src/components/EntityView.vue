@@ -1,6 +1,8 @@
 <template>
 
-  <div>
+  <div
+    class="fill-width"
+  >
     <v-row
       class="mb-2"
     >

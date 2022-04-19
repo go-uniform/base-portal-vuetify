@@ -27,7 +27,9 @@
         v-show="!!message"
         class="pa-4"
       >
-        {{ translate(message) }}
+        <div
+          v-html="translate(message)"
+        ></div>
       </v-card-text>
       <v-card-actions
         class="pt-0"

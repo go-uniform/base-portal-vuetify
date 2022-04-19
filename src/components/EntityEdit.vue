@@ -2,7 +2,7 @@
 
   <v-form
     ref="form"
-    class="pa-8"
+    class="fill-width"
   >
     <v-row
       class="mb-2"

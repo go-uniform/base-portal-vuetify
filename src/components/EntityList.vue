@@ -1,6 +1,8 @@
 <template>
 
-  <div>
+  <div
+    class="fill-width"
+  >
     <v-btn
       class="mb-8 hidden-md-and-up"
       color="success"

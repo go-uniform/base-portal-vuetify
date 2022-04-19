@@ -55,6 +55,8 @@ phrases.custom = {
     title: 'Voer jou eenmalige pin (OTP) in',
     validate: 'Valideer',
     resend: 'Stuur Weer',
+    resendConfirmationTitle: 'Is jy seker?',
+    resendConfirmationMessage: 'Herstuur sal \'n nuwe kode genereer en die voorheen gestuurde kode ongeldig maak, gebruik dit slegs as jy nie die kode betyds ontvang het nie. Is jy steeds seker jy wil weer vir jouself \'n nuwe kode stuur?',
   },
   passwordReset: {
     pageTitle: 'Herstel Wagwoord',

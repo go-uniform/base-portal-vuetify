@@ -59,6 +59,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+.fill-width {
+  width: 100%;
+}
 a i.v-icon.v-icon {
   color: inherit;
 }

@@ -15,12 +15,12 @@
       >
 
         <slot></slot>
+        <div
+          class="footer-placeholder"
+        >
+        </div>
 
       </v-layout>
-      <div
-        class="footer-placeholder"
-      >
-      </div>
 
     </v-main>
     <main-footer/>

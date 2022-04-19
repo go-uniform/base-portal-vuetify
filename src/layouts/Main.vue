@@ -14,15 +14,32 @@
         :bulk-actions="bulkActions"
         :bulk-action-handler="bulkActionHandler"
       />
-      <div
+      <v-layout
+        :fill-height="fillHeight"
+        :align-start="alignStart"
+        :align-center="alignCenter"
+        :align-end="alignEnd"
+        :align-baseline="alignBaseline"
+        :align-content-start="alignContentStart"
+        :align-content-center="alignContentCenter"
+        :align-content-end="alignContentEnd"
+        :align-content-space-around="alignContentSpaceAround"
+        :align-content-space-between="alignContentSpaceBetween"
+        :justify-start="justifyStart"
+        :justify-center="justifyCenter"
+        :justify-end="justifyEnd"
+        :justify-space-around="justifySpaceAround"
+        :justify-space-between="justifySpaceBetween"
+        :row="row"
+        :column="column"
         class="pa-8"
       >
         <slot></slot>
-      </div>
-      <div
-        class="footer-placeholder"
-      >
-      </div>
+        <div
+          class="footer-placeholder"
+        >
+        </div>
+      </v-layout>
 
     </v-main>
     <main-footer/>
@@ -61,10 +78,53 @@ export default Vue.extend({
   components: {ToastBar, ConfirmBox, ConnectionLost, MainToolbar, MainHeader, MainFooter, MainMenu, CookieConsent},
 
   props: {
+    alignStart: Boolean,
+    alignEnd: Boolean,
+    alignBaseline: Boolean,
+    alignContentStart: Boolean,
+    alignContentCenter: Boolean,
+    alignContentEnd: Boolean,
+    alignContentSpaceAround: Boolean,
+    alignContentSpaceBetween: Boolean,
+
+    justifyCenter: Boolean,
+    justifyEnd: Boolean,
+    justifySpaceAround: Boolean,
+    justifySpaceBetween: Boolean,
+
+    fillHeight: {
+      default: true,
+      type: Boolean,
+    },
+    row: Boolean,
+
     crumbs: Array,
     actions: Array,
     bulkActions: Array,
     bulkActionHandler: Function,
+  },
+
+  computed: {
+    column() {
+      return !this.row;
+    },
+    justifyStart() {
+      return !this.justifyCenter
+        && !this.justifyEnd
+        && !this.justifySpaceAround
+        && !this.justifySpaceBetween;
+    },
+    alignCenter() {
+      return !this.alignStart
+        && !this.alignEnd
+        && !this.alignBaseline
+        && !this.alignContentStart
+        && !this.alignContentCenter
+        && !this.alignContentEnd
+        && !this.alignContentSpaceAround
+        && !this.alignContentSpaceBetween;
+    },
+
   },
 
   methods: {

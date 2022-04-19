@@ -88,6 +88,7 @@
 import {auth} from '../services/base/auth';
 import {confirmation, translate, toastError} from '../plugins/vuetify';
 import EmptyLayout from '../layouts/Empty';
+import {validations} from '../services/base/validations';
 
 export default {
   name: 'OtpView',
@@ -104,7 +105,7 @@ export default {
     otp: null,
     valid: true,
     rules: {
-      required: (value) => !!value || 'Required.',
+      required: validations.required(false),
     },
   }),
 
@@ -167,7 +168,7 @@ export default {
         if (confirmed) {
           alert('resend code');
         }
-      }, 'Are you sure?', translate('Resending will generate a new code and invalidate the previously sent code, only use this if you have not received the code in a timely fashion. Are you still sure you wish to resend yourself a new code?'), {
+      }, translate('custom.otp.resendConfirmationTitle'), translate('custom.otp.resendConfirmationMessage'), {
         color: 'accent'
       })
     },

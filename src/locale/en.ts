@@ -55,6 +55,8 @@ phrases.custom = {
     title: 'Enter your one time pin (OTP)',
     validate: 'Validate',
     resend: 'Resend',
+    resendConfirmationTitle: 'Are you sure?',
+    resendConfirmationMessage: 'Resending will generate a new code and invalidate the previously sent code, only use this if you have not received the code in a timely fashion. Are you still sure you wish to resend yourself a new code?',
   },
   passwordReset: {
     pageTitle: 'Reset Password',
