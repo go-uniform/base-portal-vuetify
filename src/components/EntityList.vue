@@ -18,125 +18,18 @@
       >
         mdi-plus-box
       </v-icon>
-      {{ translate('base.entityList.buttonNew') }}
+      {{ translate('base.entityList.new') }}
 
     </v-btn>
-
     <slot
       name="filters"
-      v-if="repository.filters && repository.filters.length > 0 || repository.freeTextSearch"
     >
-
-      <v-expansion-panels
-        class="justify-start mb-8"
-        v-model="filerPanelValue"
-      >
-
-        <v-expansion-panel>
-
-          <v-expansion-panel-header
-            color="primary white--text"
-          >
-            <strong
-              class="text-uppercase"
-            >
-              {{ translate('base.entityFilters.title') }}
-            </strong>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-
-            <v-row
-              class="pt-8 pb-0"
-            >
-              <v-col
-                cols="12"
-                md="6"
-              >
-                <v-text-field
-                  v-if="repository.freeTextSearch"
-                  v-model="freeTextSearch"
-                  label="Search Terms"
-                  filled
-                >
-                </v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                md="6"
-              >
-                <v-menu
-                  v-model="datePicker"
-                  :close-on-content-click="false"
-                  transition="scale-transition"
-                  offset-y
-                  max-width="290px"
-                  min-width="290px"
-                >
-                  <template
-                    v-slot:activator="{ on, attrs }"
-                  >
-                    <v-text-field
-                      :value="dates.join(' - ')"
-                      label="Created At"
-                      readonly
-                      clearable
-                      filled
-                      v-bind="attrs"
-                      v-on="on"
-                      @click:clear="dates = null"
-                    >
-                    </v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="dates"
-                    range
-                  >
-                  </v-date-picker>
-                </v-menu>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col
-                cols="12"
-              >
-                <v-divider></v-divider>
-              </v-col>
-              <v-col
-                cols="6"
-                class="text-left"
-              >
-                <v-btn
-                  color="orange white--text"
-                  tile
-                  @click="reset"
-                >
-                  <v-icon>
-                    mdi-close-thick
-                  </v-icon>
-                  {{ translate('Reset') }}
-                </v-btn>
-              </v-col>
-              <v-col
-                cols="6"
-                class="text-right"
-              >
-                <v-btn
-                  color="success"
-                  tile
-                  @click="search"
-                >
-                  <v-icon>
-                    mdi-magnify
-                  </v-icon>
-                  {{ translate('Search') }}
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
+      <entity-list-filters
+        :repository="repository"
+        v-model="filters"
+        @change="load()"
+      />
     </slot>
-
     <v-data-table
       :show-select="showSelect"
       :items="records"
@@ -154,33 +47,7 @@
       >
 
         <slot
-          v-if="isLink(header)"
-          :set="field = repository.fields[header.value]"
-          :name="column"
-          :item="item"
-          :header="header"
-        >
-          <a
-            :key="index"
-            :href="`${field.linkRepository.viewPagePrefix}/${item.id}`"
-          >
-            {{ item[field.linkLabelFieldKey] }}
-          </a>
-        </slot>
-        <slot
-          v-else-if="column !== 'item.actions'"
-          :name="column"
-          :item="item"
-          :header="header"
-        >
-          <div
-            :key="index"
-          >
-            {{ doFormat(header, item) }}
-          </div>
-        </slot>
-        <slot
-          v-else-if="column === 'item.actions'"
+          v-if="column === 'item.actions'"
         >
           <div
             v-if="!$vuetify.breakpoint.mobile"
@@ -190,160 +57,63 @@
               name="actions.wrapper"
               :item="item"
             >
-              <v-menu>
-                <template
-                  v-slot:activator="{ on, attrs }"
-                >
-                  <v-btn
-                    color="primary"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon>
-                      mdi-dots-vertical
-                    </v-icon>
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item>
-                    <slot
-                      name="actions"
-                      :item="item"
-                    >
-                    </slot>
-                    <slot
-                      name="actions.delete"
-                      :item="item"
-                    >
-                      <v-btn
-                        class="ma-2"
-                        color="error"
-                        @click="remove(item)"
-                        :block="$vuetify.breakpoint.mobile"
-                        :large="$vuetify.breakpoint.mobile"
-                      >
-                        <v-icon
-                          class="mr-2"
-                        >
-                          mdi-delete
-                        </v-icon>
-                        {{ translate('base.entityList.buttonDelete') }}
-                      </v-btn>
-                    </slot>
-                    <slot
-                      name="actions.edit"
-                      :item="item"
-                    >
-                      <v-btn
-                        class="ma-2"
-                        color="warning"
-                        @click="edit(item)"
-                        :block="$vuetify.breakpoint.mobile"
-                        :large="$vuetify.breakpoint.mobile"
-                      >
-                        <v-icon
-                          class="mr-2"
-                        >
-                          mdi-pencil
-                        </v-icon>
-                        {{ translate('base.entityList.buttonEdit') }}
-                      </v-btn>
-                    </slot>
-                    <slot
-                      name="actions.view"
-                      :item="item"
-                    >
-                      <v-btn
-                        class="ma-2"
-                        color="info"
-                        @click="view(item)"
-                        :block="$vuetify.breakpoint.mobile"
-                        :large="$vuetify.breakpoint.mobile"
-                      >
-                        <v-icon
-                          class="mr-2"
-                        >
-                          mdi-eye
-                        </v-icon>
-                        {{ translate('base.entityList.buttonView') }}
-                      </v-btn>
-                    </slot>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
+              <button-menu
+                icon="mdi-dots-vertical"
+                :actions="actions"
+                :item="item"
+              />
             </slot>
           </div>
           <div
             v-else
             :key="index"
             class="pr-4"
+          >
+            <div
+              v-for="(action, actionIndex) in actions"
+              v-bind:key="actionIndex"
             >
-            <slot
-              name="actions"
-              :item="item"
-            >
-            </slot>
-            <slot
-              name="actions.delete"
-              :item="item"
-            >
-              <v-btn
-                class="ma-2"
-                color="error"
-                @click="remove(item)"
-                :block="$vuetify.breakpoint.mobile"
-                :large="$vuetify.breakpoint.mobile"
+              <slot
+                :name="action.name"
+                :item="item"
               >
-                <v-icon
-                  class="mr-2"
+                <v-btn
+                  class="ma-2"
+                  :color="action.color"
+                  @click="action.callback(item)"
+                  :block="$vuetify.breakpoint.mobile"
+                  :large="$vuetify.breakpoint.mobile"
                 >
-                  mdi-delete
-                </v-icon>
-                {{ translate('Delete') }}
-              </v-btn>
-            </slot>
-            <slot
-              name="actions.edit"
-              :item="item"
-            >
-              <v-btn
-                class="ma-2"
-                color="warning"
-                @click="edit(item)"
-                :block="$vuetify.breakpoint.mobile"
-                :large="$vuetify.breakpoint.mobile"
-              >
-                <v-icon
-                  class="mr-2"
-                >
-                  mdi-pencil
-                </v-icon>
-                {{ translate('Edit') }}
-              </v-btn>
-            </slot>
-            <slot
-              name="actions.view"
-              :item="item"
-            >
-              <v-btn
-                class="ma-2"
-                color="info"
-                @click="view(item)"
-                :block="$vuetify.breakpoint.mobile"
-                :large="$vuetify.breakpoint.mobile"
-              >
-                <v-icon
-                  class="mr-2"
-                >
-                  mdi-eye
-                </v-icon>
-                {{ translate('View') }}
-              </v-btn>
-            </slot>
+                  <v-icon
+                    class="mr-2"
+                    v-if="action.icon"
+                  >
+                    {{ action.icon }}
+                  </v-icon>
+                  {{ translate(action.title) }}
+                </v-btn>
+              </slot>
+            </div>
           </div>
         </slot>
+        <slot
+          v-else
+          :set="field = repository.fields[header.value]"
+          :name="column"
+          :item="item"
+          :header="header"
+        >
+
+          <entity-field-column-view
+            :field="field"
+            :value="item[header.value]"
+            :item="item"
+          />
+        </slot>
+
       </template>
     </v-data-table>
+
   </div>
 
 </template>
@@ -361,12 +131,21 @@
 </style>
 
 <script>
-import {confirmation, deleteConfirmation, translate, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import {confirmation, deleteConfirmation, translate} from '../plugins/vuetify';
 import {baseTableHeaders} from '../services/base/base';
 import {bus} from '../services/base/bus';
+import EntityListFilters from './EntityListFilters';
+import EntityFieldColumnView from './EntityFieldColumnView';
+import {defaultListCrumbs} from '../services/base/entity.helper.default-list-crumbs';
+import {defaultListActions} from '../services/base/entity.helper.default-list-actions';
+import {defaultListItemActions} from '../services/base/entity.helper.default-list-item-actions';
+import ButtonMenu from './ButtonMenu';
+import {prepend} from '../services/base/helper.prepend';
 
 export default {
   name: 'entity-list',
+  components: {ButtonMenu, EntityFieldColumnView, EntityListFilters},
+
   props: {
     disableSelection: Boolean,
     repository: null,
@@ -374,18 +153,17 @@ export default {
     prefixHeaders: [],
     suffixHeaders: [],
   },
+
   data: () => ({
     records: [],
     headers: [],
-    datePicker: false,
-    freeTextSearch: null,
-    dates: [],
     sortBy: null,
     sortDesc: null,
     page: 1,
     pageSize: 15,
-    filerPanelValue: null,
+    filters: {},
   }),
+
   computed: {
     showSelect() {
       let hasBulkActions = false;
@@ -395,6 +173,7 @@ export default {
       }
       return !this.disableSelection && !this.$vuetify.breakpoint.mobile && hasBulkActions;
     },
+
     selectedIds: {
       // getter
       get: function () {
@@ -406,57 +185,20 @@ export default {
         this.$emit('input', this.value);
         bus.publish('list.selected', this.value);
       }
-    }
+    },
+
+    actions() {
+      return defaultListItemActions(this.repository, this.remove, this.edit, this.view);
+    },
   },
   methods: {
-    reset() {
-      this.freeTextSearch = null;
-      this.dates = [];
-    },
-    search() {
-      this.filerPanelValue = null;
-      this.load();
-    },
-    isLink(header) {
-      const field = this.repository.fields[header.value];
-      if (!field) {
-        return false;
-      }
-      return field.type === 'linkId';
-    },
-    doFormat(header, item) {
-      let value = item[header.value];
-      const field = this.repository.fields[header.value];
-      if (field) {
-        const fieldType = field.type;
-        switch (fieldType) {
-          case "boolean":
-            value = formatBoolean(value);
-            break
-          case "date":
-            value = formatDate(value);
-            break
-          case "datetime":
-            value = formatDatetime(value);
-            break
-        }
-      }
-      return value;
-    },
     columns() {
       return this.headers.map(x => {
         return 'item.' + x.value;
       });
     },
-    load() {
-      function prepend(array, values) {
-        let newArray = array.slice();
-        values.reverse().forEach((value) => {
-          newArray.unshift(value);
-        });
-        return newArray;
-      }
 
+    load() {
       this.headers = baseTableHeaders(this.repository);
       if (this.prefixHeaders) {
         this.headers = prepend(this.headers, this.prefixHeaders);
@@ -467,7 +209,7 @@ export default {
         });
       }
       this.headers.push({
-        text: translate('base.entityList.headerActions'),
+        text: translate('base.entityList.actions'),
         value: 'actions',
         align: 'end',
         sortable: false,
@@ -477,19 +219,18 @@ export default {
         this.headers = this.headers.filter(item => !this.hideHeaders.includes(item.value));
       }
 
-      let filters = {};
       let order = null;
-      if (this.freeTextSearch) {
-        filters["-text"] = this.freeTextSearch;
-      }
       if (this.sortBy) {
         order = `${this.sortDesc ? '-' : ''}${this.sortBy}`;
       }
 
-      this.repository.list(order, filters).then((response) => {
+      console.log(this.filters);
+
+      this.repository.list(order, this.filters).then((response) => {
         this.records = response.items;
-      })
+      });
     },
+
     remove(item) {
       deleteConfirmation((confirmed) => {
         if (confirmed) {
@@ -499,38 +240,25 @@ export default {
         }
       })
     },
+
     edit(item) {
       this.$router.push(`${this.repository.editPagePrefix}/${item.id}`);
     },
+
     view(item) {
       this.$router.push(`${this.repository.viewPagePrefix}/${item.id}`);
     },
 
+    defaultItemActions(item) {
+      return defaultListItemActions(this.repository, item);
+    },
+
     defaultCrumbs() {
-      return [
-        {
-          icon: 'mdi-home',
-          title: translate('base.home.pageTitle'),
-          location: '/',
-        },
-        {
-          title: translate(this.repository.title.plural),
-        },
-      ];
+      return defaultListCrumbs(this.repository);
     },
 
     defaultActions() {
-      if (this.repository.disableCreation) {
-        return [];
-      }
-      return [
-        {
-          icon: 'mdi-plus-box',
-          color: 'success',
-          title: translate('base.entityList.buttonNew'),
-          location: `${this.repository.addPage}`,
-        },
-      ];
+      return defaultListActions(this.repository);
     },
 
     defaultBulkActions() {
@@ -547,9 +275,11 @@ export default {
             this.load();
           });
         }
-      }, 'base.entityList.bulkActionConfirmationTitle', translate('base.entityList.bulkActionConfirmationMessage', translate(action.title).toLowerCase(), ids.length), {
+      }, 'base.entityList.bulkActionConfirmationTitle',
+        translate('base.entityList.bulkActionConfirmationMessage',
+        translate(action.title).toLowerCase(), ids.length), {
         color: action.color ?? 'info',
-      })
+      });
     }
   },
   mounted() {

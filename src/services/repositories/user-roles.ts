@@ -109,7 +109,7 @@ export const userRoles: IRepository<UserRole> = {
     {
       color: 'error',
       icon: 'mdi-delete',
-      title: 'base.entityList.buttonDelete',
+      title: 'base.entityList.delete',
       key: 'delete'
     }
   ],

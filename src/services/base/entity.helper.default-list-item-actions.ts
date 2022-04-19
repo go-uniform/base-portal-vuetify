@@ -1,13 +1,14 @@
 import {translate} from '@/plugins/vuetify';
+import {IRepository} from '@/services/base/global.interfaces';
 
-export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listHandler?: any) => {
+export const defaultListItemActions = (repository: IRepository<any>, deleteHandler?: any, editHandler?: any, viewHandler?: any) => {
   const actions = [];
 
   if (deleteHandler) {
     actions.push(
       {
         icon: 'mdi-delete',
-        title: translate('base.entityView.delete'),
+        title: translate('base.entityList.delete'),
         color: 'error',
         callback: (item: any) => {
           deleteHandler(item)
@@ -20,7 +21,7 @@ export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listH
     actions.push(
       {
         icon: 'mdi-pencil',
-        title: translate('base.entityView.edit'),
+        title: translate('base.entityList.edit'),
         color: 'warning',
         callback: (item: any) => {
           editHandler(item)
@@ -29,14 +30,14 @@ export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listH
     );
   }
 
-  if (listHandler) {
+  if (viewHandler) {
     actions.push(
       {
-        icon: 'mdi-view-list',
-        title: translate('base.entityView.list'),
+        icon: 'mdi-eye',
+        title: translate('base.entityList.view'),
         color: 'info',
         callback: (item: any) => {
-          listHandler(item)
+          viewHandler(item)
         },
       },
     );
@@ -44,4 +45,3 @@ export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listH
 
   return actions;
 };
-

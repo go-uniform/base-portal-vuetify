@@ -65,8 +65,8 @@
                         </strong>
                       </div>
                       <entity-field-view
-                        :fieldKey="fieldKey"
                         :field="field"
+                        :value="item[fieldKey]"
                         :item="item"
                       />
 
@@ -89,25 +89,25 @@
         cols="12"
         md="4"
         class="text-center pa-0 pa-md-4 pr-4"
-        v-for="(button, index) in buttons"
+        v-for="(action, index) in actions"
         v-bind:key="index"
       >
 
         <v-btn
           class="ma-2"
-          :color="button.color"
-          @click="button.callback(item)"
+          :color="action.color"
+          @click="action.callback(item)"
           large
           block
         >
 
           <v-icon
-            v-if="button.icon"
+            v-if="action.icon"
             class="mr-2"
           >
-            {{ button.icon }}
+            {{ action.icon }}
           </v-icon>
-          {{ button.title }}
+          {{ action.title }}
 
         </v-btn>
 
@@ -151,9 +151,10 @@ export default {
 
       return response;
     },
-    buttons() {
+
+    actions() {
       return defaultViewActions(this.remove, this.edit, this.list);
-    }
+    },
   },
 
   data: () => ({

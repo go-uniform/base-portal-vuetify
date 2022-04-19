@@ -14,12 +14,12 @@
         class="justify-start"
       >
         <v-col
-          :cols="section.cols || 12"
-          :xl="section.xl || section.lg || section.md || section.sm || section.xs || section.cols || 12"
-          :lg="section.lg || section.md || section.sm || section.xs || section.cols || 12"
-          :md="section.md || section.sm || section.xs || section.cols || 12"
-          :sm="section.sm || section.xs || section.cols || 12"
-          :xs="section.xs || section.cols || 12"
+          :cols="section.getCols()"
+          :xl="section.getXl()"
+          :lg="section.getLg()"
+          :md="section.getMd()"
+          :sm="section.getSm()"
+          :xs="section.getXs()"
           v-for="(section,i) in editableSections(repository.sections)"
           :key="i"
         >
@@ -28,7 +28,9 @@
             <v-expansion-panel-header
               color="primary white--text"
             >
-              <strong>{{ translate(section.title) }}</strong>
+              <strong>
+                {{ translate(section.title) }}
+              </strong>
             </v-expansion-panel-header>
             <v-expansion-panel-content
               class="pa-8 fill-height"
@@ -46,49 +48,21 @@
                     :item="item"
                   >
                     <v-col
-                      :cols="section.childCols || 12"
-                      :xl="section.childXl || section.childLg || section.childMd || section.childSm || section.childXs || section.childCols || 12"
-                      :lg="section.childLg || section.childMd || section.childSm || section.childXs || section.childCols || 12"
-                      :md="section.childMd || section.childSm || section.childXs || section.childCols || 12"
-                      :sm="section.childSm || section.childXs || section.childCols || 12"
-                      :xs="section.childXs || section.childCols || 12"
+                      :cols="section.getChildCols()"
+                      :xl="section.getChildXl()"
+                      :lg="section.getChildLg()"
+                      :md="section.getChildMd()"
+                      :sm="section.getChildSm()"
+                      :xs="section.getChildXs()"
                       v-bind:key="fieldKey"
                     >
-                      <div
-                        v-if="field.type === 'linkId'"
-                      >
-                        <v-autocomplete
-                          v-model="item[fieldKey]"
-                          :label="translate(field.label)"
-                          :items="linkItems[fieldKey]"
-                          :multiple="field.multiple"
-                          clearable
-                          :rules="[rules.required(field.optional)]"
-                        ></v-autocomplete>
-                      </div>
-                      <div
-                        v-else-if="field.type === 'textarea'"
-                      >
-                        <v-textarea
-                          v-model="item[fieldKey]"
-                          :label="translate(field.label)"
-                          :counter="field.length"
-                          :maxlength="field.length"
-                          :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
-                        >
-                        </v-textarea>
-                      </div>
-                      <div
-                        v-else
-                      >
-                        <v-text-field
-                          v-model="item[fieldKey]"
-                          :label="translate(field.label)"
-                          :counter="field.length"
-                          :maxlength="field.length"
-                          :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
-                        ></v-text-field>
-                      </div>
+
+                      <entity-field-edit
+                        :field-key="field"
+                        :field="field"
+                        v-model="item[fieldKey]"
+                      />
+
                     </v-col>
                   </slot>
                 </v-row>
@@ -99,56 +73,50 @@
       </v-expansion-panels>
     </v-row>
     <v-row>
+
       <v-col
         cols="12"
         md="6"
         class="text-center pa-0 pa-md-4 pr-4"
+        v-for="(action, index) in actions"
+        v-bind:key="index"
       >
+
         <v-btn
           class="ma-2"
-          color="success"
-          @click="save"
+          :color="action.color"
+          :to="action.location"
+          @click="action.callback(item)"
           large
           block
         >
+
           <v-icon
+            v-if="action.icon"
             class="mr-2"
           >
-            mdi-content-save
+            {{ action.icon }}
           </v-icon>
-          {{ translate('base.app.save') }}
+          {{ action.title }}
+
         </v-btn>
+
       </v-col>
-      <v-col
-        cols="12"
-        md="6"
-        class="text-center pa-0 pa-md-4 pr-4"
-      >
-        <v-btn
-          class="ma-2 grey white--text"
-          @click="cancel"
-          large
-          block
-        >
-          <v-icon
-            class="mr-2"
-          >
-            mdi-close-circle
-          </v-icon>
-          {{ translate('base.app.cancel') }}
-        </v-btn>
-      </v-col>
+
     </v-row>
+
   </v-form>
 
 </template>
 
 <script>
-import {translate} from '../plugins/vuetify';
-import {validations} from '../services/base/validations';
+import EntityFieldEdit from './EntityFieldEdit';
+import {defaultEditCrumbs} from '../services/base/entity.helper.default-edit-crumbs';
+import {defaultEditActions} from '../services/base/entity.helper.default-edit-actions';
 
 export default {
   name: 'entity-edit',
+  components: {EntityFieldEdit},
   props: {
     repository: null,
     id: null,
@@ -157,14 +125,14 @@ export default {
     panels: [0],
     item: {
     },
-    linkItems: {
-    },
-    rules: {
-      required: validations.required,
-      pattern: validations.pattern,
-      length: validations.length,
-    }
   }),
+
+  computed: {
+    actions() {
+      return defaultEditActions(this.repository, this.$route.params.id, this.save);
+    }
+  },
+
   methods: {
     editableSections(sections) {
       return sections.filter((section) => {
@@ -175,12 +143,6 @@ export default {
       return fieldKeys.filter((fieldKey) => {
         const field = this.repository.fields[fieldKey];
         return !field.readonly;
-      });
-    },
-    linkedFields() {
-      return Object.keys(this.repository.fields).filter((key) => {
-        const field = this.repository.fields[key];
-        return field.type === 'linkId';
       });
     },
     save() {
@@ -212,77 +174,12 @@ export default {
     },
 
     defaultCrumbs() {
-      if (this.$route.params.id) {
-        return [
-          {
-            icon: 'mdi-home',
-            title: translate('base.home.pageTitle'),
-            location: '/',
-          },
-          {
-            title: translate(this.repository.title.plural),
-            location: this.repository.listPage,
-          },
-          {
-            title: translate('base.entityEdit.view'),
-            location: `${this.repository.viewPagePrefix}/${this.$route.params.id}`,
-          },
-          {
-            title: translate('base.entityEdit.edit'),
-          },
-        ];
-      }
-      return [
-        {
-          icon: 'mdi-home',
-          title: translate('base.home.pageTitle'),
-          location: '/',
-        },
-        {
-          title: translate(this.repository.title.plural),
-          location: this.repository.listPage,
-        },
-        {
-          title: translate('base.entityEdit.new'),
-        },
-      ];
+      return defaultEditCrumbs(this.repository, this.$route.params.id);
     },
 
     defaultActions() {
-      let cancelUrl = this.repository.listPage;
-      if (this.$route.params.id) {
-        cancelUrl = `${this.repository.viewPagePrefix}/${this.$route.params.id}`;
-      }
-      return [
-        {
-          icon: 'mdi-content-save',
-          color: 'success',
-          title: translate('base.app.save'),
-          callback: () => {
-            this.save();
-          }
-        },
-        {
-          icon: 'mdi-close-circle',
-          class: 'white--text',
-          color: 'grey',
-          title: translate('base.app.cancel'),
-          location: cancelUrl,
-        },
-      ];
+      return defaultEditActions(this.repository, this.$route.params.id, this.save);
     },
-
-    links(key, field) {
-      field.linkRepository.list().then((response) => {
-        this.linkItems[key] = response.items.map((item) => {
-          return {
-            value: item.id,
-            text: item.name,
-          }
-        });
-        this.$forceUpdate();
-      });
-    }
   },
 
   mounted() {
@@ -295,15 +192,8 @@ export default {
           ...response.item
         };
         this.$forceUpdate();
-        this.linkedFields().forEach((key) => {
-          this.links(key, this.repository.fields[key]);
-        });
       }).catch(() => {
         this.$router.push(`${this.repository.listPage}`);
-      });
-    } else {
-      this.linkedFields().forEach((key) => {
-        this.links(key, this.repository.fields[key]);
       });
     }
   }

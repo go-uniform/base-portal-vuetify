@@ -7,7 +7,7 @@
       v-if="field.type === 'linkId'"
     >
       <a
-        :href="`${field.linkRepository.viewPagePrefix}/${item[fieldKey]}`"
+        :href="`${field.linkRepository.viewPagePrefix}/${value}`"
       >
         {{ item[field.linkLabelFieldKey] }}
       </a>
@@ -15,7 +15,7 @@
     <div
       v-else
     >
-      {{ doFormat(fieldKey, field, item) }}
+      {{ doFormat(field, value) }}
     </div>
 
   </div>
@@ -29,14 +29,13 @@ export default {
   name: 'entity-field-view',
 
   props: {
-    fieldKey: null,
     field: null,
+    value: null,
     item: null,
   },
 
   methods: {
-    doFormat(key, field, item) {
-      let value = item[key];
+    doFormat(field, value) {
       switch (field.type) {
         case "boolean":
           value = formatBoolean(value);
