@@ -28,6 +28,12 @@
 
 </template>
 
+<style lang="scss">
+form.mw-320 {
+  max-width: 320px;
+}
+</style>
+
 <script lang="ts">
 import Vue from 'vue';
 import MainFooter from '@/components/MainFooter.vue';

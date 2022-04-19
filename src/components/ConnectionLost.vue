@@ -9,34 +9,9 @@
     fill-height
   >
 
-    <div>
-
-      <p
-        class="display-2"
-      >
-        You are offline.
-      </p>
-      <p>
-        Try:
-      </p>
-      <ul>
-
-        <li>
-          Turning off airplane mode
-        </li>
-        <li>
-          Turning on mobile data or Wi-Fi
-        </li>
-        <li>
-          Checking the signal in your area
-        </li>
-
-      </ul>
-      <br>
-      <p>
-        This message will automatically close once your connection is restored.
-      </p>
-
+    <div
+      v-html="formatString('custom.connection.pageHtml')"
+    >
     </div>
 
   </v-layout>

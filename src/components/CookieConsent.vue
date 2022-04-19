@@ -9,12 +9,13 @@
       class="pa-4"
       outlined
     >
+
       <v-card-title>
-        {{ formatString('custom.cookie.consentTitle') }}
+        {{ formatString('custom.cookieConsent.popUpTitle') }}
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text
-        v-html="formatString('custom.cookie.consentBody')"
+        v-html="formatString('custom.cookieConsent.popUpBody')"
       >
       </v-card-text>
       <v-divider></v-divider>
@@ -25,9 +26,10 @@
           block
           @click="accept"
         >
-          {{ formatString('custom.cookie.consentBtn') }}
+          {{ formatString('custom.cookieConsent.popUpBtn') }}
         </v-btn>
       </v-card-actions>
+
     </v-card>
 
   </div>

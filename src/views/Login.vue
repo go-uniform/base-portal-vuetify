@@ -6,8 +6,7 @@
       ref="login"
       v-model="valid"
       lazy-validation
-      class="text-center"
-      style="max-width:320px"
+      class="text-center mw-320"
     >
       <v-container>
         <v-row
@@ -17,7 +16,7 @@
               alt="Vuetify Name"
               contain
               src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-light.png"
-              style="max-height:100px"
+              height="100"
             />
         </v-row>
         <v-row>

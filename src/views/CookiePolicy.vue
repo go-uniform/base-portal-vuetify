@@ -3,6 +3,7 @@
   <empty-layout>
 
     <template v-slot:header>
+
       <v-toolbar>
 
         <v-breadcrumbs
@@ -20,6 +21,7 @@
               :disabled="item.disabled"
               exact
             >
+
               <v-icon
                 v-if="item.icon"
                 class="mr-2"
@@ -27,6 +29,7 @@
                 {{ item.icon }}
               </v-icon>
               {{ formatString(item.title) }}
+
             </v-breadcrumbs-item>
 
           </template>
@@ -34,20 +37,16 @@
         </v-breadcrumbs>
 
       </v-toolbar>
-    </template>
 
+    </template>
     <div
       class="pa-8"
     >
 
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet sem dapibus, placerat orci a, euismod
-        lacus. Mauris eget eros id ex convallis dictum sit amet vel felis. Donec lectus quam, mattis quis velit
-        faucibus, congue finibus metus. In neque mi, tristique nec mattis ac, tristique vel dolor. Donec posuere justo
-        orci, congue vehicula nibh luctus sit amet. Integer mi mi, dapibus ultrices tortor et, sollicitudin posuere
-        sapien. Nulla facilisi. Proin congue arcu vel mattis molestie. Phasellus felis quam, tincidunt non eros eu,
-        tempus sodales ligula. In euismod consectetur porta.
-      </p>
+      <div
+        v-html="formatString('custom.cookieConsent.pageHtml')"
+      >
+      </div>
       <div
         v-if="showCookieConsent"
         class="cookie-consent-placeholder"

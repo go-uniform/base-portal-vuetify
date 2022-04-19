@@ -9,7 +9,9 @@
   >
 
     <!-- Main Menu Header -->
-    <v-list-item>
+    <v-list-item
+      class="main-menu-header"
+    >
       <v-list-item-content v-if="!mini">
         <v-list-item-title>MAIN MENU</v-list-item-title>
       </v-list-item-content>
@@ -77,6 +79,13 @@
   </v-navigation-drawer>
 
 </template>
+
+<style lang="scss" scoped>
+.main-menu-header {
+  // match the height of the breadcrumb toolbar
+  height: 64px;
+}
+</style>
 
 <script>
 import {bus} from '@/services/base/bus';

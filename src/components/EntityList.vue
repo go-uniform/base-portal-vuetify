@@ -23,6 +23,7 @@
     >
       <v-expansion-panels
         class="justify-start mb-8"
+        v-model="filerPanelValue"
       >
         <v-expansion-panel>
           <v-expansion-panel-header
@@ -372,6 +373,7 @@ export default {
     sortDesc: null,
     page: 1,
     pageSize: 15,
+    filerPanelValue: null,
   }),
   computed: {
     showSelect() {
@@ -401,6 +403,7 @@ export default {
       this.dates = [];
     },
     search() {
+      this.filerPanelValue = null;
       this.load();
     },
     isLink(header) {
