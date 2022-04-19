@@ -7,13 +7,14 @@
       :to="this.repository.addPage"
       block
       large
+      v-if="!this.repository.disableCreation"
     >
       <v-icon
         class="mr-2"
       >
         mdi-plus-box
       </v-icon>
-      {{ format('New') }}
+      {{ formatString('New') }}
     </v-btn>
 
     <slot
@@ -21,7 +22,6 @@
       v-if="repository.filters && repository.filters.length > 0 || repository.freeTextSearch"
     >
       <v-expansion-panels
-        :value="0"
         class="justify-start mb-8"
       >
         <v-expansion-panel>
@@ -29,21 +29,28 @@
             color="primary white--text"
           >
             <strong>
-              {{ format('Filters') }}
+              {{ formatString('Filters') }}
             </strong>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-row>
+            <v-row
+              class="pt-8 pb-0"
+            >
               <v-col
                 cols="12"
+                md="6"
               >
                 <v-text-field
                   v-if="repository.freeTextSearch"
+                  v-model="freeTextSearch"
+                  label="Search Terms"
+                  filled
                 >
                 </v-text-field>
               </v-col>
               <v-col
                 cols="12"
+                md="6"
               >
                 <v-menu
                   v-model="datePicker"
@@ -75,6 +82,8 @@
                   </v-date-picker>
                 </v-menu>
               </v-col>
+            </v-row>
+            <v-row>
               <v-col
                 cols="12"
               >
@@ -92,7 +101,7 @@
                   <v-icon>
                     mdi-close-thick
                   </v-icon>
-                  {{ format('Reset') }}
+                  {{ formatString('Reset') }}
                 </v-btn>
               </v-col>
               <v-col
@@ -107,7 +116,7 @@
                   <v-icon>
                     mdi-magnify
                   </v-icon>
-                  {{ format('Search') }}
+                  {{ formatString('Search') }}
                 </v-btn>
               </v-col>
             </v-row>
@@ -122,6 +131,10 @@
       :headers="headers"
       mobile-breakpoint="sm"
       v-model="selectedIds"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      :page.sync="page"
+      :items-per-page.sync="pageSize"
     >
       <template
         v-for="(column, index) in columns()"
@@ -202,7 +215,7 @@
                         >
                           mdi-delete
                         </v-icon>
-                        {{ format('Delete') }}
+                        {{ formatString('Delete') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -221,7 +234,7 @@
                         >
                           mdi-pencil
                         </v-icon>
-                        {{ format('Edit') }}
+                        {{ formatString('Edit') }}
                       </v-btn>
                     </slot>
                     <slot
@@ -240,7 +253,7 @@
                         >
                           mdi-eye
                         </v-icon>
-                        {{ format('View') }}
+                        {{ formatString('View') }}
                       </v-btn>
                     </slot>
                   </v-list-item>
@@ -274,7 +287,7 @@
                 >
                   mdi-delete
                 </v-icon>
-                {{ format('Delete') }}
+                {{ formatString('Delete') }}
               </v-btn>
             </slot>
             <slot
@@ -293,7 +306,7 @@
                 >
                   mdi-pencil
                 </v-icon>
-                {{ format('Edit') }}
+                {{ formatString('Edit') }}
               </v-btn>
             </slot>
             <slot
@@ -312,7 +325,7 @@
                 >
                   mdi-eye
                 </v-icon>
-                {{ format('View') }}
+                {{ formatString('View') }}
               </v-btn>
             </slot>
           </div>
@@ -336,7 +349,7 @@
 </style>
 
 <script>
-import {confirmation, deleteConfirmation, format, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import {confirmation, deleteConfirmation, formatString, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 import {baseTableHeaders} from '../services/base/base';
 import {bus} from '../services/base/bus';
 
@@ -353,7 +366,12 @@ export default {
     records: [],
     headers: [],
     datePicker: false,
+    freeTextSearch: null,
     dates: [],
+    sortBy: null,
+    sortDesc: null,
+    page: 1,
+    pageSize: 15,
   }),
   computed: {
     showSelect() {
@@ -379,12 +397,11 @@ export default {
   },
   methods: {
     reset() {
-      // todo: reset filters
-      alert('reset!');
+      this.freeTextSearch = null;
+      this.dates = [];
     },
     search() {
-      // todo: search filters
-      alert('search!');
+      this.load();
     },
     isLink(header) {
       const field = this.repository.fields[header.value];
@@ -446,7 +463,16 @@ export default {
         this.headers = this.headers.filter(item => !this.hideHeaders.includes(item.value));
       }
 
-      this.repository.list().then((response) => {
+      let filters = {};
+      let order = null;
+      if (this.freeTextSearch) {
+        filters["-text"] = this.freeTextSearch;
+      }
+      if (this.sortBy) {
+        order = `${this.sortDesc ? '-' : ''}${this.sortBy}`;
+      }
+
+      this.repository.list(order, filters).then((response) => {
         this.records = response.items;
       })
     },
@@ -470,21 +496,24 @@ export default {
       return [
         {
           icon: 'mdi-home',
-          title: format('Home'),
+          title: formatString('Home'),
           location: '/',
         },
         {
-          title: format(this.repository.title.plural),
+          title: formatString(this.repository.title.plural),
         },
       ];
     },
 
     defaultActions() {
+      if (this.repository.disableCreation) {
+        return [];
+      }
       return [
         {
           icon: 'mdi-plus-box',
           color: 'success',
-          title: format('New'),
+          title: formatString('New'),
           location: `${this.repository.addPage}`,
         },
       ];
@@ -504,7 +533,7 @@ export default {
             this.load();
           });
         }
-      }, 'Are you sure?', format('You are about to {0} {1} record(s), are you sure you want to do this?', action.title.toLowerCase(), ids.length), {
+      }, 'Are you sure?', formatString('You are about to {0} {1} record(s), are you sure you want to do this?', action.title.toLowerCase(), ids.length), {
         color: action.color ?? 'info',
       })
     }

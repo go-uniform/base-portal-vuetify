@@ -8,7 +8,10 @@ import {
   IReadPromise,
   IUpdatePromise
 } from './global.interfaces';
-import {getBaseUrl, mergeHeaders, processStandardItemResponse, processStandardListResponse} from '@/services/base/base';
+import {
+  processStandardItemResponse,
+  processStandardListResponse
+} from '@/services/base/base';
 import {generic} from '@/services/base/global.types';
 import {EnumHttpMethod} from '@/services/base/global.enums';
 

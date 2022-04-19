@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import VueRouter, {Route, RouteConfig} from 'vue-router';
+import VueRouter, {RouteConfig} from 'vue-router';
 import Home from '../views/Home.vue'
 import {NavigationGuard} from 'vue-router/types/router';
 import {auth} from '@/services/base/auth';

@@ -59,7 +59,7 @@
                       >
                         <v-autocomplete
                           v-model="item[fieldKey]"
-                          :label="format(field.label)"
+                          :label="formatString(field.label)"
                           :items="linkItems[fieldKey]"
                           :multiple="field.multiple"
                           clearable
@@ -82,7 +82,7 @@
                       >
                         <v-text-field
                           v-model="item[fieldKey]"
-                          :label="format(field.label)"
+                          :label="formatString(field.label)"
                           :counter="field.length"
                           :maxlength="field.length"
                           :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
@@ -115,7 +115,7 @@
           >
             mdi-content-save
           </v-icon>
-          {{ format('Save') }}
+          {{ formatString('Save') }}
         </v-btn>
       </v-col>
       <v-col
@@ -134,7 +134,7 @@
           >
             mdi-close-circle
           </v-icon>
-          {{ format('Cancel') }}
+          {{ formatString('Cancel') }}
         </v-btn>
       </v-col>
     </v-row>
@@ -143,7 +143,7 @@
 </template>
 
 <script>
-import {format} from '../plugins/vuetify';
+import {formatString} from '../plugins/vuetify';
 
 export default {
   name: 'entity-edit',
@@ -169,7 +169,7 @@ export default {
       },
       length: (max) => {
         if (max) {
-          return value => !value || value.length <= max || format('May not be more than {0} characters long.', max);
+          return value => !value || value.length <= max || formatString('May not be more than {0} characters long.', max);
         }
         return () => true;
       }
@@ -226,34 +226,34 @@ export default {
         return [
           {
             icon: 'mdi-home',
-            title: format('Home'),
+            title: formatString('Home'),
             location: '/',
           },
           {
-            title: format(this.repository.title.plural),
+            title: formatString(this.repository.title.plural),
             location: this.repository.listPage,
           },
           {
-            title: format('View'),
+            title: formatString('View'),
             location: `${this.repository.viewPagePrefix}/${this.$route.params.id}`,
           },
           {
-            title: format('Edit'),
+            title: formatString('Edit'),
           },
         ];
       }
       return [
         {
           icon: 'mdi-home',
-          title: format('Home'),
+          title: formatString('Home'),
           location: '/',
         },
         {
-          title: format(this.repository.title.plural),
+          title: formatString(this.repository.title.plural),
           location: this.repository.listPage,
         },
         {
-          title: format('New'),
+          title: formatString('New'),
         },
       ];
     },
@@ -267,7 +267,7 @@ export default {
         {
           icon: 'mdi-content-save',
           color: 'success',
-          title: format('Save'),
+          title: formatString('Save'),
           callback: () => {
             this.save();
           }
@@ -276,7 +276,7 @@ export default {
           icon: 'mdi-close-circle',
           class: 'white--text',
           color: 'grey',
-          title: format('Cancel'),
+          title: formatString('Cancel'),
           location: cancelUrl,
         },
       ];

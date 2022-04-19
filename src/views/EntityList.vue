@@ -7,9 +7,7 @@
     :bulkActionHandler="bulkActionHandler"
   >
 
-    <!-- provide key to ensure component is refreshed when navigating to a new path -->
     <entity-list
-      :key="$route.path"
       ref="list"
       :repository="$route.meta.repository"
     >

@@ -26,7 +26,7 @@
               >
                 {{ item.icon }}
               </v-icon>
-              {{ format(item.title) }}
+              {{ formatString(item.title) }}
             </v-breadcrumbs-item>
 
           </template>
@@ -68,7 +68,7 @@
 
 <script>
 import EmptyLayout from '../layouts/Empty';
-import {format} from '../plugins/vuetify';
+import {formatString} from '../plugins/vuetify';
 
 export default {
   name: 'CookiePolicy',
@@ -79,7 +79,7 @@ export default {
     crumbs: [
       {
         icon: 'mdi-home',
-        title: format('Home'),
+        title: formatString('Home'),
         location: '/',
       },
       {

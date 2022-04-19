@@ -27,7 +27,7 @@
             >
               {{ item.icon }}
             </v-icon>
-            {{ format(item.title) }}
+            {{ formatString(item.title) }}
           </v-breadcrumbs-item>
 
         </template>
@@ -54,7 +54,7 @@
             >
               {{ action.icon }}
             </v-icon>
-            {{ format(action.title) }}
+            {{ formatString(action.title) }}
           </v-btn>
         </template>
 
@@ -70,7 +70,7 @@
               v-bind="attrs"
               v-on="on"
             >
-              {{ format('Bulk') }}
+              {{ formatString('Bulk') }}
               <v-icon
                 right
                 dark
@@ -97,7 +97,7 @@
                 >
                   {{ bulkAction.icon }}
                 </v-icon>
-                {{ format(bulkAction.title) }}
+                {{ formatString(bulkAction.title) }}
               </v-btn>
             </v-list-item>
           </v-list>

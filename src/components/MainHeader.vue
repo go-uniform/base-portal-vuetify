@@ -68,7 +68,7 @@
             <v-icon>mdi-theme-light-dark</v-icon>
           </v-list-item-icon>
           <v-list-item-title>
-            {{ $vuetify.theme.dark ? format('Light Mode') : format('Dark Mode') }}
+            {{ $vuetify.theme.dark ? formatString('Light Mode') : formatString('Dark Mode') }}
           </v-list-item-title>
         </v-list-item>
         <v-divider></v-divider>

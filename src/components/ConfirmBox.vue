@@ -39,14 +39,14 @@
           text
           @click.native="agree"
         >
-          {{ format(options.agreeTitle) }}
+          {{ formatString(options.agreeTitle) }}
         </v-btn>
         <v-btn
           color="grey"
           text
           @click.native="cancel"
         >
-          {{ format(options.cancelTitle) }}
+          {{ formatString(options.cancelTitle) }}
         </v-btn>
 
       </v-card-actions>

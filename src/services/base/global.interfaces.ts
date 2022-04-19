@@ -174,6 +174,7 @@ export interface IRepositoryTitle {
 }
 
 export interface IRepository<T> {
+  disableCreation?: boolean;
   freeTextSearch?: boolean;
   entity: string;
   title: IRepositoryTitle;

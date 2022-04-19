@@ -45,6 +45,7 @@ const StubRecord: UserRole = StubList[0];
 const entity = 'userRoles';
 
 export const userRoles: IRepository<UserRole> = {
+  freeTextSearch: true,
   entity: entity,
   title: {
     singular: 'User Role',
@@ -104,6 +105,14 @@ export const userRoles: IRepository<UserRole> = {
         'modifiedAt',
         'createdAt',
       ]
+    }
+  ],
+  bulkActions: [
+    {
+      color: 'error',
+      icon: 'mdi-delete',
+      title: 'Delete',
+      key: 'delete'
     }
   ],
 

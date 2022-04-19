@@ -50,7 +50,7 @@
               class="mr-4"
               @click="validate"
             >
-              {{ format('Validate') }}
+              {{ formatString('Validate') }}
             </v-btn>
           </v-col>
         </v-row>

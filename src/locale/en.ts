@@ -35,6 +35,8 @@ phrases.raw = {
   'First Name': 'First Name',
   'Last Name': 'Last Name',
   'Username': 'Username',
+  'Filters': 'Filters',
+  'Search': 'Search',
 };
 
 phrases.custom = {

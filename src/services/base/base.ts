@@ -4,7 +4,8 @@ import {toastError, toastSuccess} from '@/plugins/vuetify';
 import {IStubScenario} from './stub';
 import {
   IErrorResponse,
-  IGeneric, IHeader, IHeaderLinked,
+  IGeneric,
+  IHeaderLinked,
   IItem,
   IItemResponse,
   IList,

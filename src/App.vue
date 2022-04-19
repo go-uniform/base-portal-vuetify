@@ -1,6 +1,9 @@
 <template>
 
-  <router-view/>
+  <!-- provide key to ensure component is refreshed when navigating to a new path -->
+  <router-view
+    :key="$route.path"
+  />
 
 </template>
 

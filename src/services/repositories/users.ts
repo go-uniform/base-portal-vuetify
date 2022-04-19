@@ -43,6 +43,7 @@ interface User {
 const entity = 'users';
 
 export const users: IRepository<User> = {
+  freeTextSearch: true,
   entity: entity,
   title: {
     singular: 'User',
@@ -98,6 +99,7 @@ export const users: IRepository<User> = {
     createdAt: {
       label: 'Created At',
       type: EnumFieldType.DateTime,
+      filterable: true,
       readonly: true,
     },
   },
@@ -134,6 +136,14 @@ export const users: IRepository<User> = {
         'modifiedAt',
         'createdAt',
       ]
+    }
+  ],
+  bulkActions: [
+    {
+      color: 'error',
+      icon: 'mdi-delete',
+      title: 'Delete',
+      key: 'delete'
     }
   ],
 

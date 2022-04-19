@@ -94,7 +94,7 @@
           >
             mdi-delete
           </v-icon>
-          {{ format('Delete') }}
+          {{ formatString('Delete') }}
         </v-btn>
       </v-col>
       <v-col
@@ -114,7 +114,7 @@
           >
             mdi-pencil
           </v-icon>
-          {{ format('Edit') }}
+          {{ formatString('Edit') }}
         </v-btn>
       </v-col>
       <v-col
@@ -134,7 +134,7 @@
           >
             mdi-view-list
           </v-icon>
-          {{ format('List') }}
+          {{ formatString('List') }}
         </v-btn>
       </v-col>
     </v-row>
@@ -143,7 +143,7 @@
 </template>
 
 <script>
-import {deleteConfirmation, format, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import {deleteConfirmation, formatString, formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 
 export default {
   name: 'entity-view',
@@ -216,15 +216,15 @@ export default {
       return [
         {
           icon: 'mdi-home',
-          title: format('Home'),
+          title: formatString('Home'),
           location: '/',
         },
         {
-          title: format(this.repository.title.plural),
+          title: formatString(this.repository.title.plural),
           location: this.repository.listPage,
         },
         {
-          title: format('View'),
+          title: formatString('View'),
         },
       ];
     },
@@ -234,7 +234,7 @@ export default {
         {
           icon: 'mdi-delete',
           color: 'error',
-          title: format('Delete'),
+          title: formatString('Delete'),
           callback: () => {
             this.remove(this.item);
           }
@@ -242,7 +242,7 @@ export default {
         {
           icon: 'mdi-pencil',
           color: 'warning',
-          title: format('Edit'),
+          title: formatString('Edit'),
           callback: () => {
             this.edit(this.item);
           }
@@ -250,7 +250,7 @@ export default {
         {
           icon: 'mdi-view-list',
           color: 'info',
-          title: format('List'),
+          title: formatString('List'),
           callback: () => {
             this.list();
           }

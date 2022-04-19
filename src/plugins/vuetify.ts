@@ -27,21 +27,21 @@ export const kebabCase = (str: any) => {
 export const toastError = (text: string, ...args: any[]) => {
   bus.publish('toast.show', {
     type: 'error',
-    message: format(text, ...args),
+    message: formatString(text, ...args),
   });
 }
 
 export const toastSuccess = (text: string, ...args: any[]) => {
   bus.publish('toast.show', {
     type: 'success',
-    message: format(text, ...args),
+    message: formatString(text, ...args),
   });
 }
 
 export const toastCustom = (type: string, text: string, ...args: any[]) => {
   bus.publish('toast.show', {
     type: type,
-    message: format(text, ...args),
+    message: formatString(text, ...args),
   });
 }
 
@@ -66,7 +66,7 @@ export const confirmation = (callback: any, title: string, body: string, options
 };
 
 // __ is shorthand for format string function
-export const format = (text: string, ...args: any[]) => {
+export const formatString = (text: string, ...args: any[]) => {
   let key = `${text}`;
   if (text.startsWith('$vuetify.')) {
     key = `${text}`;
@@ -91,13 +91,13 @@ export const format = (text: string, ...args: any[]) => {
 
 Vue.mixin({
   methods: {
-    format: format,
+    formatString: formatString,
     kebabCase: kebabCase,
   },
 });
 
 Vue.filter('format', (text: string, ...args: any[]) => {
-  format(text, args);
+  formatString(text, args);
 });
 
 export const formatBoolean = (value: any) => {

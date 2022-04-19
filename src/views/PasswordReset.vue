@@ -32,7 +32,7 @@
             cols="12"
           >
             <v-text-field
-              :label="format('Username or Email')"
+              :label="formatString('Username or Email')"
               v-model="email"
               :rules="[rules.required, rules.email]"
               autofocus
@@ -50,7 +50,7 @@
               class="mr-4"
               @click="reset"
             >
-              {{ format('Reset') }}
+              {{ formatString('Reset') }}
             </v-btn>
           </v-col>
           <v-col

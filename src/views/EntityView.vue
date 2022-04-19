@@ -5,9 +5,7 @@
     :actions="actions"
   >
 
-    <!-- provide key to ensure component is refreshed when navigating to a new path -->
     <entity-view
-      :key="$route.path"
       ref="viewer"
       :repository="$route.meta.repository"
       :id="$route.params.id"

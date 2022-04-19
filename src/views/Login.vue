@@ -32,7 +32,7 @@
             cols="12"
           >
             <v-text-field
-              :label="format('Username or Email')"
+              :label="formatString('Username or Email')"
               v-model="email"
               :rules="[rules.required, rules.email]"
               autofocus
@@ -46,7 +46,7 @@
               :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[rules.required]"
               :type="passwordShow ? 'text' : 'password'"
-              :label="format('Password')"
+              :label="formatString('Password')"
               @click:append="passwordShow = !passwordShow"
             ></v-text-field>
           </v-col>
@@ -62,7 +62,7 @@
               class="mr-4"
               @click="login"
             >
-              {{ format('Login') }}
+              {{ formatString('Login') }}
             </v-btn>
           </v-col>
           <v-col
