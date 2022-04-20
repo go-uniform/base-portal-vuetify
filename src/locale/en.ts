@@ -2,11 +2,15 @@ import en from '@/locale/base/en';
 const phrases: any = en;
 
 phrases.custom = {
+  menu: {
+    users: 'Users',
+  },
   users: {
     singular: 'User',
     plural: 'Users',
     sections: {
       general: 'General',
+      attributes: 'Attributes',
     },
     fields: {
       id: 'Id',
@@ -15,6 +19,10 @@ phrases.custom = {
       username: 'Username',
       email: 'Email',
       userRoleId: 'User Role',
+      attributes: {
+        title: 'Attributes',
+        sex: 'Sex',
+      },
       modifiedAt: 'Modified At',
       createdAt: 'Created At',
     },
@@ -27,7 +35,23 @@ phrases.custom = {
     },
     fields: {
       id: 'Id',
-      name: 'Email',
+      name: 'Name',
+      description: 'Description',
+      modifiedAt: 'Modified At',
+      createdAt: 'Created At',
+    },
+  },
+  userAttributes: {
+    singular: 'User Attribute',
+    plural: 'User Attributes',
+    sections: {
+      general: 'General',
+    },
+    fields: {
+      id: 'Id',
+      type: 'Type',
+      key: 'Key',
+      name: 'Name',
       description: 'Description',
       modifiedAt: 'Modified At',
       createdAt: 'Created At',

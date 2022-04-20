@@ -14,6 +14,11 @@
         <strong
           class="text-uppercase"
         >
+          <v-icon
+            class="mr-2"
+          >
+            mdi-magnify
+          </v-icon>
           {{ translate('base.entityFilters.title') }}
         </strong>
       </v-expansion-panel-header>

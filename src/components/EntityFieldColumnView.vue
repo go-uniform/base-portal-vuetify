@@ -14,6 +14,11 @@
       </a>
     </div>
     <div
+      v-else-if="field.type === 'attributes'"
+    >
+      <small><i>attributes are not supported on table list views</i></small>
+    </div>
+    <div
       v-else
     >
       {{ doFormat() }}

@@ -88,7 +88,7 @@ phrases.base = {
     edit: 'Wysig',
   },
   entityFilters: {
-    title: 'Filtreer',
+    title: 'Soek',
     freeTextSearch: 'Soek Terme',
     search: 'Soek',
     reset: 'Herstel',

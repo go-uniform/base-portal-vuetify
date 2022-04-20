@@ -226,7 +226,6 @@ export default {
       if (this.sortBy) {
         order = `${this.sortDesc ? '-' : ''}${this.sortBy}`;
       }
-      console.log(order);
 
       this.repository.list(order, this.filters, this.page, this.pageSize).then((response) => {
         this.records = response.items;

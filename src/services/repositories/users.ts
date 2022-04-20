@@ -12,6 +12,7 @@ import {
   stubScenario,
 } from '@/services/base/stub';
 import {Section} from '@/services/base/global.classes.section';
+import {userAttributes} from '@/services/repositories/user-attributes';
 
 const StubList: User[] = [
   {
@@ -23,6 +24,9 @@ const StubList: User[] = [
     password: 'password',
     userRoleId: '624df0929bc786ddf868f7e8',
     userRoleLabel: 'Administrators',
+    attributes: {
+      sex: "male",
+    },
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -38,6 +42,7 @@ interface User {
   password: string;
   userRoleId: string;
   userRoleLabel: string;
+  attributes: { [key: string]: any };
   modifiedAt: Date;
   createdAt: Date;
 }
@@ -94,6 +99,11 @@ export const users: IRepository<User> = {
       linkIdFieldKey: 'userRoleId',
       readonly: true,
     },
+    attributes: {
+      label: 'custom.users.fields.attributes',
+      type: EnumFieldType.Attributes,
+      attributeRepository: userAttributes,
+    },
     modifiedAt: {
       label: 'custom.users.fields.modifiedAt',
       type: EnumFieldType.DateTime,
@@ -135,6 +145,7 @@ export const users: IRepository<User> = {
       'username',
       'email',
       'userRoleId',
+      'attributes',
       'modifiedAt',
       'createdAt',
     ]),

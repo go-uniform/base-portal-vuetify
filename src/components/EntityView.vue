@@ -45,7 +45,7 @@
                     v-for="fieldKey in section.fieldKeys"
                     :set="field = repository.fields[fieldKey]"
                     :name="fieldKey"
-                    :fieldKey="fieldKey"
+                    :field-key="fieldKey"
                     :field="field"
                     :item="item"
                   >
@@ -58,18 +58,12 @@
                       :xs="section.getChildXs()"
                       v-bind:key="fieldKey"
                     >
-
-                      <div>
-                        <strong>
-                          {{ translate(field.label) }}
-                        </strong>
-                      </div>
                       <entity-field-view
                         :field="field"
                         :value="item[fieldKey]"
+                        :field-key="fieldKey"
                         :item="item"
                       />
-
                     </v-col>
                   </slot>
                 </v-row>

@@ -89,7 +89,7 @@ phrases.base = {
     edit: 'Edit',
   },
   entityFilters: {
-    title: 'Filter',
+    title: 'Search',
     freeTextSearch: 'Search Terms',
     search: 'Search',
     reset: 'Reset',

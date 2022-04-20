@@ -1,5 +1,5 @@
 import {AuthToken, AuthTokenJwt, generic} from './global.types';
-import {EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
+import {EnumAttributeType, EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {toastError} from '@/plugins/vuetify';
 
 export interface IError {
@@ -121,7 +121,13 @@ export interface IFieldLinkLabel {
   linkIdFieldKey: string;
 }
 
-export type IField = IFieldNormal | IFieldLinkId | IFieldLinkLabel;
+export interface IFieldAttribute {
+  label: string;
+  type: EnumFieldType;
+  attributeRepository: IRepository<any>;
+}
+
+export type IField = IFieldNormal | IFieldLinkId | IFieldLinkLabel | IFieldAttribute;
 
 export type IFields = { [key: string]: IField }
 
@@ -222,4 +228,14 @@ export interface IAuthRepository {
   logout: ILogoutPromise;
   login: ILoginPromise;
   otp: IOtpPromise;
+}
+
+export interface IAttribute {
+  id: string;
+  key: string;
+  name: string;
+  description?: string;
+  type: EnumAttributeType;
+  modifiedAt: Date;
+  createdAt: Date;
 }

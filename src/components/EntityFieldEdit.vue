@@ -30,6 +30,11 @@
       </v-textarea>
     </div>
     <div
+      v-else-if="field.type === 'attributes'"
+    >
+      <small><i>attributes are not supported on edit pages yet</i></small>
+    </div>
+    <div
       v-else
     >
       <v-text-field

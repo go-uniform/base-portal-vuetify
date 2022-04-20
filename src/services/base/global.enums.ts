@@ -14,11 +14,16 @@ export enum EnumFieldType {
   Uuid = 'uuid',
   Text = 'text',
   TextArea = 'textarea',
-  DateTime = 'datetime'
+  DateTime = 'datetime',
+  Attributes = 'attributes',
 }
 
 export enum EnumHeaderAlign {
   Start = 'start',
   Center = 'center',
   End = 'end',
+}
+
+export enum EnumAttributeType {
+  Text = "text"
 }
