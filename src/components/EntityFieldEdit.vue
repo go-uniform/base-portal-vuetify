@@ -45,7 +45,20 @@
     <div
       v-else-if="field.type === 'attributes'"
     >
-      <small><i>attributes are not supported on edit pages yet</i></small>
+      <slot
+        v-for="(val, key) in value"
+        :name="`${fieldKey}.${key}`"
+      >
+        <div
+          v-bind:key="key"
+        >
+          <v-text-field
+            :value="value[key]"
+            :label="translate(`${field.label}.${key}`)"
+            @input="attributeInput(key, $event)"
+          ></v-text-field>
+        </div>
+      </slot>
     </div>
     <div
       v-else
@@ -83,16 +96,22 @@ export default {
       required: validations.required,
       pattern: validations.pattern,
       length: validations.length,
-    }
+    },
+    attributes: {},
   }),
 
   methods: {
     input(value) {
       this.$emit('input', value);
     },
+    attributeInput(key, value) {
+      this.attributes[key] = value;
+      this.input(this.attributes);
+    }
   },
 
   mounted() {
+    this.attributes = {};
     let repository = null;
 
     if (this.field) {

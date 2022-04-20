@@ -18,6 +18,7 @@ export enum EnumFieldType {
   TextArea = 'textarea',
   DateTime = 'datetime',
   Attributes = 'attributes',
+  Enumeration = 'enumeration',
 }
 
 export enum EnumHeaderAlign {

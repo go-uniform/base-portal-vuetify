@@ -92,6 +92,11 @@ export interface IBulkPromise {
   ): Promise<IGeneric<generic>>;
 }
 
+export interface IEnumValue {
+  value: string;
+  text: string;
+}
+
 export interface IFieldNormal {
   label: string;
   type: EnumFieldType;
@@ -100,6 +105,7 @@ export interface IFieldNormal {
   filterable?: boolean;
   pattern?: RegExp;
   patternMessage?: string;
+  values?: IEnumValue[];
 }
 
 export interface IFieldLinkId {
