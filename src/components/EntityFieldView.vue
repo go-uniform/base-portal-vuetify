@@ -12,10 +12,40 @@
         </strong>
       </div>
       <a
+        v-if="value"
         :href="`${field.linkRepository.viewPagePrefix}/${value}`"
       >
         {{ item[field.linkLabelFieldKey] }}
       </a>
+      <small
+        v-else
+      >
+        <i>
+          empty
+        </i>
+      </small>
+    </div>
+    <div
+      v-else-if="field.type === 'selfReferenceId'"
+    >
+      <div>
+        <strong>
+          {{ translate(field.label) }}
+        </strong>
+      </div>
+      <a
+        v-if="value"
+        :href="`${parentRepository.viewPagePrefix}/${value}`"
+      >
+        {{ item[field.selfReferenceLabelFieldKey] }}
+      </a>
+      <small
+        v-else
+      >
+        <i>
+          &lt;{{ translate('custom.empty') }}&gt;
+        </i>
+      </small>
     </div>
     <div
       v-else-if="field.type === 'attributes'"
@@ -56,6 +86,7 @@ export default {
   name: 'entity-field-view',
 
   props: {
+    parentRepository: null,
     field: null,
     value: null,
     item: null,
@@ -77,6 +108,6 @@ export default {
       }
       return value;
     },
-  }
+  },
 };
 </script>

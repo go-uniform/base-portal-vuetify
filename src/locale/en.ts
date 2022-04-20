@@ -2,6 +2,7 @@ import en from '@/locale/base/en';
 const phrases: any = en;
 
 phrases.custom = {
+  empty: 'empty',
   menu: {
     users: 'Users',
   },
@@ -19,6 +20,7 @@ phrases.custom = {
       username: 'Username',
       email: 'Email',
       userRoleId: 'User Role',
+      parentUserId: 'Parent User',
       attributes: {
         title: 'Attributes',
         sex: 'Sex',

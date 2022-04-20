@@ -59,6 +59,7 @@
                       v-bind:key="fieldKey"
                     >
                       <entity-field-view
+                        :parent-repository="repository"
                         :field="field"
                         :value="item[fieldKey]"
                         :field-key="fieldKey"
@@ -137,7 +138,7 @@ export default {
       let response = {};
       Object.keys(this.repository.fields).map((key) => {
         const field = this.repository.fields[key];
-        if (['linkLabel'].includes(field.type)) {
+        if (['linkLabel','selfReferenceLabel'].includes(field.type)) {
           return;
         }
         response[key] = this.repository.fields[key];

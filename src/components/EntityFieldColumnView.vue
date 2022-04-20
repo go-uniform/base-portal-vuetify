@@ -14,6 +14,15 @@
       </a>
     </div>
     <div
+      v-else-if="field.type === 'selfReferenceId'"
+    >
+      <a
+        :href="`${parentRepository.viewPagePrefix}/${value}`"
+      >
+        {{ item[field.selfReferenceLabelFieldKey] }}
+      </a>
+    </div>
+    <div
       v-else-if="field.type === 'attributes'"
     >
       <small><i>attributes are not supported on table list views</i></small>
@@ -35,16 +44,14 @@ export default {
   name: 'entity-field-column-view',
 
   props: {
+    parentRepository: null,
     field: null,
     value: null,
     item: null,
+    fieldKey: null,
   },
 
   methods: {
-    isLink(field) {
-      return field.type === 'linkId';
-    },
-
     doFormat() {
       switch (this.field.type) {
         case "boolean":

@@ -108,7 +108,9 @@
         >
 
           <entity-field-column-view
+            :parent-repository="repository"
             :field="field"
+            :field-key="header.value"
             :value="item[header.value]"
             :item="item"
           />

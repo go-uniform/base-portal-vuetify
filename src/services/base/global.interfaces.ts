@@ -110,6 +110,7 @@ export interface IFieldLinkId {
   filterable?: boolean;
   linkLabelFieldKey: string;
   linkRepository: IRepository<any>;
+  textAssemblyCallback: (item: any) => string;
 }
 
 export interface IFieldLinkLabel {
@@ -121,13 +122,32 @@ export interface IFieldLinkLabel {
   linkIdFieldKey: string;
 }
 
+export interface ISelfReferenceId {
+  label: string;
+  type: EnumFieldType;
+  optional?: boolean;
+  readonly?: boolean;
+  filterable?: boolean;
+  selfReferenceLabelFieldKey: string;
+  textAssemblyCallback: (item: any) => string;
+}
+
+export interface ISelfReferenceLabel {
+  label: string;
+  type: EnumFieldType;
+  optional?: boolean;
+  readonly?: boolean;
+  filterable?: boolean;
+  selfReferenceIdFieldKey: string;
+}
+
 export interface IFieldAttribute {
   label: string;
   type: EnumFieldType;
   attributeRepository: IRepository<any>;
 }
 
-export type IField = IFieldNormal | IFieldLinkId | IFieldLinkLabel | IFieldAttribute;
+export type IField = IFieldNormal | IFieldLinkId | IFieldLinkLabel | IFieldAttribute | ISelfReferenceId | ISelfReferenceLabel;
 
 export type IFields = { [key: string]: IField }
 

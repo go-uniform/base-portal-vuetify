@@ -16,7 +16,7 @@ import {userAttributes} from '@/services/repositories/user-attributes';
 
 const StubList: User[] = [
   {
-    id: generateUuid(),
+    id: 'xyz123',
     firstName: 'Justin',
     lastName: 'Robertson',
     username: 'justin@somewhere.co.za',
@@ -27,6 +27,23 @@ const StubList: User[] = [
     attributes: {
       sex: "male",
     },
+    modifiedAt: new Date(),
+    createdAt: new Date(),
+  },
+  {
+    id: generateUuid(),
+    firstName: 'Joe',
+    lastName: 'Soap',
+    username: 'joe@somewhere.co.za',
+    email: 'joe@somewhere.co.za',
+    password: 'password',
+    userRoleId: '624df0929bc786ddf868f7e8',
+    userRoleLabel: 'Administrators',
+    attributes: {
+      sex: "male",
+    },
+    parentUserId: 'xyz123',
+    parentUserLabel: 'Justin Robertson',
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -42,6 +59,8 @@ interface User {
   password: string;
   userRoleId: string;
   userRoleLabel: string;
+  parentUserId?: string;
+  parentUserLabel?: string;
   attributes: { [key: string]: any };
   modifiedAt: Date;
   createdAt: Date;
@@ -99,6 +118,20 @@ export const users: IRepository<User> = {
       linkIdFieldKey: 'userRoleId',
       readonly: true,
     },
+    parentUserId: {
+      label: 'custom.users.fields.parentUserId',
+      type: EnumFieldType.SelfReferenceId,
+      selfReferenceLabelFieldKey: 'parentUserLabel',
+      textAssemblyCallback: (item) => { return `${item.firstName} ${item.lastName}`; },
+      optional: true,
+    },
+    parentUserLabel: {
+      label: 'custom.users.fields.parentUserLabel',
+      type: EnumFieldType.SelfReferenceLabel,
+      selfReferenceIdFieldKey: 'parentUserId',
+      readonly: true,
+      optional: true,
+    },
     attributes: {
       label: 'custom.users.fields.attributes',
       type: EnumFieldType.Attributes,
@@ -133,6 +166,9 @@ export const users: IRepository<User> = {
       fieldKey: 'userRoleId',
     },
     {
+      fieldKey: 'parentUserId',
+    },
+    {
       fieldKey: 'createdAt',
       align: EnumHeaderAlign.End,
     },
@@ -145,10 +181,15 @@ export const users: IRepository<User> = {
       'username',
       'email',
       'userRoleId',
+      'parentUserId',
       'attributes',
       'modifiedAt',
       'createdAt',
-    ]),
+    ], {
+      childXl: 3,
+      childLg: 4,
+      childMd: 6,
+    }),
   ],
   bulkActions: [
     {

@@ -59,7 +59,9 @@
                     >
 
                       <entity-field-edit
-                        :field-key="field"
+                        :parent-repository="repository"
+                        :item="item"
+                        :field-key="fieldKey"
                         :field="field"
                         v-model="item[fieldKey]"
                       />

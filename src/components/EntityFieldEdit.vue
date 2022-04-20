@@ -17,6 +17,19 @@
       ></v-autocomplete>
     </div>
     <div
+      v-else-if="field.type === 'selfReferenceId'"
+    >
+      <v-autocomplete
+        :value="value"
+        :label="translate(field.label)"
+        :items="linkItems"
+        :multiple="field.multiple"
+        clearable
+        :rules="[rules.required(field.optional)]"
+        @input="input"
+      ></v-autocomplete>
+    </div>
+    <div
       v-else-if="field.type === 'textarea'"
     >
       <v-textarea
@@ -57,9 +70,11 @@ export default {
   name: 'entity-field-edit',
 
   props: {
-    fieldKey: null,
+    parentRepository: null,
     field: null,
     value: null,
+    item: null,
+    fieldKey: null,
   },
 
   data: () => ({
@@ -75,29 +90,35 @@ export default {
     input(value) {
       this.$emit('input', value);
     },
-
-
-    links(key, field) {
-      field.linkRepository.list().then((response) => {
-        this.linkItems[key] = response.items.map((item) => {
-          return {
-            value: item.id,
-            text: item.name,
-          }
-        });
-        this.$forceUpdate();
-      });
-    },
   },
 
   mounted() {
-    if (this.field && this.field.linkRepository) {
-      this.field.linkRepository.list().then((response) => {
+    let repository = null;
+
+    if (this.field) {
+      if (this.field.linkRepository) {
+        repository = this.field.linkRepository;
+      } else if (this.field.type === 'selfReferenceId') {
+        repository = this.parentRepository;
+      }
+    }
+
+    if (repository) {
+      repository.list().then((response) => {
         this.linkItems = response.items.map((item) => {
+          let text = '';
+          if (this.field.textAssemblyCallback) {
+            text = this.field.textAssemblyCallback(item);
+          } else {
+            text = item.name || item.text;
+          }
           return {
             value: item.id,
-            text: item.name,
+            text: text,
           }
+        });
+        this.linkItems = this.linkItems.filter((item) => {
+          return item.value !== this.item.id;
         });
         this.$forceUpdate();
       });

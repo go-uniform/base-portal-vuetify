@@ -2,6 +2,7 @@ import af from '@/locale/base/af';
 const phrases: any = af;
 
 phrases.custom = {
+  empty: 'leeg',
   menu: {
     users: 'Gebruikers',
   },
@@ -19,6 +20,7 @@ phrases.custom = {
       username: 'Gebruikersnaam',
       email: 'E-pos',
       userRoleId: 'Gebruikersrol',
+      parentUserId: 'Ouer Gebruiker',
       attributes: {
         title: 'Eienskappe',
         sex: 'Geslag',
