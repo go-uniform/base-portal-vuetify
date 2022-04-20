@@ -34,9 +34,9 @@
               cols="12"
               md="6"
               xl="4"
+              v-if="repository.freeTextSearch"
             >
               <v-text-field
-                v-if="repository.freeTextSearch"
                 v-model="freeTextSearch"
                 :label="translate('base.entityFilters.freeTextSearch')"
                 filled
