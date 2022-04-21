@@ -1,44 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>Uniform</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
-    <script>
-      // we will not be supporting any of the old IE variants
-      if (navigator.userAgent.includes('MSIE') || navigator.userAgent.includes('Trident')) {
-        window.location = '/incompatible.html';
-      }
-      // avoid white flicker when navigating while in dark-mode
-      if (window && window.localStorage) {
-        const dark = window.localStorage.getItem('theme.dark');
-        if (dark !== null) {
-          const css = 'body { background: #121212; }',
-            head = document.head || document.getElementsByTagName('head')[0],
-            style = document.createElement('style');
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title>Uniform</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+  <script>
+    // set GTAG4 trackingId
+    const trackingId = null;
+    window.gtag = () => {};
+    if (trackingId) {
+      const script = document.createElement('script');
+      script.onload = function () {
+        window.dataLayer = window.dataLayer || [];
 
-          head.appendChild(style);
+        function gtag() {
+          dataLayer.push(arguments);
+        }
 
-          style.type = 'text/css';
-          if (style.styleSheet){
-            // This is required for IE8 and below.
-            style.styleSheet.cssText = css;
-          } else {
-            style.appendChild(document.createTextNode(css));
-          }
+        gtag('js', new Date());
+        gtag('config', trackingId);
+        window.gtag = gtag;
+      };
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${trackingId}`;
+      document.head.appendChild(script);
+    }
+
+    // we will not be supporting any of the old IE variants
+    if (navigator.userAgent.includes('MSIE') || navigator.userAgent.includes('Trident')) {
+      window.location = '/incompatible.html';
+    }
+    // avoid white flicker when navigating while in dark-mode
+    if (window && window.localStorage) {
+      const dark = window.localStorage.getItem('theme.dark');
+      if (dark !== null) {
+        const css = 'body { background: #121212; }',
+          head = document.head || document.getElementsByTagName('head')[0],
+          style = document.createElement('style');
+
+        head.appendChild(style);
+
+        style.type = 'text/css';
+        if (style.styleSheet) {
+          // This is required for IE8 and below.
+          style.styleSheet.cssText = css;
+        } else {
+          style.appendChild(document.createTextNode(css));
         }
       }
-    </script>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    }
+  </script>
+</head>
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+      Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
 </html>

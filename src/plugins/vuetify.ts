@@ -116,15 +116,26 @@ export const translate = (text: string | null | undefined, ...args: any[]): stri
   return text;
 };
 
+export const eventPush = (topic: string, options?: any) => {
+  if ((window as any).gtag) {
+    (window as any).gtag('event', topic, options);
+  }
+};
+
 Vue.mixin({
   methods: {
     formatString: formatString,
     translate: translate,
     kebabCase: kebabCase,
+    eventPush: eventPush,
   },
 });
 
-Vue.filter('format', (text: string, ...args: any[]) => {
+Vue.filter('eventPush', (topic: string, options: any) => {
+  eventPush(topic, options);
+});
+
+Vue.filter('translate', (text: string, ...args: any[]) => {
   translate(text, args);
 });
 

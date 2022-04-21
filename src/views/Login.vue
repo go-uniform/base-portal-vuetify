@@ -34,7 +34,7 @@
             <v-text-field
               :label="translate('base.login.identifier')"
               v-model="email"
-              :rules="[rules.required, rules.email]"
+              :rules="[rules.required]"
               autofocus
             ></v-text-field>
           </v-col>
