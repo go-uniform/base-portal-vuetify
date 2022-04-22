@@ -28,7 +28,7 @@
         class="white--text py-2"
       >
         <div>
-          <strong>Uniform</strong> - {{ new Date().getFullYear() }}
+          <strong>{{ translate('base.app.title') }}</strong> - {{ new Date().getFullYear() }}
         </div>
         <div>
           <small>v1.0.2</small>
