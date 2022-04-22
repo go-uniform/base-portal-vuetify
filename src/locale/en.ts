@@ -4,7 +4,10 @@ const phrases: any = en;
 phrases.custom = {
   empty: 'empty',
   menu: {
-    users: 'Users',
+    users: {
+      title: 'Users',
+      icon: 'mdi-account',
+    },
   },
   users: {
     singular: 'User',

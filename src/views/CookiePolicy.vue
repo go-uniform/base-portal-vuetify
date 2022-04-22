@@ -76,7 +76,7 @@ export default {
     showCookieConsent: false,
     crumbs: [
       {
-        icon: 'mdi-home',
+        icon: 'base.home.icon',
         title: 'base.home.pageTitle',
         location: '/',
       },

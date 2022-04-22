@@ -5,7 +5,7 @@ export const defaultEditCrumbs = (repository: IRepository<any>, id: string | nul
   if (id) {
     return [
       {
-        icon: 'mdi-home',
+        icon: translate('base.home.icon'),
         title: translate('base.home.pageTitle'),
         location: '/',
       },
@@ -24,7 +24,7 @@ export const defaultEditCrumbs = (repository: IRepository<any>, id: string | nul
   }
   return [
     {
-      icon: 'mdi-home',
+      icon: translate('base.home.icon'),
       title: translate('base.home.pageTitle'),
       location: '/',
     },

@@ -60,6 +60,7 @@ phrases.base = {
   },
   home: {
     pageTitle: 'Tuis',
+    icon: 'mdi-home',
   },
   entity: {
     list: 'Lys {0}',

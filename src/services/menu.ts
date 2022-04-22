@@ -14,12 +14,12 @@ const generateMenuItem = <T>(repository: IRepository<T>): object => {
 export const mainMenuItems = [
   {
     title: translate('base.home.pageTitle'),
-    icon: 'mdi-home',
+    icon: translate('base.home.icon'),
     location: '/'
   },
   {
-    title: translate('custom.menu.users'),
-    icon: 'mdi-account',
+    title: translate('custom.menu.users.title'),
+    icon: translate('custom.menu.users.icon'),
     children: [
       generateMenuItem(users),
       generateMenuItem(userRoles),

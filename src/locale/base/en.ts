@@ -60,6 +60,7 @@ phrases.base = {
   },
   home: {
     pageTitle: 'Home',
+    icon: 'mdi-home',
   },
   entity: {
     list: 'List {0}',
