@@ -61,7 +61,7 @@ export default Vue.extend({
 <style lang="scss">
 // since footer is floating we need to ensure that we hold a space for it to float into once fully scrolled down
 .footer-placeholder {
-  height: 62px;
+  height: 68px;
 }
 .v-list-item--dense > .v-list-group__header {
   min-height: 40px;
