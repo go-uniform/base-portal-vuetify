@@ -59,6 +59,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+.v-list-item--dense > .v-list-group__header {
+  min-height: 40px;
+}
 .fill-width {
   width: 100%;
 }

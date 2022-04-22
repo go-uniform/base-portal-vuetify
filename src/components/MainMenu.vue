@@ -38,6 +38,7 @@
         v-if="item.children && item.children.length > 0"
         v-bind:key="index"
         :prepend-icon="item.icon"
+        class="v-list-item--dense"
       >
 
         <template v-slot:activator>
@@ -51,6 +52,7 @@
             v-if="!mini"
             v-bind:key="childIndex"
             :to="child.location"
+            dense
           >
 
             <v-list-item-icon>
@@ -69,6 +71,7 @@
         v-else
         v-bind:key="index"
         :to="item.location"
+        dense
       >
 
         <v-list-item-icon>
