@@ -13,6 +13,7 @@ import {
 } from '@/services/base/stub';
 import {Section} from '@/services/base/global.classes.section';
 import {userAttributes} from '@/services/repositories/user-attributes';
+import {permissions} from '@/services/repositories/permissions';
 
 const StubList: User[] = [
   {
@@ -137,6 +138,11 @@ export const users: IRepository<User> = {
       type: EnumFieldType.Attributes,
       attributeRepository: userAttributes,
     },
+    permissions: {
+      label: 'custom.users.fields.permissions',
+      type: EnumFieldType.Attributes,
+      attributeRepository: permissions,
+    },
     modifiedAt: {
       label: 'custom.users.fields.modifiedAt',
       type: EnumFieldType.DateTime,
@@ -190,6 +196,9 @@ export const users: IRepository<User> = {
       childLg: 4,
       childMd: 6,
     }),
+    new Section('custom.users.sections.permissions', [
+      'permissions',
+    ]),
   ],
   bulkActions: [
     {

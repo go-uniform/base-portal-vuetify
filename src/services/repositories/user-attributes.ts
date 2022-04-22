@@ -48,7 +48,7 @@ export const userAttributes: IRepository<IAttribute> = {
       type: EnumFieldType.Text,
     },
     key: {
-      label: 'custom.userAttributes.fields.name',
+      label: 'custom.userAttributes.fields.key',
       type: EnumFieldType.Text,
       pattern: /^[a-zA-z0-9]+$/,
       patternMessage: 'custom.validations.jsonKey',
@@ -75,6 +75,9 @@ export const userAttributes: IRepository<IAttribute> = {
     },
   },
   headers: [
+    {
+      fieldKey: 'key',
+    },
     {
       fieldKey: 'name',
     },

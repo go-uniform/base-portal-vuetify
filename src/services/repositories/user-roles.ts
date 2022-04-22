@@ -10,6 +10,7 @@ import {
 import {IRepository} from '@/services/base/global.interfaces';
 import {EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
+import {permissions} from '@/services/repositories/permissions';
 
 interface UserRole {
   id: string;
@@ -72,6 +73,11 @@ export const userRoles: IRepository<UserRole> = {
       type: EnumFieldType.TextArea,
       optional: true,
     },
+    permissions: {
+      label: 'custom.users.fields.permissions',
+      type: EnumFieldType.Attributes,
+      attributeRepository: permissions,
+    },
     modifiedAt: {
       label: 'custom.userRoles.fields.modifiedAt',
       type: EnumFieldType.DateTime,
@@ -103,6 +109,9 @@ export const userRoles: IRepository<UserRole> = {
       'description',
       'modifiedAt',
       'createdAt',
+    ]),
+    new Section('custom.users.sections.permissions', [
+      'permissions',
     ]),
   ],
   bulkActions: [

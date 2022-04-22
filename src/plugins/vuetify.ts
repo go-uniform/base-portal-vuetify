@@ -116,7 +116,7 @@ export const translate = (text: string | null | undefined, ...args: any[]): stri
   return text;
 };
 
-export const eventPush = (topic: string, options?: any) => {
+export const analyticsEventPush = (topic: string, options?: any) => {
   if ((window as any).gtag) {
     (window as any).gtag('event', topic, options);
   }
@@ -127,12 +127,12 @@ Vue.mixin({
     formatString: formatString,
     translate: translate,
     kebabCase: kebabCase,
-    eventPush: eventPush,
+    analyticsEventPush: analyticsEventPush,
   },
 });
 
-Vue.filter('eventPush', (topic: string, options: any) => {
-  eventPush(topic, options);
+Vue.filter('analyticsEventPush', (topic: string, options: any) => {
+  analyticsEventPush(topic, options);
 });
 
 Vue.filter('translate', (text: string, ...args: any[]) => {
