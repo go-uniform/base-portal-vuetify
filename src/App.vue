@@ -64,6 +64,9 @@ export default Vue.extend({
   height: 68px;
 }
 
+.v-application, .v-navigation-drawer, .v-list {
+  background-color: var(--v-background-base) !important;
+}
 .v-list-group--active > .v-list-group__header > .v-list-item__icon > .v-icon {
   color: #fff !important;
 }
