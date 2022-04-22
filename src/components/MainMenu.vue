@@ -82,6 +82,11 @@
       </v-list-item>
 
     </template>
+    <div
+      style="width:100%"
+      class="footer-placeholder"
+    >
+    </div>
 
   </v-navigation-drawer>
 

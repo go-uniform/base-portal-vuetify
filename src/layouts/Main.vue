@@ -70,13 +70,6 @@
 
 </template>
 
-<style lang="scss" scoped>
-// since footer is floating we need to ensure that we hold a space for it to float into once fully scrolled down
-.footer-placeholder {
-  height: 62px;
-}
-</style>
-
 <script lang="ts">
 import Vue from 'vue';
 import MainFooter from '@/components/MainFooter.vue';
