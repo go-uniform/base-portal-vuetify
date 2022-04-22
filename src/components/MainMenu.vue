@@ -39,6 +39,9 @@
         v-bind:key="index"
         :prepend-icon="item.icon"
         class="v-list-item--dense"
+        :group="item.group"
+        v-model="groups[index]"
+        @click="closeOtherGroups(index)"
       >
 
         <template v-slot:activator>
@@ -72,6 +75,7 @@
         v-bind:key="index"
         :to="item.location"
         dense
+        @click="closeOtherGroups(index)"
       >
 
         <v-list-item-icon>
@@ -109,10 +113,21 @@ export default {
   data: () => ({
     drawer: false,
     mini: false,
-    items: mainMenuItems
+    items: mainMenuItems,
+    groups: {},
   }),
 
   methods: {
+    closeOtherGroups(index) {
+      for (const key in this.groups) {
+        if (`${key}` === `${index}`) {
+          console.log('skip', index);
+          continue;
+        }
+        this.groups[key] = false;
+      }
+    },
+
     toggle() {
       let open = !this.mini;
       if (this.$vuetify.breakpoint.mobile) {
