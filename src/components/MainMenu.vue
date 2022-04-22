@@ -121,7 +121,6 @@ export default {
     closeOtherGroups(index) {
       for (const key in this.groups) {
         if (`${key}` === `${index}`) {
-          console.log('skip', index);
           continue;
         }
         this.groups[key] = false;
