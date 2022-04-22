@@ -2,8 +2,9 @@
 
   <div
   >
+
     <v-menu
-      top
+      bottom
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -13,23 +14,26 @@
           class="language-selector"
         >
           <v-icon>
-            mdi-web
+            mdi-theme-light-dark
           </v-icon>
           <span
             class="ml-2 hidden-xs-only"
           >
-            {{ languageText }}
+            {{ translate('base.app.theme') }}
           </span>
         </v-btn>
       </template>
 
       <v-list>
         <v-list-item
-          v-for="(item, index) in languages"
-          :key="index"
-          @click="selectLanguage(item.value)"
+          @click="setThemeModeLight"
         >
-          <v-list-item-title>{{ item.text }}</v-list-item-title>
+          <v-list-item-title>{{ translate('base.app.lightMode') }}</v-list-item-title>
+        </v-list-item>
+        <v-list-item
+          @click="setThemeModeDark"
+        >
+          <v-list-item-title>{{ translate('base.app.darkMode') }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -40,8 +44,8 @@
 <style lang="scss" scoped>
 .language-selector {
   position: fixed;
-  left: 10px;
-  bottom: 10px;
+  right: 10px;
+  top: 10px;
   z-index: 5;
 }
 </style>
@@ -50,29 +54,23 @@
 import {languages} from '@/plugins/vuetify';
 
 export default {
-  name: 'language-selector',
+  name: 'theme-selector',
 
   data: () => ({
-    show: true,
-    language: 'en',
-    languageText: 'English',
-    languages: [],
   }),
 
   methods: {
-    selectLanguage(lang) {
-      if (this.$vuetify.lang.current !== lang) {
-        if (languages.filter(language => language.value === lang).length > 0) {
-          this.$vuetify.lang.current = lang;
-          this.language = lang;
-          this.languageText = languages.filter(language => language.value === this.language)[0].text;
+    setThemeModeDark() {
+      this.$vuetify.theme.dark = true;
+      if (window && window.localStorage) {
+        window.localStorage.setItem('theme.dark', this.$vuetify.theme.dark.toString());
+      }
+    },
 
-          if (window && window.localStorage) {
-            window.localStorage.setItem('lang', lang);
-          }
-
-          location.reload();
-        }
+    setThemeModeLight() {
+      this.$vuetify.theme.dark = false;
+      if (window && window.localStorage) {
+        window.localStorage.setItem('theme.dark', this.$vuetify.theme.dark.toString());
       }
     },
   },

@@ -18,6 +18,7 @@ phrases.base = {
     logoUrl: 'https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png',
     smallLogoAlt: 'Uniform',
     smallLogoUrl: 'https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png',
+    theme: 'Theme',
     lightMode: 'Light Mode',
     darkMode: 'Dark Mode',
     logout: 'Log Out',

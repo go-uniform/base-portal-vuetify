@@ -8,37 +8,55 @@
       v-scroll="onScroll"
     >
 
-      <main-toolbar
-        :crumbs="crumbs"
-        :actions="actions"
-        :bulk-actions="bulkActions"
-        :bulk-action-handler="bulkActionHandler"
-      />
       <v-layout
-        :fill-height="fillHeight"
-        :align-start="alignStart"
-        :align-center="alignCenter"
-        :align-end="alignEnd"
-        :align-baseline="alignBaseline"
-        :align-content-start="alignContentStart"
-        :align-content-center="alignContentCenter"
-        :align-content-end="alignContentEnd"
-        :align-content-space-around="alignContentSpaceAround"
-        :align-content-space-between="alignContentSpaceBetween"
-        :justify-start="justifyStart"
-        :justify-center="justifyCenter"
-        :justify-end="justifyEnd"
-        :justify-space-around="justifySpaceAround"
-        :justify-space-between="justifySpaceBetween"
-        :row="row"
-        :column="column"
-        class="pa-8"
+        fill-height
+        justify-start
+        align-center
+        column
       >
-        <slot></slot>
+
         <div
+          style="width:100%"
+        >
+          <main-toolbar
+            :crumbs="crumbs"
+            :actions="actions"
+            :bulk-actions="bulkActions"
+            :bulk-action-handler="bulkActionHandler"
+          />
+        </div>
+        <div
+          style="width:100%"
+          class="pa-8 flex-grow-1"
+        >
+          <v-layout
+            :fill-height="fillHeight"
+            :align-start="alignStart"
+            :align-center="alignCenter"
+            :align-end="alignEnd"
+            :align-baseline="alignBaseline"
+            :align-content-start="alignContentStart"
+            :align-content-center="alignContentCenter"
+            :align-content-end="alignContentEnd"
+            :align-content-space-around="alignContentSpaceAround"
+            :align-content-space-between="alignContentSpaceBetween"
+            :justify-start="justifyStart"
+            :justify-center="justifyCenter"
+            :justify-end="justifyEnd"
+            :justify-space-around="justifySpaceAround"
+            :justify-space-between="justifySpaceBetween"
+            :row="row"
+            :column="column"
+          >
+            <slot></slot>
+          </v-layout>
+        </div>
+        <div
+          style="width:100%"
           class="footer-placeholder"
         >
         </div>
+
       </v-layout>
 
     </v-main>
