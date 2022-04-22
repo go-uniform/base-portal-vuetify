@@ -111,6 +111,10 @@ export const translate = (text: string | null | undefined, ...args: any[]): stri
     const translated = instance.framework.lang.t(key, ...args);
     if (translated !== key && !translated.startsWith('$vuetify.')) {
       text = translated;
+    } else {
+      window.dispatchEvent(new ErrorEvent('error', {
+        error: new Error(`[Vuetify] Translation key "${key}" not found in fallback`),
+      }));
     }
   }
   return text;

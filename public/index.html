@@ -10,88 +10,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
   <script>
     // set Google Analytics GTAG4 trackingId
-    const analyticsTrackingId = null;
+    window.analyticsTrackingId = null;
     // set Google Optimize containerId
-    const optimizeContainerId = null;
+    window.optimizeContainerId = null;
     // set HotJar trackingId
-    const hotjarTrackingId = null;
-
-    /* Google Analytics 4 */
-    window.gtag = () => {
-    };
-    if (analyticsTrackingId) {
-      const script = document.createElement('script');
-      script.onload = function () {
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-          dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-        gtag('config', analyticsTrackingId);
-        window.gtag = gtag;
-      };
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${analyticsTrackingId}`;
-      document.head.appendChild(script);
-    }
-
-    /* Google Optimize */
-    if (optimizeContainerId) {
-      const script = document.createElement('script');
-      script.onload = function () {
-        setTimeout(() => {
-          window.gtag('event', 'optimize.loaded', {
-            optimizeContainerId: optimizeContainerId,
-          })
-        }, 100);
-      };
-      script.src = `https://www.googleoptimize.com/optimize.js?id=${optimizeContainerId}`;
-      document.head.appendChild(script);
-    }
-
-    /* Hotjar */
-    if (hotjarTrackingId) {
-      (function (h, o, t, j, a, r) {
-        h.hj = h.hj || function () {
-          (h.hj.q = h.hj.q || []).push(arguments)
-        };
-        h._hjSettings = {hjid: hotjarTrackingId, hjsv: 6};
-        a = o.getElementsByTagName('head')[0];
-        r = o.createElement('script');
-        r.async = 1;
-        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-        a.appendChild(r);
-      })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
-    }
-
-    /* Browser Incompatibility Check */
-    // we will not be supporting any of the old IE variants
-    if (navigator.userAgent.includes('MSIE') || navigator.userAgent.includes('Trident')) {
-      window.location = '/incompatible.html';
-    }
-
-    /* Dark Mode White Flicker Fix */
-    // avoid white flicker when navigating while in dark-mode
-    if (window && window.localStorage) {
-      const dark = window.localStorage.getItem('theme.dark');
-      if (dark !== null) {
-        const css = 'body { background: #121212; }',
-          head = document.head || document.getElementsByTagName('head')[0],
-          style = document.createElement('style');
-
-        head.appendChild(style);
-
-        style.type = 'text/css';
-        if (style.styleSheet) {
-          // This is required for IE8 and below.
-          style.styleSheet.cssText = css;
-        } else {
-          style.appendChild(document.createTextNode(css));
-        }
-      }
-    }
+    window.hotjarTrackingId = null;
+    // set an endpoint to log client errors to server
+    window.logErrorEndpoint = null;
   </script>
+  <script type="text/javascript" src="/header.js"></script>
 </head>
 <body>
   <noscript>

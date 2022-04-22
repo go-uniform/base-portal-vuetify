@@ -19,26 +19,16 @@
     }
   </style>
   <script>
-    // avoid white flicker when navigating while in dark-mode
-    if (window && window.localStorage) {
-      const dark = window.localStorage.getItem('theme.dark');
-      if (dark !== null) {
-        const css = 'body { background: #121212; color: #fff; }',
-          head = document.head || document.getElementsByTagName('head')[0],
-          style = document.createElement('style');
-
-        head.appendChild(style);
-
-        style.type = 'text/css';
-        if (style.styleSheet){
-          // This is required for IE8 and below.
-          style.styleSheet.cssText = css;
-        } else {
-          style.appendChild(document.createTextNode(css));
-        }
-      }
-    }
+    // set Google Analytics GTAG4 trackingId
+    window.analyticsTrackingId = null;
+    // set Google Optimize containerId
+    window.optimizeContainerId = null;
+    // set HotJar trackingId
+    window.hotjarTrackingId = null;
+    // set an endpoint to log client errors to server
+    window.logErrorEndpoint = null;
   </script>
+  <script type="text/javascript" src="/header.js"></script>
 </head>
 <body>
 

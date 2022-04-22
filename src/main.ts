@@ -6,6 +6,11 @@ import {bus} from '@/services/base/bus';
 import {vueBus} from '@/plugins/vue-bus';
 
 Vue.config.productionTip = false
+Vue.config.errorHandler = function (err, vm, info) {
+  window.dispatchEvent(new ErrorEvent('error', {
+    error: err,
+  }));
+};
 
 bus.set(vueBus);
 
