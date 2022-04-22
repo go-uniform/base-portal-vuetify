@@ -63,6 +63,13 @@ export default Vue.extend({
 .footer-placeholder {
   height: 68px;
 }
+
+.v-list-group--active > .v-list-group__header > .v-list-item__icon > .v-icon {
+  color: #fff !important;
+}
+.v-expansion-panel-header.white--text .v-icon {
+  color: #fff !important;
+}
 .v-list-item--dense > .v-list-group__header {
   min-height: 40px;
 }

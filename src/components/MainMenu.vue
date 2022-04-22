@@ -42,6 +42,7 @@
         :group="item.group"
         v-model="groups[index]"
         @click="closeOtherGroups(index)"
+        active-class="accent white--text"
       >
 
         <template v-slot:activator>
