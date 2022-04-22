@@ -12,6 +12,7 @@ phrases.custom = {
     sections: {
       general: 'General',
       attributes: 'Attributes',
+      permissions: 'Permissions',
     },
     fields: {
       id: 'Id',
@@ -24,6 +25,10 @@ phrases.custom = {
       attributes: {
         title: 'Attributes',
         sex: 'Sex',
+      },
+      permissions: {
+        title: 'Permissions',
+        usersListOwner: 'Users List Owner',
       },
       modifiedAt: 'Modified At',
       createdAt: 'Created At',
@@ -59,6 +64,10 @@ phrases.custom = {
       createdAt: 'Created At',
     },
   },
+  permissions: {
+    singular: 'Permission',
+    plural: 'Permissions',
+  }
 };
 
 export default phrases;

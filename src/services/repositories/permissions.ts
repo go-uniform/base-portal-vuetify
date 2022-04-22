@@ -14,7 +14,7 @@ import {Section} from '@/services/base/global.classes.section';
 const StubList: IAttribute[] = [
   {
     id: '624df0929bc786ddf868f7e8',
-    key: 'users.list.owner',
+    key: 'usersListOwner',
     name: 'Users List Owner',
     description: 'Ability to list users that you own or your group owns in some way.',
     type: EnumAttributeType.Text,
@@ -64,8 +64,8 @@ export const permissions: IRepository<IAttribute> = {
     key: {
       label: 'custom.permissions.fields.key',
       type: EnumFieldType.Text,
-      pattern: /^[a-zA-z0-9.]+$/,
-      patternMessage: 'custom.validations.jsonDottedKey',
+      pattern: /^[a-zA-z0-9]+$/,
+      patternMessage: 'custom.validations.jsonKey',
     },
     name: {
       label: 'custom.permissions.fields.name',

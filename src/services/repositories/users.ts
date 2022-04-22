@@ -28,6 +28,9 @@ const StubList: User[] = [
     attributes: {
       sex: "male",
     },
+    permissions: {
+      'usersListOwner': 'allow',
+    },
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -42,6 +45,9 @@ const StubList: User[] = [
     userRoleLabel: 'Administrators',
     attributes: {
       sex: "male",
+    },
+    permissions: {
+      'users.list.owner': 'deny',
     },
     parentUserId: 'xyz123',
     parentUserLabel: 'Justin Robertson',
@@ -63,6 +69,7 @@ interface User {
   parentUserId?: string;
   parentUserLabel?: string;
   attributes: { [key: string]: any };
+  permissions: { [key: string]: any };
   modifiedAt: Date;
   createdAt: Date;
 }

@@ -12,6 +12,7 @@ phrases.custom = {
     sections: {
       general: 'Algemeen',
       attributes: 'Eienskappe',
+      permissions: 'Toestemmings',
     },
     fields: {
       id: 'Id',
@@ -24,6 +25,10 @@ phrases.custom = {
       attributes: {
         title: 'Eienskappe',
         sex: 'Geslag',
+      },
+      permissions: {
+        title: 'Toestemmings',
+        usersListOwner: 'Gebruikers Lys Eienaar',
       },
       modifiedAt: 'Gewysig Teen',
       createdAt: 'Geskep Teen',
@@ -44,8 +49,8 @@ phrases.custom = {
     },
   },
   userAttributes: {
-    singular: 'Gebruiker Attribute',
-    plural: 'Gebruiker Attributes',
+    singular: 'Gebruiker Eienskap',
+    plural: 'Gebruiker Eienskappe',
     sections: {
       general: 'Algemeen',
     },
@@ -59,6 +64,10 @@ phrases.custom = {
       createdAt: 'Geskep Teen',
     },
   },
+  permissions: {
+    singular: 'Toestemming',
+    plural: 'Toestemmings',
+  }
 };
 
 export default phrases;
