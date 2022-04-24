@@ -14,7 +14,6 @@
         color="accent"
         :value="value"
         :items="linkItems"
-        :multiple="field.multiple"
         clearable
         :rules="[rules.required(field.optional)]"
         @input="input"
@@ -32,7 +31,6 @@
         color="accent"
         :value="value"
         :items="linkItems"
-        :multiple="field.multiple"
         clearable
         :rules="[rules.required(field.optional)]"
         @input="input"
@@ -103,7 +101,6 @@
         :items="field.values"
         :item-text="(item) => {return translate(item.title)}"
         item-value="value"
-        :multiple="field.multiple"
         clearable
         :rules="[rules.required(field.optional)]"
         @input="input"
