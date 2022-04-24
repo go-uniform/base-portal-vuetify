@@ -11,6 +11,7 @@
       />
       <v-autocomplete
         item-color="accent white--text"
+        color="accent"
         :value="value"
         :items="linkItems"
         :multiple="field.multiple"
@@ -28,6 +29,7 @@
       />
       <v-autocomplete
         item-color="accent white--text"
+        color="accent"
         :value="value"
         :items="linkItems"
         :multiple="field.multiple"
@@ -96,6 +98,7 @@
       />
       <v-autocomplete
         item-color="accent white--text"
+        color="accent"
         :value="value || field.defaultValue"
         :items="field.values"
         :item-text="(item) => {return translate(item.title)}"
