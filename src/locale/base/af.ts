@@ -33,10 +33,12 @@ phrases.base = {
     deleteConfirmationTitle: 'Is jy seker?',
     deleteConfirmationMessage: 'Is jy seker jy wil die geselekteerde rekord uitvee?',
     boolean: {
-      colorTrue: 'success',
-      iconTrue: 'mdi-check-bold',
-      colorFalse: 'danger',
-      iconFalse: 'mdi-close-thick',
+      trueColor: 'success',
+      trueIcon: 'mdi-check-bold',
+      trueTitle: 'Ja',
+      falseColor: 'danger',
+      falseIcon: 'mdi-close-thick',
+      falseTitle: 'Nee',
     }
   },
   logout: {
@@ -76,6 +78,7 @@ phrases.base = {
     view: 'Beskou {0}',
   },
   entityList: {
+    title: 'Lys',
     actions: 'Aksies',
     new: 'Nuwe',
     edit: 'Wysig',
@@ -107,15 +110,14 @@ phrases.base = {
     pageHtml: 'Die bladsy waarna jy soek kan nie gevind word nie.',
   },
   cookieConsent: {
-    popUpTitle: 'Your privacy',
-    popUpBody: 'By clicking "Accept all cookies", you agree we may store cookies on your device and disclose information in accordance with our <a href="/policies/cookie">Cookie Policy.<a/>',
-    popUpBtn: 'Accept all cookies',
-    pageTitle: 'Cookie Consent',
+    pageTitle: 'Koekie Toestemming',
     pageHtml: '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sit amet sem dapibus, placerat orci a, euismod lacus. Mauris eget eros id ex convallis dictum sit amet vel felis. Donec lectus quam, mattis quis velit faucibus, congue finibus metus. In neque mi, tristique nec mattis ac, tristique vel dolor. Donec posuere justo orci, congue vehicula nibh luctus sit amet. Integer mi mi, dapibus ultrices tortor et, sollicitudin posuere sapien. Nulla facilisi. Proin congue arcu vel mattis molestie. Phasellus felis quam, tincidunt non eros eu, tempus sodales ligula. In euismod consectetur porta.</p>',
+    popUpTitle: 'Jou privaatheid',
+    popUpBody: 'Deur "Aanvaar alle koekies" te klik, stem jy in dat ons koekies op jou toestel kan stoor en inligting kan openbaar in ooreenstemming met ons <a href="/policies/cookie">koekiebeleid.<a/>',
+    popUpBtn: 'Aanvaar alle koekies',
   },
   connection: {
-    pageTitle: '',
-    pageHtml: '<p class="display-2">You are offline.</p><p>Try:</p><ul><li>Turning off airplane mode</li><li>Turning on mobile data or Wi-Fi</li><li>Checking the signal in your area</li></ul><br><p>This message will automatically close once your connection is restored.</p>'
+    pageHtml: '<p class="display-2">Jy is vanlyn.</p><p>Probeer:</p><ul><li>Skakel vliegtuigmodus af</li><li>Skakel mobiele data of Wi aan -Fi</li><li>Kontroleer tans die sein in jou area</li></ul><br><p>Hierdie boodskap sal outomaties toemaak sodra jou verbinding herstel is.</p>'
   }
 };
 

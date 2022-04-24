@@ -4,7 +4,10 @@ const phrases: any = af;
 phrases.custom = {
   empty: 'leeg',
   menu: {
-    users: 'Gebruikers',
+    users: {
+      title: 'Gebruikers',
+      icon: 'mdi-account',
+    },
   },
   users: {
     singular: 'Gebruiker',
@@ -42,11 +45,35 @@ phrases.custom = {
     },
     fields: {
       id: 'Id',
+      status: 'Status',
       name: 'Naam',
       description: 'Beskrywing',
+      super: 'Super',
       modifiedAt: 'Gewysig Teen',
       createdAt: 'Geskep Teen',
     },
+    hints: {
+      super: '\'n super gebruiker rol het toegang tot alles, maar kan uitdruklik toestemmings geweier word.',
+    },
+    enums: {
+      status: {
+        pending: {
+          title: 'Hangende',
+          icon: 'mdi-timer-sand-full',
+          color: 'grey',
+        },
+        approved: {
+          title: 'Goedgekeur',
+          icon: 'mdi-check-bold',
+          color: 'success',
+        },
+        rejected: {
+          title: 'Verwerp',
+          icon: 'mdi-close-thick',
+          color: 'danger',
+        }
+      }
+    }
   },
   userAttributes: {
     singular: 'Gebruiker Eienskap',
@@ -68,6 +95,25 @@ phrases.custom = {
   permissions: {
     singular: 'Toestemming',
     plural: 'Toestemmings',
+    enums: {
+      type: {
+        inherit: {
+          title: 'Erf',
+          icon: 'mdi-arrow-up-left',
+          color: 'grey',
+        },
+        allow: {
+          title: 'Toegang',
+          icon: 'mdi-check-bold',
+          color: 'success',
+        },
+        deny: {
+          title: 'Weier',
+          icon: 'mdi-close-thick',
+          color: 'danger',
+        },
+      }
+    }
   }
 };
 

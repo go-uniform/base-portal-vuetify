@@ -41,6 +41,7 @@
         class="v-list-item--dense"
         :group="item.group"
         v-model="groups[index]"
+        :disabled="mini && groups[index]"
         @click="closeOtherGroups(index)"
         active-class="accent white--text"
       >
