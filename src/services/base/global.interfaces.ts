@@ -93,8 +93,9 @@ export interface IBulkPromise {
 }
 
 export interface IEnumValue {
-  value: string;
-  text: string;
+  value: string | null;
+  title: string;
+  icon?: string;
 }
 
 export interface IFieldNormal {
@@ -106,6 +107,17 @@ export interface IFieldNormal {
   pattern?: RegExp;
   patternMessage?: string;
   values?: IEnumValue[];
+  hint?: string;
+}
+
+export interface IFieldBoolean {
+  label: string;
+  type: EnumFieldType;
+  optional?: boolean;
+  readonly?: boolean;
+  filterable?: boolean;
+  hint?: string;
+  inverted?: boolean;
 }
 
 export interface IFieldLinkId {
@@ -117,6 +129,7 @@ export interface IFieldLinkId {
   linkLabelFieldKey: string;
   linkRepository: IRepository<any>;
   textAssemblyCallback: (item: any) => string;
+  hint?: string;
 }
 
 export interface IFieldLinkLabel {
@@ -126,6 +139,7 @@ export interface IFieldLinkLabel {
   readonly?: boolean;
   filterable?: boolean;
   linkIdFieldKey: string;
+  hint?: string;
 }
 
 export interface ISelfReferenceId {
@@ -136,6 +150,7 @@ export interface ISelfReferenceId {
   filterable?: boolean;
   selfReferenceLabelFieldKey: string;
   textAssemblyCallback: (item: any) => string;
+  hint?: string;
 }
 
 export interface ISelfReferenceLabel {
@@ -145,15 +160,17 @@ export interface ISelfReferenceLabel {
   readonly?: boolean;
   filterable?: boolean;
   selfReferenceIdFieldKey: string;
+  hint?: string;
 }
 
 export interface IFieldAttribute {
   label: string;
   type: EnumFieldType;
   attributeRepository: IRepository<any>;
+  hint?: string;
 }
 
-export type IField = IFieldNormal | IFieldLinkId | IFieldLinkLabel | IFieldAttribute | ISelfReferenceId | ISelfReferenceLabel;
+export type IField = IFieldNormal | IFieldBoolean | IFieldLinkId | IFieldLinkLabel | IFieldAttribute | ISelfReferenceId | ISelfReferenceLabel;
 
 export type IFields = { [key: string]: IField }
 

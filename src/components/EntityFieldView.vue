@@ -65,6 +65,27 @@
       </slot>
     </div>
     <div
+      v-else-if="field.type === 'boolean'"
+    >
+      <div>
+        <strong>
+          {{ translate(field.label) }}
+        </strong>
+      </div>
+      <v-icon
+        v-if="value === true && !field.inverted"
+        :color="translate('base.app.boolean.colorTrue')"
+      >
+        {{ translate('base.app.boolean.iconTrue') }}
+      </v-icon>
+      <v-icon
+        v-else
+        :color="translate('base.app.boolean.colorFalse')"
+      >
+        {{ translate('base.app.boolean.iconFalse') }}
+      </v-icon>
+    </div>
+    <div
       v-else
     >
       <div>

@@ -16,6 +16,7 @@ interface UserRole {
   id: string;
   name: string;
   description: string;
+  super?: boolean;
   modifiedAt: Date;
   createdAt: Date;
 }
@@ -25,6 +26,7 @@ const StubList: UserRole[] = [
     id: '624df0929bc786ddf868f7e8',
     name: 'Administrators',
     description: 'This user role has the highest privileges in the system and can do pretty much anything',
+    super: true,
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -73,6 +75,12 @@ export const userRoles: IRepository<UserRole> = {
       type: EnumFieldType.TextArea,
       optional: true,
     },
+    super: {
+      label: 'custom.userRoles.fields.super',
+      type: EnumFieldType.Boolean,
+      optional: true,
+      hint: 'custom.userRoles.hints.super',
+    },
     permissions: {
       label: 'custom.users.fields.permissions',
       type: EnumFieldType.Attributes,
@@ -98,6 +106,9 @@ export const userRoles: IRepository<UserRole> = {
       fieldKey: 'description',
     },
     {
+      fieldKey: 'super',
+    },
+    {
       fieldKey: 'createdAt',
       align: EnumHeaderAlign.End,
     },
@@ -107,6 +118,7 @@ export const userRoles: IRepository<UserRole> = {
       'id',
       'name',
       'description',
+      'super',
       'modifiedAt',
       'createdAt',
     ]),

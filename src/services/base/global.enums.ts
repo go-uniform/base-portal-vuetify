@@ -16,6 +16,7 @@ export enum EnumFieldType {
   Uuid = 'uuid',
   Text = 'text',
   TextArea = 'textarea',
+  Boolean = 'boolean',
   DateTime = 'datetime',
   Attributes = 'attributes',
   Enumeration = 'enumeration',
@@ -28,5 +29,6 @@ export enum EnumHeaderAlign {
 }
 
 export enum EnumAttributeType {
-  Text = "text"
+  Text = "text",
+  Enumeration = 'enumeration',
 }

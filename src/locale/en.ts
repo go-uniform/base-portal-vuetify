@@ -47,9 +47,13 @@ phrases.custom = {
       id: 'Id',
       name: 'Name',
       description: 'Description',
+      super: 'Super',
       modifiedAt: 'Modified At',
       createdAt: 'Created At',
     },
+    hints: {
+      super: 'A super user role has access to everything but can explicitly be denied permissions.',
+    }
   },
   userAttributes: {
     singular: 'User Attribute',

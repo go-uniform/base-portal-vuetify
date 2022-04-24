@@ -12,3 +12,5 @@ export interface AuthTokenTwoFactorRedirect {
 }
 
 export type AuthToken = AuthTokenJwt | AuthTokenTwoFactorRedirect;
+
+export type Attributes = { [key: string]: any };

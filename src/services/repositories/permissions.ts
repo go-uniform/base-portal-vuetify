@@ -17,7 +17,16 @@ const StubList: IAttribute[] = [
     key: 'usersListOwner',
     name: 'Users List Owner',
     description: 'Ability to list users that you own or your group owns in some way.',
-    type: EnumAttributeType.Text,
+    type: EnumAttributeType.Enumeration,
+    modifiedAt: new Date(),
+    createdAt: new Date(),
+  },
+  {
+    id: '626516d2be4f88afcc41676d',
+    key: 'usersCreateOwner',
+    name: 'Users Create Owner',
+    description: 'Ability to create new users that you own or your group owns in some way.',
+    type: EnumAttributeType.Enumeration,
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -43,23 +52,26 @@ export const permissions: IRepository<IAttribute> = {
       type: EnumFieldType.Uuid,
       readonly: true,
     },
-    type: { // todo: create enum type fields that are limited to a specific selection of values
+    type: {
       label: 'custom.permissions.fields.type',
-      type: EnumFieldType.Text,
-      // values: [
-      //   {
-      //     value: null,
-      //     text: 'custom.permissions.inherit',
-      //   },
-      //   {
-      //     value: 'allow',
-      //     text: 'custom.permissions.allow',
-      //   },
-      //   {
-      //     value: 'deny',
-      //     text: 'custom.permissions.deny',
-      //   },
-      // ],
+      type: EnumFieldType.Enumeration,
+      values: [
+        {
+          value: null,
+          title: 'custom.permissions.inherit',
+          icon: 'mdi-arrow-up-left'
+        },
+        {
+          value: 'allow',
+          title: 'custom.permissions.allow',
+          icon: 'mdi-check'
+        },
+        {
+          value: 'deny',
+          title: 'custom.permissions.deny',
+          icon: 'mdi-close'
+        },
+      ],
     },
     key: {
       label: 'custom.permissions.fields.key',

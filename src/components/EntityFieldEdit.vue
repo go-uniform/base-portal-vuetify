@@ -14,6 +14,7 @@
         clearable
         :rules="[rules.required(field.optional)]"
         @input="input"
+        :hint="field.hint"
       ></v-autocomplete>
     </div>
     <div
@@ -27,6 +28,7 @@
         clearable
         :rules="[rules.required(field.optional)]"
         @input="input"
+        :hint="field.hint"
       ></v-autocomplete>
     </div>
     <div
@@ -39,6 +41,7 @@
         :maxlength="field.length"
         :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
         @input="input"
+        :hint="field.hint"
       >
       </v-textarea>
     </div>
@@ -56,9 +59,29 @@
             :value="value[key]"
             :label="translate(`${field.label}.${key}`)"
             @input="attributeInput(key, $event)"
+            :hint="field.hint"
           ></v-text-field>
         </div>
       </slot>
+    </div>
+    <div
+      v-else-if="field.type === 'boolean'"
+    >
+      <v-card>
+        <v-card-title>
+          {{ translate(field.label )}}
+          <v-spacer></v-spacer>
+          <v-switch
+            :value="value"
+            @input="input"
+          ></v-switch>
+        </v-card-title>
+        <v-card-text
+          v-if="field.hint"
+          v-html="translate(field.hint)"
+        >
+        </v-card-text>
+      </v-card>
     </div>
     <div
       v-else
@@ -70,6 +93,7 @@
         :maxlength="field.length"
         :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
         @input="input"
+        :hint="field.hint"
       ></v-text-field>
     </div>
 

@@ -64,6 +64,10 @@ export default Vue.extend({
   height: 68px;
 }
 
+.theme--dark.v-sheet.v-card:not(.v-sheet--outlined) {
+  box-shadow: 0px 3px 1px -2px rgb(200 200 200 / 20%), 0px 2px 2px 0px rgb(200 200 200 / 14%), 0px 1px 5px 0px rgb(200 200 200 / 12%);
+}
+
 .v-application, .v-navigation-drawer, .v-list {
   background-color: var(--v-background-base) !important;
 }

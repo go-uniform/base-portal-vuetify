@@ -60,6 +60,7 @@ phrases.custom = {
       key: 'Sleutel',
       name: 'Naam',
       description: 'Beskrywing',
+      super: 'Super',
       modifiedAt: 'Gewysig Teen',
       createdAt: 'Geskep Teen',
     },

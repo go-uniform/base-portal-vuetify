@@ -31,6 +31,12 @@ phrases.base = {
     disagreeTitle: 'No',
     deleteConfirmationTitle: 'Are you sure?',
     deleteConfirmationMessage: 'Are you sure you wish to delete the selected record?',
+    boolean: {
+      colorTrue: 'success',
+      iconTrue: 'mdi-check-bold',
+      colorFalse: 'danger',
+      iconFalse: 'mdi-close-thick',
+    }
   },
   logout: {
     pageTitle: 'Logout',

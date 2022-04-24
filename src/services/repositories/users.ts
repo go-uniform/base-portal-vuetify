@@ -14,10 +14,13 @@ import {
 import {Section} from '@/services/base/global.classes.section';
 import {userAttributes} from '@/services/repositories/user-attributes';
 import {permissions} from '@/services/repositories/permissions';
+import {Attributes} from "@/services/base/global.types";
 
+const parentId = generateUuid();
+const parentLabel = 'Justin Robertson';
 const StubList: User[] = [
   {
-    id: 'xyz123',
+    id: parentId,
     firstName: 'Justin',
     lastName: 'Robertson',
     username: 'justin@somewhere.co.za',
@@ -49,8 +52,8 @@ const StubList: User[] = [
     permissions: {
       'users.list.owner': 'deny',
     },
-    parentUserId: 'xyz123',
-    parentUserLabel: 'Justin Robertson',
+    parentUserId: parentId,
+    parentUserLabel: parentLabel,
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -68,8 +71,9 @@ interface User {
   userRoleLabel: string;
   parentUserId?: string;
   parentUserLabel?: string;
-  attributes: { [key: string]: any };
-  permissions: { [key: string]: any };
+  attributes: Attributes;
+  permissions: Attributes;
+  allowPermissionByDefault?: boolean;
   modifiedAt: Date;
   createdAt: Date;
 }
