@@ -71,6 +71,10 @@ export default Vue.extend({
 .v-data-table__selected:not(.v-data-table__mobile-table-row) {
   color: var(--v-accent-base) !important;
   background: var(--v-accent-lighten4) !important;
+
+  .v-input--selection-controls__input > .v-icon {
+    color:var(--v-accent-base) !important;
+  }
 }
 
 .theme--dark.v-sheet.v-card:not(.v-sheet--outlined) {
