@@ -10,11 +10,6 @@
       <entity-field-view-label
         :field="field"
       />
-      <div>
-        <strong>
-          {{ translate(field.label) }}
-        </strong>
-      </div>
       <a
         v-if="value"
         :href="`${field.linkRepository.viewPagePrefix}/${value}`"
