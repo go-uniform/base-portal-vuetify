@@ -168,10 +168,9 @@ export const users: IRepository<User> = {
   },
   headers: [
     {
-      fieldKey: 'firstName',
-    },
-    {
-      fieldKey: 'lastName',
+      title: 'custom.users.virtual.name',
+      displayCallback: (item) => { return `${item.firstName} ${item.lastName}` },
+      sortable: false,
     },
     {
       fieldKey: 'username',

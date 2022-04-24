@@ -188,12 +188,16 @@ export type IField = IFieldNormal | IFieldEnum | IFieldBoolean | IFieldLinkId | 
 
 export type IFields = { [key: string]: IField }
 
+export type HeaderCallback = (item: any) => string;
+
 export interface IHeaderCustom {
   title: string;
   align?: EnumHeaderAlign;
   sortable?: boolean;
   filterable?: boolean;
   class?: string | string[];
+  displayText?: string;
+  displayCallback?: HeaderCallback;
 }
 
 export interface IHeaderLinked {

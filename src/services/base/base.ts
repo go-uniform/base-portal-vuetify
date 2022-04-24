@@ -4,7 +4,7 @@ import {toastError, toastSuccess, translate} from '@/plugins/vuetify';
 import {IStubScenario} from './stub';
 import {
   IErrorResponse,
-  IGeneric,
+  IGeneric, IHeaderCustom,
   IHeaderLinked,
   IItem,
   IItemResponse,
@@ -241,13 +241,19 @@ export const baseTableHeaders = (repository: IRepository<any>): object[] => {
   const response: object[] = [];
   if (repository.headers) {
     repository.headers.forEach((header) => {
+      let displayText = null;
+      let displayCallback = null;
       let value = null;
       const linkedHeader = (header as IHeaderLinked);
-      if (linkedHeader) {
+      if (linkedHeader && linkedHeader.fieldKey) {
         value = linkedHeader.fieldKey;
         if (!header.title) {
           header.title = repository.fields[linkedHeader.fieldKey].label;
         }
+      } else {
+        const customHeader = (header as IHeaderCustom);
+        displayText = customHeader.displayText;
+        displayCallback = customHeader.displayCallback;
       }
       response.push({
         text: translate(header.title) ?? 'Unknown',
@@ -256,6 +262,8 @@ export const baseTableHeaders = (repository: IRepository<any>): object[] => {
         filterable: header.filterable ?? false,
         class: header.class,
         value: value,
+        displayText: displayText,
+        displayCallback: displayCallback,
       });
     });
   }

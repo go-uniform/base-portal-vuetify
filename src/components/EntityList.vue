@@ -100,6 +100,32 @@
           </div>
         </slot>
         <slot
+          v-else-if="!header.value"
+          :name="column"
+          :item="item"
+          :header="header"
+        >
+
+          <!-- virtual field -->
+          <div
+            :key="index"
+          >
+
+            <span
+              v-if="header.displayText"
+            >
+              {{ header.displayText }}
+            </span>
+            <span
+              v-else-if="header.displayCallback"
+            >
+              {{ header.displayCallback(item) }}
+            </span>
+
+          </div>
+
+        </slot>
+        <slot
           v-else
           :set="field = repository.fields[header.value]"
           :name="column"

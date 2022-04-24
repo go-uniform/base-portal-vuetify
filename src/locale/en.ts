@@ -17,6 +17,9 @@ phrases.custom = {
       attributes: 'Attributes',
       permissions: 'Permissions',
     },
+    virtual: {
+      name: 'Name',
+    },
     fields: {
       id: 'Id',
       firstName: 'First Name',
