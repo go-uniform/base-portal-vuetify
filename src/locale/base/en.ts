@@ -3,6 +3,7 @@ const phrases: any = en;
 
 phrases.base = {
   validations: {
+    saveFailed: 'Some fields failed validation so the change were not saved.',
     required: 'May not be empty',
     email: 'Must be a valid email address',
     length: 'May not be more than {0} characters long.',

@@ -3,6 +3,7 @@ const phrases: any = af;
 
 phrases.base = {
   validations: {
+    saveFailed: 'Sommige velde kon nie bekragtig word nie, so die verandering is nie gestoor nie.',
     required: 'Mag nie leeg wees nie',
     email: 'Moet \'n geldige e-posadres wees',
     length: 'Mag nie meer as {0} karakters lank wees nie.',

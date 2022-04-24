@@ -1,25 +1,23 @@
 <template>
-
   <div
     v-if="messages.length > 0"
     class="toast-container"
     @click="messagesPopLast"
   >
-
-    <v-alert
-      v-for="message in messages"
-      @input="messagesPopSpecific(message.key)"
-      v-bind:key="message.key"
-      :type="message.type"
-      dismissible
+    <div
+      class="toast-inner-container"
     >
-
-      {{ message.text }}
-
-    </v-alert>
-
+      <v-alert
+        v-for="message in messages"
+        @input="messagesPopSpecific(message.key)"
+        v-bind:key="message.key"
+        :type="message.type"
+        dismissible
+      >
+        {{ message.text }}
+      </v-alert>
+    </div>
   </div>
-
 </template>
 
 <style lang="scss" scoped>
@@ -32,6 +30,12 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 10;
   padding: 16px;
+}
+.toast-inner-container {
+  position: fixed;
+  top:15px;
+  left:15px;
+  right:15px;
 }
 </style>
 

@@ -111,6 +111,7 @@
 import EntityFieldEdit from './EntityFieldEdit';
 import {defaultEditCrumbs} from '../services/base/entity.helper.default-edit-crumbs';
 import {defaultEditActions} from '../services/base/entity.helper.default-edit-actions';
+import {toastError} from '../plugins/vuetify';
 
 export default {
   name: 'entity-edit',
@@ -160,6 +161,8 @@ export default {
         this.repository.create(this.item).then((response) => {
           this.$router.push(`${this.repository.viewPagePrefix}/${response.id}`);
         });
+      } else {
+        toastError('base.validations.saveFailed');
       }
     },
 
