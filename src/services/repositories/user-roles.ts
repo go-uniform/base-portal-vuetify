@@ -73,6 +73,7 @@ export const userRoles: IRepository<UserRole> = {
     status: {
       label: 'custom.userRoles.fields.status',
       type: EnumFieldType.Enumeration,
+      defaultValue: 'pending',
       values: [
         {
           value: 'pending',

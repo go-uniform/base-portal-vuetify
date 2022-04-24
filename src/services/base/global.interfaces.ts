@@ -93,7 +93,7 @@ export interface IBulkPromise {
 }
 
 export interface IEnum {
-  value?: string;
+  value: string;
   title: string;
   icon?: string;
   color?: string;
@@ -116,6 +116,7 @@ export interface IFieldEnum {
   optional?: boolean;
   readonly?: boolean;
   filterable?: boolean;
+  defaultValue: string;
   values?: IEnum[];
   textOnly?: boolean;
   iconOnly?: boolean;

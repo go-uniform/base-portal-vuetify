@@ -93,7 +93,7 @@
         :field="field"
       />
       <v-autocomplete
-        :value="value"
+        :value="value || field.defaultValue"
         :items="field.values"
         :item-text="(item) => {return translate(item.title)}"
         item-value="value"

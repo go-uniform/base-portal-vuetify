@@ -55,8 +55,10 @@ export const permissions: IRepository<IAttribute> = {
     type: {
       label: 'custom.permissions.fields.type',
       type: EnumFieldType.Enumeration,
+      defaultValue: 'inherit',
       values: [
         {
+          value: 'inherit',
           title: 'custom.permissions.enums.type.inherit.title',
           icon: 'custom.permissions.enums.type.inherit.icon',
           color: 'custom.permissions.enums.type.inherit.color',
