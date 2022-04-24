@@ -3,12 +3,15 @@
   <main-layout
     :crumbs="crumbs"
     :actions="actions"
+    :loading="loading || submitting"
   >
 
     <entity-edit
       ref="editor"
       :repository="$route.meta.repository"
       :id="$route.params.id"
+      @loading="updateLoadingIndicator"
+      @submitting="updateSubmittingIndicator"
     >
     </entity-edit>
 
@@ -31,7 +34,19 @@ export default {
   data: () => ({
     crumbs: [],
     actions: [],
+    loading: true,
+    submitting: false,
   }),
+
+  methods: {
+    updateLoadingIndicator(value) {
+      this.loading = value;
+    },
+
+    updateSubmittingIndicator(value) {
+      this.submitting = value;
+    }
+  },
 
   mounted() {
     this.crumbs = this.$refs.editor.defaultCrumbs();

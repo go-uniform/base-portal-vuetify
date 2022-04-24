@@ -2,7 +2,7 @@
 
   <v-layout
     v-if="!connected"
-    class="connection-lost"
+    class="connection-lost pa-2 pa-sm-4 pa-lg-8"
     :class="{dark:this.$vuetify.theme.dark}"
     justify-center
     align-center

@@ -18,7 +18,7 @@
       v-else-if="field.type === 'selfReferenceId'"
     >
       <a
-        :href="`${parentRepository.viewPagePrefix}/${value}`"
+        :href="`${repository.viewPagePrefix}/${value}`"
       >
         {{ item[field.selfReferenceLabelFieldKey] }}
       </a>
@@ -86,7 +86,7 @@ export default {
   name: 'entity-field-column-view',
   components: {EntityFieldViewLinkId},
   props: {
-    parentRepository: null,
+    repository: null,
     field: null,
     value: null,
     item: null,

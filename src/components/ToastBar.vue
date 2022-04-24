@@ -56,18 +56,30 @@ export default {
       const index = this.messages.findIndex(message => message.key === key);
       if (index > -1) {
         this.messages.splice(index, 1);
+        if (window.sessionStorage) {
+          window.sessionStorage.setItem('toast.messages', JSON.stringify(this.messages));
+        }
       }
     },
 
     messagesPopLast() {
       if (this.messages.length > 0) {
         this.messages.pop();
+        if (window.sessionStorage) {
+          window.sessionStorage.setItem('toast.messages', JSON.stringify(this.messages));
+        }
       }
     }
 
   },
 
   created() {
+    if (window.sessionStorage) {
+      const sessionMessages = JSON.parse(window.sessionStorage.getItem('toast.messages'));
+      if (sessionMessages && sessionMessages.length > 0) {
+        this.messages = sessionMessages;
+      }
+    }
 
     bus.subscribe('toast.show', (toast) => {
       const key = this.counter++;
@@ -77,15 +89,25 @@ export default {
         type: toast.type,
         text: toast.message,
       };
+
       if (index > -1) {
         this.messages[index] = message;
       } else {
         this.messages.push(message);
       }
+
+      if (window.sessionStorage) {
+        window.sessionStorage.setItem('toast.messages', JSON.stringify(this.messages));
+      }
     });
 
     bus.subscribe('toast.clear', () => {
       this.show = false;
+      this.messages = [];
+
+      if (window.sessionStorage) {
+        window.sessionStorage.setItem('toast.messages', JSON.stringify(this.messages));
+      }
     });
 
   },

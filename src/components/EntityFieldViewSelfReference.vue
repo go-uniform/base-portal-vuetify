@@ -11,9 +11,9 @@
         ,
       </span>
       <a
-        :href="`${field.linkRepository.viewPagePrefix}/${valueItem}`"
+        :href="`${repository.viewPagePrefix}/${valueItem}`"
       >
-        {{ getMultiValue(item[field.linkLabelFieldKey])[index] }}
+        {{ getMultiValue(item[field.selfReferenceLabelFieldKey])[index] }}
       </a>
     </span>
     <small
@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: 'entity-field-view-link-id',
+  name: 'entity-field-view-self-reference',
   props: {
     tabular: Boolean,
     repository: null,

@@ -11,6 +11,8 @@
         :field="field"
       />
       <entity-field-edit-link-id
+        :repository="repository"
+        :item="item"
         :field="field"
         :value="value"
         @input="input"
@@ -23,16 +25,14 @@
       <entity-field-view-label
         :field="field"
       />
-      <v-autocomplete
-        item-color="accent white--text"
-        color="accent"
+      <entity-field-edit-self-reference
+        :repository="repository"
+        :item="item"
+        :field="field"
         :value="value"
-        :items="linkItems"
-        clearable
-        :rules="[rules.required(field.optional)]"
         @input="input"
-        filled
-      ></v-autocomplete>
+      />
+
     </div>
     <div
       v-else-if="field.type === 'textarea'"
@@ -94,11 +94,11 @@
       <v-autocomplete
         item-color="accent white--text"
         color="accent"
-        :value="value || field.defaultValue"
+        :value="value ? value : (!field.optional ? field.defaultValue : null)"
         :items="field.values"
         :item-text="(item) => {return translate(item.title)}"
         item-value="value"
-        clearable
+        :clearable="field.optional"
         :rules="[rules.required(field.optional)]"
         @input="input"
         filled
@@ -128,12 +128,13 @@
 import {validations} from '../services/base/validations';
 import EntityFieldViewLabel from './EntityFieldViewLabel';
 import EntityFieldEditLinkId from './EntityFieldEditLinkId';
+import EntityFieldEditSelfReference from './EntityFieldEditSelfReference';
 
 export default {
   name: 'entity-field-edit',
-  components: {EntityFieldEditLinkId, EntityFieldViewLabel},
+  components: {EntityFieldEditSelfReference, EntityFieldEditLinkId, EntityFieldViewLabel},
   props: {
-    parentRepository: null,
+    repository: null,
     field: null,
     value: null,
     item: null,
@@ -163,34 +164,6 @@ export default {
 
   mounted() {
     this.attributes = {};
-    let repository = null;
-
-    if (this.field) {
-      if (this.field.type === 'selfReferenceId') {
-        repository = this.parentRepository;
-      }
-    }
-
-    if (repository) {
-      repository.list().then((response) => {
-        this.linkItems = response.items.map((item) => {
-          let text = '';
-          if (this.field.textAssemblyCallback) {
-            text = this.field.textAssemblyCallback(item);
-          } else {
-            text = item.name || item.text;
-          }
-          return {
-            value: item.id,
-            text: text,
-          }
-        });
-        this.linkItems = this.linkItems.filter((item) => {
-          return item.value !== this.item.id;
-        });
-        this.$forceUpdate();
-      });
-    }
   },
 };
 </script>

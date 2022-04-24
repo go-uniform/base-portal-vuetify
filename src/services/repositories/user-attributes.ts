@@ -1,17 +1,18 @@
 import {
   baseBulkStub,
   baseCreateStub,
-  baseDeleteStub,
+  baseDeleteStub, baseListLoad,
   baseListStub,
   baseReadStub,
   baseUpdateStub,
-  stubScenario,
 } from '@/services/base/stub';
 import {IAttribute, IRepository} from '@/services/base/global.interfaces';
 import {EnumAttributeType, EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
 
-const StubList: IAttribute[] = [
+const entity = 'userAttributes';
+
+export const UserAttributesList: IAttribute[] = baseListLoad([
   {
     id: '624df0929bc786ddf868f7e8',
     key: 'sex',
@@ -21,9 +22,11 @@ const StubList: IAttribute[] = [
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
-];
-const StubRecord: IAttribute = StubList[0];
-const entity = 'userAttributes';
+], entity);
+
+const stubRecordHandler = (item: any) => {
+  return item;
+}
 
 export const userAttributes: IRepository<IAttribute> = {
   freeTextSearch: true,
@@ -109,10 +112,10 @@ export const userAttributes: IRepository<IAttribute> = {
     }
   ],
 
-  list: baseListStub<IAttribute>(stubScenario(StubList), entity),
-  create: baseCreateStub<IAttribute>(stubScenario(StubRecord), entity, ),
-  read: baseReadStub<IAttribute>(stubScenario(StubRecord), entity),
-  update: baseUpdateStub<IAttribute>(stubScenario(StubRecord), entity),
-  delete: baseDeleteStub<IAttribute>(stubScenario(StubRecord), StubList, entity),
-  bulk: baseBulkStub(stubScenario(StubRecord), entity),
+  list: baseListStub<IAttribute>(UserAttributesList, null, entity),
+  create: baseCreateStub<IAttribute>(UserAttributesList, stubRecordHandler, entity),
+  read: baseReadStub<IAttribute>(UserAttributesList, null, entity),
+  update: baseUpdateStub<IAttribute>(UserAttributesList, stubRecordHandler, entity),
+  delete: baseDeleteStub<IAttribute>(UserAttributesList, null, entity),
+  bulk: baseBulkStub<IAttribute>(UserAttributesList, null, entity),
 };

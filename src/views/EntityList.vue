@@ -5,11 +5,13 @@
     :actions="actions"
     :bulkActions="bulkActions"
     :bulkActionHandler="bulkActionHandler"
+    :loading="loading"
   >
 
     <entity-list
       ref="list"
       :repository="$route.meta.repository"
+      @loading="updateLoadingIndicator"
     >
     </entity-list>
 
@@ -34,7 +36,14 @@ export default {
     actions: [],
     bulkActions: [],
     bulkActionHandler: null,
+    loading: true,
   }),
+
+  methods: {
+    updateLoadingIndicator(value) {
+      this.loading = value;
+    }
+  },
 
   mounted() {
     this.crumbs = this.$refs.list.defaultCrumbs();

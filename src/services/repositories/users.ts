@@ -1,26 +1,24 @@
-import {userRoles} from '@/services/repositories/user-roles';
+import {userRoles, UserRolesList} from '@/services/repositories/user-roles';
 import {IRepository} from '@/services/base/global.interfaces';
 import {EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {
   baseBulkStub,
   baseCreateStub,
-  baseDeleteStub,
+  baseDeleteStub, baseListLoad,
   baseListStub,
   baseReadStub,
   baseUpdateStub,
-  generateUuid,
-  stubScenario,
 } from '@/services/base/stub';
 import {Section} from '@/services/base/global.classes.section';
 import {userAttributes} from '@/services/repositories/user-attributes';
 import {permissions} from '@/services/repositories/permissions';
 import {Attributes} from "@/services/base/global.types";
 
-const parentId = generateUuid();
-const parentLabel = 'Justin Robertson';
-const StubList: User[] = [
+const entity = 'users';
+
+export const UsersList: User[] = baseListLoad([
   {
-    id: parentId,
+    id: '62658668e80509c3a8d4cd18',
     firstName: 'Justin',
     lastName: 'Robertson',
     username: 'justin@somewhere.co.za',
@@ -38,7 +36,7 @@ const StubList: User[] = [
     createdAt: new Date(),
   },
   {
-    id: generateUuid(),
+    id: '62658660e42de5175f35c2ed',
     firstName: 'Joe',
     lastName: 'Soap',
     username: 'joe@somewhere.co.za',
@@ -52,13 +50,24 @@ const StubList: User[] = [
     permissions: {
       'users.list.owner': 'deny',
     },
-    parentUserId: parentId,
-    parentUserLabel: parentLabel,
+    parentUserId: '62658668e80509c3a8d4cd18',
+    parentUserLabel: 'Justin Robertson',
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
-];
-const StubRecord: User = StubList[0];
+], entity);
+
+const stubRecordHandler = (item: User) => {
+  if (item.userRoleId) {
+    const userRoles = UserRolesList.filter((userRole) => userRole.id === item.userRoleId)
+    item.userRoleLabel = userRoles[0].name;
+  }
+  if (item.parentUserId) {
+    const users = UsersList.filter((user) => user.id === item.parentUserId)
+    item.parentUserLabel = `${users[0].firstName} ${users[0].lastName}`;
+  }
+  return item;
+}
 
 interface User {
   id: string;
@@ -77,8 +86,6 @@ interface User {
   modifiedAt: Date;
   createdAt: Date;
 }
-
-const entity = 'users';
 
 export const users: IRepository<User> = {
   freeTextSearch: true,
@@ -219,10 +226,10 @@ export const users: IRepository<User> = {
     }
   ],
 
-  list: baseListStub<User>(stubScenario(StubList), entity),
-  create: baseCreateStub<User>(stubScenario(StubRecord), entity),
-  read: baseReadStub<User>(stubScenario(StubRecord), entity),
-  update: baseUpdateStub<User>(stubScenario(StubRecord), entity),
-  delete: baseDeleteStub<User>(stubScenario(StubRecord), StubList, entity),
-  bulk: baseBulkStub(stubScenario(StubRecord), entity),
+  list: baseListStub<User>(UsersList, null, entity),
+  create: baseCreateStub<User>(UsersList, stubRecordHandler, entity),
+  read: baseReadStub<User>(UsersList, null, entity),
+  update: baseUpdateStub<User>(UsersList, stubRecordHandler, entity),
+  delete: baseDeleteStub<User>(UsersList, null, entity),
+  bulk: baseBulkStub<User>(UsersList, null, entity),
 };

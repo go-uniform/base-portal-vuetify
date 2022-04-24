@@ -23,6 +23,7 @@
             :actions="actions"
             :bulk-actions="bulkActions"
             :bulk-action-handler="bulkActionHandler"
+            :loading="loading"
           />
         </div>
         <div
@@ -65,6 +66,25 @@
     <cookie-consent/>
     <connection-lost/>
     <confirm-box/>
+    <v-dialog
+      fullscreen
+      persistent
+    >
+      <v-card
+        class="fill-height"
+      >
+        <v-layout
+          fill-height
+          justify-center
+          align-center
+          column
+        >
+          <div>
+            Loading...
+          </div>
+        </v-layout>
+      </v-card>
+    </v-dialog>
 
   </v-app>
 
@@ -113,6 +133,8 @@ export default Vue.extend({
     actions: Array,
     bulkActions: Array,
     bulkActionHandler: Function,
+
+    loading: Boolean,
   },
 
   computed: {

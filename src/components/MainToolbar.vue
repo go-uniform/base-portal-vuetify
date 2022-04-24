@@ -47,6 +47,7 @@
             tile
             :class="action.class"
             @click="callback(action.callback)"
+            :disabled="loading"
           >
             <v-icon
               v-if="action.icon"
@@ -64,7 +65,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               color="grey"
-              :disabled="!selected || selected.length === 0"
+              :disabled="loading || !selected || selected.length === 0"
               v-if="bulkActions && bulkActions.length > 0"
               tile
               v-bind="attrs"
@@ -90,6 +91,7 @@
                 :color="bulkAction.color"
                 @click="bulk(bulkAction)"
                 block
+                :disabled="loading"
               >
                 <v-icon
                   class="mr-2"
@@ -119,6 +121,7 @@ export default {
     actions: Array,
     bulkActions: Array,
     bulkActionHandler: Function,
+    loading: Boolean,
   },
 
   data: () => ({

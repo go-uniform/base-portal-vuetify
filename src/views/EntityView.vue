@@ -3,12 +3,14 @@
   <main-layout
     :crumbs="crumbs"
     :actions="actions"
+    :loading="loading"
   >
 
     <entity-view
       ref="viewer"
       :repository="$route.meta.repository"
       :id="$route.params.id"
+      @loading="updateLoadingIndicator"
     >
     </entity-view>
 
@@ -31,7 +33,14 @@ export default {
   data: () => ({
     crumbs: [],
     actions: [],
+    loading: true,
   }),
+
+  methods: {
+    updateLoadingIndicator(value) {
+      this.loading = value;
+    }
+  },
 
   mounted() {
     this.crumbs = this.$refs.viewer.defaultCrumbs();

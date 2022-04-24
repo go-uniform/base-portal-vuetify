@@ -93,7 +93,12 @@ export const processStandardResponse = <T>(
 ): void => {
 
   if (response.status !== 200) {
-    const message = response.headers.get('Message') ?? 'Something went wrong.';
+    if (response.status === 404) {
+      toastError(translate('base.errors.recordNotFound'));
+      return;
+    }
+
+    const message = response.headers.get('Message') ?? translate('base.errors.general');
     toastError(message);
 
     if (response.status === 401) {

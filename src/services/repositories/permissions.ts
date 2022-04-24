@@ -1,17 +1,18 @@
 import {
   baseBulkStub,
   baseCreateStub,
-  baseDeleteStub,
+  baseDeleteStub, baseListLoad,
   baseListStub,
   baseReadStub,
   baseUpdateStub,
-  stubScenario,
 } from '@/services/base/stub';
 import {IAttribute, IRepository} from '@/services/base/global.interfaces';
 import {EnumAttributeType, EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
 
-const StubList: IAttribute[] = [
+const entity = 'permissions';
+
+export const PermissionsList: IAttribute[] = baseListLoad([
   {
     id: '624df0929bc786ddf868f7e8',
     key: 'usersListOwner',
@@ -30,9 +31,11 @@ const StubList: IAttribute[] = [
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
-];
-const StubRecord: IAttribute = StubList[0];
-const entity = 'permissions';
+], entity);
+
+const stubRecordHandler = (item: any) => {
+  return item;
+}
 
 export const permissions: IRepository<IAttribute> = {
   freeTextSearch: true,
@@ -139,10 +142,10 @@ export const permissions: IRepository<IAttribute> = {
     }
   ],
 
-  list: baseListStub<IAttribute>(stubScenario(StubList), entity),
-  create: baseCreateStub<IAttribute>(stubScenario(StubRecord), entity, ),
-  read: baseReadStub<IAttribute>(stubScenario(StubRecord), entity),
-  update: baseUpdateStub<IAttribute>(stubScenario(StubRecord), entity),
-  delete: baseDeleteStub<IAttribute>(stubScenario(StubRecord), StubList, entity),
-  bulk: baseBulkStub(stubScenario(StubRecord), entity),
+  list: baseListStub<IAttribute>(PermissionsList, null, entity),
+  create: baseCreateStub<IAttribute>(PermissionsList, stubRecordHandler, entity),
+  read: baseReadStub<IAttribute>(PermissionsList, null, entity),
+  update: baseUpdateStub<IAttribute>(PermissionsList, stubRecordHandler, entity),
+  delete: baseDeleteStub<IAttribute>(PermissionsList, null, entity),
+  bulk: baseBulkStub<IAttribute>(PermissionsList, null, entity),
 };

@@ -1,6 +1,15 @@
 <template>
 
+  <v-layout
+    v-if="loading"
+    fill-height
+    justify-center
+    align-center
+  >
+    {{ translate('base.app.loading') }}
+  </v-layout>
   <div
+    v-else
     class="fill-width"
   >
 
@@ -59,7 +68,7 @@
                       v-bind:key="fieldKey"
                     >
                       <entity-field-view
-                        :parent-repository="repository"
+                        :repository="repository"
                         :field="field"
                         :value="item[fieldKey]"
                         :field-key="fieldKey"
@@ -115,7 +124,7 @@
 </template>
 
 <script>
-import {deleteConfirmation, translate} from '../plugins/vuetify';
+import {deleteConfirmation, toastError, translate} from '../plugins/vuetify';
 import EntityFieldView from './EntityFieldView';
 import {defaultViewActions} from '../services/base/entity.helper.default-view-actions';
 import {defaultViewCrumbs} from '../services/base/entity.helper.default-view-crumbs';
@@ -155,6 +164,7 @@ export default {
   data: () => ({
     panels: [0],
     item: {},
+    loading: true,
   }),
 
   methods: {
@@ -186,12 +196,17 @@ export default {
   },
 
   mounted() {
+    this.loading = true;
+    this.$emit('loading', this.loading);
     this.repository.read(this.id).then((response) => {
       this.item = response.item;
+      this.loading = false;
+      this.$emit('loading', this.loading);
       this.$forceUpdate();
-    }).catch(() => {
-      this.$router.push(`${this.repository.listPage}`);
+    }).catch((reason) => {
+      const message = reason.headers.get('Message') ?? translate('base.errors.general');
+      toastError(message)
     });
-  }
+  },
 };
 </script>

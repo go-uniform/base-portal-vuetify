@@ -1,6 +1,23 @@
 <template>
 
+  <v-layout
+    v-if="loading"
+    fill-height
+    justify-center
+    align-center
+  >
+    {{ translate('base.app.loading') }}
+  </v-layout>
+  <v-layout
+    v-else-if="submitting"
+    fill-height
+    justify-center
+    align-center
+  >
+    {{ translate('base.app.submitting') }}
+  </v-layout>
   <v-form
+    v-else
     ref="form"
     class="fill-width"
   >
@@ -59,7 +76,7 @@
                     >
 
                       <entity-field-edit
-                        :parent-repository="repository"
+                        :repository="repository"
                         :item="item"
                         :field-key="fieldKey"
                         :field="field"
@@ -91,6 +108,7 @@
           @click="action.callback(item)"
           large
           block
+          :disabled="loading || submitting"
         >
           <v-icon
             v-if="action.icon"
@@ -111,7 +129,7 @@
 import EntityFieldEdit from './EntityFieldEdit';
 import {defaultEditCrumbs} from '../services/base/entity.helper.default-edit-crumbs';
 import {defaultEditActions} from '../services/base/entity.helper.default-edit-actions';
-import {toastError} from '../plugins/vuetify';
+import {toastError, toastSuccess, translate} from '../plugins/vuetify';
 
 export default {
   name: 'entity-edit',
@@ -121,9 +139,10 @@ export default {
     id: null,
   },
   data: () => ({
+    submitting: false,
+    loading: true,
     panels: [0],
-    item: {
-    },
+    item: {},
   }),
 
   computed: {
@@ -149,17 +168,27 @@ export default {
         Object.keys(this.item).forEach((key) => {
           const field = this.repository.fields[key];
           if (!field || field.readonly) {
-            delete(this.item[key]);
+            delete (this.item[key]);
           }
         });
+        this.submitting = true;
+        this.$emit('submitting', this.submitting);
         if (this.$route.params.id) {
           this.repository.update(this.$route.params.id, this.item).then(() => {
+            toastSuccess('base.app.submittedSuccessfully');
             this.$router.push(`${this.repository.viewPagePrefix}/${this.$route.params.id}`);
+          }).finally((reason) => {
+            this.submitting = false;
+            this.$emit('submitting', this.submitting);
           });
           return;
         }
         this.repository.create(this.item).then((response) => {
-          this.$router.push(`${this.repository.viewPagePrefix}/${response.id}`);
+          toastSuccess('base.app.submittedSuccessfully');
+          this.$router.push(`${this.repository.viewPagePrefix}/${response.item.id}`);
+        }).finally(() => {
+          this.submitting = false;
+          this.$emit('submitting', this.submitting);
         });
       } else {
         toastError('base.validations.saveFailed');
@@ -186,17 +215,30 @@ export default {
   mounted() {
     this.item = {...this.repository.default};
     if (this.id) {
+      this.loading = true;
+      this.$emit('loading', this.loading);
+      this.item.id = this.id;
       this.repository.read(this.id).then((response) => {
         // merge two objects together with second object taking priority
         this.item = {
           ...this.repository.default,
           ...response.item
         };
+        this.loading = false;
+        this.$emit('loading', this.loading);
         this.$forceUpdate();
-      }).catch(() => {
-        this.$router.push(`${this.repository.listPage}`);
+      }).catch((reason) => {
+        const message = reason.headers.get('Message') ?? translate('base.errors.general');
+        toastError(message)
       });
+    } else {
+      this.loading = false;
+      this.$emit('loading', this.loading);
     }
+  },
+
+  created() {
+    this.item.id = this.id;
   }
 };
 </script>

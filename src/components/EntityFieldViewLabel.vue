@@ -3,7 +3,15 @@
 
   <div>
     <strong>
+
       {{ translate(field.label) }}
+      <span
+        v-if="!field.optional"
+        class="danger--text"
+      >
+        *
+      </span>
+
     </strong>
     <v-menu
       v-if="field.hint"

@@ -28,9 +28,12 @@
         :repository="repository"
         v-model="filters"
         @change="load()"
+        :disabled="loading"
       />
     </slot>
     <v-data-table
+      :loading="loading"
+      :loading-text="translate('base.app.loading')"
       :show-select="showSelect"
       :items="records"
       :headers="headers"
@@ -43,6 +46,7 @@
       @update:sort-by="load"
       @update:sort-desc="load"
       @update:items-per-page="load"
+      :disable-sort="loading"
     >
       <template
         v-for="(column, index) in columns()"
@@ -134,7 +138,7 @@
         >
 
           <entity-field-column-view
-            :parent-repository="repository"
+            :repository="repository"
             :field="field"
             :field-key="header.value"
             :value="item[header.value]"
@@ -193,6 +197,7 @@ export default {
     page: 1,
     pageSize: 15,
     filters: {},
+    loading: true,
   }),
 
   computed: {
@@ -230,6 +235,8 @@ export default {
     },
 
     load() {
+      this.loading = true;
+      this.$emit('loading', this.loading);
       this.headers = baseTableHeaders(this.repository);
       if (this.prefixHeaders) {
         this.headers = prepend(this.headers, this.prefixHeaders);
@@ -256,7 +263,11 @@ export default {
       }
 
       this.repository.list(order, this.filters, this.page, this.pageSize).then((response) => {
+        console.log(response.items);
         this.records = response.items;
+      }).finally(() => {
+        this.loading = false;
+        this.$emit('loading', this.loading);
       });
     },
 

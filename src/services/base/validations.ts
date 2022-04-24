@@ -5,7 +5,7 @@ const noValidation = () => true;
 export const validations = {
   required: (optional: boolean) => {
     if (!optional) {
-      return (value: any) => { return (!!value && value.constructor !== Array) || (value.constructor === Array && value.length > 0) || translate('base.validations.required'); }
+      return (value: any) => { return (!!value && value.length > 0) || translate('base.validations.required'); }
     }
     return noValidation;
   },

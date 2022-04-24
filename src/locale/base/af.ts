@@ -9,10 +9,15 @@ phrases.base = {
     length: 'Mag nie meer as {0} karakters lank wees nie.',
   },
   errors: {
+    general: 'Iets het verkeerd geloop',
+    recordNotFound: 'Die rekord kon nie gevind word nie',
     unknownOtpType: 'Onbekende OTP tipe \'{0}\' bespeur',
     incorrectOtpPin: 'Verkeerde OTP pin verskaf',
   },
   app: {
+    loading: 'Laai...',
+    submitting: 'Dien data in...',
+    submittedSuccessfully: 'Data suksesvol ingedien',
     scrollTop: 'Rol Boontoe',
     title: 'Uniform',
     headerTitle: 'Uniform',
@@ -27,7 +32,7 @@ phrases.base = {
     mainMenu: 'Hooflys',
     backLogin: 'Terug na aanmelding',
     backSafety: 'Terug na veiligheid',
-    save: 'Skep',
+    save: 'Stoor',
     cancel: 'Kanselleer',
     agreeTitle: 'Ja',
     disagreeTitle: 'Nee',
@@ -118,7 +123,7 @@ phrases.base = {
     popUpBtn: 'Aanvaar alle koekies',
   },
   connection: {
-    pageHtml: '<p class="display-2">Jy is vanlyn.</p><p>Probeer:</p><ul><li>Skakel vliegtuigmodus af</li><li>Skakel mobiele data of Wi aan -Fi</li><li>Kontroleer tans die sein in jou area</li></ul><br><p>Hierdie boodskap sal outomaties toemaak sodra jou verbinding herstel is.</p>'
+    pageHtml: '<p class="display-2">Jy is vanlyn af.</p><p>Probeer:</p><ul><li>Skakel vliegtuigmodus af</li><li>Skakel mobiele data of Wi aan -Fi</li><li>Kontroleer tans die sein in jou area</li></ul><br><p>Hierdie boodskap sal outomaties toemaak sodra jou verbinding herstel is.</p>'
   }
 };
 

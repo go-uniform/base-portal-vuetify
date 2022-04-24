@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import {NavigationGuard} from 'vue-router/types/router';
 import {auth} from '@/services/base/auth';
 import {crudRoutes} from '@/services/crud';
-import {translate} from '@/plugins/vuetify';
+import {toastError, translate} from '@/plugins/vuetify';
 
 Vue.use(VueRouter)
 

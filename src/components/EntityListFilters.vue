@@ -4,12 +4,13 @@
     v-if="filterableFieldKeys.length > 0 || repository.freeTextSearch"
     class="justify-start mb-2 mb-sm-4 mb-lg-8"
     v-model="filterPanelValue"
+    :disabled="disabled"
   >
 
     <v-expansion-panel>
 
       <v-expansion-panel-header
-        color="primary white--text"
+        :color="disabled ? 'grey white--text' : 'primary white--text'"
       >
         <strong
           class="text-uppercase"
@@ -110,6 +111,7 @@ export default {
   props: {
     repository: null,
     value: null,
+    disabled: Boolean,
   },
 
   data: () => ({

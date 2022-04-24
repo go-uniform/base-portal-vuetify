@@ -15,6 +15,8 @@ import {
 import {generic} from '@/services/base/global.types';
 import {EnumHttpMethod} from '@/services/base/global.enums';
 
+const StubTimeout = 1000;
+
 export const generateUuid = () => {
   let d = performance.now();
   let d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0;
@@ -76,18 +78,22 @@ const wrapperReject = <T>(callbackReject: any, reject: any) => {
 
 export const baseRestItemStub = <T>(scenario: IStubScenario, callbackResolve: any, callbackReject: any, method: EnumHttpMethod, path: string, payload: generic = {}, headers = new Headers()): Promise<IItem<T>> => {
   return new Promise<IItem<T>>((resolve, reject) => {
-    console.log('rest-item', method, path, payload, headers);
-    processStandardItemResponse<T>(scenario, wrapperResolve(callbackResolve, resolve, reject), wrapperReject(callbackReject, reject));
+    setTimeout(() => {
+      console.log('rest-item', method, path, payload, headers);
+      processStandardItemResponse<T>(scenario, wrapperResolve(callbackResolve, resolve, reject), wrapperReject(callbackReject, reject));
+    }, StubTimeout);
   });
 };
 export const baseRestListStub = <T>(scenario: IStubScenario, callbackResolve: any, callbackReject: any, method: EnumHttpMethod, path: string, payload: generic = {}, headers = new Headers()): Promise<IList<T>> => {
   return new Promise<IList<T>>((resolve, reject) => {
-    console.log('rest-list', method, path, payload, headers);
-    processStandardItemResponse<T>(scenario, wrapperResolve(callbackResolve, resolve, reject), wrapperReject(callbackReject, reject));
+    setTimeout(() => {
+      console.log('rest-list', method, path, payload, headers);
+      processStandardItemResponse<T>(scenario, wrapperResolve(callbackResolve, resolve, reject), wrapperReject(callbackReject, reject));
+    }, StubTimeout);
   });
 };
 
-export const baseListStub = <T>(scenario: IStubScenario, entity: string): IListPromise<T> => {
+export const baseListStub = <T>(list: T[], scenario: IStubScenario | null, entity: string): IListPromise<T> => {
   return (
     order: string,
     filters: object = {},
@@ -95,68 +101,171 @@ export const baseListStub = <T>(scenario: IStubScenario, entity: string): IListP
     pageSize = 50,
   ): Promise<IList<T>> => {
     return new Promise<IList<T>>((resolve, reject) => {
-      console.log('list', entity, order, filters, pageIndex, pageSize);
-      processStandardListResponse<T>(scenario, resolve, reject);
+      setTimeout(() => {
+        console.log('list', entity, order, filters, pageIndex, pageSize);
+        if (scenario) {
+          processStandardListResponse<T>(scenario, resolve, reject);
+        } else {
+          processStandardListResponse<T>(stubScenario(list, 200), resolve, reject)
+        }
+      }, StubTimeout);
     });
   };
 };
 
-export const baseCreateStub = <T>(scenario: IStubScenario, entity: string): ICreatePromise<T> => {
+export type IStubCreateHandler = (item: any) => any;
+
+export const baseCreateStub = <T>(list: T[], scenario: IStubScenario | IStubCreateHandler | null, entity: string): ICreatePromise<T> => {
   return (
     document: T,
   ): Promise<IItem<T>> => {
     return new Promise<IItem<T>>((resolve, reject) => {
-      console.log('create', entity, document);
-      processStandardItemResponse<T>(scenario, resolve, reject);
+      setTimeout(() => {
+        console.log('create', entity, document);
+        const hardcodedScenario = (scenario as IStubScenario);
+        if (hardcodedScenario && hardcodedScenario.status) {
+          processStandardItemResponse<T>(hardcodedScenario, resolve, reject);
+        } else {
+          const handler = (scenario as IStubCreateHandler);
+          const record: any = document;
+          record.id = generateUuid();
+          record.modifiedAt = new Date();
+          record.createdAt = new Date();
+          if (handler) {
+            list.push(handler(record));
+          } else {
+            list.push(record);
+          }
+          if (window.localStorage) {
+            window.localStorage.setItem(`stub.${entity}`, JSON.stringify(list));
+          }
+          processStandardItemResponse<T>(stubScenario(record, 200), resolve, reject);
+        }
+      }, StubTimeout);
     });
   };
 };
 
-export const baseReadStub = <T>(scenario: IStubScenario, entity: string): IReadPromise<T> => {
+export const baseReadStub = <T>(list: T[], scenario: IStubScenario | null, entity: string): IReadPromise<T> => {
   return (
     id: string,
   ): Promise<IItem<T>> => {
     return new Promise<IItem<T>>((resolve, reject) => {
-      console.log('read', entity, id);
-      processStandardItemResponse<T>(scenario, resolve, reject);
+      setTimeout(() => {
+        console.log('read', entity, id);
+        if (scenario) {
+          processStandardItemResponse<T>(scenario, resolve, reject);
+        } else {
+          const index = list.findIndex((item: any) => {
+            return item.id === id
+          });
+          if (index === -1) {
+            processStandardItemResponse<T>(stubScenario(null, 404), resolve, reject);
+          } else {
+            processStandardItemResponse<T>(stubScenario(list[index], 200), resolve, reject);
+          }
+        }
+      }, StubTimeout);
     });
   };
 };
 
-export const baseUpdateStub = <T>(scenario: IStubScenario, entity: string): IUpdatePromise<T> => {
+export const baseUpdateStub = <T>(list: T[], scenario: IStubScenario | IStubCreateHandler | null, entity: string): IUpdatePromise<T> => {
   return (
     id: string,
     document: T,
   ): Promise<IItem<T>> => {
     return new Promise<IItem<T>>((resolve, reject) => {
-      console.log('update', entity, id, document);
-      processStandardItemResponse<T>(scenario, resolve, reject);
+      setTimeout(() => {
+        console.log('update', entity, id, document);
+        const hardcodedScenario = (scenario as IStubScenario);
+        if (hardcodedScenario && hardcodedScenario.status) {
+          processStandardItemResponse<T>(hardcodedScenario, resolve, reject);
+        } else {
+          const index = list.findIndex((item: any) => {
+            return item.id === id
+          });
+          if (index === -1) {
+            processStandardItemResponse<T>(stubScenario(null, 404), resolve, reject);
+          } else {
+            const handler = (scenario as IStubCreateHandler);
+            const record: any = {
+              ...list[index],
+              ...document
+            };
+            record.modifiedAt = new Date();
+            if (handler) {
+              list[index] = handler(record);
+            } else {
+              list[index] = record;
+            }
+            if (window.localStorage) {
+              window.localStorage.setItem(`stub.${entity}`, JSON.stringify(list));
+            }
+            processStandardItemResponse<T>(stubScenario(record, 200), resolve, reject);
+          }
+        }
+      }, StubTimeout);
     });
   };
 };
 
-export const baseDeleteStub = <T>(scenario: IStubScenario, list: T[], entity: string): IDeletePromise<T> => {
+export const baseDeleteStub = <T>(list: T[], scenario: IStubScenario | null, entity: string): IDeletePromise<T> => {
   return (
     id: string,
   ): Promise<IItem<T>> => {
     return new Promise<IItem<T>>((resolve, reject) => {
-      console.log('delete', entity, id);
-      processStandardItemResponse<T>(scenario, (value: IItem<T>) => {
-        list.pop();
-        resolve(value);
-      }, reject);
+      setTimeout(() => {
+        console.log('delete', entity, id);
+        const hardcodedScenario = (scenario as IStubScenario);
+        if (hardcodedScenario && hardcodedScenario.status) {
+          processStandardItemResponse<T>(hardcodedScenario, resolve, reject);
+        } else {
+          const index = list.findIndex((item: any) => {
+            return item.id === id
+          });
+          if (index === -1) {
+            processStandardItemResponse<T>(stubScenario(null, 404), resolve, reject);
+          } else {
+            const record = list[index];
+            list.splice(index, 1);
+            if (window.localStorage) {
+              window.localStorage.setItem(`stub.${entity}`, JSON.stringify(list));
+            }
+            processStandardItemResponse<T>(stubScenario(record, 200), resolve, reject);
+          }
+        }
+      }, StubTimeout);
     });
   };
 };
 
-export const baseBulkStub = (scenario: IStubScenario, entity: string): IBulkPromise => {
+export const baseBulkStub = <T>(list: T[], scenario: IStubScenario | null, entity: string): IBulkPromise => {
   return (
     action: string,
     ids: string[],
   ): Promise<IItem<generic>> => {
     return new Promise<IItem<generic>>((resolve, reject) => {
-      console.log('bulk', entity, action, ids);
-      processStandardItemResponse<generic>(scenario, resolve, reject);
+      setTimeout(() => {
+        console.log('bulk', entity, action, ids);
+        if (scenario) {
+          processStandardItemResponse<generic>(scenario, resolve, reject);
+        }
+      }, StubTimeout);
     });
   };
 };
+
+export const baseListLoad = <T>(list: T[], entity: string): T[] => {
+  if (window.localStorage) {
+    const data = window.localStorage.getItem(`stub.${entity}`);
+    if (data) {
+      const items = JSON.parse(data);
+      if (items) {
+        return items;
+      }
+    }
+    window.localStorage.setItem(`stub.${entity}`, JSON.stringify(list));
+  }
+  return list;
+}

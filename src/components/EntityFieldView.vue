@@ -11,7 +11,7 @@
         :field="field"
       />
       <entity-field-view-link-id
-        :tabular="true"
+        :repository="repository"
         :item="item"
         :value="value"
         :field="field"
@@ -25,19 +25,12 @@
       <entity-field-view-label
         :field="field"
       />
-      <a
-        v-if="value"
-        :href="`${parentRepository.viewPagePrefix}/${value}`"
-      >
-        {{ item[field.selfReferenceLabelFieldKey] }}
-      </a>
-      <small
-        v-else
-      >
-        <i>
-          &lt;{{ translate('custom.empty') }}&gt;
-        </i>
-      </small>
+      <entity-field-view-self-reference
+        :repository="repository"
+        :item="item"
+        :value="value"
+        :field="field"
+      />
 
     </div>
     <div
@@ -50,11 +43,24 @@
         <div
           v-bind:key="key"
         >
-          <strong>
-            {{ translate(`${field.label}.${key}`) }}
-          </strong>
+          <div>
+            <strong>
+              {{ translate(`${field.label}.${key}`) }}
+            </strong>
+          </div>
+          <small
+            v-if="!val || val.length <= 0"
+          >
+            <i>
+              &lt;{{ translate('custom.empty') }}&gt;
+            </i>
+          </small>
+          <span
+            v-else
+          >
+            {{ val }}
+          </span>
         </div>
-        {{ val }}
       </slot>
     </div>
     <div
@@ -84,7 +90,18 @@
       <entity-field-view-label
         :field="field"
       />
-      {{ doFormat(field, value) }}
+      <small
+        v-if="!value || value.length <= 0"
+      >
+        <i>
+          &lt;{{ translate('custom.empty') }}&gt;
+        </i>
+      </small>
+      <span
+        v-else
+      >
+        {{ doFormat(field, value) }}
+      </span>
 
     </div>
 
@@ -96,12 +113,13 @@
 import {formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 import EntityFieldViewLabel from './EntityFieldViewLabel';
 import EntityFieldViewLinkId from './EntityFieldViewLinkId';
+import EntityFieldViewSelfReference from './EntityFieldViewSelfReference';
 
 export default {
   name: 'entity-field-view',
-  components: {EntityFieldViewLinkId, EntityFieldViewLabel},
+  components: {EntityFieldViewSelfReference, EntityFieldViewLinkId, EntityFieldViewLabel},
   props: {
-    parentRepository: null,
+    repository: null,
     field: null,
     value: null,
     item: null,

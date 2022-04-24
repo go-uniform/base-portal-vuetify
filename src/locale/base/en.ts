@@ -9,10 +9,15 @@ phrases.base = {
     length: 'May not be more than {0} characters long.',
   },
   errors: {
+    general: 'Something went wrong',
+    recordNotFound: 'The record could not be found',
     unknownOtpType: 'Unknown OTP type \'{0}\' detected',
     incorrectOtpPin: 'Incorrect OTP supplied',
   },
   app: {
+    loading: 'Loading...',
+    submitting: 'Submitting data...',
+    submittedSuccessfully: 'Data successfully submitted',
     scrollTop: 'Scroll Top',
     title: 'Uniform',
     headerTitle: 'Uniform',

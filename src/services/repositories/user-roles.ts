@@ -1,28 +1,19 @@
 import {
   baseBulkStub,
   baseCreateStub,
-  baseDeleteStub,
+  baseDeleteStub, baseListLoad,
   baseListStub,
   baseReadStub,
   baseUpdateStub,
-  stubScenario,
 } from '@/services/base/stub';
 import {IRepository} from '@/services/base/global.interfaces';
 import {EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
 import {permissions} from '@/services/repositories/permissions';
 
-interface UserRole {
-  id: string;
-  status: string;
-  name: string;
-  description: string;
-  super?: boolean;
-  modifiedAt: Date;
-  createdAt: Date;
-}
+const entity = 'userRoles';
 
-const StubList: UserRole[] = [
+export const UserRolesList: UserRole[] = baseListLoad([
   {
     id: '624df0929bc786ddf868f7e8',
     status: 'approved',
@@ -48,9 +39,21 @@ const StubList: UserRole[] = [
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
-];
-const StubRecord: UserRole = StubList[0];
-const entity = 'userRoles';
+], entity);
+
+const stubRecordHandler = (item: any) => {
+  return item;
+}
+
+interface UserRole {
+  id: string;
+  status: string;
+  name: string;
+  description: string;
+  super?: boolean;
+  modifiedAt: Date;
+  createdAt: Date;
+}
 
 export const userRoles: IRepository<UserRole> = {
   freeTextSearch: true,
@@ -170,10 +173,10 @@ export const userRoles: IRepository<UserRole> = {
     }
   ],
 
-  list: baseListStub<UserRole>(stubScenario(StubList), entity),
-  create: baseCreateStub<UserRole>(stubScenario(StubRecord), entity, ),
-  read: baseReadStub<UserRole>(stubScenario(StubRecord), entity),
-  update: baseUpdateStub<UserRole>(stubScenario(StubRecord), entity),
-  delete: baseDeleteStub<UserRole>(stubScenario(StubRecord), StubList, entity),
-  bulk: baseBulkStub(stubScenario(StubRecord), entity),
+  list: baseListStub<UserRole>(UserRolesList, null, entity),
+  create: baseCreateStub<UserRole>(UserRolesList, stubRecordHandler, entity),
+  read: baseReadStub<UserRole>(UserRolesList, null, entity),
+  update: baseUpdateStub<UserRole>(UserRolesList, stubRecordHandler, entity),
+  delete: baseDeleteStub<UserRole>(UserRolesList, null, entity),
+  bulk: baseBulkStub<UserRole>(UserRolesList, null, entity),
 };
