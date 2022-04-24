@@ -95,6 +95,9 @@ phrases.custom = {
   permissions: {
     singular: 'Toestemming',
     plural: 'Toestemmings',
+    sections: {
+      general: 'Algemeen',
+    },
     enums: {
       type: {
         inherit: {
