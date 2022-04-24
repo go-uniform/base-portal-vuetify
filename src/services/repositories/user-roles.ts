@@ -99,7 +99,6 @@ export const userRoles: IRepository<UserRole> = {
     name: {
       label: 'custom.userRoles.fields.name',
       type: EnumFieldType.Text,
-      hint: '<strong>Long Test:</strong><p>This is going to be a test of a long hint with lost of HTML content in it.</p>'
     },
     description: {
       label: 'custom.userRoles.fields.description',
