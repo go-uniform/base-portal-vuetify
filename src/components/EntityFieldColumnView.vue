@@ -7,11 +7,12 @@
     <div
       v-if="field.type === 'linkId'"
     >
-      <a
-        :href="`${field.linkRepository.viewPagePrefix}/${value}`"
-      >
-        {{ item[field.linkLabelFieldKey] }}
-      </a>
+      <entity-field-view-link-id
+        :tabular="true"
+        :item="item"
+        :value="value"
+        :field="field"
+      />
     </div>
     <div
       v-else-if="field.type === 'selfReferenceId'"
@@ -79,10 +80,11 @@
 
 <script>
 import {formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import EntityFieldViewLinkId from './EntityFieldViewLinkId';
 
 export default {
   name: 'entity-field-column-view',
-
+  components: {EntityFieldViewLinkId},
   props: {
     parentRepository: null,
     field: null,
@@ -98,6 +100,16 @@ export default {
         enumValue = this.field.values.filter((item) => { return item.value === this.field.defaultValue })[0];
       }
       return enumValue;
+    },
+
+    getMultiValue(subValue) {
+      if (!subValue) {
+        return [];
+      }
+      if (subValue.constructor === Array) {
+        return subValue;
+      }
+      return [subValue];
     },
 
     doFormat() {

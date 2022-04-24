@@ -10,19 +10,12 @@
       <entity-field-view-label
         :field="field"
       />
-      <a
-        v-if="value"
-        :href="`${field.linkRepository.viewPagePrefix}/${value}`"
-      >
-        {{ item[field.linkLabelFieldKey] }}
-      </a>
-      <small
-        v-else
-      >
-        <i>
-          empty
-        </i>
-      </small>
+      <entity-field-view-link-id
+        :tabular="true"
+        :item="item"
+        :value="value"
+        :field="field"
+      />
 
     </div>
     <div
@@ -102,10 +95,11 @@
 <script>
 import {formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
 import EntityFieldViewLabel from './EntityFieldViewLabel';
+import EntityFieldViewLinkId from './EntityFieldViewLinkId';
 
 export default {
   name: 'entity-field-view',
-  components: {EntityFieldViewLabel},
+  components: {EntityFieldViewLinkId, EntityFieldViewLabel},
   props: {
     parentRepository: null,
     field: null,
@@ -115,12 +109,22 @@ export default {
   },
 
   methods: {
-    getEnumValue(value) {
-      let enumValue = this.field.values.filter((item) => { return item.value === value })[0];
+    getEnumValue(subValue) {
+      let enumValue = this.field.values.filter((item) => { return item.value === subValue })[0];
       if (!enumValue) {
         enumValue = this.field.values.filter((item) => { return item.value === this.field.defaultValue })[0];
       }
       return enumValue;
+    },
+
+    getMultiValue(subValue) {
+      if (!subValue) {
+        return [];
+      }
+      if (subValue.constructor === Array) {
+        return subValue;
+      }
+      return [subValue];
     },
 
     doFormat(field, value) {

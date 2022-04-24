@@ -6,19 +6,16 @@
     <div
       v-if="field.type === 'linkId'"
     >
+
       <entity-field-view-label
         :field="field"
       />
-      <v-autocomplete
-        item-color="accent white--text"
-        color="accent"
+      <entity-field-edit-link-id
+        :field="field"
         :value="value"
-        :items="linkItems"
-        clearable
-        :rules="[rules.required(field.optional)]"
         @input="input"
-        filled
-      ></v-autocomplete>
+      />
+
     </div>
     <div
       v-else-if="field.type === 'selfReferenceId'"
@@ -130,10 +127,11 @@
 <script>
 import {validations} from '../services/base/validations';
 import EntityFieldViewLabel from './EntityFieldViewLabel';
+import EntityFieldEditLinkId from './EntityFieldEditLinkId';
 
 export default {
   name: 'entity-field-edit',
-  components: {EntityFieldViewLabel},
+  components: {EntityFieldEditLinkId, EntityFieldViewLabel},
   props: {
     parentRepository: null,
     field: null,
@@ -154,9 +152,6 @@ export default {
   }),
 
   methods: {
-    hint() {
-      this.showHint = true;
-    },
     input(value) {
       this.$emit('input', value);
     },
@@ -171,9 +166,7 @@ export default {
     let repository = null;
 
     if (this.field) {
-      if (this.field.linkRepository) {
-        repository = this.field.linkRepository;
-      } else if (this.field.type === 'selfReferenceId') {
+      if (this.field.type === 'selfReferenceId') {
         repository = this.parentRepository;
       }
     }

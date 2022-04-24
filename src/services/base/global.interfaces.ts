@@ -121,6 +121,7 @@ export interface IFieldEnum {
   textOnly?: boolean;
   iconOnly?: boolean;
   hint?: string;
+  multiple?: boolean;
 }
 
 export interface IFieldBoolean {
@@ -145,6 +146,7 @@ export interface IFieldLinkId {
   linkRepository: IRepository<any>;
   textAssemblyCallback: (item: any) => string;
   hint?: string;
+  multiple?: boolean;
 }
 
 export interface IFieldLinkLabel {
@@ -155,6 +157,7 @@ export interface IFieldLinkLabel {
   filterable?: boolean;
   linkIdFieldKey: string;
   hint?: string;
+  multiple?: boolean;
 }
 
 export interface ISelfReferenceId {
@@ -166,6 +169,7 @@ export interface ISelfReferenceId {
   selfReferenceLabelFieldKey: string;
   textAssemblyCallback: (item: any) => string;
   hint?: string;
+  multiple?: boolean;
 }
 
 export interface ISelfReferenceLabel {
@@ -176,6 +180,7 @@ export interface ISelfReferenceLabel {
   filterable?: boolean;
   selfReferenceIdFieldKey: string;
   hint?: string;
+  multiple?: boolean;
 }
 
 export interface IFieldAttribute {
