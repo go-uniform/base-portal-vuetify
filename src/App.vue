@@ -68,12 +68,18 @@ export default Vue.extend({
   background: inherit !important;
 }
 
+.theme--dark {
+  .v-input input {
+    caret-color: #fff !important;
+  }
+}
+
 .v-data-table__selected:not(.v-data-table__mobile-table-row) {
   color: var(--v-accent-base) !important;
   background: var(--v-accent-lighten4) !important;
 
   .v-input--selection-controls__input > .v-icon {
-    color:var(--v-accent-base) !important;
+    color: var(--v-accent-base) !important;
   }
 }
 
