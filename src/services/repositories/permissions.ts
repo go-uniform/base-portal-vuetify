@@ -57,19 +57,21 @@ export const permissions: IRepository<IAttribute> = {
       type: EnumFieldType.Enumeration,
       values: [
         {
-          value: null,
-          title: 'custom.permissions.inherit',
-          icon: 'mdi-arrow-up-left'
+          title: 'custom.permissions.enums.type.inherit.title',
+          icon: 'custom.permissions.enums.type.inherit.icon',
+          color: 'custom.permissions.enums.type.inherit.color',
         },
         {
           value: 'allow',
-          title: 'custom.permissions.allow',
-          icon: 'mdi-check'
+          title: 'custom.permissions.enums.type.allow.title',
+          icon: 'custom.permissions.enums.type.allow.icon',
+          color: 'custom.permissions.enums.type.allow.color',
         },
         {
           value: 'deny',
-          title: 'custom.permissions.deny',
-          icon: 'mdi-close'
+          title: 'custom.permissions.enums.type.deny.title',
+          icon: 'custom.permissions.enums.type.deny.icon',
+          color: 'custom.permissions.enums.type.deny.color',
         },
       ],
     },

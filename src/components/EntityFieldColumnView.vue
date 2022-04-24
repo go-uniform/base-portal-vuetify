@@ -28,20 +28,44 @@
       <small><i>attributes are not supported on table list views</i></small>
     </div>
     <div
-      v-else-if="field.type === 'boolean'"
+      v-else-if="field.type === 'enumeration' || field.type === 'boolean'"
+      :set:strValue="strValue = value === true && !field.inverted ? 'true' : 'false'"
+      :set:enumValue="enumValue = field.type === 'enumeration' ?  field.values.filter((item) => { return item.value === value })[0] : { title: `base.app.boolean.${strValue}Title`, icon: `base.app.boolean.${strValue}Icon`, color: `base.app.boolean.${strValue}Color` }"
     >
-      <v-icon
-        v-if="value === true && !field.inverted"
-        :color="translate('base.app.boolean.colorTrue')"
+
+      <div
+        v-if="!field.textOnly && !field.iconOnly"
       >
-        {{ translate('base.app.boolean.iconTrue') }}
-      </v-icon>
-      <v-icon
+        <v-icon
+          :color="translate(enumValue.color)"
+        >
+          {{ translate(enumValue.icon) }}
+        </v-icon>
+        <span>
+          {{ translate(enumValue.title) }}
+        </span>
+      </div>
+      <v-tooltip
+        v-else-if="field.iconOnly"
+        right
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon
+            v-bind="attrs"
+            v-on="on"
+            :color="translate(enumValue.color)"
+          >
+            {{ translate(enumValue.icon) }}
+          </v-icon>
+        </template>
+        <span>{{ translate(enumValue.title) }}</span>
+      </v-tooltip>
+      <span
         v-else
-        :color="translate('base.app.boolean.colorFalse')"
       >
-        {{ translate('base.app.boolean.iconFalse') }}
-      </v-icon>
+        {{ translate(enumValue.title) }}
+      </span>
+
     </div>
     <div
       v-else

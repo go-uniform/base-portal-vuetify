@@ -87,6 +87,25 @@
       </v-card>
     </div>
     <div
+      v-else-if="field.type === 'enumeration'"
+    >
+      <entity-field-view-label
+        :field="field"
+      />
+      <v-autocomplete
+        :value="value"
+        :items="field.values"
+        :item-text="(item) => {return translate(item.title)}"
+        item-value="value"
+        :multiple="field.multiple"
+        clearable
+        :rules="[rules.required(field.optional)]"
+        @input="input"
+        filled
+      >
+      </v-autocomplete>
+    </div>
+    <div
       v-else
     >
       <entity-field-view-label

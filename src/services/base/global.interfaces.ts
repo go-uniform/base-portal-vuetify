@@ -92,10 +92,11 @@ export interface IBulkPromise {
   ): Promise<IGeneric<generic>>;
 }
 
-export interface IEnumValue {
-  value: string | null;
+export interface IEnum {
+  value?: string;
   title: string;
   icon?: string;
+  color?: string;
 }
 
 export interface IFieldNormal {
@@ -106,7 +107,18 @@ export interface IFieldNormal {
   filterable?: boolean;
   pattern?: RegExp;
   patternMessage?: string;
-  values?: IEnumValue[];
+  hint?: string;
+}
+
+export interface IFieldEnum {
+  label: string;
+  type: EnumFieldType;
+  optional?: boolean;
+  readonly?: boolean;
+  filterable?: boolean;
+  values?: IEnum[];
+  textOnly?: boolean;
+  iconOnly?: boolean;
   hint?: string;
 }
 
@@ -118,6 +130,8 @@ export interface IFieldBoolean {
   filterable?: boolean;
   hint?: string;
   inverted?: boolean;
+  textOnly?: boolean;
+  iconOnly?: boolean;
 }
 
 export interface IFieldLinkId {
@@ -170,7 +184,7 @@ export interface IFieldAttribute {
   hint?: string;
 }
 
-export type IField = IFieldNormal | IFieldBoolean | IFieldLinkId | IFieldLinkLabel | IFieldAttribute | ISelfReferenceId | ISelfReferenceLabel;
+export type IField = IFieldNormal | IFieldEnum | IFieldBoolean | IFieldLinkId | IFieldLinkLabel | IFieldAttribute | ISelfReferenceId | ISelfReferenceLabel;
 
 export type IFields = { [key: string]: IField }
 

@@ -45,6 +45,7 @@ phrases.custom = {
     },
     fields: {
       id: 'Id',
+      status: 'Status',
       name: 'Name',
       description: 'Description',
       super: 'Super',
@@ -53,6 +54,25 @@ phrases.custom = {
     },
     hints: {
       super: 'A super user role has access to everything but can explicitly be denied permissions.',
+    },
+    enums: {
+      status: {
+        pending: {
+          title: 'Pending',
+          icon: 'mdi-timer-sand-full',
+          color: 'grey',
+        },
+        approved: {
+          title: 'Approved',
+          icon: 'mdi-check-bold',
+          color: 'success',
+        },
+        rejected: {
+          title: 'Rejected',
+          icon: 'mdi-close-thick',
+          color: 'danger',
+        }
+      }
     }
   },
   userAttributes: {
@@ -74,6 +94,25 @@ phrases.custom = {
   permissions: {
     singular: 'Permission',
     plural: 'Permissions',
+    enums: {
+      type: {
+        inherit: {
+          title: 'Inherit',
+          icon: 'mdi-arrow-up-left',
+          color: 'grey',
+        },
+        allow: {
+          title: 'Allow',
+          icon: 'mdi-check-bold',
+          color: 'success',
+        },
+        deny: {
+          title: 'Deny',
+          icon: 'mdi-close-thick',
+          color: 'danger',
+        },
+      }
+    }
   }
 };
 

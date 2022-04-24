@@ -14,6 +14,7 @@ import {permissions} from '@/services/repositories/permissions';
 
 interface UserRole {
   id: string;
+  status: string;
   name: string;
   description: string;
   super?: boolean;
@@ -24,6 +25,7 @@ interface UserRole {
 const StubList: UserRole[] = [
   {
     id: '624df0929bc786ddf868f7e8',
+    status: 'approved',
     name: 'Administrators',
     description: 'This user role has the highest privileges in the system and can do pretty much anything',
     super: true,
@@ -32,6 +34,7 @@ const StubList: UserRole[] = [
   },
   {
     id: '625ae8cdc7cee73e4d177ecc',
+    status: 'pending',
     name: 'Editors',
     description: 'This user role can edit most data',
     modifiedAt: new Date(),
@@ -39,6 +42,7 @@ const StubList: UserRole[] = [
   },
   {
     id: '625ae8e197304b98b929f1f7',
+    status: 'rejected',
     name: 'Viewers',
     description: 'This user role can view most data',
     modifiedAt: new Date(),
@@ -66,6 +70,31 @@ export const userRoles: IRepository<UserRole> = {
       type: EnumFieldType.Uuid,
       readonly: true,
     },
+    status: {
+      label: 'custom.userRoles.fields.status',
+      type: EnumFieldType.Enumeration,
+      values: [
+        {
+          value: 'pending',
+          title: 'custom.userRoles.enums.status.pending.title',
+          icon: 'custom.userRoles.enums.status.pending.icon',
+          color: 'custom.userRoles.enums.status.pending.color',
+        },
+        {
+          value: 'approved',
+          title: 'custom.userRoles.enums.status.approved.title',
+          icon: 'custom.userRoles.enums.status.approved.icon',
+          color: 'custom.userRoles.enums.status.approved.color',
+        },
+        {
+          value: 'rejected',
+          title: 'custom.userRoles.enums.status.rejected.title',
+          icon: 'custom.userRoles.enums.status.rejected.icon',
+          color: 'custom.userRoles.enums.status.rejected.color',
+        }
+      ],
+      textOnly: true,
+    },
     name: {
       label: 'custom.userRoles.fields.name',
       type: EnumFieldType.Text,
@@ -81,6 +110,7 @@ export const userRoles: IRepository<UserRole> = {
       type: EnumFieldType.Boolean,
       optional: true,
       hint: 'custom.userRoles.hints.super',
+      iconOnly: true
     },
     permissions: {
       label: 'custom.users.fields.permissions',
@@ -101,6 +131,9 @@ export const userRoles: IRepository<UserRole> = {
   },
   headers: [
     {
+      fieldKey: 'status',
+    },
+    {
       fieldKey: 'name',
     },
     {
@@ -117,6 +150,7 @@ export const userRoles: IRepository<UserRole> = {
   sections: [
     new Section('custom.userRoles.sections.general', [
       'id',
+      'status',
       'name',
       'description',
       'super',
