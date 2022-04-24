@@ -86,7 +86,7 @@
       <entity-field-view-label
         :field="field"
       />
-      {{ translate(field.values.filter((item) => { return item.value === value })[0].title) }}
+      {{ translate(getEnumValue(value).title) }}
 
     </div>
     <div
@@ -120,6 +120,14 @@ export default {
   },
 
   methods: {
+    getEnumValue(value) {
+      let enumValue = this.field.values.filter((item) => { return item.value === value })[0];
+      if (!enumValue) {
+        enumValue = this.field.values.filter((item) => { return item.value === this.field.defaultValue })[0];
+      }
+      return enumValue;
+    },
+
     doFormat(field, value) {
       switch (field.type) {
         case "boolean":

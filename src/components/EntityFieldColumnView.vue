@@ -30,7 +30,7 @@
     <div
       v-else-if="field.type === 'enumeration' || field.type === 'boolean'"
       :set:strValue="strValue = value === true && !field.inverted ? 'true' : 'false'"
-      :set:enumValue="enumValue = field.type === 'enumeration' ?  field.values.filter((item) => { return item.value === value })[0] : { title: `base.app.boolean.${strValue}Title`, icon: `base.app.boolean.${strValue}Icon`, color: `base.app.boolean.${strValue}Color` }"
+      :set:enumValue="enumValue = field.type === 'enumeration' ?  getEnumValue(value) : { title: `base.app.boolean.${strValue}Title`, icon: `base.app.boolean.${strValue}Icon`, color: `base.app.boolean.${strValue}Color` }"
     >
 
       <div
@@ -92,6 +92,14 @@ export default {
   },
 
   methods: {
+    getEnumValue(value) {
+      let enumValue = this.field.values.filter((item) => { return item.value === value })[0];
+      if (!enumValue) {
+        enumValue = this.field.values.filter((item) => { return item.value === this.field.defaultValue })[0];
+      }
+      return enumValue;
+    },
+
     doFormat() {
       switch (this.field.type) {
         case "boolean":
