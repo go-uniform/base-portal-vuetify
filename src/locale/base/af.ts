@@ -12,6 +12,7 @@ phrases.base = {
     incorrectOtpPin: 'Verkeerde OTP pin verskaf',
   },
   app: {
+    scrollTop: 'Rol Boontoe',
     title: 'Uniform',
     headerTitle: 'Uniform',
     logoAlt: 'Uniform',
@@ -31,6 +32,12 @@ phrases.base = {
     disagreeTitle: 'Nee',
     deleteConfirmationTitle: 'Is jy seker?',
     deleteConfirmationMessage: 'Is jy seker jy wil die geselekteerde rekord uitvee?',
+    boolean: {
+      colorTrue: 'success',
+      iconTrue: 'mdi-check-bold',
+      colorFalse: 'danger',
+      iconFalse: 'mdi-close-thick',
+    }
   },
   logout: {
     pageTitle: 'Teken Uit',

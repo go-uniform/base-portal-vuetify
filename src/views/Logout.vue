@@ -3,7 +3,7 @@
   <empty-layout>
 
     <div
-      class="pa-8 text-center"
+      class="pa-2 pa-sm-4 pa-lg-8 text-center"
       v-html="translate('base.logout.pageHtml')"
     >
     </div>

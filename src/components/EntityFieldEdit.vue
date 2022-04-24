@@ -6,42 +6,48 @@
     <div
       v-if="field.type === 'linkId'"
     >
+      <entity-field-view-label
+        :field="field"
+      />
       <v-autocomplete
         :value="value"
-        :label="translate(field.label)"
         :items="linkItems"
         :multiple="field.multiple"
         clearable
         :rules="[rules.required(field.optional)]"
         @input="input"
-        :hint="field.hint"
+        filled
       ></v-autocomplete>
     </div>
     <div
       v-else-if="field.type === 'selfReferenceId'"
     >
+      <entity-field-view-label
+        :field="field"
+      />
       <v-autocomplete
         :value="value"
-        :label="translate(field.label)"
         :items="linkItems"
         :multiple="field.multiple"
         clearable
         :rules="[rules.required(field.optional)]"
         @input="input"
-        :hint="field.hint"
+        filled
       ></v-autocomplete>
     </div>
     <div
       v-else-if="field.type === 'textarea'"
     >
+      <entity-field-view-label
+        :field="field"
+      />
       <v-textarea
         :value="value"
-        :label="translate(field.label)"
         :counter="field.length"
         :maxlength="field.length"
         :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
         @input="input"
-        :hint="field.hint"
+        filled
       >
       </v-textarea>
     </div>
@@ -59,7 +65,7 @@
             :value="value[key]"
             :label="translate(`${field.label}.${key}`)"
             @input="attributeInput(key, $event)"
-            :hint="field.hint"
+            filled
           ></v-text-field>
         </div>
       </slot>
@@ -69,31 +75,30 @@
     >
       <v-card>
         <v-card-title>
-          {{ translate(field.label )}}
+          <entity-field-view-label
+            :field="field"
+          />
           <v-spacer></v-spacer>
           <v-switch
             :value="value"
             @input="input"
           ></v-switch>
         </v-card-title>
-        <v-card-text
-          v-if="field.hint"
-          v-html="translate(field.hint)"
-        >
-        </v-card-text>
       </v-card>
     </div>
     <div
       v-else
     >
+      <entity-field-view-label
+        :field="field"
+      />
       <v-text-field
         :value="value"
-        :label="translate(field.label)"
         :counter="field.length"
         :maxlength="field.length"
         :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
         @input="input"
-        :hint="field.hint"
+        filled
       ></v-text-field>
     </div>
 
@@ -102,10 +107,11 @@
 </template>
 <script>
 import {validations} from '../services/base/validations';
+import EntityFieldViewLabel from './EntityFieldViewLabel';
 
 export default {
   name: 'entity-field-edit',
-
+  components: {EntityFieldViewLabel},
   props: {
     parentRepository: null,
     field: null,
@@ -122,9 +128,13 @@ export default {
       length: validations.length,
     },
     attributes: {},
+    showHint: false,
   }),
 
   methods: {
+    hint() {
+      this.showHint = true;
+    },
     input(value) {
       this.$emit('input', value);
     },

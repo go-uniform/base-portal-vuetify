@@ -2,7 +2,7 @@
 
   <v-expansion-panels
     v-if="filterableFieldKeys.length > 0 || repository.freeTextSearch"
-    class="justify-start mb-8"
+    class="justify-start mb-2 mb-sm-4 mb-lg-8"
     v-model="filterPanelValue"
   >
 

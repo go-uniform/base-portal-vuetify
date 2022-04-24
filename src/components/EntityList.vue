@@ -5,7 +5,7 @@
   >
 
     <v-btn
-      class="mb-8 hidden-md-and-up"
+      class="mb-2 mb-sm-4 mb-lg-8 hidden-md-and-up"
       color="success"
       :to="this.repository.addPage"
       block

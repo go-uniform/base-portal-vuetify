@@ -6,17 +6,7 @@
     fixed
   >
     <language-selector/>
-    <v-btn
-      v-if="showScrollTopBtn"
-      class="scroll-top"
-      fab
-      icon
-      @click.stop="scrollTop"
-    >
-      <v-icon>
-        mdi-arrow-up
-      </v-icon>
-    </v-btn>
+    <scroll-top-button/>
 
     <v-card
       flat
@@ -43,39 +33,14 @@
 .v-footer {
   z-index: 4; // we need to put footer above most other floating sections but not over alerts so level 4 should work
 }
-
-.scroll-top {
-  z-index: 5;
-  position: fixed;
-  right: 15px;
-  bottom: 0px;
-}
 </style>
 
 <script>
-import goTo from 'vuetify/lib/services/goto'
-import {bus} from '@/services/base/bus';
 import LanguageSelector from '@/components/LanguageSelector';
+import ScrollTopButton from '@/components/ScrollTopButton';
 
 export default {
   name: 'main-footer',
-  components: {LanguageSelector},
-  data: () => ({
-    showScrollTopBtn: false,
-  }),
-
-  methods: {
-    scrollTop() {
-      goTo(0)
-    }
-  },
-
-  created() {
-
-    bus.subscribe('window.scrollTopBtn', (state) => {
-      this.showScrollTopBtn = state;
-    });
-
-  },
+  components: {ScrollTopButton, LanguageSelector},
 }
 </script>

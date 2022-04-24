@@ -46,11 +46,11 @@ export default Vue.extend({
         const downLink = connection.downlink;
 
         if (isConnected && downLink < 0.1) {
-            isConnected = false;
-            bus.publish('connection', isConnected);
+          isConnected = false;
+          bus.publish('connection', isConnected);
         } else if (!isConnected && downLink > 0.1) {
-            isConnected = true;
-            bus.publish('connection', isConnected);
+          isConnected = true;
+          bus.publish('connection', isConnected);
         }
       }
     }, 500);
@@ -64,6 +64,15 @@ export default Vue.extend({
   height: 68px;
 }
 
+.v-data-table__mobile-table-row:hover, .v-data-table__mobile-table-row.v-data-table__selected {
+  background: inherit !important;
+}
+
+.v-data-table__selected:not(.v-data-table__mobile-table-row) {
+  color: var(--v-accent-base) !important;
+  background: var(--v-accent-lighten4) !important;
+}
+
 .theme--dark.v-sheet.v-card:not(.v-sheet--outlined) {
   box-shadow: 0px 3px 1px -2px rgb(200 200 200 / 20%), 0px 2px 2px 0px rgb(200 200 200 / 14%), 0px 1px 5px 0px rgb(200 200 200 / 12%);
 }
@@ -71,18 +80,23 @@ export default Vue.extend({
 .v-application, .v-navigation-drawer, .v-list {
   background-color: var(--v-background-base) !important;
 }
+
 .v-list-group--active > .v-list-group__header > .v-list-item__icon > .v-icon {
   color: #fff !important;
 }
+
 .v-expansion-panel-header.white--text .v-icon {
   color: #fff !important;
 }
+
 .v-list-item--dense > .v-list-group__header {
   min-height: 40px;
 }
+
 .fill-width {
   width: 100%;
 }
+
 a i.v-icon.v-icon {
   color: inherit;
 }

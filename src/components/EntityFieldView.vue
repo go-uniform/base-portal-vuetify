@@ -6,6 +6,9 @@
     <div
       v-if="field.type === 'linkId'"
     >
+      <entity-field-view-label
+        :field="field"
+      />
       <div>
         <strong>
           {{ translate(field.label) }}
@@ -28,11 +31,9 @@
     <div
       v-else-if="field.type === 'selfReferenceId'"
     >
-      <div>
-        <strong>
-          {{ translate(field.label) }}
-        </strong>
-      </div>
+      <entity-field-view-label
+        :field="field"
+      />
       <a
         v-if="value"
         :href="`${parentRepository.viewPagePrefix}/${value}`"
@@ -67,11 +68,9 @@
     <div
       v-else-if="field.type === 'boolean'"
     >
-      <div>
-        <strong>
-          {{ translate(field.label) }}
-        </strong>
-      </div>
+      <entity-field-view-label
+        :field="field"
+      />
       <v-icon
         v-if="value === true && !field.inverted"
         :color="translate('base.app.boolean.colorTrue')"
@@ -88,11 +87,9 @@
     <div
       v-else
     >
-      <div>
-        <strong>
-          {{ translate(field.label) }}
-        </strong>
-      </div>
+      <entity-field-view-label
+        :field="field"
+      />
       {{ doFormat(field, value) }}
     </div>
 
@@ -102,10 +99,11 @@
 
 <script>
 import {formatBoolean, formatDate, formatDatetime} from '../plugins/vuetify';
+import EntityFieldViewLabel from './EntityFieldViewLabel';
 
 export default {
   name: 'entity-field-view',
-
+  components: {EntityFieldViewLabel},
   props: {
     parentRepository: null,
     field: null,

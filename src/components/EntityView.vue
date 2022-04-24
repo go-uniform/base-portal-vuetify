@@ -35,7 +35,7 @@
               </strong>
             </v-expansion-panel-header>
             <v-expansion-panel-content
-              class="pa-8 fill-height"
+              class="pa-2 pa-sm-4 pa-lg-8 fill-height"
             >
               <slot
                 :name="'section-'+ kebabCase(section.title)"

@@ -12,6 +12,7 @@ phrases.base = {
     incorrectOtpPin: 'Incorrect OTP supplied',
   },
   app: {
+    scrollTop: 'Scroll Top',
     title: 'Uniform',
     headerTitle: 'Uniform',
     logoAlt: 'Uniform',

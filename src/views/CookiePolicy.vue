@@ -40,7 +40,7 @@
 
     </template>
     <div
-      class="pa-8"
+      class="pa-2 pa-sm-4 pa-lg-8"
     >
 
       <div

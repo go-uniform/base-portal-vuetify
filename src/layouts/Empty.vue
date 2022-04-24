@@ -22,7 +22,7 @@
         </div>
         <div
           style="width:100%"
-          class="pa-8 flex-grow-1"
+          class="pa-2 pa-sm-4 pa-lg-8 flex-grow-1"
         >
           <v-layout
             :fill-height="fillHeight"
