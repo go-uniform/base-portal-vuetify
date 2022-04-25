@@ -39,7 +39,6 @@
         v-bind:key="index"
         :prepend-icon="item.icon"
         class="v-list-item--dense"
-        :group="item.group"
         v-model="groups[index]"
         :disabled="mini && groups[index]"
         @click="closeOtherGroups(index)"
@@ -169,6 +168,16 @@ export default {
           window.sessionStorage.setItem('nav.mini', this.mini.toString());
         }
       }
+    },
+
+    isActive(items) {
+      let oneActive = false;
+      items.forEach((item) => {
+        if (this.$route.path.startsWith(item.location)) {
+          oneActive = true;
+        }
+      });
+      return oneActive;
     }
   },
 
@@ -185,6 +194,12 @@ export default {
   },
 
   mounted() {
+    this.items.forEach((item, index) => {
+      if (item.children) {
+        this.groups[index] = this.isActive(item.children);
+      }
+    });
+    console.log(this.groups);
     // load expected menu state from local browser session storage
     if (window && window.sessionStorage) {
       const mini = window.sessionStorage.getItem('nav.mini');

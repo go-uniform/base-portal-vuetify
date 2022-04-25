@@ -20,7 +20,6 @@ export const mainMenuItems = [
   {
     title: translate('custom.menu.users.title'),
     icon: translate('custom.menu.users.icon'),
-    group: '/user',
     children: [
       generateMenuItem(users),
       generateMenuItem(userRoles),
