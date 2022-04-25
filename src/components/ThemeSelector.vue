@@ -27,11 +27,13 @@
       <v-list>
         <v-list-item
           @click="setThemeModeLight"
+          :disabled="!$vuetify.theme.dark"
         >
           <v-list-item-title>{{ translate('base.app.lightMode') }}</v-list-item-title>
         </v-list-item>
         <v-list-item
           @click="setThemeModeDark"
+          :disabled="$vuetify.theme.dark"
         >
           <v-list-item-title>{{ translate('base.app.darkMode') }}</v-list-item-title>
         </v-list-item>

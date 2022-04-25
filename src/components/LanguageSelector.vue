@@ -27,6 +27,7 @@
         <v-list-item
           v-for="(item, index) in languages"
           :key="index"
+          :disabled="item.value === language"
           @click="selectLanguage(item.value)"
         >
           <v-list-item-title>{{ item.text }}</v-list-item-title>
