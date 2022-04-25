@@ -9,6 +9,7 @@ phrases.base = {
     length: 'Mag nie meer as {0} karakters lank wees nie.',
   },
   errors: {
+    missingFilterType: '\'n Filterkontrole vir \'{0}\' is nog nie geïmplementeer nie',
     general: 'Iets het verkeerd geloop',
     recordNotFound: 'Die rekord kon nie gevind word nie',
     accountDoesNotExist: 'Geen rekening kon gevind word vir die gegewe gebruikersnaam/e-pos nie',
@@ -43,6 +44,9 @@ phrases.base = {
     disagreeTitle: 'Nee',
     deleteConfirmationTitle: 'Is jy seker?',
     deleteConfirmationMessage: 'Is jy seker jy wil die geselekteerde rekord uitvee?',
+    optionNotSetColor: 'accent',
+    optionNotSetIcon: 'mdi-cancel',
+    optionNotSetTitle: 'Nie Gestel Nie',
     boolean: {
       trueColor: 'success',
       trueIcon: 'mdi-check-bold',

@@ -37,9 +37,12 @@
               xl="4"
               v-if="repository.freeTextSearch"
             >
+              <entity-field-view-label
+                :field="{ label: 'base.entityFilters.freeTextSearch' }"
+                hide-required
+              />
               <v-text-field
                 v-model="freeTextSearch"
-                :label="translate('base.entityFilters.freeTextSearch')"
                 filled
               >
               </v-text-field>
@@ -52,7 +55,6 @@
               v-bind:key="fieldKey"
             >
               <entity-list-filter-field
-                ref="createdAt"
                 :field="repository.fields[fieldKey]"
                 v-model="filters[fieldKey]"
               />
@@ -105,9 +107,11 @@
 <script>
 import EntityListFilterField from './EntityListFilterField';
 import {bus} from '../services/base/bus';
+import EntityFieldViewLabel from './EntityFieldViewLabel';
+
 export default {
   name: 'entity-list-filters',
-  components: {EntityListFilterField},
+  components: {EntityFieldViewLabel, EntityListFilterField},
   props: {
     repository: null,
     value: null,

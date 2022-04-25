@@ -13,9 +13,12 @@
       <template
         v-slot:activator="{ on, attrs }"
       >
+        <entity-field-view-label
+          :field="field"
+          hide-required
+        />
         <v-text-field
           :value="display"
-          :label="translate(field.label)"
           readonly
           clearable
           filled
@@ -32,20 +35,62 @@
       >
       </v-date-picker>
     </v-menu>
+    <div
+      v-else-if="field.type === 'enumeration'"
+    >
+      <entity-field-view-label
+        :field="field"
+        hide-required
+      />
+      <v-autocomplete
+        item-color="accent white--text"
+        color="accent"
+        :value="value"
+        :items="prefixNotSetValue(field.values, 'title')"
+        :item-text="(item) => {return translate(item.title)}"
+        item-value="value"
+        clearable
+        filled
+        multiple
+      >
+      </v-autocomplete>
+    </div>
+    <div
+      v-else-if="field.type === 'boolean'"
+    >
+      <entity-field-view-label
+        :field="field"
+        hide-required
+      />
+      <v-autocomplete
+        item-color="accent white--text"
+        color="accent"
+        :value="value"
+        :items="getBooleanValues()"
+        item-text="text"
+        item-value="value"
+        clearable
+        filled
+        multiple
+      >
+      </v-autocomplete>
+    </div>
     <span
       v-else
     >
-      todo: implement filter type
+      {{ translate('base.errors.missingFilterType', field.type) }}
     </span>
   </div>
 
 </template>
 <script>
 import {bus} from '../services/base/bus';
+import EntityFieldViewLabel from './EntityFieldViewLabel';
+import {translate} from '../plugins/vuetify';
 
 export default {
   name: 'entity-list-filter-field',
-
+  components: {EntityFieldViewLabel},
   props: {
     field: null,
     value: null,
@@ -77,6 +122,35 @@ export default {
     update() {
       this.$emit('input', this.dates);
     },
+
+    prependArray(array, value) {
+      const newArray = new Array(value);
+      array.forEach((item) => {
+        newArray.push(item);
+      });
+      return newArray;
+    },
+
+    prefixNotSetValue(items, textKey = 'text') {
+      const item = {
+        value: null,
+      };
+      item[textKey] = translate('base.app.optionNotSetTitle');
+      return this.prependArray(items, item);
+    },
+
+    getBooleanValues() {
+      return this.prefixNotSetValue([
+        {
+          value: true,
+          text: translate('base.app.boolean.trueTitle')
+        },
+        {
+          value: false,
+          text: translate('base.app.boolean.falseTitle')
+        }
+      ]);
+    }
   },
 
   created() {

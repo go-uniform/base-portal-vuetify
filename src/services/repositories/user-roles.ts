@@ -98,6 +98,7 @@ export const userRoles: IRepository<UserRole> = {
         }
       ],
       textOnly: true,
+      filterable: true,
     },
     name: {
       label: 'custom.userRoles.fields.name',
@@ -113,7 +114,8 @@ export const userRoles: IRepository<UserRole> = {
       type: EnumFieldType.Boolean,
       optional: true,
       hint: 'custom.userRoles.hints.super',
-      iconOnly: true
+      iconOnly: true,
+      filterable: true,
     },
     permissions: {
       label: 'custom.users.fields.permissions',

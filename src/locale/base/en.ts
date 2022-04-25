@@ -9,6 +9,7 @@ phrases.base = {
     length: 'May not be more than {0} characters long.',
   },
   errors: {
+    missingFilterType: 'A filter control for \'{0}\' has not bee implemented yet',
     general: 'Something went wrong',
     recordNotFound: 'The record could not be found',
     accountDoesNotExist: 'No account could be found for the given username/email',
@@ -43,6 +44,9 @@ phrases.base = {
     disagreeTitle: 'No',
     deleteConfirmationTitle: 'Are you sure?',
     deleteConfirmationMessage: 'Are you sure you wish to delete the selected record?',
+    optionNotSetColor: 'accent',
+    optionNotSetIcon: 'mdi-cancel',
+    optionNotSetTitle: 'Not Populated',
     boolean: {
       trueColor: 'success',
       trueIcon: 'mdi-check-bold',

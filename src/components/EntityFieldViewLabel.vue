@@ -6,7 +6,7 @@
 
       {{ translate(field.label) }}
       <span
-        v-if="!field.optional"
+        v-if="!field.optional && !hideRequired"
         class="danger--text"
       >
         *
@@ -62,7 +62,8 @@ export default {
   name: 'entity-field-view-label',
 
   props: {
-    field: null,
+    field: {},
+    hideRequired: Boolean,
   },
 
   methods: {
