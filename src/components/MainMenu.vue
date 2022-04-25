@@ -103,6 +103,10 @@
   // match the height of the breadcrumb toolbar
   height: 64px;
 }
+.v-list-item__title {
+  // allow menu items to wrap for languages that have longer words than english
+  white-space: normal;
+}
 </style>
 
 <script>
