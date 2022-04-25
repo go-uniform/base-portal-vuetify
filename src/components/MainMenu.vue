@@ -196,10 +196,9 @@ export default {
   mounted() {
     this.items.forEach((item, index) => {
       if (item.children) {
-        this.groups[index] = this.isActive(item.children);
+        this.groups[`${index}`] = this.isActive(item.children);
       }
     });
-    console.log(this.groups);
     // load expected menu state from local browser session storage
     if (window && window.sessionStorage) {
       const mini = window.sessionStorage.getItem('nav.mini');
