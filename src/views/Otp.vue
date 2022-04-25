@@ -7,6 +7,7 @@
       v-model="valid"
       lazy-validation
       class="text-center mw-320"
+      :disabled="submitting || resending"
     >
       <v-container>
         <v-row
@@ -47,10 +48,11 @@
           >
             <v-btn
               block
-              :disabled="!valid || !isFilled"
+              :disabled="!valid || !isFilled || resending"
               color="success"
               class="mr-4"
               @click="validate"
+              :loading="submitting"
             >
               {{ translate('base.otp.validate') }}
             </v-btn>
@@ -60,10 +62,11 @@
           >
             <v-btn
               block
-              :disabled="!valid || !isFilled"
+              :disabled="!valid || !isFilled || submitting"
               color="accent"
               class="mr-4"
               @click="resend"
+              :loading="resending"
             >
               {{ translate('base.otp.resend') }}
             </v-btn>
@@ -104,6 +107,8 @@ export default {
     otpRequestId: null,
     otp: null,
     valid: true,
+    submitting: false,
+    resending: false,
     rules: {
       required: validations.required(false),
     },
@@ -139,6 +144,7 @@ export default {
     },
 
     otpAuth() {
+      this.submitting = true;
       auth.otp(this.otpRequestId, this.otp).then(() => {
         if (this.$route.query.redirect != null) {
           this.$router.push(this.$route.query.redirect.toString());
@@ -146,7 +152,7 @@ export default {
           this.$router.push('/');
         }
       }).finally(() => {
-        this.loading = false;
+        this.submitting = false;
       });
     },
 
@@ -166,7 +172,11 @@ export default {
     resend() {
       confirmation((confirmed) => {
         if (confirmed) {
+          this.resending = true;
           alert('resend code');
+          setTimeout(() => {
+            this.resending = false;
+          }, 3000);
         }
       }, translate('base.otp.resendConfirmationTitle'), translate('base.otp.resendConfirmationMessage'), {
         color: 'accent'

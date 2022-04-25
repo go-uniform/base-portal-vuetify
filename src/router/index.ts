@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import {NavigationGuard} from 'vue-router/types/router';
 import {auth} from '@/services/base/auth';
 import {crudRoutes} from '@/services/crud';
-import {toastError, translate} from '@/plugins/vuetify';
+import {loadingStop, toastError, translate} from '@/plugins/vuetify';
 
 Vue.use(VueRouter)
 
@@ -82,6 +82,13 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+const UnloadLoadingIndicator: NavigationGuard = (to, from, next) => {
+  // stop any active loading indicator upon a navigation redirect since a new page is now active
+  loadingStop();
+  next();
+}
+router.beforeEach(UnloadLoadingIndicator);
 
 const AuthGuard: NavigationGuard = (to, from, next) => {
   if (to.name !== 'login' && !(to.meta && to.meta.public)) {

@@ -64,8 +64,8 @@ if (navigator.userAgent.includes('MSIE') || navigator.userAgent.includes('Triden
 // avoid white flicker when navigating while in dark-mode
 if (window && window.localStorage) {
     const dark = window.localStorage.getItem('theme.dark');
-    if (dark !== null) {
-        const css = 'body { background: #121212; }',
+    if (dark !== 'true') {
+        const css = 'body { background: rgb(238, 238, 238) !important; } .lds-ring div { border: 8px solid rgb(51, 51, 51) !important; border-color: rgb(51, 51, 51) transparent transparent transparent !important; }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
 

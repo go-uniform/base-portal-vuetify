@@ -11,11 +11,16 @@ phrases.base = {
   errors: {
     general: 'Something went wrong',
     recordNotFound: 'The record could not be found',
+    accountDoesNotExist: 'No account could be found for the given username/email',
+    invalidCredentials: 'Invalid username/email or password given',
     unknownOtpType: 'Unknown OTP type \'{0}\' detected',
     incorrectOtpPin: 'Incorrect OTP supplied',
   },
   app: {
     loading: 'Loading...',
+    loadingTimeout: 'Operation was automatically cancelled since system took to long to respond',
+    loggingOut: 'Logging out...',
+    deleting: 'Deleting data...',
     submitting: 'Submitting data...',
     submittedSuccessfully: 'Data successfully submitted',
     scrollTop: 'Scroll Top',

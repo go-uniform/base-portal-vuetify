@@ -66,25 +66,7 @@
     <cookie-consent/>
     <connection-lost/>
     <confirm-box/>
-    <v-dialog
-      fullscreen
-      persistent
-    >
-      <v-card
-        class="fill-height"
-      >
-        <v-layout
-          fill-height
-          justify-center
-          align-center
-          column
-        >
-          <div>
-            Loading...
-          </div>
-        </v-layout>
-      </v-card>
-    </v-dialog>
+    <loading-indicator/>
 
   </v-app>
 
@@ -101,12 +83,17 @@ import CookieConsent from '@/components/CookieConsent.vue';
 import ConnectionLost from '@/components/ConnectionLost.vue';
 import ConfirmBox from '@/components/ConfirmBox.vue';
 import ToastBar from '@/components/ToastBar.vue';
+import {confirmation, translate} from '@/plugins/vuetify';
+import LoadingIndicator from '@/components/LoadingIndicator.vue';
 
 let globalShowScrollTopBtn = false;
 
 export default Vue.extend({
   name: 'main-layout',
-  components: {ToastBar, ConfirmBox, ConnectionLost, MainToolbar, MainHeader, MainFooter, MainMenu, CookieConsent},
+  components: {
+    LoadingIndicator,
+    ToastBar, ConfirmBox, ConnectionLost, MainToolbar, MainHeader, MainFooter, MainMenu, CookieConsent
+  },
 
   props: {
     alignStart: Boolean,

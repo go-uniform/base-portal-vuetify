@@ -124,7 +124,7 @@
 </template>
 
 <script>
-import {deleteConfirmation, toastError, translate} from '../plugins/vuetify';
+import {deleteConfirmation, loadingStart, toastError, translate} from '../plugins/vuetify';
 import EntityFieldView from './EntityFieldView';
 import {defaultViewActions} from '../services/base/entity.helper.default-view-actions';
 import {defaultViewCrumbs} from '../services/base/entity.helper.default-view-crumbs';
@@ -175,6 +175,7 @@ export default {
     remove() {
       deleteConfirmation((confirmed) => {
         if (confirmed) {
+          loadingStart(7000, 'base.app.deleting');
           this.repository.delete(this.id).then(() => {
             this.$router.push(`${this.repository.listPage}`);
           });

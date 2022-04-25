@@ -104,6 +104,7 @@
 <script>
 import {bus} from '@/services/base/bus';
 import {auth} from '@/services/base/auth';
+import {loadingStart} from '@/plugins/vuetify';
 
 export default {
   name: 'main-header',
@@ -131,6 +132,7 @@ export default {
     },
 
     logout() {
+      loadingStart(7000, 'base.app.loggingOut')
       auth.logout().then(() => {
         this.$router.push('/logout');
       });

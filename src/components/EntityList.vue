@@ -166,7 +166,7 @@
 </style>
 
 <script>
-import {confirmation, deleteConfirmation, translate} from '../plugins/vuetify';
+import {confirmation, deleteConfirmation, loadingStart, loadingStop, translate} from '../plugins/vuetify';
 import {baseTableHeaders} from '../services/base/base';
 import {bus} from '../services/base/bus';
 import EntityListFilters from './EntityListFilters';
@@ -274,8 +274,10 @@ export default {
     remove(item) {
       deleteConfirmation((confirmed) => {
         if (confirmed) {
+          loadingStart(7000, 'base.app.deleting');
           this.repository.delete(item.id).then(() => {
             this.load();
+            loadingStop();
           });
         }
       })

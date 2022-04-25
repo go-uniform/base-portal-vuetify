@@ -11,11 +11,16 @@ phrases.base = {
   errors: {
     general: 'Iets het verkeerd geloop',
     recordNotFound: 'Die rekord kon nie gevind word nie',
+    accountDoesNotExist: 'Geen rekening kon gevind word vir die gegewe gebruikersnaam/e-pos nie',
+    invalidCredentials: 'Ongeldige gebruikersnaam/e-pos of wagwoord gegee',
     unknownOtpType: 'Onbekende OTP tipe \'{0}\' bespeur',
     incorrectOtpPin: 'Verkeerde OTP pin verskaf',
   },
   app: {
     loading: 'Laai...',
+    loadingTimeout: 'Werking was outomaties gekanselleer aangesien die stelsel te lank geneem het om te reageer',
+    loggingOut: 'Teken uit...',
+    deleting: 'Vee data uit...',
     submitting: 'Dien data in...',
     submittedSuccessfully: 'Data suksesvol ingedien',
     scrollTop: 'Rol Boontoe',

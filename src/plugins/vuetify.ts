@@ -72,6 +72,17 @@ export const kebabCase = (str: any) => {
   return str && str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g).map((x: any) => x.toLowerCase()).join('-');
 };
 
+export const loadingStart = (timeout: number, text: string, ...args: any[]) => {
+  bus.publish('loading.start', {
+    text: translate(text, ...args),
+    timeout: timeout,
+  });
+};
+
+export const loadingStop = () => {
+  bus.publish('loading.stop', {});
+};
+
 export const toastError = (text: string, ...args: any[]) => {
   bus.publish('toast.show', {
     type: 'error',

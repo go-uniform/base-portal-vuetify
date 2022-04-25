@@ -7,6 +7,7 @@
       v-model="valid"
       lazy-validation
       class="text-center mw-320"
+      :disabled="submitting"
     >
       <v-container>
         <v-row
@@ -61,6 +62,7 @@
               color="success"
               class="mr-4"
               @click="login"
+              :loading="submitting"
             >
               {{ translate('base.login.button') }}
             </v-btn>
@@ -87,6 +89,7 @@ export default {
   name: 'LoginView',
   components: {EmptyLayout},
   data: () => ({
+    submitting: false,
     valid: true,
     email: null,
     password: null,
@@ -98,6 +101,7 @@ export default {
   methods: {
     login() {
       if (this.$refs.login.validate()) {
+        this.submitting = true;
         auth.login('user', this.email, this.password).then((response) => {
           if (response.item.twoFactor) {
             this.$router.push({
@@ -114,8 +118,8 @@ export default {
           } else {
             this.$router.push('/');
           }
-        }).finally(() => {
-          this.loading = false;
+        }).catch(() => {
+          this.submitting = false;
         });
       }
     },
