@@ -16,6 +16,11 @@ phrases.custom = {
       icon: 'mdi-account',
     },
   },
+  reports: {
+    example1: {
+      title: 'Example 1',
+    },
+  },
   users: {
     singular: 'User',
     plural: 'Users',
