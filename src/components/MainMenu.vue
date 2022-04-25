@@ -124,9 +124,15 @@ export default {
 
   methods: {
     closeOtherGroups(index) {
-      const value = this.groups[`${index}`];
-      this.groups = {};
-      this.groups[`${index}`] = value;
+      setTimeout(() => {
+        for (const key in this.groups) {
+          if (`${key}` === `${index}`) {
+            continue;
+          }
+          this.groups[`${key}`] = false;
+          this.$forceUpdate();
+        }
+      }, 1);
     },
 
     toggle() {
