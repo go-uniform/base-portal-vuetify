@@ -108,7 +108,7 @@ export default {
               path: "/otp",
               query: {
                 type: 'auth',
-                optRequestId: response.item.otpRequestId,
+                otpRequestId: response.item.otpRequestId,
                 otp: response.item.otp,
                 redirect: this.$route.query.redirect,
               }

@@ -46,7 +46,11 @@
           v-bind="attrs"
           v-on="on"
         >
-          {{ username || 'Unknown' }}
+          <small
+            class="hidden-xs-only"
+          >
+            {{ username || 'Unknown' }}
+          </small>
           <v-icon
             right
             dark

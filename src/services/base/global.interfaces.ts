@@ -1,6 +1,5 @@
 import {AuthToken, AuthTokenJwt, generic} from './global.types';
 import {EnumAttributeType, EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
-import {toastError} from '@/plugins/vuetify';
 
 export interface IError {
   status: number;
@@ -49,6 +48,10 @@ export interface ILoginPromise {
 
 export interface IOtpPromise {
   (otpRequestId: string, pin: string, headers?: Headers): Promise<IItem<AuthTokenJwt>>;
+}
+
+export interface IResendOtpPromise {
+  (otpRequestId: string, headers?: Headers): Promise<IItem<any>>;
 }
 
 export interface IListPromise<T> {
@@ -295,6 +298,7 @@ export interface IAuthRepository {
   logout: ILogoutPromise;
   login: ILoginPromise;
   otp: IOtpPromise;
+  resendOtp: IResendOtpPromise;
 }
 
 export interface IAttribute {

@@ -15,7 +15,7 @@ import {
 import {generic} from '@/services/base/global.types';
 import {EnumHttpMethod} from '@/services/base/global.enums';
 
-const StubTimeout = 1000;
+const StubTimeout = 500;
 
 export const generateUuid = () => {
   let d = performance.now();
@@ -268,4 +268,26 @@ export const baseListLoad = <T>(list: T[], entity: string): T[] => {
     window.localStorage.setItem(`stub.${entity}`, JSON.stringify(list));
   }
   return list;
+}
+
+export const generateFakeJwt = (claims: any): string => {
+  const header = {
+    "alg": "HS256",
+    "typ": "JWT",
+  }
+  const encodedHeaders = btoa(JSON.stringify(header))
+
+  if (!claims) {
+    claims = {
+      "iat": Math.round((new Date()).getTime() / 1000),
+    }
+  } else {
+    claims.iat = Math.round((new Date()).getTime() / 1000);
+  }
+  const encodedPayload = btoa(JSON.stringify(claims))
+
+  const signature = 'fake';
+  const encodedSignature = btoa(signature)
+
+  return `${encodedHeaders}.${encodedPayload}.${encodedSignature}`
 }

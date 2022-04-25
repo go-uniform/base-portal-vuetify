@@ -56,7 +56,7 @@ phrases.custom = {
       createdAt: 'Geskep Teen',
     },
     hints: {
-      super: '\'n super gebruiker rol het toegang tot alles, maar kan uitdruklik toestemmings geweier word.',
+      super: '\'n Super gebruiker rol het toegang tot alles, maar kan uitdruklik toestemmings geweier word.',
     },
     enums: {
       status: {

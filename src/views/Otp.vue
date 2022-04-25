@@ -62,7 +62,7 @@
           >
             <v-btn
               block
-              :disabled="!valid || !isFilled || submitting"
+              :disabled="submitting"
               color="accent"
               class="mr-4"
               @click="resend"
@@ -89,7 +89,7 @@
 
 <script>
 import {auth} from '../services/base/auth';
-import {confirmation, translate, toastError} from '../plugins/vuetify';
+import {confirmation, translate, toastError, toastSuccess} from '../plugins/vuetify';
 import EmptyLayout from '../layouts/Empty';
 import {validations} from '../services/base/validations';
 
@@ -104,7 +104,6 @@ export default {
     backHidden: true,
     backText: null,
     backLocation: null,
-    otpRequestId: null,
     otp: null,
     valid: true,
     submitting: false,
@@ -122,7 +121,6 @@ export default {
 
   mounted() {
     this.type = this.$route.query.type;
-    this.otpRequestId = this.$route.query.otpRequestId;
     this.otp = this.$route.query.otp;
     switch (this.type.toLowerCase()) {
       default:
@@ -144,14 +142,15 @@ export default {
     },
 
     otpAuth() {
+      let otpRequestId = this.$route.query.otpRequestId || '';
       this.submitting = true;
-      auth.otp(this.otpRequestId, this.otp).then(() => {
+      auth.otp(otpRequestId, this.otp).then(() => {
         if (this.$route.query.redirect != null) {
           this.$router.push(this.$route.query.redirect.toString());
         } else {
           this.$router.push('/');
         }
-      }).finally(() => {
+      }).catch(() => {
         this.submitting = false;
       });
     },
@@ -173,10 +172,11 @@ export default {
       confirmation((confirmed) => {
         if (confirmed) {
           this.resending = true;
-          alert('resend code');
-          setTimeout(() => {
+          auth.resendOtp(this.otpRequestId).then(() => {
+            toastSuccess('base.otp.resent');
+          }).finally(() => {
             this.resending = false;
-          }, 3000);
+          });
         }
       }, translate('base.otp.resendConfirmationTitle'), translate('base.otp.resendConfirmationMessage'), {
         color: 'accent'
