@@ -18,6 +18,16 @@ export const mainMenuItems = [
     location: '/'
   },
   {
+    title: translate('custom.menu.reports.title'),
+    icon: translate('custom.menu.reports.icon'),
+    children: [
+      {
+        title: translate('custom.menu.reports.example1.title'),
+        location: '/reports/example1'
+      }
+    ]
+  },
+  {
     title: translate('custom.menu.users.title'),
     icon: translate('custom.menu.users.icon'),
     children: [

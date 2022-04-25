@@ -19,6 +19,15 @@ const routes: Array<RouteConfig> = [
     }
   },
   {
+    path: '/reports/example1',
+    name: 'report-example1',
+    component: () => import('../views/ReportView.vue'),
+    meta: {
+      title: 'custom.reports.example1.title',
+      permissions: [],
+    }
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('../views/Login.vue'),

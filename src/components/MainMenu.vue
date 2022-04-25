@@ -39,8 +39,8 @@
         v-bind:key="index"
         :prepend-icon="item.icon"
         class="v-list-item--dense"
-        v-model="groups[index]"
-        :disabled="mini && groups[index]"
+        v-model="groups[`${index}`]"
+        :disabled="mini && groups[`${index}`]"
         @click="closeOtherGroups(index)"
         active-class="accent white--text"
       >
@@ -124,12 +124,9 @@ export default {
 
   methods: {
     closeOtherGroups(index) {
-      for (const key in this.groups) {
-        if (`${key}` === `${index}`) {
-          continue;
-        }
-        this.groups[key] = false;
-      }
+      const value = this.groups[`${index}`];
+      this.groups = {};
+      this.groups[`${index}`] = value;
     },
 
     toggle() {

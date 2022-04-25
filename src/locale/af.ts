@@ -4,6 +4,13 @@ const phrases: any = af;
 phrases.custom = {
   empty: 'leeg',
   menu: {
+    reports: {
+      title: 'Rapporte',
+      icon: 'mdi-chart-box',
+      example1: {
+        title: 'Voorbeeld 1',
+      }
+    },
     users: {
       title: 'Gebruikers',
       icon: 'mdi-account',
