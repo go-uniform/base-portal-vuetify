@@ -1,6 +1,5 @@
 <!-- render editing component for any given field based on field type and properties -->
 <template>
-
   <div>
 
     <div
@@ -85,6 +84,7 @@
     >
       <v-card>
         <v-card-title>
+
           <entity-field-view-label
             :field="field"
           />
@@ -93,12 +93,14 @@
             :value="value"
             @input="input"
           ></v-switch>
+
         </v-card-title>
       </v-card>
     </div>
     <div
       v-else-if="field.type === 'enumeration'"
     >
+
       <entity-field-view-label
         :field="field"
       />
@@ -115,10 +117,12 @@
         filled
       >
       </v-autocomplete>
+
     </div>
     <div
       v-else
     >
+
       <entity-field-view-label
         :field="field"
       />
@@ -130,11 +134,12 @@
         @input="input"
         filled
       ></v-text-field>
+
     </div>
 
   </div>
-
 </template>
+
 <script>
 import {validations} from '../services/base/validations';
 import EntityFieldViewLabel from './EntityFieldViewLabel';

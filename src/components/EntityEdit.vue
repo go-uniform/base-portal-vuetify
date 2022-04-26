@@ -43,6 +43,7 @@
         >
           <v-expansion-panel
           >
+
             <v-expansion-panel-header
               color="primary white--text"
             >
@@ -91,6 +92,7 @@
                 </v-row>
               </slot>
             </v-expansion-panel-content>
+
           </v-expansion-panel>
         </v-col>
       </v-expansion-panels>
@@ -113,6 +115,7 @@
           block
           :disabled="loading || submitting"
         >
+
           <v-icon
             v-if="action.icon"
             class="mr-2"
@@ -120,6 +123,7 @@
             {{ action.icon }}
           </v-icon>
           {{ action.title }}
+
         </v-btn>
       </v-col>
     </v-row>
@@ -181,7 +185,7 @@ export default {
           this.repository.update(this.$route.params.id, this.item).then(() => {
             toastSuccess('base.app.submittedSuccessfully');
             this.$router.push(`${this.repository.viewPagePrefix}/${this.$route.params.id}`);
-          }).finally((reason) => {
+          }).finally(() => {
             this.submitting = false;
             this.$emit('submitting', this.submitting);
           });
@@ -219,31 +223,6 @@ export default {
   mounted() {
     this.item = {...this.repository.default};
 
-    this.attributes = {};
-    Object.keys(this.repository.fields).forEach((fieldKey) => {
-      const field = this.repository.fields[fieldKey];
-      this.attributes[fieldKey] = [
-        {
-          key: ''
-        }
-      ];
-      if (field.type === 'attributes') {
-        if (this.item[fieldKey] === undefined) {
-          this.item[fieldKey] = {};
-        }
-        field.attributeRepository.list().then((response) => {
-          this.attributes[fieldKey] = [];
-          response.items.forEach((item) => {
-            this.attributes[fieldKey].push(item);
-            if (this.item[fieldKey][item.key] === undefined) {
-              this.item[fieldKey][item.key] = null;
-            }
-          });
-          this.$forceUpdate();
-        });
-      }
-    })
-
     if (this.id) {
       this.loading = true;
       this.$emit('loading', this.loading);
@@ -257,6 +236,31 @@ export default {
         this.loading = false;
         this.$emit('loading', this.loading);
         this.$forceUpdate();
+
+        this.attributes = {};
+        Object.keys(this.repository.fields).forEach((fieldKey) => {
+          const field = this.repository.fields[fieldKey];
+          this.attributes[fieldKey] = [
+            {
+              key: ''
+            }
+          ];
+          if (field.type === 'attributes') {
+            if (this.item[fieldKey] === undefined) {
+              this.item[fieldKey] = {};
+            }
+            field.attributeRepository.list().then((response) => {
+              this.attributes[fieldKey] = [];
+              response.items.forEach((item) => {
+                this.attributes[fieldKey].push(item);
+                if (this.item[fieldKey][item.key] === undefined) {
+                  this.item[fieldKey][item.key] = null;
+                }
+              });
+              this.$forceUpdate();
+            });
+          }
+        });
       }).catch((reason) => {
         const message = reason.headers.get('Message') ?? translate('base.errors.general');
         toastError(message)
@@ -264,6 +268,31 @@ export default {
     } else {
       this.loading = false;
       this.$emit('loading', this.loading);
+
+      this.attributes = {};
+      Object.keys(this.repository.fields).forEach((fieldKey) => {
+        const field = this.repository.fields[fieldKey];
+        this.attributes[fieldKey] = [
+          {
+            key: ''
+          }
+        ];
+        if (field.type === 'attributes') {
+          if (this.item[fieldKey] === undefined) {
+            this.item[fieldKey] = {};
+          }
+          field.attributeRepository.list().then((response) => {
+            this.attributes[fieldKey] = [];
+            response.items.forEach((item) => {
+              this.attributes[fieldKey].push(item);
+              if (this.item[fieldKey][item.key] === undefined) {
+                this.item[fieldKey][item.key] = null;
+              }
+            });
+            this.$forceUpdate();
+          });
+        }
+      });
     }
   },
 
