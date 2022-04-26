@@ -43,7 +43,7 @@
       >
 
         <entity-field-view-label
-          :field="{...field,...{label:`${field.label}.${attribute.key}`}}"
+          :field="{...field,...{label:`${field.label}.${attribute.key}`,optional:true}}"
         />
         <small
           v-if="!val || val.length <= 0"
