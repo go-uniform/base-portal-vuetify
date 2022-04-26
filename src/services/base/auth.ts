@@ -114,7 +114,6 @@ export const auth: IAuthRepository =  {
         let scenario = stubScenario({}, 404, new Headers({
             'Message': 'base.errors.recordNotFound'
         }));
-        console.log(otpRequestId);
         const user = UsersList[parseInt(otpRequestId)]
         if (user) {
             const jwt = generateFakeJwt({

@@ -65,11 +65,13 @@
                       :md="section.getChildMd()"
                       :sm="section.getChildSm()"
                       :xs="section.getChildXs()"
-                      v-bind:key="fieldKey"
+                      v-for="attribute in attributes[fieldKey]"
+                      v-bind:key="`${fieldKey}${attribute.key}`"
                     >
                       <entity-field-view
                         :repository="repository"
                         :field="field"
+                        :attribute="attribute"
                         :value="item[fieldKey]"
                         :field-key="fieldKey"
                         :item="item"
@@ -199,6 +201,29 @@ export default {
   mounted() {
     this.loading = true;
     this.$emit('loading', this.loading);
+
+    this.attributes = {};
+    Object.keys(this.repository.fields).forEach((fieldKey) => {
+      const field = this.repository.fields[fieldKey];
+      this.attributes[fieldKey] = [
+        {
+          key: ''
+        }
+      ];
+      if (field.type === 'attributes') {
+        if (this.item[fieldKey] === undefined) {
+          this.item[fieldKey] = {};
+        }
+        field.attributeRepository.list().then((response) => {
+          this.attributes[fieldKey] = [];
+          response.items.forEach((item) => {
+            this.attributes[fieldKey].push(item);
+          });
+          this.$forceUpdate();
+        });
+      }
+    });
+
     this.repository.read(this.id).then((response) => {
       this.item = response.item;
       this.loading = false;

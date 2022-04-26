@@ -263,7 +263,6 @@ export default {
       }
 
       this.repository.list(order, this.filters, this.page, this.pageSize).then((response) => {
-        console.log(response.items);
         this.records = response.items;
       }).finally(() => {
         this.loading = false;

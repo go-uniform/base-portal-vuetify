@@ -72,7 +72,8 @@
                       :md="section.getChildMd()"
                       :sm="section.getChildSm()"
                       :xs="section.getChildXs()"
-                      v-bind:key="fieldKey"
+                      v-for="attribute in attributes[fieldKey]"
+                      v-bind:key="`${fieldKey}${attribute.key}`"
                     >
 
                       <entity-field-edit
@@ -80,7 +81,9 @@
                         :item="item"
                         :field-key="fieldKey"
                         :field="field"
-                        v-model="item[fieldKey]"
+                        :attribute="attribute"
+                        :value="attribute.key ? item[fieldKey][attribute.key] : item[fieldKey]"
+                        @input="attribute.key ? item[fieldKey][attribute.key] = $event : item[fieldKey] = $event"
                       />
 
                     </v-col>
@@ -143,6 +146,7 @@ export default {
     loading: true,
     panels: [0],
     item: {},
+    attributes: {},
   }),
 
   computed: {
@@ -214,6 +218,32 @@ export default {
 
   mounted() {
     this.item = {...this.repository.default};
+
+    this.attributes = {};
+    Object.keys(this.repository.fields).forEach((fieldKey) => {
+      const field = this.repository.fields[fieldKey];
+      this.attributes[fieldKey] = [
+        {
+          key: ''
+        }
+      ];
+      if (field.type === 'attributes') {
+        if (this.item[fieldKey] === undefined) {
+          this.item[fieldKey] = {};
+        }
+        field.attributeRepository.list().then((response) => {
+          this.attributes[fieldKey] = [];
+          response.items.forEach((item) => {
+            this.attributes[fieldKey].push(item);
+            if (this.item[fieldKey][item.key] === undefined) {
+              this.item[fieldKey][item.key] = null;
+            }
+          });
+          this.$forceUpdate();
+        });
+      }
+    })
+
     if (this.id) {
       this.loading = true;
       this.$emit('loading', this.loading);

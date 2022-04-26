@@ -43,6 +43,7 @@ phrases.custom = {
       attributes: {
         title: 'Eienskappe',
         sex: 'Geslag',
+        age: 'Ouderdom',
       },
       permissions: {
         title: 'Toestemmings',

@@ -22,6 +22,7 @@
     <div
       v-else-if="field.type === 'selfReferenceId'"
     >
+
       <entity-field-view-label
         :field="field"
       />
@@ -37,6 +38,7 @@
     <div
       v-else-if="field.type === 'textarea'"
     >
+
       <entity-field-view-label
         :field="field"
       />
@@ -49,25 +51,34 @@
         filled
       >
       </v-textarea>
+
     </div>
     <div
       v-else-if="field.type === 'attributes'"
     >
+
       <slot
-        v-for="(val, key) in value"
-        :name="`${fieldKey}.${key}`"
+        v-if="attribute.key"
+        :name="`${fieldKey}.${attribute.key}`"
       >
-        <div
-          v-bind:key="key"
-        >
-          <v-text-field
-            :value="value[key]"
-            :label="translate(`${field.label}.${key}`)"
-            @input="attributeInput(key, $event)"
-            filled
-          ></v-text-field>
-        </div>
+
+        <entity-field-view-label
+          :field="{...field,...{label:`${field.label}.${attribute.key}`,optional:true}}"
+        />
+        <v-text-field
+          :value="value"
+          @input="input($event)"
+          filled
+        ></v-text-field>
+
       </slot>
+      <slot
+        v-else
+        :name="`${fieldKey}.skeleton-loader`"
+      >
+        <v-skeleton-loader type="sentences" />
+      </slot>
+
     </div>
     <div
       v-else-if="field.type === 'boolean'"
@@ -136,6 +147,7 @@ export default {
   props: {
     repository: null,
     field: null,
+    attribute: null,
     value: null,
     item: null,
     fieldKey: null,
@@ -156,10 +168,6 @@ export default {
     input(value) {
       this.$emit('input', value);
     },
-    attributeInput(key, value) {
-      this.attributes[key] = value;
-      this.input(this.attributes);
-    }
   },
 
   mounted() {

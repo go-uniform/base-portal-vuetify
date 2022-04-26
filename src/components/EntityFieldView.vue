@@ -37,30 +37,33 @@
       v-else-if="field.type === 'attributes'"
     >
       <slot
-        v-for="(val, key) in value"
-        :name="`${fieldKey}.${key}`"
+        v-if="attribute.key"
+        :name="`${fieldKey}.${attribute.key}`"
+        :set="val = value[attribute.key]"
       >
-        <div
-          v-bind:key="key"
+
+        <entity-field-view-label
+          :field="{...field,...{label:`${field.label}.${attribute.key}`}}"
+        />
+        <small
+          v-if="!val || val.length <= 0"
         >
-          <div>
-            <strong>
-              {{ translate(`${field.label}.${key}`) }}
-            </strong>
-          </div>
-          <small
-            v-if="!val || val.length <= 0"
-          >
-            <i>
-              &lt;{{ translate('custom.empty') }}&gt;
-            </i>
-          </small>
-          <span
-            v-else
-          >
-            {{ val }}
-          </span>
-        </div>
+          <i>
+            &lt;{{ translate('custom.empty') }}&gt;
+          </i>
+        </small>
+        <span
+          v-else
+        >
+          {{ val }}
+        </span>
+      </slot>
+      <slot
+        v-else
+        :name="`${fieldKey}.skeleton-loader`"
+        :set="val = value[attribute.key]"
+      >
+        <v-skeleton-loader type="sentences" />
       </slot>
     </div>
     <div
@@ -121,6 +124,7 @@ export default {
   props: {
     repository: null,
     field: null,
+    attribute: null,
     value: null,
     item: null,
     fieldKey: null,

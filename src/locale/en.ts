@@ -43,10 +43,12 @@ phrases.custom = {
       attributes: {
         title: 'Attributes',
         sex: 'Sex',
+        age: 'Age',
       },
       permissions: {
         title: 'Permissions',
         usersListOwner: 'Users List Owner',
+        usersCreateOwner: 'Users Create Owner',
       },
       modifiedAt: 'Modified At',
       createdAt: 'Created At',

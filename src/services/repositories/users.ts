@@ -205,7 +205,6 @@ export const users: IRepository<User> = {
       'email',
       'userRoleId',
       'parentUserId',
-      'attributes',
       'modifiedAt',
       'createdAt',
     ], {
@@ -213,9 +212,20 @@ export const users: IRepository<User> = {
       childLg: 4,
       childMd: 6,
     }),
+    new Section('custom.users.sections.attributes', [
+      'attributes',
+    ], {
+      childXl: 3,
+      childLg: 4,
+      childMd: 6,
+    }),
     new Section('custom.users.sections.permissions', [
       'permissions',
-    ]),
+    ], {
+      childXl: 3,
+      childLg: 4,
+      childMd: 6,
+    }),
   ],
   bulkActions: [
     {
