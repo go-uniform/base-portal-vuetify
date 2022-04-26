@@ -155,7 +155,9 @@ export default {
       if (this.$refs.form.validate()) {
         let value = this.filters;
         if (this.freeTextSearch) {
-          value["-text"] = this.freeTextSearch;
+          value['-text'] = this.freeTextSearch;
+        } else if (value['-text'] !== undefined) {
+          delete(value['-text']);
         }
         this.filterPanelValue = null;
         this.$emit('input', value);

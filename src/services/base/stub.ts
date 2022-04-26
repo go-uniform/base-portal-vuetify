@@ -9,6 +9,7 @@ import {
   IUpdatePromise
 } from './global.interfaces';
 import {
+  compileListQueryParameters,
   processStandardItemResponse,
   processStandardListResponse
 } from '@/services/base/base';
@@ -102,7 +103,7 @@ export const baseListStub = <T>(list: T[], scenario: IStubScenario | null, entit
   ): Promise<IList<T>> => {
     return new Promise<IList<T>>((resolve, reject) => {
       setTimeout(() => {
-        console.log('list', entity, order, filters, pageIndex, pageSize);
+        console.log('list', entity, order, filters, pageIndex, pageSize, compileListQueryParameters(order, filters));
         if (scenario) {
           processStandardListResponse<T>(scenario, resolve, reject);
         } else {

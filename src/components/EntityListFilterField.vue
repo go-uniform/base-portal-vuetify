@@ -52,6 +52,7 @@
         clearable
         filled
         multiple
+        @change="update"
       >
       </v-autocomplete>
     </div>
@@ -72,6 +73,7 @@
         clearable
         filled
         multiple
+        @change="update"
       >
       </v-autocomplete>
     </div>
@@ -119,8 +121,8 @@ export default {
   },
 
   methods: {
-    update() {
-      this.$emit('input', this.dates);
+    update($event) {
+      this.$emit('input', $event);
     },
 
     prependArray(array, value) {
