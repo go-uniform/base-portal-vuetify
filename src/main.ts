@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
-import vuetify from './plugins/vuetify';
+import router from './router/base'
+import vuetify from './plugins/base/vuetify';
 import {bus} from '@/services/base/bus';
-import {vueBus} from '@/plugins/vue-bus';
+import {vueBus} from '@/plugins/base/vue-bus';
 
 Vue.config.productionTip = false
 Vue.config.errorHandler = function (err, vm, info) {

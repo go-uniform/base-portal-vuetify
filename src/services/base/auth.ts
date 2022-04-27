@@ -1,4 +1,4 @@
-import {toastError} from '@/plugins/vuetify';
+import {toastError} from '@/plugins/base/vuetify';
 import {IAuthRepository, IItem} from '@/services/base/global.interfaces';
 import {EnumHttpMethod} from '@/services/base/global.enums';
 import {baseRestItemStub, generateFakeJwt, stubScenario} from '@/services/base/stub';
@@ -76,7 +76,7 @@ export const auth: IAuthRepository =  {
 
     login: (type: string, identifier: string, password: string, headers: Headers = new Headers()) => {
         let scenario = stubScenario({}, 401, new Headers({
-            'Message': 'base.errors.accountDoesNotExist'
+            'Message': '$vuetify.errors.accountDoesNotExist'
         }));
         const index = UsersList.findIndex((item: any) => {
             return item.username === identifier || item.email === identifier;
@@ -85,7 +85,7 @@ export const auth: IAuthRepository =  {
             const user = UsersList[index];
             if (user.password !== password) {
                 scenario = stubScenario({}, 401, new Headers({
-                    'Message': 'base.errors.invalidCredentials'
+                    'Message': '$vuetify.errors.invalidCredentials'
                 }));
             } else {
                 scenario = stubScenario({
@@ -112,7 +112,7 @@ export const auth: IAuthRepository =  {
 
     otp: (otpRequestId: string, pin: string, headers: Headers = new Headers()) => {
         let scenario = stubScenario({}, 404, new Headers({
-            'Message': 'base.errors.recordNotFound'
+            'Message': '$vuetify.errors.recordNotFound'
         }));
         const user = UsersList[parseInt(otpRequestId)]
         if (user) {
@@ -127,7 +127,7 @@ export const auth: IAuthRepository =  {
         }
         return baseRestItemStub<AuthTokenJwt>(scenario, (value: IItem<AuthTokenJwt>) => {
             if (pin !== '000000') {
-                toastError('base.errors.incorrectOtpPin', []);
+                toastError('$vuetify.errors.incorrectOtpPin', []);
                 return false;
             }
             authToken = value.item.token;

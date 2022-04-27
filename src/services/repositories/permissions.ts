@@ -41,8 +41,8 @@ export const permissions: IRepository<IAttribute> = {
   freeTextSearch: true,
   entity: entity,
   title: {
-    singular: 'custom.permissions.singular',
-    plural: 'custom.permissions.plural',
+    singular: '$vuetify.permissions.singular',
+    plural: '$vuetify.permissions.plural',
   },
   defaultSortOrder: '-createdAt',
   listPage: '/permissions',
@@ -51,57 +51,57 @@ export const permissions: IRepository<IAttribute> = {
   editPagePrefix: '/permissions/edit',
   fields: {
     id: {
-      label: 'custom.permissions.fields.id',
+      label: '$vuetify.permissions.fields.id',
       type: EnumFieldType.Uuid,
       readonly: true,
     },
     type: {
-      label: 'custom.permissions.fields.type',
+      label: '$vuetify.permissions.fields.type',
       type: EnumFieldType.Enumeration,
       defaultValue: 'inherit',
       values: [
         {
           value: 'inherit',
-          title: 'custom.permissions.enums.type.inherit.title',
-          icon: 'custom.permissions.enums.type.inherit.icon',
-          color: 'custom.permissions.enums.type.inherit.color',
+          title: '$vuetify.permissions.enums.type.inherit.title',
+          icon: '$vuetify.permissions.enums.type.inherit.icon',
+          color: '$vuetify.permissions.enums.type.inherit.color',
         },
         {
           value: 'allow',
-          title: 'custom.permissions.enums.type.allow.title',
-          icon: 'custom.permissions.enums.type.allow.icon',
-          color: 'custom.permissions.enums.type.allow.color',
+          title: '$vuetify.permissions.enums.type.allow.title',
+          icon: '$vuetify.permissions.enums.type.allow.icon',
+          color: '$vuetify.permissions.enums.type.allow.color',
         },
         {
           value: 'deny',
-          title: 'custom.permissions.enums.type.deny.title',
-          icon: 'custom.permissions.enums.type.deny.icon',
-          color: 'custom.permissions.enums.type.deny.color',
+          title: '$vuetify.permissions.enums.type.deny.title',
+          icon: '$vuetify.permissions.enums.type.deny.icon',
+          color: '$vuetify.permissions.enums.type.deny.color',
         },
       ],
     },
     key: {
-      label: 'custom.permissions.fields.key',
+      label: '$vuetify.permissions.fields.key',
       type: EnumFieldType.Text,
       pattern: /^[a-zA-z0-9]+$/,
-      patternMessage: 'custom.validations.jsonKey',
+      patternMessage: '$vuetify.validations.jsonKey',
     },
     name: {
-      label: 'custom.permissions.fields.name',
+      label: '$vuetify.permissions.fields.name',
       type: EnumFieldType.Text,
     },
     description: {
-      label: 'custom.permissions.fields.description',
+      label: '$vuetify.permissions.fields.description',
       type: EnumFieldType.TextArea,
       optional: true,
     },
     modifiedAt: {
-      label: 'custom.permissions.fields.modifiedAt',
+      label: '$vuetify.permissions.fields.modifiedAt',
       type: EnumFieldType.DateTime,
       readonly: true,
     },
     createdAt: {
-      label: 'custom.permissions.fields.createdAt',
+      label: '$vuetify.permissions.fields.createdAt',
       type: EnumFieldType.DateTime,
       readonly: true,
       filterable: true,
@@ -123,7 +123,7 @@ export const permissions: IRepository<IAttribute> = {
     },
   ],
   sections: [
-    new Section('custom.permissions.sections.general', [
+    new Section('$vuetify.permissions.sections.general', [
       'id',
       'type',
       'key',
@@ -137,7 +137,7 @@ export const permissions: IRepository<IAttribute> = {
     {
       color: 'error',
       icon: 'mdi-delete',
-      title: 'base.entityList.delete',
+      title: '$vuetify.entityList.delete',
       key: 'delete'
     }
   ],

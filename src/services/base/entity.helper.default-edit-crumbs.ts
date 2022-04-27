@@ -1,12 +1,12 @@
-import {translate} from '@/plugins/vuetify';
+import {translate} from '@/plugins/base/vuetify';
 import {IRepository} from '@/services/base/global.interfaces';
 
 export const defaultEditCrumbs = (repository: IRepository<any>, id: string | null | undefined) => {
   if (id) {
     return [
       {
-        icon: translate('base.home.icon'),
-        title: translate('base.home.pageTitle'),
+        icon: translate('$vuetify.home.icon'),
+        title: translate('$vuetify.home.pageTitle'),
         location: '/',
       },
       {
@@ -14,18 +14,18 @@ export const defaultEditCrumbs = (repository: IRepository<any>, id: string | nul
         location: repository.listPage,
       },
       {
-        title: translate('base.entityEdit.view'),
+        title: translate('$vuetify.entityEdit.view'),
         location: `${repository.viewPagePrefix}/${id}`,
       },
       {
-        title: translate('base.entityEdit.edit'),
+        title: translate('$vuetify.entityEdit.edit'),
       },
     ];
   }
   return [
     {
-      icon: translate('base.home.icon'),
-      title: translate('base.home.pageTitle'),
+      icon: translate('$vuetify.home.icon'),
+      title: translate('$vuetify.home.pageTitle'),
       location: '/',
     },
     {
@@ -33,7 +33,7 @@ export const defaultEditCrumbs = (repository: IRepository<any>, id: string | nul
       location: repository.listPage,
     },
     {
-      title: translate('base.entityEdit.new'),
+      title: translate('$vuetify.entityEdit.new'),
     },
   ];
 };

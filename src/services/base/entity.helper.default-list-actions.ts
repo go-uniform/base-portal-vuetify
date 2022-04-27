@@ -1,4 +1,4 @@
-import {translate} from '@/plugins/vuetify';
+import {translate} from '@/plugins/base/vuetify';
 import {IRepository} from '@/services/base/global.interfaces';
 
 export const defaultListActions = (repository: IRepository<any>) => {
@@ -9,7 +9,7 @@ export const defaultListActions = (repository: IRepository<any>) => {
     {
       icon: 'mdi-plus-box',
       color: 'success',
-      title: translate('base.entityList.new'),
+      title: translate('$vuetify.entityList.new'),
       location: `${repository.addPage}`,
     },
   ];

@@ -1,11 +1,11 @@
-import {translate} from '@/plugins/vuetify';
+import {translate} from '@/plugins/base/vuetify';
 import {IRepository} from '@/services/base/global.interfaces';
 
 export const defaultViewCrumbs = (repository: IRepository<any>) => {
   return [
     {
-      icon: translate('base.home.icon'),
-      title: translate('base.home.pageTitle'),
+      icon: translate('$vuetify.home.icon'),
+      title: translate('$vuetify.home.pageTitle'),
       location: '/',
     },
     {
@@ -13,7 +13,7 @@ export const defaultViewCrumbs = (repository: IRepository<any>) => {
       location: repository.listPage,
     },
     {
-      title: translate('base.entityView.view'),
+      title: translate('$vuetify.entityView.view'),
     },
   ];
 };

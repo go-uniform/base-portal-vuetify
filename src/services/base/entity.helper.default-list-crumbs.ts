@@ -1,11 +1,11 @@
-import {translate} from '@/plugins/vuetify';
+import {translate} from '@/plugins/base/vuetify';
 import {IRepository} from '@/services/base/global.interfaces';
 
 export const defaultListCrumbs = (repository: IRepository<any>) => {
   return [
     {
-      icon: translate('base.home.icon'),
-      title: translate('base.home.pageTitle'),
+      icon: translate('$vuetify.home.icon'),
+      title: translate('$vuetify.home.pageTitle'),
       location: '/',
     },
     {

@@ -59,8 +59,8 @@ export const userRoles: IRepository<UserRole> = {
   freeTextSearch: true,
   entity: entity,
   title: {
-    singular: 'custom.userRoles.singular',
-    plural: 'custom.userRoles.plural',
+    singular: '$vuetify.userRoles.singular',
+    plural: '$vuetify.userRoles.plural',
   },
   defaultSortOrder: '-createdAt',
   listPage: '/user-roles',
@@ -69,66 +69,66 @@ export const userRoles: IRepository<UserRole> = {
   editPagePrefix: '/user-roles/edit',
   fields: {
     id: {
-      label: 'custom.userRoles.fields.id',
+      label: '$vuetify.userRoles.fields.id',
       type: EnumFieldType.Uuid,
       readonly: true,
     },
     status: {
-      label: 'custom.userRoles.fields.status',
+      label: '$vuetify.userRoles.fields.status',
       type: EnumFieldType.Enumeration,
       defaultValue: 'pending',
       values: [
         {
           value: 'pending',
-          title: 'custom.userRoles.enums.status.pending.title',
-          icon: 'custom.userRoles.enums.status.pending.icon',
-          color: 'custom.userRoles.enums.status.pending.color',
+          title: '$vuetify.userRoles.enums.status.pending.title',
+          icon: '$vuetify.userRoles.enums.status.pending.icon',
+          color: '$vuetify.userRoles.enums.status.pending.color',
         },
         {
           value: 'approved',
-          title: 'custom.userRoles.enums.status.approved.title',
-          icon: 'custom.userRoles.enums.status.approved.icon',
-          color: 'custom.userRoles.enums.status.approved.color',
+          title: '$vuetify.userRoles.enums.status.approved.title',
+          icon: '$vuetify.userRoles.enums.status.approved.icon',
+          color: '$vuetify.userRoles.enums.status.approved.color',
         },
         {
           value: 'rejected',
-          title: 'custom.userRoles.enums.status.rejected.title',
-          icon: 'custom.userRoles.enums.status.rejected.icon',
-          color: 'custom.userRoles.enums.status.rejected.color',
+          title: '$vuetify.userRoles.enums.status.rejected.title',
+          icon: '$vuetify.userRoles.enums.status.rejected.icon',
+          color: '$vuetify.userRoles.enums.status.rejected.color',
         }
       ],
       textOnly: true,
       filterable: true,
     },
     name: {
-      label: 'custom.userRoles.fields.name',
+      label: '$vuetify.userRoles.fields.name',
       type: EnumFieldType.Text,
     },
     description: {
-      label: 'custom.userRoles.fields.description',
+      label: '$vuetify.userRoles.fields.description',
       type: EnumFieldType.TextArea,
       optional: true,
     },
     super: {
-      label: 'custom.userRoles.fields.super',
+      label: '$vuetify.userRoles.fields.super',
       type: EnumFieldType.Boolean,
       optional: true,
-      hint: 'custom.userRoles.hints.super',
+      hint: '$vuetify.userRoles.hints.super',
       iconOnly: true,
       filterable: true,
     },
     permissions: {
-      label: 'custom.users.fields.permissions',
+      label: '$vuetify.users.fields.permissions',
       type: EnumFieldType.Attributes,
       attributeRepository: permissions,
     },
     modifiedAt: {
-      label: 'custom.userRoles.fields.modifiedAt',
+      label: '$vuetify.userRoles.fields.modifiedAt',
       type: EnumFieldType.DateTime,
       readonly: true,
     },
     createdAt: {
-      label: 'custom.userRoles.fields.createdAt',
+      label: '$vuetify.userRoles.fields.createdAt',
       type: EnumFieldType.DateTime,
       readonly: true,
       filterable: true,
@@ -153,7 +153,7 @@ export const userRoles: IRepository<UserRole> = {
     },
   ],
   sections: [
-    new Section('custom.userRoles.sections.general', [
+    new Section('$vuetify.userRoles.sections.general', [
       'id',
       'status',
       'name',
@@ -162,7 +162,7 @@ export const userRoles: IRepository<UserRole> = {
       'modifiedAt',
       'createdAt',
     ]),
-    new Section('custom.users.sections.permissions', [
+    new Section('$vuetify.users.sections.permissions', [
       'permissions',
     ]),
   ],
@@ -170,7 +170,7 @@ export const userRoles: IRepository<UserRole> = {
     {
       color: 'error',
       icon: 'mdi-delete',
-      title: 'base.entityList.delete',
+      title: '$vuetify.entityList.delete',
       key: 'delete'
     }
   ],

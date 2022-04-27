@@ -1,6 +1,6 @@
 import {bus} from './bus';
 import {auth} from './auth';
-import {toastError, toastSuccess, translate} from '@/plugins/vuetify';
+import {toastError, toastSuccess, translate} from '@/plugins/base/vuetify';
 import {IStubScenario} from './stub';
 import {
   IErrorResponse,
@@ -93,9 +93,9 @@ export const processStandardResponse = <T>(
 ): void => {
 
   if (response.status !== 200) {
-    let generalErrorMessage = 'base.errors.general';
+    let generalErrorMessage = '$vuetify.errors.general';
     if (response.status === 404) {
-      generalErrorMessage = 'base.errors.recordNotFound';
+      generalErrorMessage = '$vuetify.errors.recordNotFound';
     }
     const message = response.headers.get('Message') ?? translate(generalErrorMessage);
     toastError(message);

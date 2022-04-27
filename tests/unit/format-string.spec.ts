@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import {formatString} from '@/plugins/vuetify';
+import {formatString} from '@/plugins/base/vuetify';
 
 describe('formatString', () => {
   it('replaces placeholder within the given string with the given arguments', () => {

@@ -1,4 +1,4 @@
-import {translate} from '@/plugins/vuetify';
+import {translate} from '@/plugins/base/vuetify';
 import {IRepository} from '@/services/base/global.interfaces';
 
 export const defaultEditActions = (repository: IRepository<any>, id: string, saveHandler: any) => {
@@ -14,7 +14,7 @@ export const defaultEditActions = (repository: IRepository<any>, id: string, sav
       {
         icon: 'mdi-content-save',
         color: 'success',
-        title: translate('base.app.save'),
+        title: translate('$vuetify.app.save'),
         callback: (item: any) => {
           saveHandler(item);
         }
@@ -27,7 +27,7 @@ export const defaultEditActions = (repository: IRepository<any>, id: string, sav
       icon: 'mdi-close-circle',
       class: 'white--text',
       color: 'grey',
-      title: translate('base.app.cancel'),
+      title: translate('$vuetify.app.cancel'),
       location: cancelUrl,
       callback: (item: any) => {
         // do nothing since location will redirect us

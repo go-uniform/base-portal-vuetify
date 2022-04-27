@@ -1,7 +1,7 @@
 import en from 'vuetify/src/locale/en';
-const phrases: any = en;
+import {extend} from '@/locale/base/base';
 
-phrases.base = {
+export default extend(en, {
   validations: {
     saveFailed: 'Some fields failed validation so the change were not saved.',
     required: 'May not be empty',
@@ -18,6 +18,23 @@ phrases.base = {
     incorrectOtpPin: 'Incorrect OTP supplied',
   },
   app: {
+    title: process.env.VUE_APP_TITLE,
+
+    headerTitle: '',
+    headerLogoFullAlt: process.env.VUE_APP_TITLE,
+    headerLogoFullDark: 'full.png',
+    headerLogoFullLight: 'full.png',
+    headerLogoCompactAlt: process.env.VUE_APP_TITLE[0],
+    headerLogoCompactDark: 'compact.png',
+    headerLogoCompactLight: 'compact.png',
+
+    standaloneLogoFullAlt: process.env.VUE_APP_TITLE,
+    standaloneLogoFullDark: 'full.png',
+    standaloneLogoFullLight: 'full.png',
+    standaloneLogoCompactAlt: process.env.VUE_APP_TITLE[0],
+    standaloneLogoCompactDark: 'compact.png',
+    standaloneLogoCompactLight: 'compact.png',
+
     loading: 'Loading...',
     loadingTimeout: 'Operation was automatically cancelled since system took to long to respond',
     loggingOut: 'Logging out...',
@@ -128,7 +145,134 @@ phrases.base = {
   },
   connection: {
     pageHtml: '<p class="display-2">You are offline.</p><p>Try:</p><ul><li>Turning off airplane mode</li><li>Turning on mobile data or Wi-Fi</li><li>Checking the signal in your area</li></ul><br><p>This message will automatically close once your connection is restored.</p>'
-  }
-};
-
-export default phrases;
+  },
+  empty: 'empty',
+  menu: {
+    reports: {
+      title: 'Reports',
+      icon: 'mdi-chart-box',
+      example1: {
+        title: 'Example 1',
+      }
+    },
+    users: {
+      title: 'Users',
+      icon: 'mdi-account',
+    },
+  },
+  reports: {
+    example1: {
+      title: 'Example 1',
+    },
+  },
+  users: {
+    singular: 'User',
+    plural: 'Users',
+    sections: {
+      general: 'General',
+      attributes: 'Attributes',
+      permissions: 'Permissions',
+    },
+    virtual: {
+      name: 'Name',
+    },
+    fields: {
+      id: 'Id',
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      username: 'Username',
+      email: 'Email',
+      userRoleId: 'User Role',
+      parentUserId: 'Parent User',
+      attributes: {
+        title: 'Attributes',
+        sex: 'Sex',
+        age: 'Age',
+      },
+      permissions: {
+        title: 'Permissions',
+        usersListOwner: 'Users List Owner',
+        usersCreateOwner: 'Users Create Owner',
+      },
+      modifiedAt: 'Modified At',
+      createdAt: 'Created At',
+    },
+  },
+  userRoles: {
+    singular: 'User Role',
+    plural: 'User Roles',
+    sections: {
+      general: 'General',
+    },
+    fields: {
+      id: 'Id',
+      status: 'Status',
+      name: 'Name',
+      description: 'Description',
+      super: 'Super',
+      modifiedAt: 'Modified At',
+      createdAt: 'Created At',
+    },
+    hints: {
+      super: 'A super user role has access to everything but can explicitly be denied permissions.',
+    },
+    enums: {
+      status: {
+        pending: {
+          title: 'Pending',
+          icon: 'mdi-timer-sand-full',
+          color: 'grey',
+        },
+        approved: {
+          title: 'Approved',
+          icon: 'mdi-check-bold',
+          color: 'success',
+        },
+        rejected: {
+          title: 'Rejected',
+          icon: 'mdi-close-thick',
+          color: 'danger',
+        }
+      }
+    }
+  },
+  userAttributes: {
+    singular: 'User Attribute',
+    plural: 'User Attributes',
+    sections: {
+      general: 'General',
+    },
+    fields: {
+      id: 'Id',
+      type: 'Type',
+      key: 'Key',
+      name: 'Name',
+      description: 'Description',
+      modifiedAt: 'Modified At',
+      createdAt: 'Created At',
+    },
+  },
+  permissions: {
+    singular: 'Permission',
+    plural: 'Permissions',
+    enums: {
+      type: {
+        inherit: {
+          title: 'Inherit',
+          icon: 'mdi-arrow-up-left',
+          color: 'grey',
+        },
+        allow: {
+          title: 'Allow',
+          icon: 'mdi-check-bold',
+          color: 'success',
+        },
+        deny: {
+          title: 'Deny',
+          icon: 'mdi-close-thick',
+          color: 'danger',
+        },
+      }
+    }
+  },
+});

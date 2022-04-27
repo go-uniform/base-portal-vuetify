@@ -1,4 +1,4 @@
-import {translate} from '@/plugins/vuetify';
+import {translate} from '@/plugins/base/vuetify';
 
 export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listHandler?: any) => {
   const actions = [];
@@ -7,7 +7,7 @@ export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listH
     actions.push(
       {
         icon: 'mdi-delete',
-        title: translate('base.entityView.delete'),
+        title: translate('$vuetify.entityView.delete'),
         color: 'error',
         callback: (item: any) => {
           deleteHandler(item)
@@ -20,7 +20,7 @@ export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listH
     actions.push(
       {
         icon: 'mdi-pencil',
-        title: translate('base.entityView.edit'),
+        title: translate('$vuetify.entityView.edit'),
         color: 'warning',
         callback: (item: any) => {
           editHandler(item)
@@ -33,7 +33,7 @@ export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listH
     actions.push(
       {
         icon: 'mdi-view-list',
-        title: translate('base.entityView.list'),
+        title: translate('$vuetify.entityView.list'),
         color: 'info',
         callback: (item: any) => {
           listHandler(item)

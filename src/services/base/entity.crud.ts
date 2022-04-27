@@ -4,7 +4,7 @@ import {
   IItem,
   IList,
   IListPromise,
-  IReadPromise,
+  IReadPromise, IRepository,
   IUpdatePromise
 } from '@/services/base/global.interfaces';
 import {
@@ -15,7 +15,7 @@ import {
   processStandardListResponse
 } from '@/services/base/base';
 import {RouteConfig} from 'vue-router';
-import {translate} from '@/plugins/vuetify';
+import {translate} from '@/plugins/base/vuetify';
 
 export const baseList = <T>(entity: string): IListPromise<T> => {
   return (
@@ -123,18 +123,19 @@ export const baseDelete = <T>(entity: string): IDeletePromise<T> => {
   };
 };
 
-const generateRepositoryCrudRoutes = (repository: any): RouteConfig[] => {
+export const createRepositoryCrudRoutes = (routes: RouteConfig[], repository: any): RouteConfig[] => {
   const plural = translate(repository.title.plural);
   const singular = translate(repository.title.singular);
-  const titleList = translate('base.entity.list', plural);
-  const titleNew = translate('base.entity.new', singular);
-  const titleEdit = translate('base.entity.edit', singular);
-  const titleView = translate('base.entity.view', singular);
-  return [
+  const titleList = translate('$vuetify.entity.list', plural);
+  const titleNew = translate('$vuetify.entity.new', singular);
+  const titleEdit = translate('$vuetify.entity.edit', singular);
+  const titleView = translate('$vuetify.entity.view', singular);
+
+  routes.push(...[
     {
       path: `${repository.listPage}`,
       name: `${repository.entity}-list`,
-      component: () => import('@/views/EntityList.vue'),
+      component: () => import('@/views/base/EntityList.vue'),
       meta: {
         repository: repository,
         title: titleList,
@@ -143,7 +144,7 @@ const generateRepositoryCrudRoutes = (repository: any): RouteConfig[] => {
     {
       path: `${repository.viewPagePrefix}/:id`,
       name: `${repository.entity}-view`,
-      component: () => import('@/views/EntityView.vue'),
+      component: () => import('@/views/base/EntityView.vue'),
       meta: {
         repository: repository,
         title: titleView,
@@ -152,7 +153,7 @@ const generateRepositoryCrudRoutes = (repository: any): RouteConfig[] => {
     {
       path: `${repository.addPage}`,
       name: `${repository.entity}-new`,
-      component: () => import('@/views/EntityEdit.vue'),
+      component: () => import('@/views/base/EntityEdit.vue'),
       meta: {
         repository: repository,
         title: titleNew,
@@ -161,19 +162,20 @@ const generateRepositoryCrudRoutes = (repository: any): RouteConfig[] => {
     {
       path: `${repository.editPagePrefix}/:id`,
       name: `${repository.entity}-edit`,
-      component: () => import('@/views/EntityEdit.vue'),
+      component: () => import('@/views/base/EntityEdit.vue'),
       meta: {
         repository: repository,
         title: titleEdit,
       }
     },
-  ];
+  ]);
+
+  return routes;
 }
 
-export const generateCrudRoutes = (...repositories: any[]): RouteConfig[] => {
-  const routes: RouteConfig[] = [];
-  repositories.forEach((repository) => {
-    routes.push(...generateRepositoryCrudRoutes(repository));
-  });
-  return routes;
+export const createMenuItem = <T>(repository: IRepository<T>): object => {
+  return {
+    title: translate(repository.title.plural),
+    location: repository.listPage,
+  };
 }

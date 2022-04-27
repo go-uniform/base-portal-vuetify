@@ -32,8 +32,8 @@ export const userAttributes: IRepository<IAttribute> = {
   freeTextSearch: true,
   entity: entity,
   title: {
-    singular: 'custom.userAttributes.singular',
-    plural: 'custom.userAttributes.plural',
+    singular: '$vuetify.userAttributes.singular',
+    plural: '$vuetify.userAttributes.plural',
   },
   defaultSortOrder: '-createdAt',
   listPage: '/user-attributes',
@@ -42,36 +42,36 @@ export const userAttributes: IRepository<IAttribute> = {
   editPagePrefix: '/user-attributes/edit',
   fields: {
     id: {
-      label: 'custom.userAttributes.fields.id',
+      label: '$vuetify.userAttributes.fields.id',
       type: EnumFieldType.Uuid,
       readonly: true,
     },
     type: { // todo: create enum type fields that are limited to a specific selection of values
-      label: 'custom.userAttributes.fields.type',
+      label: '$vuetify.userAttributes.fields.type',
       type: EnumFieldType.Text,
     },
     key: {
-      label: 'custom.userAttributes.fields.key',
+      label: '$vuetify.userAttributes.fields.key',
       type: EnumFieldType.Text,
       pattern: /^[a-zA-z0-9]+$/,
-      patternMessage: 'custom.validations.jsonKey',
+      patternMessage: '$vuetify.validations.jsonKey',
     },
     name: {
-      label: 'custom.userAttributes.fields.name',
+      label: '$vuetify.userAttributes.fields.name',
       type: EnumFieldType.Text,
     },
     description: {
-      label: 'custom.userAttributes.fields.description',
+      label: '$vuetify.userAttributes.fields.description',
       type: EnumFieldType.TextArea,
       optional: true,
     },
     modifiedAt: {
-      label: 'custom.userAttributes.fields.modifiedAt',
+      label: '$vuetify.userAttributes.fields.modifiedAt',
       type: EnumFieldType.DateTime,
       readonly: true,
     },
     createdAt: {
-      label: 'custom.userAttributes.fields.createdAt',
+      label: '$vuetify.userAttributes.fields.createdAt',
       type: EnumFieldType.DateTime,
       readonly: true,
       filterable: true,
@@ -93,7 +93,7 @@ export const userAttributes: IRepository<IAttribute> = {
     },
   ],
   sections: [
-    new Section('custom.userAttributes.sections.general', [
+    new Section('$vuetify.userAttributes.sections.general', [
       'id',
       'type',
       'key',
@@ -107,7 +107,7 @@ export const userAttributes: IRepository<IAttribute> = {
     {
       color: 'error',
       icon: 'mdi-delete',
-      title: 'base.entityList.delete',
+      title: '$vuetify.entityList.delete',
       key: 'delete'
     }
   ],

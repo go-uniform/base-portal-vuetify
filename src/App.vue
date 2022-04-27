@@ -10,6 +10,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {bus} from '@/services/base/bus';
+import {hasDark,hasLight} from '@/plugins/theme';
 
 let isConnected = true;
 
@@ -19,8 +20,14 @@ export default Vue.extend({
   created() {
     if (window && window.localStorage) {
       const dark = window.localStorage.getItem('theme.dark');
-      if (dark !== null) {
-        this.$vuetify.theme.dark = dark !== 'false';
+      if (hasDark && hasLight) {
+        if (dark !== null) {
+          this.$vuetify.theme.dark = dark !== 'false';
+        }
+      } else if (hasDark) {
+        this.$vuetify.theme.dark = true;
+      } else {
+        this.$vuetify.theme.dark = false;
       }
     }
 
