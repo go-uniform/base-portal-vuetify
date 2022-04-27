@@ -203,6 +203,6 @@ Vue.filter('datetime', (value: any) => {
 });
 
 // set main application title
-document.title = translate('base.app.title');
+document.title = translate('custom.app.title');
 
 export default instance;

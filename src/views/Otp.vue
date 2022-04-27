@@ -14,11 +14,11 @@
           class="py-8"
         >
           <v-img
-            :alt="translate('base.app.smallLogoAlt')"
+            :alt="translate('custom.app.standaloneLogoAlt')"
             contain
-            :src="translate('base.app.smallLogoUrl')"
+            :src="getLogo($vuetify.theme.dark ? 'custom.app.standaloneLogoFullDark' : 'custom.app.standaloneLogoFullLight')"
             transition="scale-transition"
-            max-height="100"
+            max-height="200"
           />
         </v-row>
         <v-row>
@@ -135,6 +135,11 @@ export default {
   },
 
   methods: {
+    getLogo(logo) {
+      const logos = require.context('@/assets/logos', true);
+      return logos('./' + translate(logo));
+    },
+
     keypress(ev) {
       if (['Enter','NumpadEnter'].includes(ev.key)) {
         this.validate();

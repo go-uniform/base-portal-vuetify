@@ -5,20 +5,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-  <title>Uniform</title>
+  <title><%= VUE_APP_TITLE %></title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
   <script>
     // set Google Analytics GTAG4 trackingId
-    window.analyticsTrackingId = null;
+    window.analyticsTrackingId = '<%= VUE_APP_ANALYTICS_TRACK_ID %>';
     // set Google Optimize containerId
-    window.optimizeContainerId = null;
+    window.optimizeContainerId = '<%= VUE_APP_OPTIMIZE_CONTAINER_ID %>';
     // set HotJar trackingId
-    window.hotjarTrackingId = null;
+    window.hotjarTrackingId = '<%= VUE_APP_HOTJAR_TRACK_ID %>';
     // set an endpoint to log client errors to server
-    window.logErrorEndpoint = null;
+    window.logErrorEndpoint = '<%= VUE_APP_JAVASCRIPT_ERROR_ENDPOINT %>';
   </script>
-  <script type="text/javascript" src="/header.js"></script>
+  <script type="text/javascript" src="./header.js"></script>
   <style>
     body {
       background: rgb(51, 51, 51);
@@ -32,6 +32,7 @@
       left: calc(50% - 40px);
       top: calc(50% - 40px);
     }
+
     .lds-ring div {
       box-sizing: border-box;
       display: block;
@@ -44,15 +45,19 @@
       animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
       border-color: #fff transparent transparent transparent;
     }
+
     .lds-ring div:nth-child(1) {
       animation-delay: -0.45s;
     }
+
     .lds-ring div:nth-child(2) {
       animation-delay: -0.3s;
     }
+
     .lds-ring div:nth-child(3) {
       animation-delay: -0.15s;
     }
+
     @keyframes lds-ring {
       0% {
         transform: rotate(0deg);
@@ -64,10 +69,17 @@
   </style>
 </head>
 <body>
-  <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  <div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
   <noscript>
-    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
-      Please enable it to continue.</strong>
+    <strong>
+      We're sorry but <%= VUE_APP_TITLE %> doesn't work properly without JavaScript enabled. Please enable it to
+      continue.
+    </strong>
   </noscript>
   <div id="app"></div>
   <!-- built files will be auto injected -->

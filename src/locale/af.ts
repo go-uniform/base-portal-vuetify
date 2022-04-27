@@ -2,6 +2,24 @@ import af from '@/locale/base/af';
 const phrases: any = af;
 
 phrases.custom = {
+  app: {
+    title: process.env.VUE_APP_TITLE,
+
+    headerTitle: '',
+    headerLogoFullAlt: process.env.VUE_APP_TITLE,
+    headerLogoFullDark: 'full.png',
+    headerLogoFullLight: 'full.png',
+    headerLogoCompactAlt: process.env.VUE_APP_TITLE[0],
+    headerLogoCompactDark: 'compact.png',
+    headerLogoCompactLight: 'compact.png',
+
+    standaloneLogoFullAlt: process.env.VUE_APP_TITLE,
+    standaloneLogoFullDark: 'full.png',
+    standaloneLogoFullLight: 'full.png',
+    standaloneLogoCompactAlt: process.env.VUE_APP_TITLE[0],
+    standaloneLogoCompactDark: 'compact.png',
+    standaloneLogoCompactLight: 'compact.png',
+  },
   empty: 'leeg',
   menu: {
     reports: {

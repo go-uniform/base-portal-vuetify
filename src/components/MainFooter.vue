@@ -18,10 +18,14 @@
         class="white--text py-2"
       >
         <div>
-          <strong>{{ translate('base.app.title') }}</strong> - {{ new Date().getFullYear() }}
+          <strong>
+            {{ translate('custom.app.title') }}
+          </strong>
         </div>
         <div>
-          <small>v1.0.2</small>
+          <small>
+            {{ version }}
+          </small>
         </div>
       </v-card-text>
     </v-card>
@@ -42,5 +46,11 @@ import ScrollTopButton from '@/components/ScrollTopButton';
 export default {
   name: 'main-footer',
   components: {ScrollTopButton, LanguageSelector},
+
+  data() {
+    return {
+      version: process.env.VUE_APP_VERSION,
+    }
+  }
 }
 </script>

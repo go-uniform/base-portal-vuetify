@@ -6,21 +6,32 @@
       top
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="secondary"
+        <div
           v-bind="attrs"
           v-on="on"
           class="language-selector"
         >
-          <v-icon>
+          <v-btn
+            class="hidden-xs-only"
+            color="secondary"
+            large
+          >
+            <v-icon>
+              mdi-web
+            </v-icon>
+            <span
+              class="ml-2"
+            >
+              {{ languageText }}
+            </span>
+          </v-btn>
+          <v-icon
+            class="pa-2 hidden-sm-and-up"
+            dark
+          >
             mdi-web
           </v-icon>
-          <span
-            class="ml-2 hidden-xs-only"
-          >
-            {{ languageText }}
-          </span>
-        </v-btn>
+        </div>
       </template>
 
       <v-list>

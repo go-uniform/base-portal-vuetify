@@ -12,23 +12,36 @@
     >
       mdi-menu
     </v-icon>
+
+    <v-spacer
+      class="mr-2 hidden-sm-and-up"
+    ></v-spacer>
+
     <div
-      @click="navigateHome"
       class="d-flex align-center"
     >
       <v-img
-        :alt="translate('base.app.smallLogoAlt')"
-        class="shrink"
+        :alt="translate('custom.app.headerLogoFullAlt')"
+        class="shrink hidden-xs-only"
         contain
-        :src="translate('base.app.smallLogoUrl')"
+        position="left center"
+        :src="getLogo($vuetify.theme.dark ? 'custom.app.headerLogoFullDark' : 'custom.app.headerLogoFullLight')"
         transition="scale-transition"
-        max-width="40"
+        max-height="60"
+      />
+      <v-img
+        :alt="translate('custom.app.headerLogoCompactAlt')"
+        class="shrink hidden-sm-and-up"
+        contain
+        :src="getLogo($vuetify.theme.dark ? 'custom.app.headerLogoCompactDark' : 'custom.app.headerLogoCompactLight')"
+        transition="scale-transition"
+        max-height="60"
       />
 
       <strong
-        class="display-1 ml-4 hidden-sm-and-down"
+        class="display-1 ml-4 hidden-xs-only"
       >
-        {{ translate('base.app.headerTitle') }}
+        {{ translate('custom.app.headerTitle') }}
       </strong>
     </div>
 
@@ -38,26 +51,32 @@
       offset-y
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="secondary"
-          tile
-          large
-          elevation="0"
+        <div
           v-bind="attrs"
           v-on="on"
         >
-          <small
+          <v-btn
             class="hidden-xs-only"
+            color="secondary"
+            large
           >
-            {{ username || 'Unknown' }}
-          </small>
+            <small>
+              {{ username || 'Unknown' }}
+            </small>
+            <v-icon
+              right
+              dark
+            >
+              mdi-chevron-down
+            </v-icon>
+          </v-btn>
           <v-icon
-            right
+            class="hidden-sm-and-up"
             dark
           >
             mdi-chevron-down
           </v-icon>
-        </v-btn>
+        </div>
       </template>
       <v-list
         dense
@@ -108,7 +127,7 @@
 <script>
 import {bus} from '@/services/base/bus';
 import {auth} from '@/services/base/auth';
-import {loadingStart} from '@/plugins/vuetify';
+import {loadingStart, translate} from '@/plugins/vuetify';
 
 export default {
   name: 'main-header',
@@ -116,12 +135,13 @@ export default {
   computed: {
     username: () => {
       return auth.meta()['name'];
-    }
+    },
   },
 
   methods: {
-    navigateHome() {
-      this.$router.push('/');
+    getLogo(logo) {
+      const logos = require.context('@/assets/logos', true);
+      return logos('./' + translate(logo));
     },
 
     menuOpen() {

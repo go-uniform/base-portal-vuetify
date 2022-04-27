@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Browser Not Supported</title>
+  <title>Browser Not Supported | <%= VUE_APP_TITLE %></title>
   <style>
     .container {
       width: 100%;
@@ -20,15 +20,15 @@
   </style>
   <script>
     // set Google Analytics GTAG4 trackingId
-    window.analyticsTrackingId = null;
+    window.analyticsTrackingId = '<%= VUE_APP_ANALYTICS_TRACK_ID %>';
     // set Google Optimize containerId
-    window.optimizeContainerId = null;
+    window.optimizeContainerId = '<%= VUE_APP_OPTIMIZE_CONTAINER_ID %>';
     // set HotJar trackingId
-    window.hotjarTrackingId = null;
+    window.hotjarTrackingId = '<%= VUE_APP_HOTJAR_TRACK_ID %>';
     // set an endpoint to log client errors to server
-    window.logErrorEndpoint = null;
+    window.logErrorEndpoint = '<%= VUE_APP_JAVASCRIPT_ERROR_ENDPOINT %>';
   </script>
-  <script type="text/javascript" src="/header.js"></script>
+  <script type="text/javascript" src="./header.js"></script>
 </head>
 <body>
 
