@@ -13,7 +13,7 @@
           class="py-8"
         >
           <v-img
-            :alt="translate('custom.app.standaloneLogoAlt')"
+            :alt="translate('custom.app.standaloneLogoFullAlt')"
             contain
             :src="getLogo($vuetify.theme.dark ? 'custom.app.standaloneLogoFullDark' : 'custom.app.standaloneLogoFullLight')"
             transition="scale-transition"
