@@ -6,7 +6,7 @@
 
     <div>
       <!-- todo: architect widget component -->
-      <small><i>dashboard widgets/metrics will go here</i></small>
+      <small><i>{{ translate('$vuetify.app.homeComingSoon') }}</i></small>
     </div>
 
   </main-layout>

@@ -98,7 +98,7 @@
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>My Account</v-list-item-title>
+          <v-list-item-title>{{ translate('$vuetify.app.myAccount') }}</v-list-item-title>
         </v-list-item>
         <v-list-item
           to="/settings"
@@ -106,7 +106,7 @@
           <v-list-item-icon>
             <v-icon>mdi-cogs</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>System Settings</v-list-item-title>
+          <v-list-item-title>{{ translate('$vuetify.app.systemSettings') }}</v-list-item-title>
         </v-list-item>
         <v-divider></v-divider>
         <v-list-item

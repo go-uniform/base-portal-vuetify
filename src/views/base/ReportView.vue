@@ -6,7 +6,7 @@
 
     <div>
       <!-- todo: architect report component -->
-      <small><i>report view will go here</i></small>
+      <small><i>{{ translate('$vuetify.app.reportComingSoon') }}</i></small>
     </div>
 
   </main-layout>

@@ -36,6 +36,10 @@ export default extend(en, {
     standaloneLogoCompactDark: 'compact.png',
     standaloneLogoCompactLight: 'compact.png',
 
+    homeComingSoon: 'dashboard widgets/metrics will go here',
+    reportComingSoon: 'report view will go here',
+    myAccount: 'My Account',
+    systemSettings: 'System Settings',
     loading: 'Loading...',
     loadingTimeout: 'Operation was automatically cancelled since system took to long to respond',
     loggingOut: 'Logging out...',

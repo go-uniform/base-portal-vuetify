@@ -36,6 +36,10 @@ export default extend(af, {
     standaloneLogoCompactDark: 'compact.png',
     standaloneLogoCompactLight: 'compact.png',
 
+    homeComingSoon: 'paneelbord legstukke/metrieke sal hierheen gaan',
+    reportComingSoon: 'verslagaansig sal hierheen gaan',
+    myAccount: 'My Rekening',
+    systemSettings: 'Stelsel Instellings',
     loading: 'Laai...',
     loadingTimeout: 'Werking was outomaties gekanselleer aangesien die stelsel te lank geneem het om te reageer',
     loggingOut: 'Teken uit...',
