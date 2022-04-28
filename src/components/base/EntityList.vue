@@ -247,7 +247,7 @@ export default {
         });
       }
       this.headers.push({
-        text: translate('base.entityList.actions'),
+        text: translate('$vuetify.entityList.actions'),
         value: 'actions',
         align: 'end',
         sortable: false,
@@ -273,7 +273,7 @@ export default {
     remove(item) {
       deleteConfirmation((confirmed) => {
         if (confirmed) {
-          loadingStart(7000, 'base.app.deleting');
+          loadingStart(7000, '$vuetify.app.deleting');
           this.repository.delete(item.id).then(() => {
             this.load();
             loadingStop();
@@ -316,8 +316,8 @@ export default {
             this.load();
           });
         }
-      }, 'base.entityList.bulkActionConfirmationTitle',
-        translate('base.entityList.bulkActionConfirmationMessage',
+      }, '$vuetify.entityList.bulkActionConfirmationTitle',
+        translate('$vuetify.entityList.bulkActionConfirmationMessage',
         translate(action.title).toLowerCase(), ids.length), {
         color: action.color ?? 'info',
       });

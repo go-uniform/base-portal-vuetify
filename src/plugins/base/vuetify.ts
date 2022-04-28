@@ -71,7 +71,7 @@ export const deleteConfirmation = (callback: any) => {
   bus.publish('confirm', {
     callback: callback,
     title: '$vuetify.app.deleteConfirmationTitle',
-    body: 'base.app.deleteConfirmationMessage',
+    body: '$vuetify.app.deleteConfirmationMessage',
     options: {
       color: 'error'
     },

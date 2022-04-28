@@ -202,6 +202,7 @@ export default extend(af, {
     plural: 'Gebruikers Rolle',
     sections: {
       general: 'Algemeen',
+      permissions: 'Toestemmings',
     },
     fields: {
       id: 'Id',
@@ -209,6 +210,11 @@ export default extend(af, {
       name: 'Naam',
       description: 'Beskrywing',
       super: 'Super',
+      permissions: {
+        title: 'Toestemmings',
+        usersListOwner: 'Gebruikers Lys Eienaar',
+        usersCreateOwner: 'Gebruikers Skep Eienaar',
+      },
       modifiedAt: 'Gewysig Teen',
       createdAt: 'Geskep Teen',
     },

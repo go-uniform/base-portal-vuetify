@@ -118,7 +118,7 @@ export const userRoles: IRepository<UserRole> = {
       filterable: true,
     },
     permissions: {
-      label: '$vuetify.users.fields.permissions',
+      label: '$vuetify.userRoles.fields.permissions',
       type: EnumFieldType.Attributes,
       attributeRepository: permissions,
     },
@@ -162,7 +162,7 @@ export const userRoles: IRepository<UserRole> = {
       'modifiedAt',
       'createdAt',
     ]),
-    new Section('$vuetify.users.sections.permissions', [
+    new Section('$vuetify.userRoles.sections.permissions', [
       'permissions',
     ]),
   ],

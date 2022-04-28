@@ -177,7 +177,7 @@ export default {
     remove() {
       deleteConfirmation((confirmed) => {
         if (confirmed) {
-          loadingStart(7000, 'base.app.deleting');
+          loadingStart(7000, '$vuetify.app.deleting');
           this.repository.delete(this.id).then(() => {
             this.$router.push(`${this.repository.listPage}`);
           });
@@ -230,7 +230,7 @@ export default {
         }
       });
     }).catch((reason) => {
-      const message = reason.headers.get('Message') ?? translate('base.errors.general');
+      const message = reason.headers.get('Message') ?? translate('$vuetify.errors.general');
       toastError(message)
     });
   },

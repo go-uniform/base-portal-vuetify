@@ -192,14 +192,14 @@ export default {
           return;
         }
         this.repository.create(this.item).then((response) => {
-          toastSuccess('base.app.submittedSuccessfully');
+          toastSuccess('$vuetify.app.submittedSuccessfully');
           this.$router.push(`${this.repository.viewPagePrefix}/${response.item.id}`);
         }).finally(() => {
           this.submitting = false;
           this.$emit('submitting', this.submitting);
         });
       } else {
-        toastError('base.validations.saveFailed');
+        toastError('$vuetify.validations.saveFailed');
       }
     },
 
@@ -262,7 +262,7 @@ export default {
           }
         });
       }).catch((reason) => {
-        const message = reason.headers.get('Message') ?? translate('base.errors.general');
+        const message = reason.headers.get('Message') ?? translate('$vuetify.errors.general');
         toastError(message)
       });
     } else {

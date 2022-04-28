@@ -203,6 +203,7 @@ export default extend(en, {
     plural: 'User Roles',
     sections: {
       general: 'General',
+      permissions: 'Permissions',
     },
     fields: {
       id: 'Id',
@@ -210,6 +211,11 @@ export default extend(en, {
       name: 'Name',
       description: 'Description',
       super: 'Super',
+      permissions: {
+        title: 'Permissions',
+        usersListOwner: 'Users List Owner',
+        usersCreateOwner: 'Users Create Owner',
+      },
       modifiedAt: 'Modified At',
       createdAt: 'Created At',
     },
