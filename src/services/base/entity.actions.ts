@@ -1,6 +1,12 @@
 // a custom against executed on an entity list level and returns a list response
 import {IItem, IList} from '@/services/base/global.interfaces';
-import {getBaseUrl, mergeHeaders, processStandardItemResponse, processStandardListResponse} from '@/services/base/base';
+import {
+  apiFetch,
+  getBaseUrl,
+  mergeHeaders,
+  processStandardItemResponse,
+  processStandardListResponse
+} from '@/services/base/base';
 
 export const baseEntityActionListResponse = <T>(
   entity: string,
@@ -9,7 +15,7 @@ export const baseEntityActionListResponse = <T>(
   headers: Headers = new Headers(),
 ): Promise<IList<T>> => {
   return new Promise<IList<T>>((resolve, reject) => {
-    return fetch(`${getBaseUrl()}/${entity}/actions/${action}`, {
+    return apiFetch(`${getBaseUrl()}/${entity}/actions/${action}`, {
 
       method: 'POST',
       body: JSON.stringify(payload),
@@ -35,7 +41,7 @@ export const baseEntityActionItemResponse = <T>(
   headers: Headers = new Headers(),
 ): Promise<IItem<T>> => {
   return new Promise<IItem<T>>((resolve, reject) => {
-    return fetch(`${getBaseUrl()}/${entity}/actions/${action}`, {
+    return apiFetch(`${getBaseUrl()}/${entity}/actions/${action}`, {
 
       method: 'POST',
       body: JSON.stringify(payload),
@@ -62,7 +68,7 @@ export const baseRecordActionListResponse = <T>(
   headers: Headers = new Headers(),
 ): Promise<IList<T>> => {
   return new Promise<IList<T>>((resolve, reject) => {
-    return fetch(`${getBaseUrl()}/${entity}/${id}/actions/${action}`, {
+    return apiFetch(`${getBaseUrl()}/${entity}/${id}/actions/${action}`, {
 
       method: 'POST',
       body: JSON.stringify(payload),
@@ -89,7 +95,7 @@ export const baseRecordActionItemResponse = <T>(
   headers: Headers = new Headers(),
 ): Promise<IItem<T>> => {
   return new Promise<IItem<T>>((resolve, reject) => {
-    return fetch(`${getBaseUrl()}/${entity}/${id}/actions/${action}`, {
+    return apiFetch(`${getBaseUrl()}/${entity}/${id}/actions/${action}`, {
 
       method: 'POST',
       body: JSON.stringify(payload),

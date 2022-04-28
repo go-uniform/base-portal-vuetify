@@ -1,77 +1,57 @@
-import {
-  baseBulkStub,
-  baseCreateStub,
-  baseDeleteStub, baseListLoad,
-  baseListStub,
-  baseReadStub,
-  baseUpdateStub,
-} from '@/services/base/stub';
 import {IAttribute, IRepository} from '@/services/base/global.interfaces';
-import {EnumAttributeType, EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
+import {EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
+import {baseBulk} from '@/services/base/entity.bulk';
+import {baseCreate, baseDelete, baseList, baseRead, baseUpdate} from '@/services/base/entity.crud';
 
 const entity = 'userAttributes';
-
-export const UserAttributesList: IAttribute[] = baseListLoad([
-  {
-    id: '624df0929bc786ddf868f7e8',
-    key: 'sex',
-    name: 'Sex',
-    description: 'Either of the two main categories (male and female) into which humans and most other living things are divided on the basis of their reproductive functions.',
-    type: EnumAttributeType.Text,
-    modifiedAt: new Date(),
-    createdAt: new Date(),
-  },
-], entity);
-
-const stubRecordHandler = (item: any) => {
-  return item;
-}
+const slug = 'user-attributes';
 
 export const userAttributes: IRepository<IAttribute> = {
   freeTextSearch: true,
   entity: entity,
+  slug: slug,
   title: {
-    singular: '$vuetify.userAttributes.singular',
-    plural: '$vuetify.userAttributes.plural',
+    singular: `$vuetify.${entity}.singular`,
+    plural: `$vuetify.${entity}.plural`,
   },
   defaultSortOrder: '-createdAt',
-  listPage: '/user-attributes',
-  addPage: '/user-attributes/add',
-  viewPagePrefix: '/user-attributes/view',
-  editPagePrefix: '/user-attributes/edit',
+  listPage: `/${slug}`,
+  addPage: `/${slug}/add`,
+  viewPagePrefix: `/${slug}/view`,
+  editPagePrefix: `/${slug}/edit`,
   fields: {
     id: {
-      label: '$vuetify.userAttributes.fields.id',
+      label: `$vuetify.${slug}.fields.id`,
       type: EnumFieldType.Uuid,
       readonly: true,
     },
     type: { // todo: create enum type fields that are limited to a specific selection of values
-      label: '$vuetify.userAttributes.fields.type',
+      label: `$vuetify.${slug}.fields.type`,
       type: EnumFieldType.Text,
     },
     key: {
-      label: '$vuetify.userAttributes.fields.key',
+      label: `$vuetify.${slug}.fields.key`,
       type: EnumFieldType.Text,
       pattern: /^[a-zA-z0-9]+$/,
       patternMessage: '$vuetify.validations.jsonKey',
     },
     name: {
-      label: '$vuetify.userAttributes.fields.name',
+      label: `$vuetify.${slug}.fields.name`,
       type: EnumFieldType.Text,
     },
     description: {
-      label: '$vuetify.userAttributes.fields.description',
+      label: `$vuetify.${slug}.fields.description`,
       type: EnumFieldType.TextArea,
       optional: true,
     },
     modifiedAt: {
-      label: '$vuetify.userAttributes.fields.modifiedAt',
+      label: `$vuetify.${slug}.fields.modifiedAt`,
       type: EnumFieldType.DateTime,
       readonly: true,
     },
     createdAt: {
-      label: '$vuetify.userAttributes.fields.createdAt',
+      label: `$vuetify.${slug}.fields.createdAt`,
       type: EnumFieldType.DateTime,
       readonly: true,
       filterable: true,
@@ -93,7 +73,7 @@ export const userAttributes: IRepository<IAttribute> = {
     },
   ],
   sections: [
-    new Section('$vuetify.userAttributes.sections.general', [
+    new Section(`$vuetify.${slug}.sections.general`, [
       'id',
       'type',
       'key',
@@ -112,10 +92,10 @@ export const userAttributes: IRepository<IAttribute> = {
     }
   ],
 
-  list: baseListStub<IAttribute>(UserAttributesList, null, entity),
-  create: baseCreateStub<IAttribute>(UserAttributesList, stubRecordHandler, entity),
-  read: baseReadStub<IAttribute>(UserAttributesList, null, entity),
-  update: baseUpdateStub<IAttribute>(UserAttributesList, stubRecordHandler, entity),
-  delete: baseDeleteStub<IAttribute>(UserAttributesList, null, entity),
-  bulk: baseBulkStub<IAttribute>(UserAttributesList, null, entity),
+  list: baseList<IAttribute>(slug),
+  create: baseCreate<IAttribute>(slug),
+  read: baseRead<IAttribute>(slug),
+  update: baseUpdate<IAttribute>(slug),
+  delete: baseDelete<IAttribute>(slug),
+  bulk: baseBulk(slug),
 };

@@ -9,7 +9,7 @@ import {
   IUpdatePromise
 } from './global.interfaces';
 import {
-  compileListQueryParameters,
+  compileListQueryParameters, getBaseUrl,
   processStandardItemResponse,
   processStandardListResponse
 } from '@/services/base/base';
@@ -57,57 +57,48 @@ export const stubScenario = (body: any, status = 200, headers: Headers = new Hea
   };
 };
 
-const wrapperResolve = <T>(callbackResolve: any, resolve: any, reject: any) => {
-  return <T>(value: IItem<T>) => {
-    if (callbackResolve) {
-      if (!callbackResolve(value)) {
-        reject('failed callback');
-      }
-    }
-    resolve(value);
-  };
-};
-
-const wrapperReject = <T>(callbackReject: any, reject: any) => {
-  return <T>(reason?: any) => {
-    if (callbackReject) {
-      callbackReject(reason);
-    }
-    reject(reason);
-  };
-};
-
-export const baseRestItemStub = <T>(scenario: IStubScenario, callbackResolve: any, callbackReject: any, method: EnumHttpMethod, path: string, payload: generic = {}, headers = new Headers()): Promise<IItem<T>> => {
-  return new Promise<IItem<T>>((resolve, reject) => {
-    setTimeout(() => {
-      console.log('rest-item', method, path, payload, headers);
-      processStandardItemResponse<T>(scenario, wrapperResolve(callbackResolve, resolve, reject), wrapperReject(callbackReject, reject));
-    }, StubTimeout);
-  });
-};
-export const baseRestListStub = <T>(scenario: IStubScenario, callbackResolve: any, callbackReject: any, method: EnumHttpMethod, path: string, payload: generic = {}, headers = new Headers()): Promise<IList<T>> => {
-  return new Promise<IList<T>>((resolve, reject) => {
-    setTimeout(() => {
-      console.log('rest-list', method, path, payload, headers);
-      processStandardItemResponse<T>(scenario, wrapperResolve(callbackResolve, resolve, reject), wrapperReject(callbackReject, reject));
-    }, StubTimeout);
-  });
-};
-
-export const baseListStub = <T>(list: T[], scenario: IStubScenario | null, entity: string): IListPromise<T> => {
-  return (
-    order: string,
-    filters: object = {},
-    pageIndex = 1,
-    pageSize = 50,
-  ): Promise<IList<T>> => {
-    return new Promise<IList<T>>((resolve, reject) => {
+export const baseRestItemStub = <T>(slug: string, handler: any): IResponse => {
+  return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
+    return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
-        console.log('list', entity, order, filters, pageIndex, pageSize, compileListQueryParameters(order, filters));
+        console.log('rest-item', slug, input, init);
+        handler(input, init, resolve, reject);
+      }, StubTimeout);
+    });
+  };
+};
+
+export const baseRestListStub = <T>(slug: string, handler: any): IResponse => {
+  return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
+    return new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        console.log('rest-list', slug, input, init);
+        handler(input, init, resolve, reject);
+      }, StubTimeout);
+    });
+  };
+};
+
+interface IResponse {
+  (input: RequestInfo, init?: RequestInit): Promise<Response>;
+}
+
+export const baseListStub = <T>(slug: string, scenario?: IStubScenario | null): IResponse => {
+  return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
+    return new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        console.log('list', slug, input, init);
         if (scenario) {
-          processStandardListResponse<T>(scenario, resolve, reject);
+          resolve(scenario);
         } else {
-          processStandardListResponse<T>(stubScenario(list, 200), resolve, reject)
+          let list = [];
+          if (window.localStorage) {
+            const data = window.localStorage.getItem(`stub.${slug}`);
+            if (data) {
+              list = JSON.parse(data);
+            }
+          }
+          resolve(stubScenario(list, 200));
         }
       }, StubTimeout);
     });
@@ -292,3 +283,33 @@ export const generateFakeJwt = (claims: any): string => {
 
   return `${encodedHeaders}.${encodedPayload}.${encodedSignature}`
 }
+
+const handlers: any = {};
+
+export const baseStubHandlerAppend = (stub: any) => {
+  Object.keys(stub.handlers).forEach((key) => {
+    handlers[key] = stub.handlers[key];
+  });
+}
+
+export const baseStubHandlerRoutine = (input: RequestInfo, init?: RequestInit): Promise<Response> => {
+  let method = 'GET';
+  if (init && init.method) {
+    method = init.method.toUpperCase();
+  }
+
+  let path = input.toString().replace(getBaseUrl(), '').toLowerCase();
+  if (!path.startsWith('/')) {
+    path = `/${path}`;
+  }
+  if (path.includes('?')) {
+    path = path.substring(0, path.indexOf('?'))
+  }
+
+  const pathKey = `${method} ${path}`;
+  if (handlers[pathKey]) {
+    return handlers[pathKey](input, init);
+  } else {
+    throw `no stub handler for ${pathKey}`;
+  }
+};

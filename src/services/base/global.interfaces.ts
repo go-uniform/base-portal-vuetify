@@ -266,6 +266,7 @@ export interface IRepository<T> {
   disableCreation?: boolean;
   freeTextSearch?: boolean;
   entity: string;
+  slug: string;
   title: IRepositoryTitle;
   defaultSortOrder: string;
   listPage: string;

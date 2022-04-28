@@ -8,6 +8,7 @@ import {
   IUpdatePromise
 } from '@/services/base/global.interfaces';
 import {
+  apiFetch,
   compileListQueryParameters,
   getBaseUrl,
   mergeHeaders,
@@ -17,7 +18,7 @@ import {
 import {RouteConfig} from 'vue-router';
 import {translate} from '@/plugins/base/vuetify';
 
-export const baseList = <T>(entity: string): IListPromise<T> => {
+export const baseList = <T>(slug: string): IListPromise<T> => {
   return (
     order: string,
     filters: object = {},
@@ -25,7 +26,7 @@ export const baseList = <T>(entity: string): IListPromise<T> => {
     pageSize = 50,
   ): Promise<IList<T>> => {
     return new Promise<IList<T>>((resolve, reject) => {
-      fetch(`${getBaseUrl()}/${entity}${compileListQueryParameters(order, filters)}`, {
+      apiFetch(`${getBaseUrl()}/${slug}${compileListQueryParameters(order, filters)}`, {
 
         method: 'GET',
         headers: mergeHeaders({
@@ -46,12 +47,12 @@ export const baseList = <T>(entity: string): IListPromise<T> => {
   };
 };
 
-export const baseCreate = <T>(entity: string): ICreatePromise<T> => {
+export const baseCreate = <T>(slug: string): ICreatePromise<T> => {
   return (
     document: T,
   ): Promise<IItem<T>> => {
     return new Promise<IItem<T>>((resolve, reject) => {
-      return fetch(`${getBaseUrl()}/${entity}`, {
+      return apiFetch(`${getBaseUrl()}/${slug}`, {
 
         method: 'POST',
         body: JSON.stringify(document),
@@ -70,12 +71,12 @@ export const baseCreate = <T>(entity: string): ICreatePromise<T> => {
   };
 };
 
-export const baseRead = <T>(entity: string): IReadPromise<T> => {
+export const baseRead = <T>(slug: string): IReadPromise<T> => {
   return (
     id: string,
   ): Promise<IItem<T>> => {
     return new Promise<IItem<T>>((resolve, reject) => {
-      return fetch(`${getBaseUrl()}/${entity}/${id}`, {
+      return apiFetch(`${getBaseUrl()}/${slug}/${id}`, {
         method: 'GET',
         headers: mergeHeaders({}),
       }).then((response) => {
@@ -87,13 +88,13 @@ export const baseRead = <T>(entity: string): IReadPromise<T> => {
   };
 };
 
-export const baseUpdate = <T>(entity: string): IUpdatePromise<T> => {
+export const baseUpdate = <T>(slug: string): IUpdatePromise<T> => {
   return (
     id: string,
     document: T,
   ): Promise<IItem<T>> => {
     return new Promise<IItem<T>>((resolve, reject) => {
-      return fetch(`${getBaseUrl()}/${entity}/${id}`, {
+      return apiFetch(`${getBaseUrl()}/${slug}/${id}`, {
         method: 'PUT',
         body: JSON.stringify(document),
         headers: mergeHeaders({}),
@@ -106,12 +107,12 @@ export const baseUpdate = <T>(entity: string): IUpdatePromise<T> => {
   };
 };
 
-export const baseDelete = <T>(entity: string): IDeletePromise<T> => {
+export const baseDelete = <T>(slug: string): IDeletePromise<T> => {
   return (
     id: string,
   ): Promise<IItem<T>> => {
     return new Promise<IItem<T>>((resolve, reject) => {
-      return fetch(`${getBaseUrl()}/${entity}/${id}`, {
+      return apiFetch(`${getBaseUrl()}/${slug}/${id}`, {
         method: 'DELETE',
         headers: mergeHeaders({}),
       }).then((response) => {

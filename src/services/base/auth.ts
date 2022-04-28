@@ -3,8 +3,8 @@ import {IAuthRepository, IItem} from '@/services/base/global.interfaces';
 import {EnumHttpMethod} from '@/services/base/global.enums';
 import {baseRestItemStub, generateFakeJwt, stubScenario} from '@/services/base/stub';
 import {AuthToken, AuthTokenJwt} from '@/services/base/global.types';
-import {UsersList} from '@/services/repositories/users';
-import {mergeHeaders} from '@/services/base/base';
+import {UsersList} from '@/services/stubs/users';
+import {baseRestItem} from '@/services/base/base';
 
 let authToken: string | null = null;
 let authJwt: string | null = null;
@@ -68,34 +68,14 @@ export const auth: IAuthRepository =  {
     },
 
     logout: () => {
-        return baseRestItemStub<null>(stubScenario({}), () => {
+        return baseRestItem<null>(() => {
             clearAuthDetails();
             return true;
         }, null, EnumHttpMethod.Post, 'auth/logout');
     },
 
     login: (type: string, identifier: string, password: string, headers: Headers = new Headers()) => {
-        let scenario = stubScenario({}, 401, new Headers({
-            'Message': '$vuetify.errors.accountDoesNotExist'
-        }));
-        const index = UsersList.findIndex((item: any) => {
-            return item.username === identifier || item.email === identifier;
-        });
-        if (index >= 0) {
-            const user = UsersList[index];
-            if (user.password !== password) {
-                scenario = stubScenario({}, 401, new Headers({
-                    'Message': '$vuetify.errors.invalidCredentials'
-                }));
-            } else {
-                scenario = stubScenario({
-                    twoFactor: true,
-                    otpRequestId: index,
-                    otp: '000000',
-                });
-            }
-        }
-        return baseRestItemStub<AuthToken>(scenario, (value: IItem<AuthToken>) => {
+        return baseRestItem<AuthToken>((value: IItem<AuthToken>) => {
             const jwtToken = (value.item as AuthTokenJwt);
             if (jwtToken) {
                 authToken = jwtToken.token;
@@ -111,25 +91,7 @@ export const auth: IAuthRepository =  {
     },
 
     otp: (otpRequestId: string, pin: string, headers: Headers = new Headers()) => {
-        let scenario = stubScenario({}, 404, new Headers({
-            'Message': '$vuetify.errors.recordNotFound'
-        }));
-        const user = UsersList[parseInt(otpRequestId)]
-        if (user) {
-            const jwt = generateFakeJwt({
-                "name": `${user.firstName} ${user.lastName}`,
-                "sub": user.id,
-            });
-            scenario = stubScenario({
-                token: 'e47b6d46-a0b6-446f-a520-86e5fc82b364',
-                jwt: jwt,
-            });
-        }
-        return baseRestItemStub<AuthTokenJwt>(scenario, (value: IItem<AuthTokenJwt>) => {
-            if (pin !== '000000') {
-                toastError('$vuetify.errors.incorrectOtpPin', []);
-                return false;
-            }
+        return baseRestItem<AuthTokenJwt>((value: IItem<AuthTokenJwt>) => {
             authToken = value.item.token;
             authJwt = value.item.jwt;
             storeAuthDetails();
@@ -141,7 +103,7 @@ export const auth: IAuthRepository =  {
     },
 
     resendOtp: (otpRequestId: string, headers: Headers = new Headers()) => {
-        return baseRestItemStub<AuthTokenJwt>(stubScenario({}), null, null, EnumHttpMethod.Post, 'auth/login/resendOtp', {
+        return baseRestItem<AuthTokenJwt>(null, null, EnumHttpMethod.Post, 'auth/login/resend-otp', {
             otpRequestId,
         }, headers);
     },

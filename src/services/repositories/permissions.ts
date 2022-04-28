@@ -1,107 +1,78 @@
-import {
-  baseBulkStub,
-  baseCreateStub,
-  baseDeleteStub, baseListLoad,
-  baseListStub,
-  baseReadStub,
-  baseUpdateStub,
-} from '@/services/base/stub';
 import {IAttribute, IRepository} from '@/services/base/global.interfaces';
-import {EnumAttributeType, EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
+import {EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
+import {baseBulk} from '@/services/base/entity.bulk';
+import {baseCreate, baseDelete, baseList, baseRead, baseUpdate} from '@/services/base/entity.crud';
 
 const entity = 'permissions';
-
-export const PermissionsList: IAttribute[] = baseListLoad([
-  {
-    id: '624df0929bc786ddf868f7e8',
-    key: 'usersListOwner',
-    name: 'Users List Owner',
-    description: 'Ability to list users that you own or your group owns in some way.',
-    type: EnumAttributeType.Enumeration,
-    modifiedAt: new Date(),
-    createdAt: new Date(),
-  },
-  {
-    id: '626516d2be4f88afcc41676d',
-    key: 'usersCreateOwner',
-    name: 'Users Create Owner',
-    description: 'Ability to create new users that you own or your group owns in some way.',
-    type: EnumAttributeType.Enumeration,
-    modifiedAt: new Date(),
-    createdAt: new Date(),
-  },
-], entity);
-
-const stubRecordHandler = (item: any) => {
-  return item;
-}
+const slug = entity;
 
 export const permissions: IRepository<IAttribute> = {
   freeTextSearch: true,
   entity: entity,
+  slug: slug,
   title: {
-    singular: '$vuetify.permissions.singular',
-    plural: '$vuetify.permissions.plural',
+    singular: `$vuetify.${entity}.singular`,
+    plural: `$vuetify.${entity}.plural`,
   },
   defaultSortOrder: '-createdAt',
-  listPage: '/permissions',
-  addPage: '/permissions/add',
-  viewPagePrefix: '/permissions/view',
-  editPagePrefix: '/permissions/edit',
+  listPage: `/${slug}`,
+  addPage: `/${slug}/add`,
+  viewPagePrefix: `/${slug}/view`,
+  editPagePrefix: `/${slug}/edit`,
   fields: {
     id: {
-      label: '$vuetify.permissions.fields.id',
+      label: `$vuetify.${slug}.fields.id`,
       type: EnumFieldType.Uuid,
       readonly: true,
     },
     type: {
-      label: '$vuetify.permissions.fields.type',
+      label: `$vuetify.${slug}.fields.type`,
       type: EnumFieldType.Enumeration,
       defaultValue: 'inherit',
       values: [
         {
           value: 'inherit',
-          title: '$vuetify.permissions.enums.type.inherit.title',
-          icon: '$vuetify.permissions.enums.type.inherit.icon',
-          color: '$vuetify.permissions.enums.type.inherit.color',
+          title: `$vuetify.${slug}.enums.type.inherit.title`,
+          icon: `$vuetify.${slug}.enums.type.inherit.icon`,
+          color: `$vuetify.${slug}.enums.type.inherit.color`,
         },
         {
           value: 'allow',
-          title: '$vuetify.permissions.enums.type.allow.title',
-          icon: '$vuetify.permissions.enums.type.allow.icon',
-          color: '$vuetify.permissions.enums.type.allow.color',
+          title: `$vuetify.${slug}.enums.type.allow.title`,
+          icon: `$vuetify.${slug}.enums.type.allow.icon`,
+          color: `$vuetify.${slug}.enums.type.allow.color`,
         },
         {
           value: 'deny',
-          title: '$vuetify.permissions.enums.type.deny.title',
-          icon: '$vuetify.permissions.enums.type.deny.icon',
-          color: '$vuetify.permissions.enums.type.deny.color',
+          title: `$vuetify.${slug}.enums.type.deny.title`,
+          icon: `$vuetify.${slug}.enums.type.deny.icon`,
+          color: `$vuetify.${slug}.enums.type.deny.color`,
         },
       ],
     },
     key: {
-      label: '$vuetify.permissions.fields.key',
+      label: `$vuetify.${slug}.fields.key`,
       type: EnumFieldType.Text,
       pattern: /^[a-zA-z0-9]+$/,
       patternMessage: '$vuetify.validations.jsonKey',
     },
     name: {
-      label: '$vuetify.permissions.fields.name',
+      label: `$vuetify.${slug}.fields.name`,
       type: EnumFieldType.Text,
     },
     description: {
-      label: '$vuetify.permissions.fields.description',
+      label: `$vuetify.${slug}.fields.description`,
       type: EnumFieldType.TextArea,
       optional: true,
     },
     modifiedAt: {
-      label: '$vuetify.permissions.fields.modifiedAt',
+      label: `$vuetify.${slug}.fields.modifiedAt`,
       type: EnumFieldType.DateTime,
       readonly: true,
     },
     createdAt: {
-      label: '$vuetify.permissions.fields.createdAt',
+      label: `$vuetify.${slug}.fields.createdAt`,
       type: EnumFieldType.DateTime,
       readonly: true,
       filterable: true,
@@ -123,7 +94,7 @@ export const permissions: IRepository<IAttribute> = {
     },
   ],
   sections: [
-    new Section('$vuetify.permissions.sections.general', [
+    new Section(`$vuetify.${slug}.sections.general`, [
       'id',
       'type',
       'key',
@@ -142,10 +113,10 @@ export const permissions: IRepository<IAttribute> = {
     }
   ],
 
-  list: baseListStub<IAttribute>(PermissionsList, null, entity),
-  create: baseCreateStub<IAttribute>(PermissionsList, stubRecordHandler, entity),
-  read: baseReadStub<IAttribute>(PermissionsList, null, entity),
-  update: baseUpdateStub<IAttribute>(PermissionsList, stubRecordHandler, entity),
-  delete: baseDeleteStub<IAttribute>(PermissionsList, null, entity),
-  bulk: baseBulkStub<IAttribute>(PermissionsList, null, entity),
+  list: baseList<IAttribute>(slug),
+  create: baseCreate<IAttribute>(slug),
+  read: baseRead<IAttribute>(slug),
+  update: baseUpdate<IAttribute>(slug),
+  delete: baseDelete<IAttribute>(slug),
+  bulk: baseBulk(slug),
 };

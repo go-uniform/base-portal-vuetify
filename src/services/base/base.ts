@@ -16,7 +16,12 @@ import {
 import {EnumHeaderAlign, EnumHttpMethod} from '@/services/base/global.enums';
 import {generic} from '@/services/base/global.types';
 
+interface ApiFetchHandler {
+  (input: RequestInfo, init?: RequestInit): Promise<Response>
+}
+
 let baseUrl = '/api';
+let apiFetchHandler: ApiFetchHandler | null = null;
 
 export const getBaseUrl = (): string => {
   return baseUrl;
@@ -28,6 +33,21 @@ export const setBaseUrl = (
   baseUrl = url.replace(/\/+$/, ''); // rtrim('/')
   baseUrl = baseUrl.replace(/\\+$/, ''); // rtrim('\')
 };
+
+export const getApiFetchHandler = (): ApiFetchHandler | null => {
+  return apiFetchHandler;
+}
+
+export const setApiFetchHandler = (handler: ApiFetchHandler | null) => {
+  return apiFetchHandler = handler;
+}
+
+export const apiFetch = (input: RequestInfo, init?: RequestInit): Promise<Response> => {
+  if (apiFetchHandler !== null) {
+    return apiFetchHandler(input, init);
+  }
+  return fetch(input, init);
+}
 
 export const compileListQueryParameters = (
   order: string,
@@ -159,7 +179,7 @@ export const processStandardResponse = <T>(
 
 export const baseRestItem = <T>(callbackResolve: any, callbackReject: any, method: EnumHttpMethod, path: string, payload: generic = {}, headers = new Headers()): Promise<IItem<T>> => {
   return new Promise<IItem<T>>((resolve, reject) => {
-    fetch(`${getBaseUrl()}/${path}`, {
+    apiFetch(`${getBaseUrl()}/${path}`, {
       method: method,
       body: JSON.stringify(payload),
       headers: mergeHeaders(headers),
@@ -187,7 +207,7 @@ export const baseRestItem = <T>(callbackResolve: any, callbackReject: any, metho
 
 export const baseRestList = <T>(callbackResolve: any, callbackReject: any, method: EnumHttpMethod, path: string, payload: generic = {}, headers = new Headers()): Promise<IList<T>> => {
   return new Promise<IList<T>>((resolve, reject) => {
-    fetch(`${getBaseUrl()}/${path}`, {
+    apiFetch(`${getBaseUrl()}/${path}`, {
       method: method,
       body: JSON.stringify(payload),
       headers: mergeHeaders(headers),
