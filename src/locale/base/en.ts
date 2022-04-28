@@ -9,6 +9,7 @@ export default extend(en, {
     length: 'May not be more than {0} characters long.',
   },
   errors: {
+    unknownBulkAction: 'Unknown bulk action \'{0}\' request received on entity \'{1}\'',
     missingFilterType: 'A filter control for \'{0}\' has not bee implemented yet',
     general: 'Something went wrong',
     recordNotFound: 'The record could not be found',

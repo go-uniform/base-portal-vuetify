@@ -9,6 +9,7 @@ export default extend(af, {
     length: 'Mag nie meer as {0} karakters lank wees nie.',
   },
   errors: {
+    unknownBulkAction: 'Onbekende grootmaat-handeling \'{0}\' versoek ontvang op entiteit \'{1}\'',
     missingFilterType: '\'n Filterkontrole vir \'{0}\' is nog nie geïmplementeer nie',
     general: 'Iets het verkeerd geloop',
     recordNotFound: 'Die rekord kon nie gevind word nie',

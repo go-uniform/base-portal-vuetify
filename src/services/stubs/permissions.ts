@@ -30,7 +30,7 @@ const stub = {
     return item;
   },
   handlers: {
-    'GET /permissions': baseListStub(permissions.entity, null),
+    'GET /permissions': baseListStub(permissions.entity),
   },
   initialData: PermissionsList,
 };

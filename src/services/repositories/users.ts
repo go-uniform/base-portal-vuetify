@@ -45,72 +45,72 @@ export const users: IRepository<IUser> = {
   default: {},
   fields: {
     id: {
-      label: `$vuetify.${slug}.fields.id`,
+      label: `$vuetify.${entity}.fields.id`,
       type: EnumFieldType.Uuid,
       readonly: true,
     },
     firstName: {
-      label: `$vuetify.${slug}.fields.firstName`,
+      label: `$vuetify.${entity}.fields.firstName`,
       type: EnumFieldType.Text,
     },
     lastName: {
-      label: `$vuetify.${slug}.fields.lastName`,
+      label: `$vuetify.${entity}.fields.lastName`,
       type: EnumFieldType.Text,
     },
     username: {
-      label: `$vuetify.${slug}.fields.username`,
+      label: `$vuetify.${entity}.fields.username`,
       type: EnumFieldType.Text,
     },
     email: {
-      label: `$vuetify.${slug}.fields.email`,
+      label: `$vuetify.${entity}.fields.email`,
       type: EnumFieldType.Text,
       pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       patternMessage: '$vuetify.validations.email',
       optional: true,
     },
     userRoleId: {
-      label: `$vuetify.${slug}.fields.userRoleId`,
+      label: `$vuetify.${entity}.fields.userRoleId`,
       type: EnumFieldType.LinkId,
       linkLabelFieldKey: 'userRoleLabel',
       linkRepository: userRoles,
     },
     userRoleLabel: {
-      label: `$vuetify.${slug}.fields.userRoleId`,
+      label: `$vuetify.${entity}.fields.userRoleId`,
       type: EnumFieldType.LinkLabel,
       linkIdFieldKey: 'userRoleId',
       readonly: true,
     },
     parentUserId: {
-      label: `$vuetify.${slug}.fields.parentUserId`,
+      label: `$vuetify.${entity}.fields.parentUserId`,
       type: EnumFieldType.SelfReferenceId,
       selfReferenceLabelFieldKey: 'parentUserLabel',
       textAssemblyCallback: (item) => { return `${item.firstName} ${item.lastName}`; },
       optional: true,
     },
     parentUserLabel: {
-      label: `$vuetify.${slug}.fields.parentUserLabel`,
+      label: `$vuetify.${entity}.fields.parentUserLabel`,
       type: EnumFieldType.SelfReferenceLabel,
       selfReferenceIdFieldKey: 'parentUserId',
       readonly: true,
       optional: true,
     },
     attributes: {
-      label: `$vuetify.${slug}.fields.attributes`,
+      label: `$vuetify.${entity}.fields.attributes`,
       type: EnumFieldType.Attributes,
       attributeRepository: userAttributes,
     },
     permissions: {
-      label: `$vuetify.${slug}.fields.permissions`,
+      label: `$vuetify.${entity}.fields.permissions`,
       type: EnumFieldType.Attributes,
       attributeRepository: permissions,
     },
     modifiedAt: {
-      label: `$vuetify.${slug}.fields.modifiedAt`,
+      label: `$vuetify.${entity}.fields.modifiedAt`,
       type: EnumFieldType.DateTime,
       readonly: true,
     },
     createdAt: {
-      label: `$vuetify.${slug}.fields.createdAt`,
+      label: `$vuetify.${entity}.fields.createdAt`,
       type: EnumFieldType.DateTime,
       filterable: true,
       readonly: true,
@@ -118,7 +118,7 @@ export const users: IRepository<IUser> = {
   },
   headers: [
     {
-      title: `$vuetify.${slug}.virtual.name`,
+      title: `$vuetify.${entity}.virtual.name`,
       displayCallback: (item) => { return `${item.firstName} ${item.lastName}` },
       sortable: false,
     },
@@ -140,7 +140,7 @@ export const users: IRepository<IUser> = {
     },
   ],
   sections: [
-    new Section(`$vuetify.${slug}.sections.general`, [
+    new Section(`$vuetify.${entity}.sections.general`, [
       'id',
       'firstName',
       'lastName',
@@ -155,14 +155,14 @@ export const users: IRepository<IUser> = {
       childLg: 4,
       childMd: 6,
     }),
-    new Section(`$vuetify.${slug}.sections.attributes`, [
+    new Section(`$vuetify.${entity}.sections.attributes`, [
       'attributes',
     ], {
       childXl: 3,
       childLg: 4,
       childMd: 6,
     }),
-    new Section(`$vuetify.${slug}.sections.permissions`, [
+    new Section(`$vuetify.${entity}.sections.permissions`, [
       'permissions',
     ], {
       childXl: 3,

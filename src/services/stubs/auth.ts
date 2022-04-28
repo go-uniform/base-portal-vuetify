@@ -12,7 +12,7 @@ const stub = {
       }));
 
       let body: any = null;
-      if (init.body) {
+      if (init && init.body) {
         body = JSON.parse(init.body.toString());
       }
 
@@ -59,7 +59,7 @@ const stub = {
       }));
 
       let body: any = null;
-      if (init.body) {
+      if (init && init.body) {
         body = JSON.parse(init.body.toString());
       }
 
@@ -98,35 +98,3 @@ const stub = {
 };
 
 export const StubAuth = stub;
-
-
-/* Otp
-
-        let scenario = stubScenario({}, 404, new Headers({
-            'Message': '$vuetify.errors.recordNotFound'
-        }));
-        const user = UsersList[parseInt(otpRequestId)]
-        if (user) {
-            const jwt = generateFakeJwt({
-                "name": `${user.firstName} ${user.lastName}`,
-                "sub": user.id,
-            });
-            scenario = stubScenario({
-                token: 'e47b6d46-a0b6-446f-a520-86e5fc82b364',
-                jwt: jwt,
-            });
-        }
-
-
-        response:
-              if (pin !== '000000') {
-                toastError('$vuetify.errors.incorrectOtpPin', []);
-                return false;
-            }
-
-
- */
-
-/*
-
- */

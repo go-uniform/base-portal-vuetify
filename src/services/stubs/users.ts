@@ -1,4 +1,12 @@
-import {baseListLoad, baseListStub, generateUuid} from '@/services/base/stub';
+import {
+  baseBulkStub,
+  baseCreateStub, baseDeleteStub,
+  baseListLoad,
+  baseListStub,
+  baseReadStub,
+  baseUpdateStub,
+  generateUuid, IBulkStubScenarioResponse, IStubScenario, stubScenario
+} from '@/services/base/stub';
 import {IUser, users} from '@/services/repositories/users';
 import {UserRolesList} from '@/services/stubs/user-roles';
 
@@ -23,21 +31,40 @@ export const UsersList: IUser[] = baseListLoad([
   },
 ], users.entity);
 
+const recordAssemblyHandler = (item: IUser) => {
+  if (item.userRoleId) {
+    const userRoles = UserRolesList.filter((userRole) => userRole.id === item.userRoleId)
+    item.userRoleLabel = userRoles[0].name;
+  }
+  if (item.parentUserId) {
+    const users = UsersList.filter((user) => user.id === item.parentUserId)
+    item.parentUserLabel = `${users[0].firstName} ${users[0].lastName}`;
+  }
+  return item;
+};
+
 const stub = {
   repository: users,
-  recordAssemblyHandler: (item: IUser) => {
-    if (item.userRoleId) {
-      const userRoles = UserRolesList.filter((userRole) => userRole.id === item.userRoleId)
-      item.userRoleLabel = userRoles[0].name;
-    }
-    if (item.parentUserId) {
-      const users = UsersList.filter((user) => user.id === item.parentUserId)
-      item.parentUserLabel = `${users[0].firstName} ${users[0].lastName}`;
-    }
-    return item;
-  },
   handlers: {
-    'GET /users': baseListStub(users.entity, null),
+    'GET /users': baseListStub(users.entity),
+    'POST /users/:id': baseCreateStub(users.entity, recordAssemblyHandler),
+    'GET /users/:id': baseReadStub(users.entity),
+    'PUT /users/:id': baseUpdateStub(users.entity, recordAssemblyHandler),
+    'DELETE /users/:id': baseDeleteStub(users.entity),
+    'POST /users/bulk': baseBulkStub(users.entity, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
+      switch (action) {
+        case 'delete':
+          return {
+            scenario: stubScenario({}),
+            list: list.filter(function(value, index, arr){
+              return !indexes.includes(index);
+            }),
+          };
+      }
+      return {
+        scenario: stubScenario({}, 400, new Headers({'Message':'$vuetify.errors.unknownBulkAction','Message-Arguments':`${action}###${users.entity}`}))
+      };
+    }),
   },
   initialData: UsersList,
 };

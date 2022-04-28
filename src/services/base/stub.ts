@@ -34,6 +34,15 @@ export const generateUuid = () => {
   });
 }
 
+export interface IBulkStubScenarioResponse {
+  list?: any[];
+  scenario?: IStubScenario;
+}
+
+export interface IBulkStubScenarioHandler {
+  (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse;
+}
+
 export interface IStubScenario {
   status: number;
   headers: Headers;
@@ -83,6 +92,23 @@ interface IResponse {
   (input: RequestInfo, init?: RequestInit): Promise<Response>;
 }
 
+export const getPathId = (path: string): string | null => {
+  let id: string | null = null;
+
+  // todo: there must be a more accurate way of handling this, though I am sure it will rework a large amount of rework
+  const pieces = path.split('/');
+  pieces.map((piece) => {
+    // if it looks like an id, it must be an id => such bad logic, for the love of God please figure out a better way!
+    if (/^[0-9a-f]{24}$/i.test(piece.replace('-', ''))) {
+      id = piece;
+      return ':id';
+    }
+    return piece;
+  });
+
+  return id;
+}
+
 export const baseListStub = <T>(slug: string, scenario?: IStubScenario | null): IResponse => {
   return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
     return new Promise<any>((resolve, reject) => {
@@ -105,143 +131,242 @@ export const baseListStub = <T>(slug: string, scenario?: IStubScenario | null): 
   };
 };
 
-export type IStubCreateHandler = (item: any) => any;
-
-export const baseCreateStub = <T>(list: T[], scenario: IStubScenario | IStubCreateHandler | null, entity: string): ICreatePromise<T> => {
-  return (
-    document: T,
-  ): Promise<IItem<T>> => {
-    return new Promise<IItem<T>>((resolve, reject) => {
+export const baseCreateStub = <T>(slug: string, handler?: any, scenario?: IStubScenario | null): IResponse => {
+  return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
+    return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
-        console.log('create', entity, document);
-        const hardcodedScenario = (scenario as IStubScenario);
-        if (hardcodedScenario && hardcodedScenario.status) {
-          processStandardItemResponse<T>(hardcodedScenario, resolve, reject);
+        console.log('create', slug, input, init);
+        if (scenario) {
+          resolve(scenario);
         } else {
-          const handler = (scenario as IStubCreateHandler);
-          const record: any = document;
-          record.id = generateUuid();
-          record.modifiedAt = new Date();
-          record.createdAt = new Date();
-          if (handler) {
-            list.push(handler(record));
-          } else {
-            list.push(record);
-          }
+          let list = [];
           if (window.localStorage) {
-            window.localStorage.setItem(`stub.${entity}`, JSON.stringify(list));
+            const data = window.localStorage.getItem(`stub.${slug}`);
+            if (data) {
+              list = JSON.parse(data);
+            }
           }
-          processStandardItemResponse<T>(stubScenario(record, 200), resolve, reject);
-        }
-      }, StubTimeout);
-    });
-  };
-};
 
-export const baseReadStub = <T>(list: T[], scenario: IStubScenario | null, entity: string): IReadPromise<T> => {
-  return (
-    id: string,
-  ): Promise<IItem<T>> => {
-    return new Promise<IItem<T>>((resolve, reject) => {
-      setTimeout(() => {
-        console.log('read', entity, id);
-        if (scenario) {
-          processStandardItemResponse<T>(scenario, resolve, reject);
-        } else {
-          const index = list.findIndex((item: any) => {
-            return item.id === id
-          });
-          if (index === -1) {
-            processStandardItemResponse<T>(stubScenario(null, 404), resolve, reject);
-          } else {
-            processStandardItemResponse<T>(stubScenario(list[index], 200), resolve, reject);
+          scenario = stubScenario({}, 500, new Headers({
+            'Message': '$vuetify.errors.general'
+          }));
+
+          let body: any = null;
+          if (init && init.body) {
+            body = JSON.parse(init.body.toString());
           }
-        }
-      }, StubTimeout);
-    });
-  };
-};
 
-export const baseUpdateStub = <T>(list: T[], scenario: IStubScenario | IStubCreateHandler | null, entity: string): IUpdatePromise<T> => {
-  return (
-    id: string,
-    document: T,
-  ): Promise<IItem<T>> => {
-    return new Promise<IItem<T>>((resolve, reject) => {
-      setTimeout(() => {
-        console.log('update', entity, id, document);
-        const hardcodedScenario = (scenario as IStubScenario);
-        if (hardcodedScenario && hardcodedScenario.status) {
-          processStandardItemResponse<T>(hardcodedScenario, resolve, reject);
-        } else {
-          const index = list.findIndex((item: any) => {
-            return item.id === id
-          });
-          if (index === -1) {
-            processStandardItemResponse<T>(stubScenario(null, 404), resolve, reject);
-          } else {
-            const handler = (scenario as IStubCreateHandler);
-            const record: any = {
-              ...list[index],
-              ...document
-            };
+          if (body) {
+            const record = body;
+            record.id = generateUuid();
             record.modifiedAt = new Date();
+            record.createdAt = new Date();
             if (handler) {
-              list[index] = handler(record);
+              list.push(handler(record));
             } else {
-              list[index] = record;
+              list.push(record);
             }
             if (window.localStorage) {
-              window.localStorage.setItem(`stub.${entity}`, JSON.stringify(list));
+              window.localStorage.setItem(`stub.${slug}`, JSON.stringify(list));
             }
-            processStandardItemResponse<T>(stubScenario(record, 200), resolve, reject);
+            scenario = stubScenario(record);
           }
+          resolve(scenario);
         }
       }, StubTimeout);
     });
   };
 };
 
-export const baseDeleteStub = <T>(list: T[], scenario: IStubScenario | null, entity: string): IDeletePromise<T> => {
-  return (
-    id: string,
-  ): Promise<IItem<T>> => {
-    return new Promise<IItem<T>>((resolve, reject) => {
+export const baseReadStub = <T>(slug: string, scenario?: IStubScenario | null): IResponse => {
+  return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
+    return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
-        console.log('delete', entity, id);
-        const hardcodedScenario = (scenario as IStubScenario);
-        if (hardcodedScenario && hardcodedScenario.status) {
-          processStandardItemResponse<T>(hardcodedScenario, resolve, reject);
-        } else {
-          const index = list.findIndex((item: any) => {
-            return item.id === id
-          });
-          if (index === -1) {
-            processStandardItemResponse<T>(stubScenario(null, 404), resolve, reject);
-          } else {
-            const record = list[index];
-            list.splice(index, 1);
-            if (window.localStorage) {
-              window.localStorage.setItem(`stub.${entity}`, JSON.stringify(list));
-            }
-            processStandardItemResponse<T>(stubScenario(record, 200), resolve, reject);
-          }
-        }
-      }, StubTimeout);
-    });
-  };
-};
-
-export const baseBulkStub = <T>(list: T[], scenario: IStubScenario | null, entity: string): IBulkPromise => {
-  return (
-    action: string,
-    ids: string[],
-  ): Promise<IItem<generic>> => {
-    return new Promise<IItem<generic>>((resolve, reject) => {
-      setTimeout(() => {
-        console.log('bulk', entity, action, ids);
+        console.log('read', slug, input, init);
         if (scenario) {
-          processStandardItemResponse<generic>(scenario, resolve, reject);
+          resolve(scenario);
+        } else {
+          let list = [];
+          if (window.localStorage) {
+            const data = window.localStorage.getItem(`stub.${slug}`);
+            if (data) {
+              list = JSON.parse(data);
+            }
+          }
+
+          scenario = stubScenario({}, 404, new Headers({
+            'Message': '$vuetify.errors.recordNotFound'
+          }));
+
+          const id = getPathId(input.toString());
+          if (id) {
+            const index = list.findIndex((item: any) => {
+              return item.id === id;
+            });
+            if (index >= 0) {
+              scenario = stubScenario(list[index], 200)
+            }
+          }
+          resolve(scenario);
+        }
+      }, StubTimeout);
+    });
+  };
+};
+
+export const baseUpdateStub = <T>(slug: string, handler?: any, scenario?: IStubScenario | null): IResponse => {
+  return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
+    return new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        console.log('read', slug, input, init);
+        if (scenario) {
+          resolve(scenario);
+        } else {
+          let list = [];
+          if (window.localStorage) {
+            const data = window.localStorage.getItem(`stub.${slug}`);
+            if (data) {
+              list = JSON.parse(data);
+            }
+          }
+
+          scenario = stubScenario({}, 500, new Headers({
+            'Message': '$vuetify.errors.general'
+          }));
+
+          let body: any = null;
+          if (init && init.body) {
+            body = JSON.parse(init.body.toString());
+          }
+
+          if (body) {
+            scenario = stubScenario({}, 404, new Headers({
+              'Message': '$vuetify.errors.recordNotFound'
+            }));
+
+            const id = getPathId(input.toString());
+            if (id) {
+              const index = list.findIndex((item: any) => {
+                return item.id === id;
+              });
+              console.log(id, index, list);
+              if (index >= 0) {
+                const record: any = {
+                  ...list[index],
+                  ...document
+                };
+                record.modifiedAt = new Date();
+                if (handler) {
+                  list[index] = handler(record);
+                } else {
+                  list[index] = record;
+                }
+                if (window.localStorage) {
+                  window.localStorage.setItem(`stub.${slug}`, JSON.stringify(list));
+                }
+                scenario = stubScenario(record);
+              }
+            }
+          }
+          resolve(scenario);
+        }
+      }, StubTimeout);
+    });
+  };
+};
+
+export const baseDeleteStub = <T>(slug: string, scenario?: IStubScenario | null): IResponse => {
+  return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
+    return new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        console.log('read', slug, input, init);
+        if (scenario) {
+          resolve(scenario);
+        } else {
+          let list = [];
+          if (window.localStorage) {
+            const data = window.localStorage.getItem(`stub.${slug}`);
+            if (data) {
+              list = JSON.parse(data);
+            }
+          }
+
+          scenario = stubScenario({}, 500, new Headers({
+            'Message': '$vuetify.errors.general'
+          }));
+
+          scenario = stubScenario({}, 404, new Headers({
+            'Message': '$vuetify.errors.recordNotFound'
+          }));
+
+          const id = getPathId(input.toString());
+          if (id) {
+            const index = list.findIndex((item: any) => {
+              return item.id === id
+            });
+            if (index >= 0) {
+              const record = list[index];
+              list.splice(index, 1);
+              if (window.localStorage) {
+                window.localStorage.setItem(`stub.${slug}`, JSON.stringify(list));
+              }
+              scenario = stubScenario(record);
+            }
+          }
+          resolve(scenario);
+        }
+      }, StubTimeout);
+    });
+  };
+};
+
+export const baseBulkStub = <T>(slug: string, recordHandler?: IBulkStubScenarioHandler, scenario?: IStubScenario | null): IResponse => {
+  return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
+    return new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        console.log('bulk', slug, input, init);
+        if (scenario) {
+          resolve(scenario);
+        } else {
+          let list: any = [];
+          if (window.localStorage) {
+            const data = window.localStorage.getItem(`stub.${slug}`);
+            if (data) {
+              list = JSON.parse(data);
+            }
+          }
+
+          scenario = stubScenario({}, 500, new Headers({
+            'Message': '$vuetify.errors.general'
+          }));
+
+          let body: any = null;
+          if (init && init.body) {
+            body = JSON.parse(init.body.toString());
+          }
+
+          if (body && body.action && body.ids && recordHandler) {
+            const recordIndexes: number[] = [];
+            body.ids.forEach((id: string) => {
+              const index = list.findIndex((item: any) => {
+                return item.id.toLowerCase() === id.toLowerCase();
+              });
+              recordIndexes.push(index);
+            });
+            const response = recordHandler(body.action, recordIndexes, list);
+            console.log(response);
+            if (response.scenario) {
+              scenario = response.scenario;
+            }
+            if (response.list) {
+              list = response.list;
+            }
+            if (window.localStorage) {
+              window.localStorage.setItem(`stub.${slug}`, JSON.stringify(list));
+            }
+          }
+
+          resolve(scenario);
         }
       }, StubTimeout);
     });
@@ -305,6 +430,17 @@ export const baseStubHandlerRoutine = (input: RequestInfo, init?: RequestInit): 
   if (path.includes('?')) {
     path = path.substring(0, path.indexOf('?'))
   }
+
+  // todo: there must be a more accurate way of handling this, though I am sure it will rework a large amount of rework
+  let pieces = path.split('/');
+  pieces = pieces.map((piece) => {
+    // if it looks like an id, it must be an id => such bad logic, for the love of God please figure out a better way!
+    if (/^[0-9a-f]{24}$/i.test(piece.replace('-', ''))) {
+      return ':id';
+    }
+    return piece;
+  });
+  path = pieces.join('/');
 
   const pathKey = `${method} ${path}`;
   if (handlers[pathKey]) {

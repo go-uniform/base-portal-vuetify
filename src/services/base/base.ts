@@ -118,7 +118,8 @@ export const processStandardResponse = <T>(
       generalErrorMessage = '$vuetify.errors.recordNotFound';
     }
     const message = response.headers.get('Message') ?? translate(generalErrorMessage);
-    toastError(message);
+    const messageArguments = response.headers.get('Message-Arguments') ?? '';
+    toastError(message, ...messageArguments.split('###'));
 
     if (response.status === 401) {
       window.location.assign('/login');
@@ -153,7 +154,8 @@ export const processStandardResponse = <T>(
 
     const message = response.headers.get('Message') ?? '';
     if (message !== '') {
-      toastSuccess(message);
+      const messageArguments = response.headers.get('Message-Arguments') ?? '';
+      toastSuccess(message, ...messageArguments.split('###'));
     }
 
     let value: IGeneric<T>;

@@ -231,7 +231,8 @@ export default {
       });
     }).catch((reason) => {
       const message = reason.headers.get('Message') ?? translate('$vuetify.errors.general');
-      toastError(message)
+      const messageArguments = reason.headers.get('Message-Arguments') ?? '';
+      toastError(message, ...messageArguments.split('###'));
     });
   },
 };

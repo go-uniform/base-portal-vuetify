@@ -1,4 +1,12 @@
-import {baseListLoad, baseListStub, generateUuid} from '@/services/base/stub';
+import {
+  baseBulkStub,
+  baseCreateStub, baseDeleteStub,
+  baseListLoad,
+  baseListStub,
+  baseReadStub,
+  baseUpdateStub,
+  generateUuid, IBulkStubScenarioResponse, stubScenario
+} from '@/services/base/stub';
 import {IUserRole, userRoles} from '@/services/repositories/user-roles';
 
 export const UserRolesList: IUserRole[] = baseListLoad([
@@ -31,11 +39,26 @@ export const UserRolesList: IUserRole[] = baseListLoad([
 
 const stub = {
   repository: userRoles,
-  recordAssemblyHandler: (item: IUserRole) => {
-    return item;
-  },
   handlers: {
-    'GET /user-roles': baseListStub(userRoles.entity, null),
+    'GET /user-roles': baseListStub(userRoles.entity),
+    'POST /user-roles/:id': baseCreateStub(userRoles.entity),
+    'GET /user-roles/:id': baseReadStub(userRoles.entity),
+    'PUT /user-roles/:id': baseUpdateStub(userRoles.entity),
+    'DELETE /user-roles/:id': baseDeleteStub(userRoles.entity),
+    'POST /user-roles/bulk': baseBulkStub(userRoles.entity, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
+      switch (action) {
+        case 'delete':
+          return {
+            scenario: stubScenario({}),
+            list: list.filter(function(value, index, arr){
+              return !indexes.includes(index);
+            }),
+          };
+      }
+      return {
+        scenario: stubScenario({}, 400, new Headers({'Message':'$vuetify.errors.unknownBulkAction','Message-Arguments':`${action}###${userRoles.entity}`}))
+      };
+    }),
   },
   initialData: UserRolesList,
 };

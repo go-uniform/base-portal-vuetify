@@ -22,36 +22,36 @@ export const userAttributes: IRepository<IAttribute> = {
   editPagePrefix: `/${slug}/edit`,
   fields: {
     id: {
-      label: `$vuetify.${slug}.fields.id`,
+      label: `$vuetify.${entity}.fields.id`,
       type: EnumFieldType.Uuid,
       readonly: true,
     },
     type: { // todo: create enum type fields that are limited to a specific selection of values
-      label: `$vuetify.${slug}.fields.type`,
+      label: `$vuetify.${entity}.fields.type`,
       type: EnumFieldType.Text,
     },
     key: {
-      label: `$vuetify.${slug}.fields.key`,
+      label: `$vuetify.${entity}.fields.key`,
       type: EnumFieldType.Text,
       pattern: /^[a-zA-z0-9]+$/,
       patternMessage: '$vuetify.validations.jsonKey',
     },
     name: {
-      label: `$vuetify.${slug}.fields.name`,
+      label: `$vuetify.${entity}.fields.name`,
       type: EnumFieldType.Text,
     },
     description: {
-      label: `$vuetify.${slug}.fields.description`,
+      label: `$vuetify.${entity}.fields.description`,
       type: EnumFieldType.TextArea,
       optional: true,
     },
     modifiedAt: {
-      label: `$vuetify.${slug}.fields.modifiedAt`,
+      label: `$vuetify.${entity}.fields.modifiedAt`,
       type: EnumFieldType.DateTime,
       readonly: true,
     },
     createdAt: {
-      label: `$vuetify.${slug}.fields.createdAt`,
+      label: `$vuetify.${entity}.fields.createdAt`,
       type: EnumFieldType.DateTime,
       readonly: true,
       filterable: true,
@@ -73,7 +73,7 @@ export const userAttributes: IRepository<IAttribute> = {
     },
   ],
   sections: [
-    new Section(`$vuetify.${slug}.sections.general`, [
+    new Section(`$vuetify.${entity}.sections.general`, [
       'id',
       'type',
       'key',

@@ -1,5 +1,13 @@
 import {IAttribute} from '@/services/base/global.interfaces';
-import {baseListLoad, baseListStub, generateUuid} from '@/services/base/stub';
+import {
+  baseBulkStub,
+  baseCreateStub, baseDeleteStub,
+  baseListLoad,
+  baseListStub,
+  baseReadStub,
+  baseUpdateStub,
+  generateUuid, IBulkStubScenarioResponse, stubScenario
+} from '@/services/base/stub';
 import {EnumAttributeType} from '@/services/base/global.enums';
 import {userAttributes} from '@/services/repositories/user-attributes';
 
@@ -21,7 +29,25 @@ const stub = {
     return item;
   },
   handlers: {
-    'GET /user-attributes': baseListStub(userAttributes.entity, null),
+    'GET /user-attributes': baseListStub(userAttributes.entity),
+    'POST /user-attributes/:id': baseCreateStub(userAttributes.entity),
+    'GET /user-attributes/:id': baseReadStub(userAttributes.entity),
+    'PUT /user-attributes/:id': baseUpdateStub(userAttributes.entity),
+    'DELETE /user-attributes/:id': baseDeleteStub(userAttributes.entity),
+    'POST /user-attributes/bulk': baseBulkStub(userAttributes.entity, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
+      switch (action) {
+        case 'delete':
+          return {
+            scenario: stubScenario({}),
+            list: list.filter(function(value, index, arr){
+              return !indexes.includes(index);
+            }),
+          };
+      }
+      return {
+        scenario: stubScenario({}, 400, new Headers({'Message':'$vuetify.errors.unknownBulkAction','Message-Arguments':`${action}###${userAttributes.entity}`}))
+      };
+    }),
   },
   initialData: UserAttributesList,
 };

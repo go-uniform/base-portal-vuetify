@@ -22,57 +22,57 @@ export const permissions: IRepository<IAttribute> = {
   editPagePrefix: `/${slug}/edit`,
   fields: {
     id: {
-      label: `$vuetify.${slug}.fields.id`,
+      label: `$vuetify.${entity}.fields.id`,
       type: EnumFieldType.Uuid,
       readonly: true,
     },
     type: {
-      label: `$vuetify.${slug}.fields.type`,
+      label: `$vuetify.${entity}.fields.type`,
       type: EnumFieldType.Enumeration,
       defaultValue: 'inherit',
       values: [
         {
           value: 'inherit',
-          title: `$vuetify.${slug}.enums.type.inherit.title`,
-          icon: `$vuetify.${slug}.enums.type.inherit.icon`,
-          color: `$vuetify.${slug}.enums.type.inherit.color`,
+          title: `$vuetify.${entity}.enums.type.inherit.title`,
+          icon: `$vuetify.${entity}.enums.type.inherit.icon`,
+          color: `$vuetify.${entity}.enums.type.inherit.color`,
         },
         {
           value: 'allow',
-          title: `$vuetify.${slug}.enums.type.allow.title`,
-          icon: `$vuetify.${slug}.enums.type.allow.icon`,
-          color: `$vuetify.${slug}.enums.type.allow.color`,
+          title: `$vuetify.${entity}.enums.type.allow.title`,
+          icon: `$vuetify.${entity}.enums.type.allow.icon`,
+          color: `$vuetify.${entity}.enums.type.allow.color`,
         },
         {
           value: 'deny',
-          title: `$vuetify.${slug}.enums.type.deny.title`,
-          icon: `$vuetify.${slug}.enums.type.deny.icon`,
-          color: `$vuetify.${slug}.enums.type.deny.color`,
+          title: `$vuetify.${entity}.enums.type.deny.title`,
+          icon: `$vuetify.${entity}.enums.type.deny.icon`,
+          color: `$vuetify.${entity}.enums.type.deny.color`,
         },
       ],
     },
     key: {
-      label: `$vuetify.${slug}.fields.key`,
+      label: `$vuetify.${entity}.fields.key`,
       type: EnumFieldType.Text,
       pattern: /^[a-zA-z0-9]+$/,
       patternMessage: '$vuetify.validations.jsonKey',
     },
     name: {
-      label: `$vuetify.${slug}.fields.name`,
+      label: `$vuetify.${entity}.fields.name`,
       type: EnumFieldType.Text,
     },
     description: {
-      label: `$vuetify.${slug}.fields.description`,
+      label: `$vuetify.${entity}.fields.description`,
       type: EnumFieldType.TextArea,
       optional: true,
     },
     modifiedAt: {
-      label: `$vuetify.${slug}.fields.modifiedAt`,
+      label: `$vuetify.${entity}.fields.modifiedAt`,
       type: EnumFieldType.DateTime,
       readonly: true,
     },
     createdAt: {
-      label: `$vuetify.${slug}.fields.createdAt`,
+      label: `$vuetify.${entity}.fields.createdAt`,
       type: EnumFieldType.DateTime,
       readonly: true,
       filterable: true,
@@ -94,7 +94,7 @@ export const permissions: IRepository<IAttribute> = {
     },
   ],
   sections: [
-    new Section(`$vuetify.${slug}.sections.general`, [
+    new Section(`$vuetify.${entity}.sections.general`, [
       'id',
       'type',
       'key',
