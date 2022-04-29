@@ -99,7 +99,7 @@ export const getPathId = (path: string): string | null => {
   const pieces = path.split('/');
   pieces.map((piece) => {
     // if it looks like an id, it must be an id => such bad logic, for the love of God please figure out a better way!
-    if (/^[0-9a-f]{24}$/i.test(piece.replace('-', ''))) {
+    if (/^[0-9a-f]{32}$/i.test(piece.replaceAll('-', ''))) {
       id = piece;
       return ':id';
     }
@@ -249,7 +249,6 @@ export const baseUpdateStub = <T>(slug: string, handler?: any, scenario?: IStubS
               const index = list.findIndex((item: any) => {
                 return item.id === id;
               });
-              console.log(id, index, list);
               if (index >= 0) {
                 const record: any = {
                   ...list[index],
@@ -354,7 +353,6 @@ export const baseBulkStub = <T>(slug: string, recordHandler?: IBulkStubScenarioH
               recordIndexes.push(index);
             });
             const response = recordHandler(body.action, recordIndexes, list);
-            console.log(response);
             if (response.scenario) {
               scenario = response.scenario;
             }
@@ -435,7 +433,7 @@ export const baseStubHandlerRoutine = (input: RequestInfo, init?: RequestInit): 
   let pieces = path.split('/');
   pieces = pieces.map((piece) => {
     // if it looks like an id, it must be an id => such bad logic, for the love of God please figure out a better way!
-    if (/^[0-9a-f]{24}$/i.test(piece.replace('-', ''))) {
+    if (/^[0-9a-f]{32}$/i.test(piece.replaceAll('-', ''))) {
       return ':id';
     }
     return piece;

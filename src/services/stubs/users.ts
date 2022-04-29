@@ -7,10 +7,10 @@ import {
   baseUpdateStub,
   generateUuid, IBulkStubScenarioResponse, IStubScenario, stubScenario
 } from '@/services/base/stub';
-import {IUser, users} from '@/services/repositories/users';
+import {User, users} from '@/services/repositories/users';
 import {UserRolesList} from '@/services/stubs/user-roles';
 
-export const UsersList: IUser[] = baseListLoad([
+export const UsersList: User[] = baseListLoad([
   {
     id: generateUuid(),
     firstName: 'John',
@@ -18,8 +18,10 @@ export const UsersList: IUser[] = baseListLoad([
     username: 'johns@go-uniform.org',
     email: 'johns@go-uniform.org',
     password: '$aMUqSrc7N3v',
-    userRoleId: UserRolesList[0].id,
-    userRoleLabel: UserRolesList[0].name,
+    userRole: {
+      id: UserRolesList[0].id,
+      label: UserRolesList[0].name,
+    },
     attributes: {
       sex: "male",
     },
@@ -31,14 +33,26 @@ export const UsersList: IUser[] = baseListLoad([
   },
 ], users.entity);
 
-const recordAssemblyHandler = (item: IUser) => {
-  if (item.userRoleId) {
-    const userRoles = UserRolesList.filter((userRole) => userRole.id === item.userRoleId)
-    item.userRoleLabel = userRoles[0].name;
+const recordAssemblyHandler = (item: User) => {
+  if (item.userRole) {
+    const userRoleId = item.userRole.id;
+    const userRoles = UserRolesList.filter((userRole) => userRole.id === userRoleId)
+    if (userRoles && userRoles.length > 0) {
+      item.userRole = {
+        id: userRoles[0].id,
+        label: userRoles[0].name,
+      };
+    }
   }
-  if (item.parentUserId) {
-    const users = UsersList.filter((user) => user.id === item.parentUserId)
-    item.parentUserLabel = `${users[0].firstName} ${users[0].lastName}`;
+  if (item.parentUser) {
+    const userId = item.parentUser.id;
+    const users = UsersList.filter((user) => user.id === userId)
+    if (users && users.length > 0) {
+      item.parentUser = {
+        id: users[0].id,
+        label: `${users[0].firstName} ${users[0].lastName}`,
+      };
+    }
   }
   return item;
 };

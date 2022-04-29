@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: 'entity-field-view-link-id',
+  name: 'entity-field-view-link',
   props: {
     tabular: Boolean,
     repository: null,

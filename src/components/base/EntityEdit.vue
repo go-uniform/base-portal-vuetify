@@ -289,6 +289,7 @@ export default {
               if (this.item[fieldKey][item.key] === undefined) {
                 this.item[fieldKey][item.key] = null;
               }
+              console.log(fieldKey, this.item[fieldKey]);
             });
             this.$forceUpdate();
           });

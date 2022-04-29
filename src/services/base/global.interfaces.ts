@@ -1,5 +1,9 @@
 import {AuthToken, AuthTokenJwt, generic} from './global.types';
 import {EnumAttributeType, EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
+import {baseCreate, baseDelete, baseList, baseRead, baseUpdate} from '@/services/base/entity.crud';
+import {baseBulk} from '@/services/base/entity.bulk';
+import {User} from '@/services/repositories/users';
+import {camelize, kebabCase} from '@/plugins/base/vuetify';
 
 export interface IError {
   status: number;
@@ -139,7 +143,7 @@ export interface IFieldBoolean {
   iconOnly?: boolean;
 }
 
-export interface IFieldLinkId {
+export interface IFieldLink {
   label: string;
   type: EnumFieldType;
   optional?: boolean;
@@ -152,18 +156,7 @@ export interface IFieldLinkId {
   multiple?: boolean;
 }
 
-export interface IFieldLinkLabel {
-  label: string;
-  type: EnumFieldType;
-  optional?: boolean;
-  readonly?: boolean;
-  filterable?: boolean;
-  linkIdFieldKey: string;
-  hint?: string;
-  multiple?: boolean;
-}
-
-export interface ISelfReferenceId {
+export interface ISelfReference {
   label: string;
   type: EnumFieldType;
   optional?: boolean;
@@ -175,17 +168,6 @@ export interface ISelfReferenceId {
   multiple?: boolean;
 }
 
-export interface ISelfReferenceLabel {
-  label: string;
-  type: EnumFieldType;
-  optional?: boolean;
-  readonly?: boolean;
-  filterable?: boolean;
-  selfReferenceIdFieldKey: string;
-  hint?: string;
-  multiple?: boolean;
-}
-
 export interface IFieldAttribute {
   label: string;
   type: EnumFieldType;
@@ -193,7 +175,7 @@ export interface IFieldAttribute {
   hint?: string;
 }
 
-export type IField = IFieldNormal | IFieldEnum | IFieldBoolean | IFieldLinkId | IFieldLinkLabel | IFieldAttribute | ISelfReferenceId | ISelfReferenceLabel;
+export type IField = IFieldNormal | IFieldEnum | IFieldBoolean | IFieldLink | IFieldAttribute | ISelfReference;
 
 export type IFields = { [key: string]: IField }
 
@@ -285,6 +267,88 @@ export interface IRepository<T> {
   update?: IUpdatePromise<T>;
   delete?: IDeletePromise<T>;
   bulk?: IBulkPromise;
+}
+
+export class Repository<T> implements  IRepository<T> {
+  disableCreation?: boolean;
+  freeTextSearch?: boolean;
+  entity: string;
+  slug: string;
+  title: IRepositoryTitle;
+  defaultSortOrder: string;
+  listPage: string;
+  addPage: string;
+  viewPagePrefix: string;
+  editPagePrefix: string;
+  default?: object;
+  fields: IFields;
+  headers: IHeader[];
+  sections: ISection[];
+  bulkActions?: IBulkActionButton[];
+
+  list?: IListPromise<T>;
+  create?: ICreatePromise<T>;
+  read?: IReadPromise<T>;
+  update?: IUpdatePromise<T>;
+  delete?: IDeletePromise<T>;
+  bulk?: IBulkPromise;
+
+  constructor(slug: string, defaultValue: object, options: any) {
+    this.slug = slug;
+    this.entity = camelize(slug);
+    this.title = {
+      singular: `$vuetify.${this.entity}.singular`,
+      plural: `$vuetify.${this.entity}.plural`,
+    };
+    this.freeTextSearch = true;
+    this.disableCreation = false;
+    this.listPage = `/${slug}`;
+    this.addPage = `/${slug}/add`;
+    this.viewPagePrefix = `/${slug}/view`;
+    this.editPagePrefix = `/${slug}/edit`;
+    this.default = defaultValue;
+    this.defaultSortOrder = '-createdAt';
+    this.fields = {
+      id: {
+        label: `$vuetify.${this.entity}.fields.id`,
+        type: EnumFieldType.Uuid,
+        readonly: true,
+      },
+      modifiedAt: {
+        label: `$vuetify.${this.entity}.fields.modifiedAt`,
+        type: EnumFieldType.DateTime,
+        readonly: true,
+      },
+      createdAt: {
+        label: `$vuetify.${this.entity}.fields.createdAt`,
+        type: EnumFieldType.DateTime,
+        filterable: true,
+        readonly: true,
+      },
+    };
+    this.headers = [];
+    this.sections = [];
+
+    this.list = baseList<T>(slug);
+    this.create = baseCreate<T>(slug);
+    this.read = baseRead<T>(slug);
+    this.update = baseUpdate<T>(slug);
+    this.delete = baseDelete<T>(slug);
+    this.bulk = baseBulk(slug);
+  }
+
+  setHeaders(headers: IHeader[]) {
+    this.headers = headers;
+  }
+
+  addField(key: string, field: IField) {
+    field.label = `$vuetify.${this.entity}.fields.${key}`;
+    this.fields[key] = field;
+  }
+
+  addSection(section: ISection) {
+    this.sections.push(section);
+  }
 }
 
 export interface IAuthRepository {

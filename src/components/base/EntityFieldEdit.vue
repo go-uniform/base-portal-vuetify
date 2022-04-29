@@ -3,13 +3,13 @@
   <div>
 
     <div
-      v-if="field.type === 'linkId'"
+      v-if="field.type === 'link'"
     >
 
       <entity-field-view-label
         :field="field"
       />
-      <entity-field-edit-link-id
+      <entity-field-edit-link
         :repository="repository"
         :item="item"
         :field="field"
@@ -19,7 +19,7 @@
 
     </div>
     <div
-      v-else-if="field.type === 'selfReferenceId'"
+      v-else-if="field.type === 'selfReference'"
     >
 
       <entity-field-view-label
@@ -143,12 +143,12 @@
 <script>
 import {validations} from '../../services/base/validations';
 import EntityFieldViewLabel from './EntityFieldViewLabel';
-import EntityFieldEditLinkId from './EntityFieldEditLinkId';
+import EntityFieldEditLink from './EntityFieldEditLink';
 import EntityFieldEditSelfReference from './EntityFieldEditSelfReference';
 
 export default {
   name: 'entity-field-edit',
-  components: {EntityFieldEditSelfReference, EntityFieldEditLinkId, EntityFieldViewLabel},
+  components: {EntityFieldEditSelfReference, EntityFieldEditLink, EntityFieldViewLabel},
   props: {
     repository: null,
     field: null,

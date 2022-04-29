@@ -187,8 +187,8 @@ export default extend(en, {
       lastName: 'Last Name',
       username: 'Username',
       email: 'Email',
-      userRoleId: 'User Role',
-      parentUserId: 'Parent User',
+      userRole: 'User Role',
+      parentUser: 'Parent User',
       attributes: {
         title: 'Attributes',
         sex: 'Sex',

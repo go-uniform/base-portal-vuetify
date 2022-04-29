@@ -27,13 +27,15 @@ const instance = new Vuetify({
   },
 });
 
-if (theme.themes?.dark === undefined && instance.framework.theme.dark) {
-  alert('break');
-}
-
 export const kebabCase = (str: any) => {
   return str && str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g).map((x: any) => x.toLowerCase()).join('-');
 };
+
+export const camelize = (str: string) => {
+  return str.replace('-', ' ').replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
+    return index === 0 ? word.toLowerCase() : word.toUpperCase();
+  }).replace(/\s+/g, '');
+}
 
 export const loadingStart = (timeout: number, text: string, ...args: any[]) => {
   bus.publish('loading.start', {

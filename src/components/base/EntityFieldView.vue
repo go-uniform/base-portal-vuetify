@@ -4,13 +4,13 @@
   <div>
 
     <div
-      v-if="field.type === 'linkId'"
+      v-if="field.type === 'link'"
     >
 
       <entity-field-view-label
         :field="field"
       />
-      <entity-field-view-link-id
+      <entity-field-view-link
         :repository="repository"
         :item="item"
         :value="value"
@@ -19,7 +19,7 @@
 
     </div>
     <div
-      v-else-if="field.type === 'selfReferenceId'"
+      v-else-if="field.type === 'selfReference'"
     >
 
       <entity-field-view-label
@@ -115,12 +115,12 @@
 <script>
 import {formatBoolean, formatDate, formatDatetime} from '../../plugins/base/vuetify';
 import EntityFieldViewLabel from './EntityFieldViewLabel';
-import EntityFieldViewLinkId from './EntityFieldViewLinkId';
+import EntityFieldViewLink from './EntityFieldViewLink';
 import EntityFieldViewSelfReference from './EntityFieldViewSelfReference';
 
 export default {
   name: 'entity-field-view',
-  components: {EntityFieldViewSelfReference, EntityFieldViewLinkId, EntityFieldViewLabel},
+  components: {EntityFieldViewSelfReference, EntityFieldViewLink, EntityFieldViewLabel},
   props: {
     repository: null,
     field: null,

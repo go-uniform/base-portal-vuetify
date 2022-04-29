@@ -9,10 +9,8 @@ export enum EnumHttpMethod {
 }
 
 export enum EnumFieldType {
-  LinkLabel = 'linkLabel',
-  LinkId = 'linkId',
-  SelfReferenceLabel = 'selfReferenceLabel',
-  SelfReferenceId = 'selfReferenceId',
+  Link = 'link',
+  SelfReference = 'self-reference',
   Uuid = 'uuid',
   Text = 'text',
   TextArea = 'textarea',

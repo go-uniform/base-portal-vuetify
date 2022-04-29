@@ -18,7 +18,7 @@
 import {validations} from '../../services/base/validations';
 
 export default {
-  name: 'entity-field-edit-link-id',
+  name: 'entity-field-edit-link',
   props: {
     repository: null,
     field: null,

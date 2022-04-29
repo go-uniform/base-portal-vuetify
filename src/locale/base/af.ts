@@ -187,8 +187,8 @@ export default extend(af, {
       lastName: 'Tweede Name',
       username: 'Gebruikersnaam',
       email: 'E-pos',
-      userRoleId: 'Gebruikersrol',
-      parentUserId: 'Ouer Gebruiker',
+      userRole: 'Gebruikersrol',
+      parentUser: 'Ouer Gebruiker',
       attributes: {
         title: 'Eienskappe',
         sex: 'Geslag',
