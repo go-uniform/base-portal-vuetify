@@ -20,6 +20,7 @@ export default extend(af, {
   },
   app: {
     title: process.env.VUE_APP_TITLE,
+    footerContent: `<div><strong>${process.env.VUE_APP_TITLE}</strong></div><div><small>${process.env.VUE_APP_VERSION}</small></div>`,
 
     headerTitle: '',
     headerLogoFullAlt: process.env.VUE_APP_TITLE,
