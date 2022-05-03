@@ -42,11 +42,5 @@ import ScrollTopButton from '@/components/base/ScrollTopButton';
 export default {
   name: 'main-footer',
   components: {ScrollTopButton, LanguageSelector},
-
-  data() {
-    return {
-      version: process.env.VUE_APP_VERSION,
-    }
-  }
 }
 </script>
