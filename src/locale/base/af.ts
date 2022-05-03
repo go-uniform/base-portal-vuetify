@@ -98,7 +98,7 @@ export default extend(af, {
     pageTitle: 'Herstel Wagwoord',
     title: 'Herstel jou rekening wagwoord',
     identifier: 'Gebruikersnaam of E-pos',
-    button: 'HerStel',
+    button: 'Herstel',
   },
   home: {
     pageTitle: 'Paneelborde',

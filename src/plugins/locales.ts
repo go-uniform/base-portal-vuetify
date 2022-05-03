@@ -1,9 +1,11 @@
-import af from '@/locale/af';
 import en from '@/locale/en';
+import af from '@/locale/af';
+import nl from '@/locale/nl';
 
 export const locales = {
   en,
   af,
+  nl,
 };
 
 export const languages = [
@@ -16,5 +18,10 @@ export const languages = [
     value: 'af',
     text: 'Afrikaans',
     locale: af,
-  }
+  },
+  {
+    value: 'nl',
+    text: 'Dutch',
+    locale: nl,
+  },
 ];
