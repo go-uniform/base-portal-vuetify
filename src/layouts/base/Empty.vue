@@ -15,14 +15,14 @@
       >
 
         <div
-          style="width:100%"
+          class="fill-width"
         >
           <slot name="header">
           </slot>
         </div>
         <div
-          style="width:100%"
-          class="pa-2 pa-sm-4 pa-lg-8 flex-grow-1"
+          class="fill-content"
+          :class="{'pa-2 pa-sm-4 pa-lg-8 flex-grow-1': !noPadding}"
         >
           <v-layout
             :fill-height="fillHeight"
@@ -47,8 +47,7 @@
           </v-layout>
         </div>
         <div
-          style="width:100%"
-          class="footer-placeholder"
+          class="footer-placeholder fill-width"
           v-if="!disableFooterPlaceholder"
         >
         </div>
@@ -111,6 +110,7 @@ export default Vue.extend({
       type: Boolean,
     },
     row: Boolean,
+    noPadding: Boolean,
   },
 
   computed: {

@@ -100,7 +100,7 @@ export default extend(af, {
     button: 'HerStel',
   },
   home: {
-    pageTitle: 'Tuis',
+    pageTitle: 'Paneelborde',
     icon: 'mdi-home',
   },
   entity: {
@@ -166,9 +166,7 @@ export default extend(af, {
     },
   },
   reports: {
-    example1: {
-      title: 'Voorbeeld 1',
-    },
+    pageTitle: 'Rapporte',
   },
   users: {
     singular: 'Gebruiker',

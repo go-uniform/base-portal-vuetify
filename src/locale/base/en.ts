@@ -100,7 +100,7 @@ export default extend(en, {
     button: 'Reset',
   },
   home: {
-    pageTitle: 'Home',
+    pageTitle: 'Dashboards',
     icon: 'mdi-home',
   },
   entity: {
@@ -166,9 +166,7 @@ export default extend(en, {
     },
   },
   reports: {
-    example1: {
-      title: 'Example 1',
-    },
+    pageTitle: 'Reports',
   },
   users: {
     singular: 'User',

@@ -1,11 +1,11 @@
 <template>
 
     <v-toolbar
-      v-if="crumbs && crumbs.length > 1 || actions && actions.length > 0"
+      v-if="crumbs && crumbs.length > 0 || actions && actions.length > 0"
     >
 
       <v-breadcrumbs
-        v-if="crumbs && crumbs.length > 1"
+        v-if="crumbs && crumbs.length > 0"
         :items="crumbs"
       >
 
@@ -21,6 +21,7 @@
             exact
             @click="callback(item.callback)"
           >
+
             <v-icon
               v-if="item.icon"
               class="mr-2"
@@ -28,6 +29,47 @@
               {{ item.icon }}
             </v-icon>
             {{ translate(item.title) }}
+            <v-menu
+              v-if="item.hint"
+            >
+
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  class="ml-1"
+                  color="info"
+                  v-bind="attrs"
+                  v-on="on"
+                  small
+                >
+                  mdi-help-circle
+                </v-icon>
+              </template>
+
+              <div>
+                <v-card>
+                  <v-card-title
+                    class="info white--text"
+                  >
+                    {{ translate(item.title) }}
+                    <v-spacer></v-spacer>
+                    <v-icon
+                      @click="on = false"
+                      small
+                      class="white--text"
+                    >
+                      mdi-close
+                    </v-icon>
+                  </v-card-title>
+                  <v-card-text
+                    class="pa-2 pa-sm-4 pa-lg-8"
+                    v-html="translate(item.hint)"
+                  >
+                  </v-card-text>
+                </v-card>
+              </div>
+
+            </v-menu>
+
           </v-breadcrumbs-item>
 
         </template>

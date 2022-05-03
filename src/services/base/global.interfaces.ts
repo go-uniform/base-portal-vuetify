@@ -342,7 +342,9 @@ export class Repository<T> implements  IRepository<T> {
   }
 
   addField(key: string, field: IField) {
-    field.label = `$vuetify.${this.entity}.fields.${key}`;
+    if (field.label.trim() === '') {
+      field.label = `$vuetify.${this.entity}.fields.${key}`;
+    }
     this.fields[key] = field;
   }
 

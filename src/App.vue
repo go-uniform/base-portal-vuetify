@@ -75,10 +75,30 @@ export default Vue.extend({
   background: inherit !important;
 }
 
+.v-tabs-items {
+  background-color: transparent !important;
+}
+
+.no-border {
+  border: none;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
 .theme--dark {
   .v-input input {
     caret-color: #fff !important;
   }
+}
+
+.fill-width {
+  width: 100%;
+}
+.fill-content {
+  height: 100%;
+  width: 100%;
 }
 
 .v-data-table__selected:not(.v-data-table__mobile-table-row) {

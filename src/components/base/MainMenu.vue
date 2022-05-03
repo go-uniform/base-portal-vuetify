@@ -21,6 +21,7 @@
       </v-list-item-content>
       <v-list-item-icon
         @click.stop="toggle"
+        class="clickable"
       >
         <v-icon>mdi-menu</v-icon>
       </v-list-item-icon>
@@ -88,8 +89,7 @@
 
     </template>
     <div
-      style="width:100%"
-      class="footer-placeholder"
+      class="footer-placeholder fill-width"
     >
     </div>
 

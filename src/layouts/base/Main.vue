@@ -16,7 +16,7 @@
       >
 
         <div
-          style="width:100%"
+          class="fill-width"
         >
           <main-toolbar
             :crumbs="crumbs"
@@ -25,10 +25,11 @@
             :bulk-action-handler="bulkActionHandler"
             :loading="loading"
           />
+          <slot name="header"></slot>
         </div>
         <div
-          style="width:100%"
-          class="pa-2 pa-sm-4 pa-lg-8 flex-grow-1"
+          class="fill-content"
+          :class="{'pa-2 pa-sm-4 pa-lg-8 flex-grow-1': !noPadding}"
         >
           <v-layout
             :fill-height="fillHeight"
@@ -48,13 +49,13 @@
             :justify-space-between="justifySpaceBetween"
             :row="row"
             :column="column"
+            wrap
           >
             <slot></slot>
           </v-layout>
         </div>
         <div
-          style="width:100%"
-          class="footer-placeholder"
+          class="footer-placeholder fill-width"
         >
         </div>
 
@@ -83,7 +84,6 @@ import CookieConsent from '@/components/base/CookieConsent.vue';
 import ConnectionLost from '@/components/base/ConnectionLost.vue';
 import ConfirmBox from '@/components/base/ConfirmBox.vue';
 import ToastBar from '@/components/base/ToastBar.vue';
-import {confirmation, translate} from '@/plugins/base/vuetify';
 import LoadingIndicator from '@/components/base/LoadingIndicator.vue';
 
 let globalShowScrollTopBtn = false;
@@ -122,6 +122,7 @@ export default Vue.extend({
     bulkActionHandler: Function,
 
     loading: Boolean,
+    noPadding: Boolean,
   },
 
   computed: {
