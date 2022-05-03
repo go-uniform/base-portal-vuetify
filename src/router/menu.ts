@@ -13,12 +13,7 @@ export const mainMenuItems = [
   {
     title: translate('$vuetify.menu.reports.title'),
     icon: translate('$vuetify.menu.reports.icon'),
-    children: [
-      {
-        title: translate('$vuetify.menu.reports.example1.title'),
-        location: '/reports/example1'
-      }
-    ]
+    location: '/reports'
   },
   {
     title: translate('$vuetify.menu.users.title'),

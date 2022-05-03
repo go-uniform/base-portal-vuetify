@@ -27,11 +27,6 @@ export interface User {
 
 const repository = new Repository<User>(slug, {}, {});
 
-repository.addField('id', {
-  label: '',
-  type: EnumFieldType.Uuid,
-  readonly: true,
-});
 repository.addField('firstName', {
   label: '',
   type: EnumFieldType.Text,

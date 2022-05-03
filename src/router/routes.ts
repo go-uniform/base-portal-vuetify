@@ -3,25 +3,38 @@ import {users} from '@/services/repositories/users';
 import {userRoles} from '@/services/repositories/user-roles';
 import {userAttributes} from '@/services/repositories/user-attributes';
 import {RouteConfig} from 'vue-router';
-import Home from '@/views/base/Home.vue';
+import {dashboards} from '@/services/repositories/dashboards';
+import {reports} from '@/services/repositories/reports';
 
 // custom/override routes should be added here
 const routes: RouteConfig[] = [
   {
     path: '/',
-    name: 'home',
-    component: Home,
+    name: 'dashboards',
+    component: () => import('../views/base/EntityTabs.vue'),
     meta: {
+      repository: dashboards,
       title: '$vuetify.home.pageTitle',
       permissions: [],
     }
   },
   {
-    path: '/reports/example1',
-    name: 'report-example1',
-    component: () => import('../views/base/ReportView.vue'),
+    path: '/reports',
+    name: 'report-list',
+    component: () => import('../views/base/EntityCards.vue'),
     meta: {
-      title: '$vuetify.reports.example1.title',
+      repository: reports,
+      title: '$vuetify.reports.pageTitle',
+      permissions: [],
+    }
+  },
+  {
+    path: '/reports/:id',
+    name: 'report-view',
+    component: () => import('../views/base/EntityCards.vue'),
+    meta: {
+      repository: reports,
+      title: '$vuetify.reports.pageTitle',
       permissions: [],
     }
   },
