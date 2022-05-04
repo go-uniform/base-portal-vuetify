@@ -91,22 +91,21 @@
             {{ $vuetify.theme.dark ? translate('$vuetify.app.lightMode') : translate('$vuetify.app.darkMode') }}
           </v-list-item-title>
         </v-list-item>
-        <v-divider></v-divider>
+        <v-divider
+          v-if="items && items.length > 0"
+        ></v-divider>
         <v-list-item
-          to="/my-account"
+          v-for="(item, index) in items"
+          v-bind:key="index"
+          :to="item.location"
+          dense
         >
+
           <v-list-item-icon>
-            <v-icon>mdi-account</v-icon>
+            <v-icon>{{ item.icon || '' }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>{{ translate('$vuetify.app.myAccount') }}</v-list-item-title>
-        </v-list-item>
-        <v-list-item
-          to="/settings"
-        >
-          <v-list-item-icon>
-            <v-icon>mdi-cogs</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>{{ translate('$vuetify.app.systemSettings') }}</v-list-item-title>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+
         </v-list-item>
         <v-divider></v-divider>
         <v-list-item
@@ -128,9 +127,14 @@
 import {bus} from '@/services/base/bus';
 import {auth} from '@/services/base/auth';
 import {loadingStart, translate} from '@/plugins/base/vuetify';
+import {accountMenuItems} from '@/router/menu-account';
 
 export default {
   name: 'main-header',
+
+  data: () => ({
+    items: accountMenuItems,
+  }),
 
   computed: {
     username: () => {

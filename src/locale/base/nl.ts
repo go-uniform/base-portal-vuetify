@@ -40,7 +40,7 @@ export default extend(nl, {
     homeComingSoon: 'dashboard-widgets / -statistieken komen hier\n',
     reportComingSoon: 'rapportweergave komt hier',
     myAccount: 'Mijn Rekening',
-    systemSettings: 'Systeem instellingen',
+    settings: 'Instellingen',
     loading: 'Laden...',
     loadingTimeout: 'De bewerking werd automatisch geannuleerd omdat het systeem er te lang over deed om te reageren',
     loggingOut: 'Afmelden...',

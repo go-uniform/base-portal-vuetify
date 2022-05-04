@@ -1,5 +1,5 @@
 import {IAttribute, IRepository} from '@/services/base/global.interfaces';
-import {EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
+import {EnumValueType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
 import {baseBulk} from '@/services/base/entity.bulk';
 import {baseCreate, baseDelete, baseList, baseRead, baseUpdate} from '@/services/base/entity.crud';
@@ -23,12 +23,12 @@ export const permissions: IRepository<IAttribute> = {
   fields: {
     id: {
       label: `$vuetify.${entity}.fields.id`,
-      type: EnumFieldType.Uuid,
+      type: EnumValueType.Uuid,
       readonly: true,
     },
     type: {
       label: `$vuetify.${entity}.fields.type`,
-      type: EnumFieldType.Enumeration,
+      type: EnumValueType.Enumeration,
       defaultValue: 'inherit',
       values: [
         {
@@ -53,27 +53,27 @@ export const permissions: IRepository<IAttribute> = {
     },
     key: {
       label: `$vuetify.${entity}.fields.key`,
-      type: EnumFieldType.Text,
+      type: EnumValueType.Text,
       pattern: /^[a-zA-z0-9]+$/,
       patternMessage: '$vuetify.validations.jsonKey',
     },
     name: {
       label: `$vuetify.${entity}.fields.name`,
-      type: EnumFieldType.Text,
+      type: EnumValueType.Text,
     },
     description: {
       label: `$vuetify.${entity}.fields.description`,
-      type: EnumFieldType.TextArea,
+      type: EnumValueType.TextArea,
       optional: true,
     },
     modifiedAt: {
       label: `$vuetify.${entity}.fields.modifiedAt`,
-      type: EnumFieldType.DateTime,
+      type: EnumValueType.DateTime,
       readonly: true,
     },
     createdAt: {
       label: `$vuetify.${entity}.fields.createdAt`,
-      type: EnumFieldType.DateTime,
+      type: EnumValueType.DateTime,
       readonly: true,
       filterable: true,
     },

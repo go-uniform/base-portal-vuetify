@@ -39,8 +39,6 @@ export default extend(en, {
 
     homeComingSoon: 'dashboard widgets/metrics will go here',
     reportComingSoon: 'report view will go here',
-    myAccount: 'My Account',
-    systemSettings: 'System Settings',
     loading: 'Loading...',
     loadingTimeout: 'Operation was automatically cancelled since system took to long to respond',
     loggingOut: 'Logging out...',
@@ -284,5 +282,17 @@ export default extend(en, {
         },
       }
     }
+  },
+  account: {
+    pageTitle: 'My Account',
+    icon: 'mdi-account'
+  },
+  settings: {
+    pageTitle: 'Settings',
+    icon: 'mdi-cogs'
+  },
+  customizations: {
+    pageTitle: 'Customizations',
+    icon: 'mdi-application-cog-outline'
   },
 });

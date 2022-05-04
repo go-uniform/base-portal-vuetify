@@ -87,11 +87,12 @@
 
           <entity-field-view-label
             :field="field"
+            hide-required
           />
           <v-spacer></v-spacer>
           <v-switch
-            :value="value"
-            @input="input"
+            :input-value="value"
+            @change="input"
           ></v-switch>
 
         </v-card-title>
