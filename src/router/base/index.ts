@@ -50,7 +50,23 @@ const routes: Array<RouteConfig> = [
     component: () => import('../../views/base/CookiePolicy.vue'),
     meta: {
       title: '$vuetify.cookieConsent.pageTitle',
-      public: true
+      public: true,
+    }
+  },
+  {
+    path: '/account',
+    name: 'account',
+    component: () => import('../../views/base/Account.vue'),
+    meta: {
+      title: '$vuetify.account.pageTitle',
+    }
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: () => import('../../views/base/Settings.vue'),
+    meta: {
+      title: '$vuetify.settings.pageTitle',
     }
   },
 ];
@@ -63,7 +79,7 @@ routes.push({
   component: () => import('../../views/base/NotFound.vue'),
   meta: {
     title: '$vuetify.notFound.pageTitle',
-    public: true
+    public: true,
   }
 });
 

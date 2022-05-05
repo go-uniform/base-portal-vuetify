@@ -1,5 +1,5 @@
 import {IRepository} from '@/services/base/global.interfaces';
-import {EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
+import {EnumValueType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
 import {permissions} from '@/services/repositories/permissions';
 import {baseCreate, baseDelete, baseList, baseRead, baseUpdate} from '@/services/base/entity.crud';
@@ -34,12 +34,12 @@ export const userRoles: IRepository<IUserRole> = {
   fields: {
     id: {
       label: `$vuetify.${entity}.fields.id`,
-      type: EnumFieldType.Uuid,
+      type: EnumValueType.Uuid,
       readonly: true,
     },
     status: {
       label: `$vuetify.${entity}.fields.status`,
-      type: EnumFieldType.Enumeration,
+      type: EnumValueType.Enumeration,
       defaultValue: 'pending',
       values: [
         {
@@ -66,16 +66,16 @@ export const userRoles: IRepository<IUserRole> = {
     },
     name: {
       label: `$vuetify.${entity}.fields.name`,
-      type: EnumFieldType.Text,
+      type: EnumValueType.Text,
     },
     description: {
       label: `$vuetify.${entity}.fields.description`,
-      type: EnumFieldType.TextArea,
+      type: EnumValueType.TextArea,
       optional: true,
     },
     super: {
       label: `$vuetify.${entity}.fields.super`,
-      type: EnumFieldType.Boolean,
+      type: EnumValueType.Boolean,
       optional: true,
       hint: `$vuetify.${entity}.hints.super`,
       iconOnly: true,
@@ -83,17 +83,17 @@ export const userRoles: IRepository<IUserRole> = {
     },
     permissions: {
       label: `$vuetify.${entity}.fields.permissions`,
-      type: EnumFieldType.Attributes,
+      type: EnumValueType.Attributes,
       attributeRepository: permissions,
     },
     modifiedAt: {
       label: `$vuetify.${entity}.fields.modifiedAt`,
-      type: EnumFieldType.DateTime,
+      type: EnumValueType.DateTime,
       readonly: true,
     },
     createdAt: {
       label: `$vuetify.${entity}.fields.createdAt`,
-      type: EnumFieldType.DateTime,
+      type: EnumValueType.DateTime,
       readonly: true,
       filterable: true,
     },

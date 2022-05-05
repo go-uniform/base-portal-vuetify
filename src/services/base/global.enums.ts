@@ -8,12 +8,13 @@ export enum EnumHttpMethod {
   Options = 'OPTIONS',
 }
 
-export enum EnumFieldType {
+export enum EnumValueType {
   Link = 'link',
   SelfReference = 'self-reference',
   Uuid = 'uuid',
   Text = 'text',
   TextArea = 'textarea',
+  Number = 'number',
   Boolean = 'boolean',
   DateTime = 'datetime',
   Attributes = 'attributes',
@@ -24,9 +25,4 @@ export enum EnumHeaderAlign {
   Start = 'start',
   Center = 'center',
   End = 'end',
-}
-
-export enum EnumAttributeType {
-  Text = "text",
-  Enumeration = 'enumeration',
 }

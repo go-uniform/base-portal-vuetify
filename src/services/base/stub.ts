@@ -385,6 +385,27 @@ export const baseListLoad = <T>(list: T[], entity: string): T[] => {
   return list;
 }
 
+export const baseStoreLoad = <T>(item: T, entity: string): T => {
+  if (window.localStorage) {
+    const data = window.localStorage.getItem(`stub.${entity}`);
+    if (data) {
+      const items = JSON.parse(data);
+      if (items) {
+        return items;
+      }
+    }
+    window.localStorage.setItem(`stub.${entity}`, JSON.stringify(item));
+  }
+  return item;
+}
+
+export const baseStoreSave = <T>(item: T, entity: string): T => {
+  if (window.localStorage) {
+    window.localStorage.setItem(`stub.${entity}`, JSON.stringify(item));
+  }
+  return item;
+}
+
 export const generateFakeJwt = (claims: any): string => {
   const header = {
     "alg": "HS256",

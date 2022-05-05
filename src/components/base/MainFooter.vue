@@ -13,20 +13,12 @@
       tile
       width="100%"
       color="primary"
+      class="d-flex align-center"
     >
       <v-card-text
         class="white--text py-2"
+        v-html="translate('$vuetify.app.footerContent')"
       >
-        <div>
-          <strong>
-            {{ translate('$vuetify.app.title') }}
-          </strong>
-        </div>
-        <div>
-          <small>
-            {{ version }}
-          </small>
-        </div>
       </v-card-text>
     </v-card>
   </v-footer>
@@ -36,6 +28,10 @@
 <style lang="scss" scoped>
 .v-footer {
   z-index: 4; // we need to put footer above most other floating sections but not over alerts so level 4 should work
+
+  .v-card {
+    min-height: 62px;
+  }
 }
 </style>
 
@@ -46,11 +42,5 @@ import ScrollTopButton from '@/components/base/ScrollTopButton';
 export default {
   name: 'main-footer',
   components: {ScrollTopButton, LanguageSelector},
-
-  data() {
-    return {
-      version: process.env.VUE_APP_VERSION,
-    }
-  }
 }
 </script>

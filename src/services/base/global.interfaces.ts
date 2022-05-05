@@ -1,9 +1,8 @@
 import {AuthToken, AuthTokenJwt, generic} from './global.types';
-import {EnumAttributeType, EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
+import {EnumValueType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {baseCreate, baseDelete, baseList, baseRead, baseUpdate} from '@/services/base/entity.crud';
 import {baseBulk} from '@/services/base/entity.bulk';
-import {User} from '@/services/repositories/users';
-import {camelize, kebabCase} from '@/plugins/base/vuetify';
+import {camelize} from '@/plugins/base/vuetify';
 
 export interface IError {
   status: number;
@@ -108,7 +107,7 @@ export interface IEnum {
 
 export interface IFieldNormal {
   label: string;
-  type: EnumFieldType;
+  type: EnumValueType;
   optional?: boolean;
   readonly?: boolean;
   filterable?: boolean;
@@ -119,7 +118,7 @@ export interface IFieldNormal {
 
 export interface IFieldEnum {
   label: string;
-  type: EnumFieldType;
+  type: EnumValueType;
   optional?: boolean;
   readonly?: boolean;
   filterable?: boolean;
@@ -133,7 +132,7 @@ export interface IFieldEnum {
 
 export interface IFieldBoolean {
   label: string;
-  type: EnumFieldType;
+  type: EnumValueType;
   optional?: boolean;
   readonly?: boolean;
   filterable?: boolean;
@@ -145,7 +144,7 @@ export interface IFieldBoolean {
 
 export interface IFieldLink {
   label: string;
-  type: EnumFieldType;
+  type: EnumValueType;
   optional?: boolean;
   readonly?: boolean;
   filterable?: boolean;
@@ -158,7 +157,7 @@ export interface IFieldLink {
 
 export interface ISelfReference {
   label: string;
-  type: EnumFieldType;
+  type: EnumValueType;
   optional?: boolean;
   readonly?: boolean;
   filterable?: boolean;
@@ -170,7 +169,7 @@ export interface ISelfReference {
 
 export interface IFieldAttribute {
   label: string;
-  type: EnumFieldType;
+  type: EnumValueType;
   attributeRepository: IRepository<any>;
   hint?: string;
 }
@@ -311,17 +310,17 @@ export class Repository<T> implements  IRepository<T> {
     this.fields = {
       id: {
         label: `$vuetify.${this.entity}.fields.id`,
-        type: EnumFieldType.Uuid,
+        type: EnumValueType.Uuid,
         readonly: true,
       },
       modifiedAt: {
         label: `$vuetify.${this.entity}.fields.modifiedAt`,
-        type: EnumFieldType.DateTime,
+        type: EnumValueType.DateTime,
         readonly: true,
       },
       createdAt: {
         label: `$vuetify.${this.entity}.fields.createdAt`,
-        type: EnumFieldType.DateTime,
+        type: EnumValueType.DateTime,
         filterable: true,
         readonly: true,
       },
@@ -373,7 +372,7 @@ export interface IAttribute {
   key: string;
   name: string;
   description?: string;
-  type: EnumAttributeType;
+  type: EnumValueType;
   modifiedAt: Date;
   createdAt: Date;
 }

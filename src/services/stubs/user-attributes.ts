@@ -8,7 +8,7 @@ import {
   baseUpdateStub,
   generateUuid, IBulkStubScenarioResponse, stubScenario
 } from '@/services/base/stub';
-import {EnumAttributeType} from '@/services/base/global.enums';
+import {EnumValueType} from '@/services/base/global.enums';
 import {userAttributes} from '@/services/repositories/user-attributes';
 
 export const UserAttributesList: IAttribute[] = baseListLoad([
@@ -17,7 +17,7 @@ export const UserAttributesList: IAttribute[] = baseListLoad([
     key: 'sex',
     name: 'Sex',
     description: 'Either of the two main categories (male and female) into which humans and most other living things are divided on the basis of their reproductive functions.',
-    type: EnumAttributeType.Text,
+    type: EnumValueType.Text,
     modifiedAt: new Date(),
     createdAt: new Date(),
   },

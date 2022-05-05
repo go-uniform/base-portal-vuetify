@@ -20,6 +20,7 @@ export default extend(af, {
   },
   app: {
     title: process.env.VUE_APP_TITLE,
+    footerContent: `<div><strong>${process.env.VUE_APP_TITLE}</strong></div><div><small>${process.env.VUE_APP_VERSION}</small></div>`,
 
     headerTitle: '',
     headerLogoFullAlt: process.env.VUE_APP_TITLE,
@@ -39,7 +40,7 @@ export default extend(af, {
     homeComingSoon: 'paneelbord legstukke/metrieke sal hierheen gaan',
     reportComingSoon: 'verslagaansig sal hierheen gaan',
     myAccount: 'My Rekening',
-    systemSettings: 'Stelsel Instellings',
+    settings: 'Instellings',
     loading: 'Laai...',
     loadingTimeout: 'Werking was outomaties gekanselleer aangesien die stelsel te lank geneem het om te reageer',
     loggingOut: 'Teken uit...',
@@ -97,7 +98,7 @@ export default extend(af, {
     pageTitle: 'Herstel Wagwoord',
     title: 'Herstel jou rekening wagwoord',
     identifier: 'Gebruikersnaam of E-pos',
-    button: 'HerStel',
+    button: 'Herstel',
   },
   home: {
     pageTitle: 'Paneelborde',

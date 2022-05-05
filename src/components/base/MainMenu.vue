@@ -110,7 +110,7 @@
 
 <script>
 import {bus} from '@/services/base/bus';
-import {mainMenuItems} from '@/router/menu';
+import {mainMenuItems} from '@/router/menu-main';
 
 export default {
   name: 'main-menu',
