@@ -21,7 +21,7 @@ export const languages = [
   },
   {
     value: 'nl',
-    text: 'Dutch',
+    text: 'Nederlands',
     locale: nl,
   },
 ];
