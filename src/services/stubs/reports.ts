@@ -12,7 +12,7 @@ import {Report, reports} from '@/services/repositories/reports';
 export const ReportsList: Report[] = baseListLoad([
   {
     id: generateUuid(),
-    thumbnail: 'https://via.placeholder.com/800x600',
+    urlThumbnail: 'https://via.placeholder.com/800x600',
     urlView: `https://en.wikipedia.org/wiki/Report1`,
     urlEdit: `https://en.wikipedia.org/w/index.php?title=Main_course&action=history`,
     title: 'Report #1',
@@ -22,7 +22,7 @@ export const ReportsList: Report[] = baseListLoad([
   },
   {
     id: generateUuid(),
-    thumbnail: 'https://via.placeholder.com/800x600',
+    urlThumbnail: 'https://via.placeholder.com/800x600',
     urlView: `https://en.wikipedia.org/wiki/Report2`,
     title: 'Report #2',
     description: 'This is a description',
@@ -31,7 +31,7 @@ export const ReportsList: Report[] = baseListLoad([
   },
   {
     id: generateUuid(),
-    thumbnail: 'https://via.placeholder.com/800x600',
+    urlThumbnail: 'https://via.placeholder.com/800x600',
     urlView: `https://en.wikipedia.org/wiki/Report3`,
     title: 'Report #3',
     description: 'This is a description',
@@ -40,7 +40,7 @@ export const ReportsList: Report[] = baseListLoad([
   },
   {
     id: generateUuid(),
-    thumbnail: 'https://via.placeholder.com/800x600',
+    urlThumbnail: 'https://via.placeholder.com/800x600',
     urlView: `https://en.wikipedia.org/wiki/Report4`,
     title: 'Report #4',
     description: 'This is a description',
@@ -49,7 +49,7 @@ export const ReportsList: Report[] = baseListLoad([
   },
   {
     id: generateUuid(),
-    thumbnail: 'https://via.placeholder.com/800x600',
+    urlThumbnail: 'https://via.placeholder.com/800x600',
     urlView: `https://en.wikipedia.org/wiki/Report5`,
     title: 'Report #5',
     description: 'This is a description',
@@ -58,7 +58,7 @@ export const ReportsList: Report[] = baseListLoad([
   },
   {
     id: generateUuid(),
-    thumbnail: 'https://via.placeholder.com/800x600',
+    urlThumbnail: 'https://via.placeholder.com/800x600',
     urlView: `https://en.wikipedia.org/wiki/Report6`,
     title: 'Report #6',
     description: 'This is a description',
@@ -67,7 +67,7 @@ export const ReportsList: Report[] = baseListLoad([
   },
   {
     id: generateUuid(),
-    thumbnail: 'https://via.placeholder.com/800x600',
+    urlThumbnail: 'https://via.placeholder.com/800x600',
     urlView: `https://en.wikipedia.org/wiki/Report7`,
     title: 'Report #7',
     description: 'This is a description',
@@ -76,7 +76,7 @@ export const ReportsList: Report[] = baseListLoad([
   },
   {
     id: generateUuid(),
-    thumbnail: 'https://via.placeholder.com/800x600',
+    urlThumbnail: 'https://via.placeholder.com/800x600',
     urlView: `https://en.wikipedia.org/wiki/Report8`,
     title: 'Report #8',
     description: 'This is a description',
@@ -89,7 +89,12 @@ const stub = {
   repository: reports,
   handlers: {
     'GET /reports': baseListStub(reports.entity),
-    'POST /reports/:id': baseCreateStub(reports.entity),
+    'POST /reports': baseCreateStub(reports.entity, (record: any) => {
+      record.urlThumbnail = 'https://via.placeholder.com/800x600';
+      record.urlView = `https://en.wikipedia.org/wiki/${encodeURIComponent(record.title)}`;
+      record.urlEdit = `https://en.wikipedia.org/w/index.php?title=${encodeURIComponent(record.title)}&action=history`;
+      return record;
+    }),
     'GET /reports/:id': baseReadStub(reports.entity),
     'PUT /reports/:id': baseUpdateStub(reports.entity),
     'DELETE /reports/:id': baseDeleteStub(reports.entity),

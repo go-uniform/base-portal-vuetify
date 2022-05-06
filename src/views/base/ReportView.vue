@@ -16,6 +16,7 @@
       {{ translate('$vuetify.app.loading') }}
     </v-layout>
     <iframe
+      v-if="item.urlView"
       class="fill-content pb-2 no-border"
       :src="item.urlView"
       :hidden="loading"
@@ -40,13 +41,29 @@ export default {
   },
 
   data: () => ({
-    crumbs: [],
     loading: true,
     item: {},
     repository: reports,
   }),
 
   computed: {
+    crumbs() {
+      return [
+        {
+          icon: translate('$vuetify.home.icon'),
+          title: translate('$vuetify.home.pageTitle'),
+          location: '/',
+        },
+        {
+          title: translate(this.repository.title.plural),
+          location: this.repository.listPage,
+        },
+        {
+          title: this.item.title,
+          hint: this.item.description,
+        },
+      ];
+    },
     actions() {
       let editHandler = null;
       if (this.item.urlEdit) {
@@ -77,17 +94,18 @@ export default {
     },
 
     edit() {
-      this.$router.push(`${this.repository.editPagePrefix}/${this.item.id}`);
+      this.$router.push(`${translate(this.repository.editPage,this.item.id)}`);
     },
   },
 
   mounted() {
     this.loading = true;
     this.$emit('loading', this.loading);
-
-    this.crumbs = defaultViewCrumbs(this.repository);
     this.repository.read(this.$route.params.id).then((response) => {
       this.item = response.item;
+      if (!this.item.urlView) {
+        this.loading = false;
+      }
       this.$forceUpdate();
     }).catch((reason) => {
       const message = reason.headers.get('Message') ?? translate('$vuetify.errors.general');

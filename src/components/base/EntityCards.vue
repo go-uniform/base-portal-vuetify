@@ -82,7 +82,7 @@
         >
           <v-card-text>
             <v-img
-              :src="record.thumbnail"
+              :src="record.urlThumbnail"
               :aspect-ratio="16/9"
             />
           </v-card-text>
@@ -90,7 +90,6 @@
             {{ record.title }}
           </v-card-title>
           <v-card-subtitle
-            v-if="record.description"
             v-html="record.description"
           />
         </v-card>
@@ -122,12 +121,21 @@
 .card-container {
   border: 1px solid transparent;
   flex: 1 0 100%;
+  max-width: 100%;
 
   .v-card {
     border-radius: 0 !important;
     opacity: 80%;
   }
+
+  .v-card__subtitle {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-height: 42px;
+  }
 }
+
 .card-container:hover {
   border-color: var(--v-accent-base);
 
@@ -140,6 +148,13 @@
   .card-container {
     flex: 1 0 50%;
     max-width: 50%;
+
+    .v-card-subtitle {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      height: 42px;
+    }
   }
 }
 
@@ -147,6 +162,13 @@
   .card-container {
     flex: 1 0 33%;
     max-width: 33%;
+
+    .v-card-subtitle {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      height: 42px;
+    }
   }
 }
 
@@ -154,6 +176,13 @@
   .card-container {
     flex: 1 0 25%;
     max-width: 25%;
+
+    .v-card-subtitle {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      height: 42px;
+    }
   }
 }
 </style>
@@ -215,11 +244,11 @@ export default {
     },
 
     edit(item) {
-      this.$router.push(`${this.repository.editPagePrefix}/${item.id}`);
+      this.$router.push(`${translate(this.repository.editPage, item.id)}`);
     },
 
     view(item) {
-      this.$router.push(`${this.repository.viewPagePrefix}/${item.id}`);
+      this.$router.push(`${translate(this.repository.viewPage, item.id)}`);
     },
 
     defaultItemActions(item) {

@@ -4,7 +4,7 @@ import {IRepository} from '@/services/base/global.interfaces';
 export const defaultEditActions = (repository: IRepository<any>, id: string, saveHandler: any) => {
   let cancelUrl = repository.listPage;
   if (id) {
-    cancelUrl = `${repository.viewPagePrefix}/${id}`;
+    cancelUrl = `${translate(repository.viewPage,id)}`;
   }
 
   const actions = [];

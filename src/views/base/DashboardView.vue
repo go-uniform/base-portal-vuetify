@@ -26,7 +26,6 @@
         </v-tab>
       </v-tabs>
     </template>
-
     <v-layout
       v-if="loading"
       fill-height
@@ -50,8 +49,9 @@
           class="fill-content"
         >
           <iframe
+            v-if="record.urlView"
             class="fill-content pb-2 no-border"
-            :src="editMode && record.urlEdit ? record.urlEdit : record.urlView"
+            :src="record.urlView"
             :hidden="loading"
             @load="updateLoadingIndicator(false)"
           />
@@ -62,8 +62,9 @@
       class="fill-content"
       v-else
     >
+
       <iframe
-        v-if="records.length === 1"
+        v-if="records.length === 1 && item.urlView"
         class="fill-content pb-2 no-border"
         :src="item.urlView"
         :hidden="loading"
@@ -113,7 +114,7 @@
 
 <script>
 import MainLayout from '@/layouts/base/Main';
-import {deleteConfirmation, loadingStart, loadingStop} from '../../plugins/base/vuetify';
+import {deleteConfirmation, loadingStart, loadingStop, translate} from '../../plugins/base/vuetify';
 import {dashboards} from '../../services/repositories/dashboards';
 import {defaultViewActions} from '../../services/base/entity.helper.default-view-actions';
 
@@ -125,12 +126,15 @@ export default {
 
   computed: {
     crumbs() {
-      if (this.records && this.records.length === 0) {
+      if (this.loading) {
         return [
           {
-            title: 'Loading...',
+            title:  'Loading...',
           }
         ];
+      }
+      if (this.records && this.records.length === 0) {
+        return [];
       }
       return [
         {
@@ -157,7 +161,6 @@ export default {
     item: null,
     loading: true,
     repository: dashboards,
-    editMode: false,
   }),
 
   methods: {
@@ -218,7 +221,7 @@ export default {
 
     edit() {
       if (this.item) {
-        this.$router.push(`${this.repository.editPagePrefix}/${this.item.id}`);
+        this.$router.push(`${translate(this.repository.editPage,this.item.id)}`);
       }
     },
   },

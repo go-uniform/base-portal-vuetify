@@ -55,7 +55,7 @@ export default {
           title: translate('$vuetify.entityView.view'),
           color: 'info',
           callback: () => {
-            this.$router.push(`${this.repository.viewPagePrefix}/${this.item.id}`);
+            this.$router.push(`${translate(this.repository.viewPage,this.item.id)}`);
           },
         },
       ];
@@ -83,7 +83,7 @@ export default {
     },
 
     edit(item) {
-      this.$router.push(`${this.repository.editPagePrefix}/${item.id}`);
+      this.$router.push(`${translate(this.repository.editPage,item.id)}`);
     },
   },
 

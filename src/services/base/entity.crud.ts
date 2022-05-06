@@ -143,7 +143,7 @@ export const createRepositoryCrudRoutes = (routes: RouteConfig[], repository: an
       }
     },
     {
-      path: `${repository.viewPagePrefix}/:id`,
+      path: `${translate(repository.viewPage,':id')}`,
       name: `${repository.entity}-view`,
       component: () => import('@/views/base/EntityView.vue'),
       meta: {
@@ -161,7 +161,7 @@ export const createRepositoryCrudRoutes = (routes: RouteConfig[], repository: an
       }
     },
     {
-      path: `${repository.editPagePrefix}/:id`,
+      path: `${translate(repository.editPage,':id')}`,
       name: `${repository.entity}-edit`,
       component: () => import('@/views/base/EntityEdit.vue'),
       meta: {

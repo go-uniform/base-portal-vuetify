@@ -17,16 +17,28 @@ export interface Dashboard {
 
 const repository = new Repository<Dashboard>(slug, {}, {
   freeTextSearch: false,
-  listPage: '/'
+  listPage: `/`,
+  viewPage: `/#{0}`,
 });
 
 repository.addField('title', {
   label: '',
   type: EnumValueType.Text,
 });
+repository.addField('urlView', {
+  label: '',
+  type: EnumValueType.Text,
+  readonly: true,
+});
+repository.addField('urlEdit', {
+  label: '',
+  type: EnumValueType.Text,
+  readonly: true,
+});
 repository.addField('description', {
   label: '',
   type: EnumValueType.TextArea,
+  optional: true,
 });
 
 repository.setHeaders([
@@ -46,11 +58,7 @@ repository.addSection(
     'description',
     'modifiedAt',
     'createdAt',
-  ], {
-    childXl: 3,
-    childLg: 4,
-    childMd: 6,
-  })
+  ])
 );
 
 repository.bulkActions = [

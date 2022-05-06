@@ -11,7 +11,7 @@
         ,
       </span>
       <a
-        :href="`${repository.viewPagePrefix}/${valueItem}`"
+        :href="`${translate(repository.viewPage,valueItem)}`"
       >
         {{ getMultiValue(item[field.selfReferenceLabelFieldKey])[index] }}
       </a>

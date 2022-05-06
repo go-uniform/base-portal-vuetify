@@ -31,7 +31,7 @@ const routes: RouteConfig[] = [
   {
     path: '/dashboards/add',
     name: 'dashboard-add',
-    component: () => import('../views/base/DashboardAdd.vue'),
+    component: () => import('../views/base/EntityEdit.vue'),
     meta: {
       repository: dashboards,
       title: 'New Dashboard',
@@ -71,10 +71,10 @@ const routes: RouteConfig[] = [
   {
     path: '/reports/add',
     name: 'report-add',
-    component: () => import('../views/base/ReportAdd.vue'),
+    component: () => import('../views/base/EntityEdit.vue'),
     meta: {
       repository: reports,
-      title: 'Edit Report',
+      title: 'New Report',
       permissions: [],
     }
   },

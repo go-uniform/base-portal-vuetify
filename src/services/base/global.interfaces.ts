@@ -252,8 +252,8 @@ export interface IRepository<T> {
   defaultSortOrder: string;
   listPage: string;
   addPage: string;
-  viewPagePrefix: string;
-  editPagePrefix: string;
+  viewPage: string;
+  editPage: string;
   default?: object;
   fields: IFields;
   headers: IHeader[];
@@ -277,8 +277,8 @@ export class Repository<T> implements  IRepository<T> {
   defaultSortOrder: string;
   listPage: string;
   addPage: string;
-  viewPagePrefix: string;
-  editPagePrefix: string;
+  viewPage: string;
+  editPage: string;
   default?: object;
   fields: IFields;
   headers: IHeader[];
@@ -303,8 +303,8 @@ export class Repository<T> implements  IRepository<T> {
     this.disableCreation = options.disableCreation ?? false;
     this.listPage = options.listPage ?? `/${slug}`;
     this.addPage = options.addPage ?? `/${slug}/add`;
-    this.viewPagePrefix = options.viewPagePrefix ?? `/${slug}/view`;
-    this.editPagePrefix = options.editPagePrefix ?? `/${slug}/edit`;
+    this.viewPage = options.viewPage ?? `/${slug}/view/{0}`;
+    this.editPage = options.editPage ?? `/${slug}/edit/{0}`;
     this.defaultSortOrder = options.defaultSortOrder ?? '-createdAt';
     this.default = defaultValue;
     this.fields = {

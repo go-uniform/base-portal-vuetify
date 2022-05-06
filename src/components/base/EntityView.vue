@@ -171,7 +171,7 @@ export default {
 
   methods: {
     edit() {
-      this.$router.push(`${this.repository.editPagePrefix}/${this.id}`);
+      this.$router.push(`${translate(this.repository.editPage,this.id)}`);
     },
 
     remove() {

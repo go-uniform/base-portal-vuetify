@@ -34,7 +34,11 @@ const stub = {
   repository: dashboards,
   handlers: {
     'GET /dashboards': baseListStub(dashboards.entity),
-    'POST /dashboards/:id': baseCreateStub(dashboards.entity),
+    'POST /dashboards': baseCreateStub(dashboards.entity, (record: any) => {
+      record.urlView = `https://en.wikipedia.org/wiki/${encodeURIComponent(record.title)}`;
+      record.urlEdit = `https://en.wikipedia.org/w/index.php?title=${encodeURIComponent(record.title)}&action=history`;
+      return record;
+    }),
     'GET /dashboards/:id': baseReadStub(dashboards.entity),
     'PUT /dashboards/:id': baseUpdateStub(dashboards.entity),
     'DELETE /dashboards/:id': baseDeleteStub(dashboards.entity),
