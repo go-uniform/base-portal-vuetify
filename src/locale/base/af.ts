@@ -155,7 +155,7 @@ export default extend(af, {
   empty: 'leeg',
   menu: {
     reports: {
-      title: 'Rapporte',
+      title: 'Verslae',
       icon: 'mdi-chart-box',
       example1: {
         title: 'Voorbeeld 1',
@@ -165,9 +165,6 @@ export default extend(af, {
       title: 'Gebruikers',
       icon: 'mdi-account',
     },
-  },
-  reports: {
-    pageTitle: 'Rapporte',
   },
   users: {
     singular: 'Gebruiker',
@@ -287,5 +284,45 @@ export default extend(af, {
         },
       }
     }
+  },
+  dashboards: {
+    pageTitle: 'Paneelborde',
+    singular: 'Paneelbord',
+    plural: 'Paneelborde',
+    sections: {
+      general: 'Algemeen',
+    },
+    fields: {
+      title: 'Titel',
+      description: 'Beskrywing',
+      modifiedAt: 'Gewysig Teen',
+      createdAt: 'Geskep Teen',
+    },
+  },
+  reports: {
+    pageTitle: 'Verslae',
+    singular: 'Verslag',
+    plural: 'Verslae',
+    sections: {
+      general: 'Algemeen',
+    },
+    fields: {
+      title: 'Titel',
+      description: 'Beskrywing',
+      modifiedAt: 'Gewysig Teen',
+      createdAt: 'Geskep Teen',
+    },
+  },
+  account: {
+    pageTitle: 'My Rekening',
+    icon: 'mdi-account'
+  },
+  settings: {
+    pageTitle: 'Instellings',
+    icon: 'mdi-cogs'
+  },
+  customizations: {
+    pageTitle: 'Aanpassings',
+    icon: 'mdi-application-cog-outline'
   },
 });

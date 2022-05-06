@@ -293,12 +293,25 @@ export default extend(en, {
     pageTitle: 'Dashboards',
     singular: 'Dashboard',
     plural: 'Dashboards',
+    sections: {
+      general: 'General',
+    },
+    fields: {
+      title: 'Title',
+      description: 'Description',
+      createdAt: 'Created At',
+    },
   },
   reports: {
     pageTitle: 'Reports',
     singular: 'Report',
     plural: 'Reports',
+    sections: {
+      general: 'General',
+    },
     fields: {
+      title: 'Title',
+      description: 'Description',
       createdAt: 'Created At',
     },
   },

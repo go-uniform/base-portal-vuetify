@@ -166,9 +166,6 @@ export default extend(nl, {
       icon: 'mdi-account',
     },
   },
-  reports: {
-    pageTitle: 'Rapporten',
-  },
   users: {
     singular: 'Gebruiker',
     plural: 'Gebruikers',
@@ -287,5 +284,45 @@ export default extend(nl, {
         },
       }
     }
+  },
+  dashboards: {
+    pageTitle: 'Dashboards',
+    singular: 'Dashboard',
+    plural: 'Dashboards',
+    sections: {
+      general: 'Algemeen',
+    },
+    fields: {
+      title: 'Titel',
+      description: 'Beschrijving',
+      modifiedAt: 'Gewijzigd Om',
+      createdAt: 'Geskep Om',
+    },
+  },
+  reports: {
+    pageTitle: 'Verslae',
+    singular: 'Verslag',
+    plural: 'Verslae',
+    sections: {
+      general: 'Algemeen',
+    },
+    fields: {
+      title: 'Titel',
+      description: 'Beschrijving',
+      modifiedAt: 'Gewijzigd Om',
+      createdAt: 'Geskep Om',
+    },
+  },
+  account: {
+    pageTitle: 'My Rekening',
+    icon: 'mdi-account'
+  },
+  settings: {
+    pageTitle: 'Instellings',
+    icon: 'mdi-cogs'
+  },
+  customizations: {
+    pageTitle: 'Aanpassings',
+    icon: 'mdi-application-cog-outline'
   },
 });
