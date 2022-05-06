@@ -1,5 +1,5 @@
 import {Repository} from '@/services/base/global.interfaces';
-import {EnumFieldType, EnumHeaderAlign} from '@/services/base/global.enums';
+import {EnumValueType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
 
 const entity = 'reports';
@@ -13,15 +13,19 @@ export interface Report {
   createdAt: Date;
 }
 
-const repository = new Repository<Report>(slug, {}, {});
+const repository = new Repository<Report>(slug, {}, {
+  freeTextSearch: false,
+  disableCreation: true,
+  createdAtFilterable: false,
+});
 
 repository.addField('title', {
   label: '',
-  type: EnumFieldType.Text,
+  type: EnumValueType.Text,
 });
 repository.addField('description', {
   label: '',
-  type: EnumFieldType.TextArea,
+  type: EnumValueType.TextArea,
 });
 
 repository.setHeaders([

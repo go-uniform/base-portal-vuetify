@@ -113,10 +113,10 @@ router.beforeEach(AuthGuard);
 const PageTitle: NavigationGuard = (to, from, next) => {
   let title = translate('$vuetify.app.title');
   if (to.meta && to.meta.title) {
-    if (to.meta.repository) {
-      title = `${to.meta.title} | ${title}`;
-    } else {
+    if (to.meta && to.meta.title.startsWith('$vuetify')) {
       title = `${translate(to.meta.title)} | ${title}`;
+    } else {
+      title = `${to.meta.title} | ${title}`;
     }
   }
   document.title = title;

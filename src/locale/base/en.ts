@@ -136,6 +136,15 @@ export default extend(en, {
     search: 'Search',
     reset: 'Reset',
   },
+  entityCards: {
+    title: 'Cards',
+    actions: 'Actions',
+    new: 'New',
+    edit: 'Edit',
+    view: 'View',
+    delete: 'Delete',
+    load: 'Load More',
+  },
   notFound: {
     pageTitle: 'Page Not Found',
     pageHtml: 'The page you are looking for can\'t be found.',
@@ -163,9 +172,6 @@ export default extend(en, {
       title: 'Users',
       icon: 'mdi-account',
     },
-  },
-  reports: {
-    pageTitle: 'Reports',
   },
   users: {
     singular: 'User',
@@ -282,6 +288,19 @@ export default extend(en, {
         },
       }
     }
+  },
+  dashboards: {
+    pageTitle: 'Dashboards',
+    singular: 'Dashboard',
+    plural: 'Dashboards',
+  },
+  reports: {
+    pageTitle: 'Reports',
+    singular: 'Report',
+    plural: 'Reports',
+    fields: {
+      createdAt: 'Created At',
+    },
   },
   account: {
     pageTitle: 'My Account',

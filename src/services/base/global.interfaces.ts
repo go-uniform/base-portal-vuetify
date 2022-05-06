@@ -299,8 +299,8 @@ export class Repository<T> implements  IRepository<T> {
       singular: `$vuetify.${this.entity}.singular`,
       plural: `$vuetify.${this.entity}.plural`,
     };
-    this.freeTextSearch = true;
-    this.disableCreation = false;
+    this.freeTextSearch = options.freeTextSearch ?? true;
+    this.disableCreation = options.disableCreation ?? false;
     this.listPage = `/${slug}`;
     this.addPage = `/${slug}/add`;
     this.viewPagePrefix = `/${slug}/view`;
@@ -316,12 +316,13 @@ export class Repository<T> implements  IRepository<T> {
       modifiedAt: {
         label: `$vuetify.${this.entity}.fields.modifiedAt`,
         type: EnumValueType.DateTime,
+        filterable: options.modifiedAtFilterable ?? false,
         readonly: true,
       },
       createdAt: {
         label: `$vuetify.${this.entity}.fields.createdAt`,
         type: EnumValueType.DateTime,
-        filterable: true,
+        filterable: options.createdAtFilterable ?? true,
         readonly: true,
       },
     };

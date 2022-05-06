@@ -13,7 +13,15 @@ export const DashboardsList: Dashboard[] = baseListLoad([
   {
     id: generateUuid(),
     thumbnail: 'https://via.placeholder.com/800x600',
-    title: 'Main Dashboard',
+    title: 'Main',
+    description: 'This is a description',
+    modifiedAt: new Date(),
+    createdAt: new Date(),
+  },
+  {
+    id: generateUuid(),
+    thumbnail: 'https://via.placeholder.com/800x600',
+    title: 'Secondary',
     description: 'This is a description',
     modifiedAt: new Date(),
     createdAt: new Date(),
