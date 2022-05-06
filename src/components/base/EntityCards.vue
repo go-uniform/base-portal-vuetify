@@ -1,6 +1,41 @@
 <template>
 
+  <v-layout
+    v-if="loading"
+    fill-height
+    justify-center
+    align-center
+  >
+    {{ translate('$vuetify.app.loading') }}
+  </v-layout>
+  <v-layout
+    v-else-if="!records || records.length === 0"
+    class="fill-content"
+    justify-center
+    align-center
+    column
+  >
+
+    <p>
+      No data available
+    </p>
+    <v-btn
+      color="success"
+      :to="repository.addPage"
+    >
+
+      <v-icon
+        class="mr-2"
+      >
+        mdi-plus-box
+      </v-icon>
+      New
+
+    </v-btn>
+
+  </v-layout>
   <div
+    v-else
     class="fill-width"
   >
 
@@ -43,6 +78,7 @@
       >
         <v-card
           hover
+          @click="view(record)"
         >
           <v-card-text>
             <v-img
@@ -123,7 +159,7 @@
 </style>
 
 <script>
-import {deleteConfirmation, loadingStart, loadingStop} from '../../plugins/base/vuetify';
+import {confirmation, deleteConfirmation, loadingStart, loadingStop, translate} from '../../plugins/base/vuetify';
 import EntityListFilters from './EntityListFilters';
 import {defaultListCrumbs} from '../../services/base/entity.helper.default-list-crumbs';
 import {defaultListActions} from '../../services/base/entity.helper.default-list-actions';
@@ -197,6 +233,27 @@ export default {
     defaultActions() {
       return defaultListActions(this.repository);
     },
+
+    defaultBulkActions() {
+      return this.repository.bulkActions;
+    },
+
+    bulkActionHandler(action, items) {
+      const ids = items.map((item) => {
+        return item.id;
+      });
+      confirmation((confirmed) => {
+          if (confirmed) {
+            this.repository.bulk(action.key, ids).then(() => {
+              this.load();
+            });
+          }
+        }, '$vuetify.entityList.bulkActionConfirmationTitle',
+        translate('$vuetify.entityList.bulkActionConfirmationMessage',
+          translate(action.title).toLowerCase(), ids.length), {
+          color: action.color ?? 'info',
+        });
+    }
   },
   mounted() {
     this.load();

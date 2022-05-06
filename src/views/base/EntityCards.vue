@@ -1,15 +1,15 @@
 <template>
 
   <main-layout
+    :crumbs="crumbs"
+    :actions="actions"
     :loading="loading"
   >
-
     <entity-cards
       ref="cards"
       :repository="$route.meta.repository"
       @loading="updateLoadingIndicator"
     ></entity-cards>
-
   </main-layout>
 
 </template>
@@ -26,6 +26,10 @@ export default {
   },
 
   data: () => ({
+    crumbs: [],
+    actions: [],
+    bulkActions: [],
+    bulkActionHandler: null,
     loading: true,
   }),
 
@@ -33,6 +37,13 @@ export default {
     updateLoadingIndicator(value) {
       this.loading = value;
     }
+  },
+
+  mounted() {
+    this.crumbs = this.$refs.cards.defaultCrumbs();
+    this.actions = this.$refs.cards.defaultActions();
+    this.bulkActions = this.$refs.cards.defaultBulkActions();
+    this.bulkActionHandler = this.$refs.cards.bulkActionHandler;
   },
 };
 </script>

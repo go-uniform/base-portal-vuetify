@@ -301,12 +301,12 @@ export class Repository<T> implements  IRepository<T> {
     };
     this.freeTextSearch = options.freeTextSearch ?? true;
     this.disableCreation = options.disableCreation ?? false;
-    this.listPage = `/${slug}`;
-    this.addPage = `/${slug}/add`;
-    this.viewPagePrefix = `/${slug}/view`;
-    this.editPagePrefix = `/${slug}/edit`;
+    this.listPage = options.listPage ?? `/${slug}`;
+    this.addPage = options.addPage ?? `/${slug}/add`;
+    this.viewPagePrefix = options.viewPagePrefix ?? `/${slug}/view`;
+    this.editPagePrefix = options.editPagePrefix ?? `/${slug}/edit`;
+    this.defaultSortOrder = options.defaultSortOrder ?? '-createdAt';
     this.default = defaultValue;
-    this.defaultSortOrder = '-createdAt';
     this.fields = {
       id: {
         label: `$vuetify.${this.entity}.fields.id`,

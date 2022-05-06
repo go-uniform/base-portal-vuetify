@@ -7,6 +7,9 @@ const slug = entity;
 
 export interface Report {
   id: string;
+  thumbnail?: string;
+  urlView: string;
+  urlEdit?: string;
   title: string;
   description?: string;
   modifiedAt: Date;
@@ -15,7 +18,6 @@ export interface Report {
 
 const repository = new Repository<Report>(slug, {}, {
   freeTextSearch: false,
-  disableCreation: true,
   createdAtFilterable: false,
 });
 

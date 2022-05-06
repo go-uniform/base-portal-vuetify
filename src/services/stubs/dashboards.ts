@@ -12,7 +12,8 @@ import {Dashboard, dashboards} from '@/services/repositories/dashboards';
 export const DashboardsList: Dashboard[] = baseListLoad([
   {
     id: generateUuid(),
-    thumbnail: 'https://via.placeholder.com/800x600',
+    urlView: `https://en.wikipedia.org/wiki/Main`,
+    urlEdit: `https://en.wikipedia.org/w/index.php?title=Main&action=history`,
     title: 'Main',
     description: 'This is a description',
     modifiedAt: new Date(),
@@ -20,7 +21,8 @@ export const DashboardsList: Dashboard[] = baseListLoad([
   },
   {
     id: generateUuid(),
-    thumbnail: 'https://via.placeholder.com/800x600',
+    urlView: `https://en.wikipedia.org/wiki/Secondary`,
+    urlEdit: `https://en.wikipedia.org/w/index.php?title=Secondary&action=history`,
     title: 'Secondary',
     description: 'This is a description',
     modifiedAt: new Date(),

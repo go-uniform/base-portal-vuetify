@@ -10,11 +10,31 @@ import {reports} from '@/services/repositories/reports';
 const routes: RouteConfig[] = [
   {
     path: '/',
-    name: 'dashboards',
-    component: () => import('../views/base/EntityTabs.vue'),
+    name: 'dashboard-list',
+    component: () => import('../views/base/DashboardView.vue'),
     meta: {
       repository: dashboards,
       title: '$vuetify.home.pageTitle',
+      permissions: [],
+    }
+  },
+  {
+    path: '/dashboards/edit/:id',
+    name: 'dashboard-edit',
+    component: () => import('../views/base/DashboardEdit.vue'),
+    meta: {
+      repository: dashboards,
+      title: 'Edit Dashboard',
+      permissions: [],
+    }
+  },
+  {
+    path: '/dashboards/add',
+    name: 'dashboard-add',
+    component: () => import('../views/base/DashboardAdd.vue'),
+    meta: {
+      repository: dashboards,
+      title: 'New Dashboard',
       permissions: [],
     }
   },
@@ -29,12 +49,32 @@ const routes: RouteConfig[] = [
     }
   },
   {
-    path: '/reports/:id',
+    path: '/reports/view/:id',
     name: 'report-view',
-    component: () => import('../views/base/EntityCards.vue'),
+    component: () => import('../views/base/ReportView.vue'),
     meta: {
       repository: reports,
-      title: '$vuetify.reports.pageTitle',
+      title: 'View Report',
+      permissions: [],
+    }
+  },
+  {
+    path: '/reports/edit/:id',
+    name: 'report-edit',
+    component: () => import('../views/base/ReportEdit.vue'),
+    meta: {
+      repository: reports,
+      title: 'Edit Report',
+      permissions: [],
+    }
+  },
+  {
+    path: '/reports/add',
+    name: 'report-add',
+    component: () => import('../views/base/ReportAdd.vue'),
+    meta: {
+      repository: reports,
+      title: 'Edit Report',
       permissions: [],
     }
   },

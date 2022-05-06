@@ -7,7 +7,8 @@ const slug = entity;
 
 export interface Dashboard {
   id: string;
-  thumbnail: string;
+  urlView: string;
+  urlEdit?: string;
   title: string;
   description?: string;
   modifiedAt: Date;
@@ -16,7 +17,7 @@ export interface Dashboard {
 
 const repository = new Repository<Dashboard>(slug, {}, {
   freeTextSearch: false,
-  disableCreation: true,
+  listPage: '/'
 });
 
 repository.addField('title', {
