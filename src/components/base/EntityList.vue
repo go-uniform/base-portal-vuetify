@@ -287,7 +287,6 @@ export default {
     },
 
     view(item) {
-      console.log(`${translate(this.repository.viewPage,item.id)}`);
       this.$router.push(`${translate(this.repository.viewPage,item.id)}`);
     },
 
