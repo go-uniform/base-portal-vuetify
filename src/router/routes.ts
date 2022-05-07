@@ -5,6 +5,7 @@ import {userAttributes} from '@/services/repositories/user-attributes';
 import {RouteConfig} from 'vue-router';
 import {dashboards} from '@/services/repositories/dashboards';
 import {reports} from '@/services/repositories/reports';
+import {translate} from '@/plugins/base/vuetify';
 
 // custom/override routes should be added here
 const routes: RouteConfig[] = [
@@ -24,7 +25,7 @@ const routes: RouteConfig[] = [
     component: () => import('../views/base/DashboardEdit.vue'),
     meta: {
       repository: dashboards,
-      title: 'Edit Dashboard',
+      title: translate('$vuetify.entity.edit', dashboards.title.singular),
       permissions: [],
     }
   },
@@ -34,7 +35,7 @@ const routes: RouteConfig[] = [
     component: () => import('../views/base/EntityEdit.vue'),
     meta: {
       repository: dashboards,
-      title: 'New Dashboard',
+      title: translate('$vuetify.entity.new', dashboards.title.singular),
       permissions: [],
     }
   },
@@ -44,7 +45,7 @@ const routes: RouteConfig[] = [
     component: () => import('../views/base/EntityCards.vue'),
     meta: {
       repository: reports,
-      title: '$vuetify.reports.pageTitle',
+      title: translate('$vuetify.entity.list', dashboards.title.plural),
       permissions: [],
     }
   },
@@ -54,7 +55,7 @@ const routes: RouteConfig[] = [
     component: () => import('../views/base/ReportView.vue'),
     meta: {
       repository: reports,
-      title: 'View Report',
+      title: translate('$vuetify.entity.view', reports.title.singular),
       permissions: [],
     }
   },
@@ -64,7 +65,7 @@ const routes: RouteConfig[] = [
     component: () => import('../views/base/ReportEdit.vue'),
     meta: {
       repository: reports,
-      title: 'Edit Report',
+      title: translate('$vuetify.entity.edit', reports.title.singular),
       permissions: [],
     }
   },
@@ -74,7 +75,7 @@ const routes: RouteConfig[] = [
     component: () => import('../views/base/EntityEdit.vue'),
     meta: {
       repository: reports,
-      title: 'New Report',
+      title: translate('$vuetify.entity.new', reports.title.singular),
       permissions: [],
     }
   },
