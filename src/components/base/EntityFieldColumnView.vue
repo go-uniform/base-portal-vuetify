@@ -18,7 +18,7 @@
       v-else-if="field.type === 'selfReference'"
     >
       <a
-        :href="`${repository.viewPagePrefix}/${value}`"
+        :href="`${translate(repository.viewPage,value)}`"
       >
         {{ item[field.selfReferenceLabelFieldKey] }}
       </a>

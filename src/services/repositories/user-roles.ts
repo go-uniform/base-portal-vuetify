@@ -29,8 +29,8 @@ export const userRoles: IRepository<IUserRole> = {
   defaultSortOrder: '-createdAt',
   listPage: `/${slug}`,
   addPage: `/${slug}/add`,
-  viewPagePrefix: `/${slug}/view`,
-  editPagePrefix: `/${slug}/edit`,
+  viewPage: `/${slug}/view/{0}`,
+  editPage: `/${slug}/edit/{0}`,
   fields: {
     id: {
       label: `$vuetify.${entity}.fields.id`,

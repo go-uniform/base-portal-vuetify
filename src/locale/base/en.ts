@@ -37,6 +37,7 @@ export default extend(en, {
     standaloneLogoCompactDark: 'compact.png',
     standaloneLogoCompactLight: 'compact.png',
 
+    noData: 'No data available',
     homeComingSoon: 'dashboard widgets/metrics will go here',
     reportComingSoon: 'report view will go here',
     loading: 'Loading...',
@@ -120,6 +121,7 @@ export default extend(en, {
     bulkActionConfirmationMessage: 'You are about to {0} {1} record(s), are you sure you want to do this?',
   },
   entityView: {
+    new: 'New',
     list: 'List',
     view: 'View',
     edit: 'Edit',
@@ -135,6 +137,18 @@ export default extend(en, {
     freeTextSearch: 'Search Terms',
     search: 'Search',
     reset: 'Reset',
+  },
+  entityCards: {
+    title: 'List',
+    actions: 'Actions',
+    new: 'New',
+    edit: 'Edit',
+    view: 'View',
+    delete: 'Delete',
+    bulk: 'Bulk',
+    bulkActionConfirmationTitle: 'Are you sure?',
+    bulkActionConfirmationMessage: 'You are about to {0} {1} record(s), are you sure you want to do this?',
+    load: 'Load More',
   },
   notFound: {
     pageTitle: 'Page Not Found',
@@ -163,9 +177,6 @@ export default extend(en, {
       title: 'Users',
       icon: 'mdi-account',
     },
-  },
-  reports: {
-    pageTitle: 'Reports',
   },
   users: {
     singular: 'User',
@@ -282,6 +293,33 @@ export default extend(en, {
         },
       }
     }
+  },
+  dashboards: {
+    pageTitle: 'Dashboards',
+    singular: 'Dashboard',
+    plural: 'Dashboards',
+    sections: {
+      general: 'General',
+    },
+    fields: {
+      title: 'Title',
+      description: 'Description',
+      createdAt: 'Created At',
+    },
+    noData: 'You have no dashboards, why not create your first dashboard now.',
+  },
+  reports: {
+    pageTitle: 'Reports',
+    singular: 'Report',
+    plural: 'Reports',
+    sections: {
+      general: 'General',
+    },
+    fields: {
+      title: 'Title',
+      description: 'Description',
+      createdAt: 'Created At',
+    },
   },
   account: {
     pageTitle: 'My Account',

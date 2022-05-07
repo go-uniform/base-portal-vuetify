@@ -37,6 +37,7 @@ export default extend(nl, {
     standaloneLogoCompactDark: 'compact.png',
     standaloneLogoCompactLight: 'compact.png',
 
+    noData: 'Geen gegevens beschikbaar',
     homeComingSoon: 'dashboard-widgets / -statistieken komen hier\n',
     reportComingSoon: 'rapportweergave komt hier',
     myAccount: 'Mijn Rekening',
@@ -122,6 +123,7 @@ export default extend(nl, {
     bulkActionConfirmationMessage: 'U staat op het punt {0} over {1} record(s) te halen, weet u zeker dat u dat nog steeds wilt doen?',
   },
   entityView: {
+    new: 'Nieuw',
     list: 'Lijst',
     view: 'Weergave',
     edit: 'Bewerk',
@@ -137,6 +139,18 @@ export default extend(nl, {
     freeTextSearch: 'Zoektermen',
     search: 'Zoekopdracht',
     reset: 'Herstel',
+  },
+  entityCards: {
+    title: 'Lijst',
+    actions: 'Acties',
+    new: 'Nieuw',
+    edit: 'Bewerk',
+    view: 'Weergave',
+    delete: 'Verwijderen',
+    bulk: 'Massaal',
+    bulkActionConfirmationTitle: 'Weet je het zeker?',
+    bulkActionConfirmationMessage: 'U staat op het punt {0} over {1} record(s) te halen, weet u zeker dat u dat nog steeds wilt doen?',
+    load: 'Meer Laden',
   },
   notFound: {
     pageTitle: 'Pagina Niet Gevonden',
@@ -165,9 +179,6 @@ export default extend(nl, {
       title: 'Gebruikers',
       icon: 'mdi-account',
     },
-  },
-  reports: {
-    pageTitle: 'Rapporten',
   },
   users: {
     singular: 'Gebruiker',
@@ -287,5 +298,45 @@ export default extend(nl, {
         },
       }
     }
+  },
+  dashboards: {
+    pageTitle: 'Dashboards',
+    singular: 'Dashboard',
+    plural: 'Dashboards',
+    sections: {
+      general: 'Algemeen',
+    },
+    fields: {
+      title: 'Titel',
+      description: 'Beschrijving',
+      modifiedAt: 'Gewijzigd Om',
+      createdAt: 'Geskep Om',
+    },
+  },
+  reports: {
+    pageTitle: 'Verslae',
+    singular: 'Verslag',
+    plural: 'Verslae',
+    sections: {
+      general: 'Algemeen',
+    },
+    fields: {
+      title: 'Titel',
+      description: 'Beschrijving',
+      modifiedAt: 'Gewijzigd Om',
+      createdAt: 'Geskep Om',
+    },
+  },
+  account: {
+    pageTitle: 'My Rekening',
+    icon: 'mdi-account'
+  },
+  settings: {
+    pageTitle: 'Instellings',
+    icon: 'mdi-cogs'
+  },
+  customizations: {
+    pageTitle: 'Aanpassings',
+    icon: 'mdi-application-cog-outline'
   },
 });

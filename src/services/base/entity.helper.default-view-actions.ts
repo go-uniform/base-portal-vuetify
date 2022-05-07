@@ -1,6 +1,6 @@
 import {translate} from '@/plugins/base/vuetify';
 
-export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listHandler?: any) => {
+export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listHandler?: any, newLocation?: string) => {
   const actions = [];
 
   if (deleteHandler) {
@@ -12,6 +12,17 @@ export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listH
         callback: (item: any) => {
           deleteHandler(item)
         },
+      },
+    );
+  }
+
+  if (newLocation) {
+    actions.push(
+      {
+        icon: 'mdi-plus-box',
+        color: 'success',
+        title: translate('$vuetify.entityView.new'),
+        location: newLocation,
       },
     );
   }

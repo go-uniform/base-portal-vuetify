@@ -147,7 +147,7 @@ export const baseCreateStub = <T>(slug: string, handler?: any, scenario?: IStubS
             }
           }
 
-          scenario = stubScenario({}, 500, new Headers({
+          let subScenario = stubScenario({}, 500, new Headers({
             'Message': '$vuetify.errors.general'
           }));
 
@@ -169,9 +169,9 @@ export const baseCreateStub = <T>(slug: string, handler?: any, scenario?: IStubS
             if (window.localStorage) {
               window.localStorage.setItem(`stub.${slug}`, JSON.stringify(list));
             }
-            scenario = stubScenario(record);
+            subScenario = stubScenario(record);
           }
-          resolve(scenario);
+          resolve(subScenario);
         }
       }, StubTimeout);
     });
@@ -194,7 +194,7 @@ export const baseReadStub = <T>(slug: string, scenario?: IStubScenario | null): 
             }
           }
 
-          scenario = stubScenario({}, 404, new Headers({
+          let subScenario = stubScenario({}, 404, new Headers({
             'Message': '$vuetify.errors.recordNotFound'
           }));
 
@@ -204,10 +204,10 @@ export const baseReadStub = <T>(slug: string, scenario?: IStubScenario | null): 
               return item.id === id;
             });
             if (index >= 0) {
-              scenario = stubScenario(list[index], 200)
+              subScenario = stubScenario(list[index], 200)
             }
           }
-          resolve(scenario);
+          resolve(subScenario);
         }
       }, StubTimeout);
     });
@@ -230,7 +230,7 @@ export const baseUpdateStub = <T>(slug: string, handler?: any, scenario?: IStubS
             }
           }
 
-          scenario = stubScenario({}, 500, new Headers({
+          let subScenario = stubScenario({}, 500, new Headers({
             'Message': '$vuetify.errors.general'
           }));
 
@@ -240,7 +240,7 @@ export const baseUpdateStub = <T>(slug: string, handler?: any, scenario?: IStubS
           }
 
           if (body) {
-            scenario = stubScenario({}, 404, new Headers({
+            subScenario = stubScenario({}, 404, new Headers({
               'Message': '$vuetify.errors.recordNotFound'
             }));
 
@@ -263,11 +263,11 @@ export const baseUpdateStub = <T>(slug: string, handler?: any, scenario?: IStubS
                 if (window.localStorage) {
                   window.localStorage.setItem(`stub.${slug}`, JSON.stringify(list));
                 }
-                scenario = stubScenario(record);
+                subScenario = stubScenario(record);
               }
             }
           }
-          resolve(scenario);
+          resolve(subScenario);
         }
       }, StubTimeout);
     });
@@ -290,11 +290,11 @@ export const baseDeleteStub = <T>(slug: string, scenario?: IStubScenario | null)
             }
           }
 
-          scenario = stubScenario({}, 500, new Headers({
+          let subScenario = stubScenario({}, 500, new Headers({
             'Message': '$vuetify.errors.general'
           }));
 
-          scenario = stubScenario({}, 404, new Headers({
+          subScenario = stubScenario({}, 404, new Headers({
             'Message': '$vuetify.errors.recordNotFound'
           }));
 
@@ -309,10 +309,10 @@ export const baseDeleteStub = <T>(slug: string, scenario?: IStubScenario | null)
               if (window.localStorage) {
                 window.localStorage.setItem(`stub.${slug}`, JSON.stringify(list));
               }
-              scenario = stubScenario(record);
+              subScenario = stubScenario(record);
             }
           }
-          resolve(scenario);
+          resolve(subScenario);
         }
       }, StubTimeout);
     });
@@ -335,7 +335,7 @@ export const baseBulkStub = <T>(slug: string, recordHandler?: IBulkStubScenarioH
             }
           }
 
-          scenario = stubScenario({}, 500, new Headers({
+          let subScenario = stubScenario({}, 500, new Headers({
             'Message': '$vuetify.errors.general'
           }));
 
@@ -354,7 +354,7 @@ export const baseBulkStub = <T>(slug: string, recordHandler?: IBulkStubScenarioH
             });
             const response = recordHandler(body.action, recordIndexes, list);
             if (response.scenario) {
-              scenario = response.scenario;
+              subScenario = response.scenario;
             }
             if (response.list) {
               list = response.list;
@@ -364,7 +364,7 @@ export const baseBulkStub = <T>(slug: string, recordHandler?: IBulkStubScenarioH
             }
           }
 
-          resolve(scenario);
+          resolve(subScenario);
         }
       }, StubTimeout);
     });

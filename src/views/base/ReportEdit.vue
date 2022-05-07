@@ -16,9 +16,8 @@
       {{ translate('$vuetify.app.loading') }}
     </v-layout>
     <iframe
-      v-if="item.urlView"
       class="fill-content pb-2 no-border"
-      :src="item.urlView"
+      :src="item.urlEdit"
       :hidden="loading"
       @load="updateLoadingIndicator(false)"
     />
@@ -29,46 +28,37 @@
 
 <script>
 import MainLayout from '@/layouts/base/Main';
+import {defaultViewCrumbs} from '../../services/base/entity.helper.default-view-crumbs';
 import {defaultViewActions} from '../../services/base/entity.helper.default-view-actions';
 import {deleteConfirmation, loadingStart, toastError, translate} from '../../plugins/base/vuetify';
 import {reports} from '../../services/repositories/reports';
+import {defaultEditCrumbs} from '../../services/base/entity.helper.default-edit-crumbs';
 
 export default {
-  name: 'ReportView',
+  name: 'ReportEdit',
   components: {
     MainLayout
   },
 
   data: () => ({
+    crumbs: [],
     loading: true,
     item: {},
     repository: reports,
   }),
 
   computed: {
-    crumbs() {
+    actions() {
       return [
         {
-          icon: translate('$vuetify.home.icon'),
-          title: translate('$vuetify.home.pageTitle'),
-          location: '/',
-        },
-        {
-          title: translate(this.repository.title.plural),
-          location: this.repository.listPage,
-        },
-        {
-          title: this.item.title,
-          hint: this.item.description,
+          icon: 'mdi-eye',
+          title: translate('$vuetify.entityView.view'),
+          color: 'info',
+          callback: () => {
+            this.$router.push(`${translate(this.repository.viewPage,this.item.id)}`);
+          },
         },
       ];
-    },
-    actions() {
-      let editHandler = null;
-      if (this.item.urlEdit) {
-        editHandler = this.edit;
-      }
-      return defaultViewActions(this.remove, editHandler, this.list);
     },
   },
 
@@ -92,19 +82,19 @@ export default {
       })
     },
 
-    edit() {
-      this.$router.push(`${translate(this.repository.editPage,this.item.id)}`);
+    edit(item) {
+      this.$router.push(`${translate(this.repository.editPage,item.id)}`);
     },
   },
 
   mounted() {
+    const id = this.$route.params.id;
     this.loading = true;
     this.$emit('loading', this.loading);
-    this.repository.read(this.$route.params.id).then((response) => {
+
+    this.crumbs = defaultEditCrumbs(this.repository, id);
+    this.repository.read(id).then((response) => {
       this.item = response.item;
-      if (!this.item.urlView) {
-        this.loading = false;
-      }
       this.$forceUpdate();
     }).catch((reason) => {
       const message = reason.headers.get('Message') ?? translate('$vuetify.errors.general');

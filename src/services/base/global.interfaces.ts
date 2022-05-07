@@ -252,8 +252,8 @@ export interface IRepository<T> {
   defaultSortOrder: string;
   listPage: string;
   addPage: string;
-  viewPagePrefix: string;
-  editPagePrefix: string;
+  viewPage: string;
+  editPage: string;
   default?: object;
   fields: IFields;
   headers: IHeader[];
@@ -277,8 +277,8 @@ export class Repository<T> implements  IRepository<T> {
   defaultSortOrder: string;
   listPage: string;
   addPage: string;
-  viewPagePrefix: string;
-  editPagePrefix: string;
+  viewPage: string;
+  editPage: string;
   default?: object;
   fields: IFields;
   headers: IHeader[];
@@ -299,14 +299,14 @@ export class Repository<T> implements  IRepository<T> {
       singular: `$vuetify.${this.entity}.singular`,
       plural: `$vuetify.${this.entity}.plural`,
     };
-    this.freeTextSearch = true;
-    this.disableCreation = false;
-    this.listPage = `/${slug}`;
-    this.addPage = `/${slug}/add`;
-    this.viewPagePrefix = `/${slug}/view`;
-    this.editPagePrefix = `/${slug}/edit`;
+    this.freeTextSearch = options.freeTextSearch ?? true;
+    this.disableCreation = options.disableCreation ?? false;
+    this.listPage = options.listPage ?? `/${slug}`;
+    this.addPage = options.addPage ?? `/${slug}/add`;
+    this.viewPage = options.viewPage ?? `/${slug}/view/{0}`;
+    this.editPage = options.editPage ?? `/${slug}/edit/{0}`;
+    this.defaultSortOrder = options.defaultSortOrder ?? '-createdAt';
     this.default = defaultValue;
-    this.defaultSortOrder = '-createdAt';
     this.fields = {
       id: {
         label: `$vuetify.${this.entity}.fields.id`,
@@ -316,12 +316,13 @@ export class Repository<T> implements  IRepository<T> {
       modifiedAt: {
         label: `$vuetify.${this.entity}.fields.modifiedAt`,
         type: EnumValueType.DateTime,
+        filterable: options.modifiedAtFilterable ?? false,
         readonly: true,
       },
       createdAt: {
         label: `$vuetify.${this.entity}.fields.createdAt`,
         type: EnumValueType.DateTime,
-        filterable: true,
+        filterable: options.createdAtFilterable ?? true,
         readonly: true,
       },
     };

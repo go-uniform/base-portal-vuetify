@@ -41,7 +41,7 @@ const stub = {
   repository: userRoles,
   handlers: {
     'GET /user-roles': baseListStub(userRoles.entity),
-    'POST /user-roles/:id': baseCreateStub(userRoles.entity),
+    'POST /user-roles': baseCreateStub(userRoles.entity),
     'GET /user-roles/:id': baseReadStub(userRoles.entity),
     'PUT /user-roles/:id': baseUpdateStub(userRoles.entity),
     'DELETE /user-roles/:id': baseDeleteStub(userRoles.entity),

@@ -184,7 +184,7 @@ export default {
         if (this.$route.params.id) {
           this.repository.update(this.$route.params.id, this.item).then(() => {
             toastSuccess('$vuetify.app.submittedSuccessfully');
-            this.$router.push(`${this.repository.viewPagePrefix}/${this.$route.params.id}`);
+            this.$router.push(`${translate(this.repository.viewPage,this.$route.params.id)}`);
           }).finally(() => {
             this.submitting = false;
             this.$emit('submitting', this.submitting);
@@ -193,7 +193,7 @@ export default {
         }
         this.repository.create(this.item).then((response) => {
           toastSuccess('$vuetify.app.submittedSuccessfully');
-          this.$router.push(`${this.repository.viewPagePrefix}/${response.item.id}`);
+          this.$router.push(`${translate(this.repository.viewPage,response.item.id)}`);
         }).finally(() => {
           this.submitting = false;
           this.$emit('submitting', this.submitting);
@@ -205,7 +205,7 @@ export default {
 
     cancel() {
       if (this.$route.params.id) {
-        this.$router.push(`${this.repository.viewPagePrefix}/${this.$route.params.id}`);
+        this.$router.push(`${translate(this.repository.viewPage,this.$route.params.id)}`);
         return;
       }
       this.$router.push(`${this.repository.listPage}`);

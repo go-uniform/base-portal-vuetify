@@ -61,7 +61,7 @@ const stub = {
   repository: users,
   handlers: {
     'GET /users': baseListStub(users.entity),
-    'POST /users/:id': baseCreateStub(users.entity, recordAssemblyHandler),
+    'POST /users': baseCreateStub(users.entity, recordAssemblyHandler),
     'GET /users/:id': baseReadStub(users.entity),
     'PUT /users/:id': baseUpdateStub(users.entity, recordAssemblyHandler),
     'DELETE /users/:id': baseDeleteStub(users.entity),

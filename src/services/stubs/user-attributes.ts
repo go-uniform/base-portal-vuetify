@@ -30,7 +30,7 @@ const stub = {
   },
   handlers: {
     'GET /user-attributes': baseListStub(userAttributes.entity),
-    'POST /user-attributes/:id': baseCreateStub(userAttributes.entity),
+    'POST /user-attributes': baseCreateStub(userAttributes.entity),
     'GET /user-attributes/:id': baseReadStub(userAttributes.entity),
     'PUT /user-attributes/:id': baseUpdateStub(userAttributes.entity),
     'DELETE /user-attributes/:id': baseDeleteStub(userAttributes.entity),

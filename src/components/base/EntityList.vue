@@ -283,11 +283,11 @@ export default {
     },
 
     edit(item) {
-      this.$router.push(`${this.repository.editPagePrefix}/${item.id}`);
+      this.$router.push(`${translate(this.repository.editPage,item.id)}`);
     },
 
     view(item) {
-      this.$router.push(`${this.repository.viewPagePrefix}/${item.id}`);
+      this.$router.push(`${translate(this.repository.viewPage,item.id)}`);
     },
 
     defaultItemActions(item) {

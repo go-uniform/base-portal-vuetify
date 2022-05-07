@@ -37,6 +37,7 @@ export default extend(af, {
     standaloneLogoCompactDark: 'compact.png',
     standaloneLogoCompactLight: 'compact.png',
 
+    noData: 'Geen data beskikbaar nie',
     homeComingSoon: 'paneelbord legstukke/metrieke sal hierheen gaan',
     reportComingSoon: 'verslagaansig sal hierheen gaan',
     myAccount: 'My Rekening',
@@ -122,6 +123,7 @@ export default extend(af, {
     bulkActionConfirmationMessage: 'Jy is op die punt om {0} oor {1} rekord(s) uit te voer, is jy seker jy wil dit nog doen?',
   },
   entityView: {
+    new: 'Nuwe',
     list: 'Lys',
     view: 'Beskou',
     edit: 'Wysig',
@@ -137,6 +139,18 @@ export default extend(af, {
     freeTextSearch: 'Soek Terme',
     search: 'Soek',
     reset: 'Herstel',
+  },
+  entityCards: {
+    title: 'Lys',
+    actions: 'Aksies',
+    new: 'Nuwe',
+    edit: 'Wysig',
+    view: 'Beskou',
+    delete: 'Skrap',
+    bulk: 'Maat',
+    bulkActionConfirmationTitle: 'Is jy seker?',
+    bulkActionConfirmationMessage: 'Jy is op die punt om {0} oor {1} rekord(s) uit te voer, is jy seker jy wil dit nog doen?',
+    load: 'Laai Meer',
   },
   notFound: {
     pageTitle: 'Bladsy Nie Gevind Nie',
@@ -155,7 +169,7 @@ export default extend(af, {
   empty: 'leeg',
   menu: {
     reports: {
-      title: 'Rapporte',
+      title: 'Verslae',
       icon: 'mdi-chart-box',
       example1: {
         title: 'Voorbeeld 1',
@@ -165,9 +179,6 @@ export default extend(af, {
       title: 'Gebruikers',
       icon: 'mdi-account',
     },
-  },
-  reports: {
-    pageTitle: 'Rapporte',
   },
   users: {
     singular: 'Gebruiker',
@@ -287,5 +298,45 @@ export default extend(af, {
         },
       }
     }
+  },
+  dashboards: {
+    pageTitle: 'Paneelborde',
+    singular: 'Paneelbord',
+    plural: 'Paneelborde',
+    sections: {
+      general: 'Algemeen',
+    },
+    fields: {
+      title: 'Titel',
+      description: 'Beskrywing',
+      modifiedAt: 'Gewysig Teen',
+      createdAt: 'Geskep Teen',
+    },
+  },
+  reports: {
+    pageTitle: 'Verslae',
+    singular: 'Verslag',
+    plural: 'Verslae',
+    sections: {
+      general: 'Algemeen',
+    },
+    fields: {
+      title: 'Titel',
+      description: 'Beskrywing',
+      modifiedAt: 'Gewysig Teen',
+      createdAt: 'Geskep Teen',
+    },
+  },
+  account: {
+    pageTitle: 'My Rekening',
+    icon: 'mdi-account'
+  },
+  settings: {
+    pageTitle: 'Instellings',
+    icon: 'mdi-cogs'
+  },
+  customizations: {
+    pageTitle: 'Aanpassings',
+    icon: 'mdi-application-cog-outline'
   },
 });

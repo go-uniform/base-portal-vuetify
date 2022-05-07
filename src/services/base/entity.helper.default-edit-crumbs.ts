@@ -15,7 +15,7 @@ export const defaultEditCrumbs = (repository: IRepository<any>, id: string | nul
       },
       {
         title: translate('$vuetify.entityEdit.view'),
-        location: `${repository.viewPagePrefix}/${id}`,
+        location: `${translate(repository.viewPage,id)}`,
       },
       {
         title: translate('$vuetify.entityEdit.edit'),

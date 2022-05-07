@@ -54,7 +54,7 @@
 </style>
 
 <script>
-import {hasDark, hasLight} from '@/plugins/theme';
+import theme, {hasDark, hasLight} from '@/plugins/theme';
 
 export default {
   name: 'theme-selector',
@@ -78,5 +78,14 @@ export default {
       }
     },
   },
+
+  created() {
+    if (window && window.localStorage) {
+      const themeDark = window.localStorage.getItem('theme.dark');
+      if (themeDark === null) {
+        window.localStorage.setItem('theme.dark', this.$vuetify.theme.dark.toString());
+      }
+    }
+  }
 }
 </script>
