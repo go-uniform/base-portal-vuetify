@@ -121,6 +121,7 @@ export default extend(en, {
     bulkActionConfirmationMessage: 'You are about to {0} {1} record(s), are you sure you want to do this?',
   },
   entityView: {
+    new: 'New',
     list: 'List',
     view: 'View',
     edit: 'Edit',
@@ -305,6 +306,7 @@ export default extend(en, {
       description: 'Description',
       createdAt: 'Created At',
     },
+    noData: 'You have no dashboards, why not create your first dashboard now.',
   },
   reports: {
     pageTitle: 'Reports',

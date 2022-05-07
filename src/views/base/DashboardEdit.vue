@@ -46,7 +46,7 @@ export default {
           location: `/#${this.item.id}`,
         },
         {
-          title: this.item.title ?? 'Loading...',
+          title: this.item.title ?? '$vuetify.app.loading',
           hint: this.item.description,
         },
       ]

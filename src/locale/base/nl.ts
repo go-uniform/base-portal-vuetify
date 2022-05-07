@@ -123,6 +123,7 @@ export default extend(nl, {
     bulkActionConfirmationMessage: 'U staat op het punt {0} over {1} record(s) te halen, weet u zeker dat u dat nog steeds wilt doen?',
   },
   entityView: {
+    new: 'Nieuw',
     list: 'Lijst',
     view: 'Weergave',
     edit: 'Bewerk',

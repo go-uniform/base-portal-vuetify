@@ -29,7 +29,6 @@
 
 <script>
 import MainLayout from '@/layouts/base/Main';
-import {defaultViewCrumbs} from '../../services/base/entity.helper.default-view-crumbs';
 import {defaultViewActions} from '../../services/base/entity.helper.default-view-actions';
 import {deleteConfirmation, loadingStart, toastError, translate} from '../../plugins/base/vuetify';
 import {reports} from '../../services/repositories/reports';

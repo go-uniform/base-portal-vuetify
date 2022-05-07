@@ -79,7 +79,7 @@
       >
 
         <p>
-          You have no dashboards, why not create your first dashboard now.
+          {{ translate('$vuetify.dashboards.noData') }}
         </p>
         <v-btn
           color="success"
@@ -91,7 +91,7 @@
           >
             mdi-plus-box
           </v-icon>
-          New
+          {{ translate('$vuetify.dashboards.noData') }}
 
         </v-btn>
       </v-layout>
@@ -129,7 +129,7 @@ export default {
       if (this.loading) {
         return [
           {
-            title:  'Loading...',
+            title: '$vuetify.app.loading',
           }
         ];
       }

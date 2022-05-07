@@ -123,6 +123,7 @@ export default extend(af, {
     bulkActionConfirmationMessage: 'Jy is op die punt om {0} oor {1} rekord(s) uit te voer, is jy seker jy wil dit nog doen?',
   },
   entityView: {
+    new: 'Nuwe',
     list: 'Lys',
     view: 'Beskou',
     edit: 'Wysig',
