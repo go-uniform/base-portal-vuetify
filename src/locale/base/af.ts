@@ -37,6 +37,7 @@ export default extend(af, {
     standaloneLogoCompactDark: 'compact.png',
     standaloneLogoCompactLight: 'compact.png',
 
+    noData: 'Geen data beskikbaar nie',
     homeComingSoon: 'paneelbord legstukke/metrieke sal hierheen gaan',
     reportComingSoon: 'verslagaansig sal hierheen gaan',
     myAccount: 'My Rekening',
@@ -137,6 +138,18 @@ export default extend(af, {
     freeTextSearch: 'Soek Terme',
     search: 'Soek',
     reset: 'Herstel',
+  },
+  entityCards: {
+    title: 'Lys',
+    actions: 'Aksies',
+    new: 'Nuwe',
+    edit: 'Wysig',
+    view: 'Beskou',
+    delete: 'Skrap',
+    bulk: 'Maat',
+    bulkActionConfirmationTitle: 'Is jy seker?',
+    bulkActionConfirmationMessage: 'Jy is op die punt om {0} oor {1} rekord(s) uit te voer, is jy seker jy wil dit nog doen?',
+    load: 'Laai Meer',
   },
   notFound: {
     pageTitle: 'Bladsy Nie Gevind Nie',

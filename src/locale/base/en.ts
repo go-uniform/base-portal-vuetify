@@ -37,6 +37,7 @@ export default extend(en, {
     standaloneLogoCompactDark: 'compact.png',
     standaloneLogoCompactLight: 'compact.png',
 
+    noData: 'No data available',
     homeComingSoon: 'dashboard widgets/metrics will go here',
     reportComingSoon: 'report view will go here',
     loading: 'Loading...',
@@ -137,12 +138,15 @@ export default extend(en, {
     reset: 'Reset',
   },
   entityCards: {
-    title: 'Cards',
+    title: 'List',
     actions: 'Actions',
     new: 'New',
     edit: 'Edit',
     view: 'View',
     delete: 'Delete',
+    bulk: 'Bulk',
+    bulkActionConfirmationTitle: 'Are you sure?',
+    bulkActionConfirmationMessage: 'You are about to {0} {1} record(s), are you sure you want to do this?',
     load: 'Load More',
   },
   notFound: {

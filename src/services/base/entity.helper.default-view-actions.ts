@@ -21,7 +21,7 @@ export const defaultViewActions = (deleteHandler?: any, editHandler?: any, listH
       {
         icon: 'mdi-plus-box',
         color: 'success',
-        title: translate('$vuetify.entityList.new'),
+        title: translate('$vuetify.entityView.new'),
         location: newLocation,
       },
     );

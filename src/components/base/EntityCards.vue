@@ -17,7 +17,7 @@
   >
 
     <p>
-      No data available
+      {{ translate('$vuetify.app.noData') }}
     </p>
     <v-btn
       color="success"
@@ -29,7 +29,7 @@
       >
         mdi-plus-box
       </v-icon>
-      New
+      {{ translate('$vuetify.entityCards.new') }}
 
     </v-btn>
 
@@ -53,7 +53,7 @@
       >
         mdi-plus-box
       </v-icon>
-      {{ translate('$vuetify.entityList.new') }}
+      {{ translate('$vuetify.entityCards.new') }}
 
     </v-btn>
     <slot
@@ -277,8 +277,8 @@ export default {
               this.load();
             });
           }
-        }, '$vuetify.entityList.bulkActionConfirmationTitle',
-        translate('$vuetify.entityList.bulkActionConfirmationMessage',
+        }, '$vuetify.entityCards.bulkActionConfirmationTitle',
+        translate('$vuetify.entityCards.bulkActionConfirmationMessage',
           translate(action.title).toLowerCase(), ids.length), {
           color: action.color ?? 'info',
         });

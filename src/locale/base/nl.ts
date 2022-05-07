@@ -37,6 +37,7 @@ export default extend(nl, {
     standaloneLogoCompactDark: 'compact.png',
     standaloneLogoCompactLight: 'compact.png',
 
+    noData: 'Geen gegevens beschikbaar',
     homeComingSoon: 'dashboard-widgets / -statistieken komen hier\n',
     reportComingSoon: 'rapportweergave komt hier',
     myAccount: 'Mijn Rekening',
@@ -137,6 +138,18 @@ export default extend(nl, {
     freeTextSearch: 'Zoektermen',
     search: 'Zoekopdracht',
     reset: 'Herstel',
+  },
+  entityCards: {
+    title: 'Lijst',
+    actions: 'Acties',
+    new: 'Nieuw',
+    edit: 'Bewerk',
+    view: 'Weergave',
+    delete: 'Verwijderen',
+    bulk: 'Massaal',
+    bulkActionConfirmationTitle: 'Weet je het zeker?',
+    bulkActionConfirmationMessage: 'U staat op het punt {0} over {1} record(s) te halen, weet u zeker dat u dat nog steeds wilt doen?',
+    load: 'Meer Laden',
   },
   notFound: {
     pageTitle: 'Pagina Niet Gevonden',
