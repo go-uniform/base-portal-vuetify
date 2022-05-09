@@ -1,8 +1,16 @@
-# demo
+# Base Portal Vuetify
+Quickly and easily prototype a new administration portal for your project.
 
 ## Project setup
 ```
 npm install
+```
+**Note:** In build scripts, for pipelines or github-workflows, remember to use the `npm ci` instead since it will not try to upgrade any old packages eliminating any unexpected bugs from upgrading external node packages.
+
+## Configure local environment
+You can just use our default local development environment configuration just to get started.
+```
+cp .env.development.local.example .env.development.local
 ```
 
 ### Compiles and hot-reloads for development
