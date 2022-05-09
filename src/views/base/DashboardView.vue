@@ -13,6 +13,7 @@
       <v-tabs
         v-if="!loading && records.length > 1"
         background-color="background"
+        color="secondary"
         v-model="tab"
         show-arrows
         @change="change"
