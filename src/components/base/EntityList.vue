@@ -39,10 +39,8 @@
       :headers="headers"
       mobile-breakpoint="sm"
       v-model="selectedIds"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      :page.sync="page"
-      :items-per-page.sync="pageSize"
+      :options.sync="options"
+      :server-items-length="totalCount"
       @update:sort-by="load"
       @update:sort-desc="load"
       @update:items-per-page="load"
@@ -192,13 +190,25 @@ export default {
   data: () => ({
     records: [],
     headers: [],
-    sortBy: null,
-    sortDesc: null,
-    page: 1,
-    pageSize: 15,
+    totalCount: 0,
     filters: {},
     loading: true,
+    options: {
+      itemsPerPage: 5,
+      page: 1,
+      sortBy: [],
+      sortDesc: [],
+    },
   }),
+
+  watch: {
+    options: {
+      handler() {
+        this.load();
+      },
+      deep: true,
+    },
+  },
 
   computed: {
     showSelect() {
@@ -258,12 +268,13 @@ export default {
       }
 
       let order = null;
-      if (this.sortBy) {
-        order = `${this.sortDesc ? '-' : ''}${this.sortBy}`;
+      if (this.options.sortBy) {
+        order = `${this.options.sortDesc ? '-' : ''}${this.options.sortBy}`;
       }
 
-      this.repository.list(order, this.filters, this.page, this.pageSize).then((response) => {
+      this.repository.list(order, this.filters, this.options.page, this.options.itemsPerPage).then((response) => {
         this.records = response.items;
+        this.totalCount = parseInt(response.headers.get("Record-Total-Count"));
       }).finally(() => {
         this.loading = false;
         this.$emit('loading', this.loading);

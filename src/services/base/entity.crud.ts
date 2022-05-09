@@ -22,7 +22,7 @@ export const baseList = <T>(slug: string): IListPromise<T> => {
   return (
     order: string,
     filters: object = {},
-    pageIndex = 1,
+    page = 1,
     pageSize = 50,
   ): Promise<IList<T>> => {
     return new Promise<IList<T>>((resolve, reject) => {
@@ -31,7 +31,7 @@ export const baseList = <T>(slug: string): IListPromise<T> => {
         method: 'GET',
         headers: mergeHeaders({
           'Page-Size': pageSize,
-          'Page-Index': pageIndex,
+          'Page': page,
         }),
 
       }).then((response) => {

@@ -21,7 +21,7 @@ export const UserAttributesList: IAttribute[] = baseListLoad([
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
-], userAttributes.entity);
+], userAttributes);
 
 const stub = {
   repository: userAttributes,
@@ -29,12 +29,12 @@ const stub = {
     return item;
   },
   handlers: {
-    'GET /user-attributes': baseListStub(userAttributes.entity),
-    'POST /user-attributes': baseCreateStub(userAttributes.entity),
-    'GET /user-attributes/:id': baseReadStub(userAttributes.entity),
-    'PUT /user-attributes/:id': baseUpdateStub(userAttributes.entity),
-    'DELETE /user-attributes/:id': baseDeleteStub(userAttributes.entity),
-    'POST /user-attributes/bulk': baseBulkStub(userAttributes.entity, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
+    'GET /user-attributes': baseListStub(userAttributes),
+    'POST /user-attributes': baseCreateStub(userAttributes),
+    'GET /user-attributes/:id': baseReadStub(userAttributes),
+    'PUT /user-attributes/:id': baseUpdateStub(userAttributes),
+    'DELETE /user-attributes/:id': baseDeleteStub(userAttributes),
+    'POST /user-attributes/bulk': baseBulkStub(userAttributes, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
       switch (action) {
         case 'delete':
           return {

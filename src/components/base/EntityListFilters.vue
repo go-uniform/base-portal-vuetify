@@ -124,6 +124,20 @@ export default {
     filters: {},
   }),
 
+  watch: {
+    filters: {
+      handler() {
+        Object.keys(this.filters).forEach((key) => {
+          const value = this.filters[key];
+          if (value && value.length === 0) {
+            delete(this.filters[key]);
+          }
+        });
+      },
+      deep: true,
+    },
+  },
+
   computed: {
     filterableFieldKeys() {
       if (!this.repository) {

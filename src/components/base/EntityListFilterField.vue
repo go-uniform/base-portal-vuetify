@@ -24,7 +24,7 @@
           filled
           v-bind="attrs"
           v-on="on"
-          @click:clear="dates = []"
+          @click:clear="dates = []; update([]);"
         >
         </v-text-field>
       </template>

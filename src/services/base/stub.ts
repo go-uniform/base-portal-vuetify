@@ -1,20 +1,6 @@
-import {
-  IBulkPromise,
-  ICreatePromise,
-  IDeletePromise,
-  IItem,
-  IList,
-  IListPromise,
-  IReadPromise,
-  IUpdatePromise
-} from './global.interfaces';
-import {
-  compileListQueryParameters, getBaseUrl,
-  processStandardItemResponse,
-  processStandardListResponse
-} from '@/services/base/base';
-import {generic} from '@/services/base/global.types';
-import {EnumHttpMethod} from '@/services/base/global.enums';
+import {IRepository} from './global.interfaces';
+import {getBaseUrl} from '@/services/base/base';
+import {EnumValueType} from '@/services/base/global.enums';
 
 const StubTimeout = 500;
 
@@ -66,7 +52,11 @@ export const stubScenario = (body: any, status = 200, headers: Headers = new Hea
   };
 };
 
-export const baseRestItemStub = <T>(slug: string, handler: any): IResponse => {
+export const baseRestItemStub = <T>(slug: string | IRepository<any>, handler: any): IResponse => {
+  const repository = (slug as IRepository<any>);
+  if (repository) {
+    slug = repository.slug;
+  }
   return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
     return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
@@ -77,7 +67,7 @@ export const baseRestItemStub = <T>(slug: string, handler: any): IResponse => {
   };
 };
 
-export const baseRestListStub = <T>(slug: string, handler: any): IResponse => {
+export const baseRestListStub = <T>(slug: string | IRepository<any>, handler: any): IResponse => {
   return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
     return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
@@ -109,14 +99,35 @@ export const getPathId = (path: string): string | null => {
   return id;
 }
 
-export const baseListStub = <T>(slug: string, scenario?: IStubScenario | null): IResponse => {
+export const baseListStub = <T>(slug: string | IRepository<any>, scenario?: IStubScenario | null, filter?: any): IResponse => {
+  const repository = (slug as IRepository<any>);
+  if (repository) {
+    slug = repository.slug;
+  }
   return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
+    let itemsPerPage = 15;
+    let page = 0;
+    let order: string | null = null;
     return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
-        console.log('list', slug, input, init);
+        if (init && init.headers) {
+          const headers = (init.headers as Headers);
+          if (headers) {
+            const pageSizeString = headers.get('Page-Size');
+            if (pageSizeString) {
+              itemsPerPage = parseInt(pageSizeString);
+            }
+            const pageString = headers.get('Page');
+            if (pageString) {
+              page = parseInt(pageString);
+            }
+          }
+        }
+        console.log('list', slug, filter, input, init, );
         if (scenario) {
           resolve(scenario);
         } else {
+          const responseHeaders = new Headers();
           let list = [];
           if (window.localStorage) {
             const data = window.localStorage.getItem(`stub.${slug}`);
@@ -124,14 +135,124 @@ export const baseListStub = <T>(slug: string, scenario?: IStubScenario | null): 
               list = JSON.parse(data);
             }
           }
-          resolve(stubScenario(list, 200));
+          const filters: any = {};
+          const url = new URL("http://example.com/"+ input.toString());
+          url.searchParams.forEach((value, key) => {
+            if (key === '-order') {
+              order = value;
+            } else {
+              filters[key] = value;
+            }
+          });
+          if (filter) {
+            list = filter(list, filters, order, itemsPerPage, page);
+          } else if (repository) {
+            list = list.sort(() => {
+              return true;
+            });
+            list = list.filter((item: any) => {
+              let include = true;
+              Object.keys(filters).forEach((key: string) => {
+                const value = filters[key];
+                if (key === '-text') {
+                  let text = '';
+                  if (item.text) {
+                    text = item.text;
+                  }
+                  else if (item.name) {
+                    text = item.name;
+                  }
+                  else if (item.title) {
+                    text = item.title;
+                  }
+                  else if (item.firstName) {
+                    text += text ? ' ' : '';
+                    text += item.firstName;
+                  }
+                  else if (item.firstNames) {
+                    text += text ? ' ' : '';
+                    text += item.firstNames;
+                  }
+                  else if (item.lastName) {
+                    text += text ? ' ' : '';
+                    text += item.lastName;
+                  }
+                  text = text.toLowerCase();
+                  if (text.length > value.length) {
+                    text = text.substring(0, value.length)
+                  }
+                  if (text !== value.toLowerCase()) {
+                    include = false;
+                  }
+                } else {
+                  let itemValue = item[key];
+                  if (itemValue === null || itemValue === undefined) {
+                    itemValue = '##null##';
+                  }
+                  const itemDate: Date = new Date(Date.parse(itemValue));
+                  const values = value.toLowerCase().split(',');
+                  values.forEach((val: string, index: number) => {
+                    if (val === '') {
+                      values[index] = '##null##';
+                    }
+                  });
+                  let from: Date = new Date();
+                  let to: Date = new Date();
+                  switch (repository.fields[key].type) {
+                    default:
+                      if (!values.includes(itemValue.toString().toLowerCase())) {
+                        include = false;
+                      }
+                      break;
+                    case EnumValueType.Time:
+                      break;
+                    case EnumValueType.Date:
+                    case EnumValueType.DateTime:
+                      if (values.length > 1) {
+                        from = new Date(Date.parse(values[0]));
+                        to = new Date(Date.parse(values[1]));
+                      } else if (values.length > 0) {
+                        from = new Date(Date.parse(values[0]));
+                      }
+                      if (from > to) {
+                        const temp = from;
+                        from = to;
+                        to = temp;
+                      }
+                      if (!(from && to && itemDate && itemDate > from && itemDate < to)) {
+                        include = false;
+                      }
+                      break;
+                  }
+                }
+              });
+              return include;
+            });
+            const totalCount = list.length;
+            if (page < 1) {
+              page = 1;
+            }
+            if (itemsPerPage > 0) {
+              if (list.length > itemsPerPage) {
+                list = list.splice((page - 1) * itemsPerPage, itemsPerPage);
+              }
+            }
+            responseHeaders.set('Page', page.toString());
+            responseHeaders.set('Page-Size', list.length);
+            responseHeaders.set('Record-Total-Count', totalCount);
+          }
+          resolve(stubScenario(list, 200, responseHeaders));
         }
       }, StubTimeout);
     });
   };
 };
 
-export const baseCreateStub = <T>(slug: string, handler?: any, scenario?: IStubScenario | null): IResponse => {
+export const baseCreateStub = <T>(slug: string | IRepository<any>, handler?: any, scenario?: IStubScenario | null): IResponse => {
+  const repository = (slug as IRepository<any>);
+  if (repository) {
+    slug = repository.slug;
+  }
   return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
     return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
@@ -178,7 +299,11 @@ export const baseCreateStub = <T>(slug: string, handler?: any, scenario?: IStubS
   };
 };
 
-export const baseReadStub = <T>(slug: string, scenario?: IStubScenario | null): IResponse => {
+export const baseReadStub = <T>(slug: string | IRepository<any>, scenario?: IStubScenario | null): IResponse => {
+  const repository = (slug as IRepository<any>);
+  if (repository) {
+    slug = repository.slug;
+  }
   return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
     return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
@@ -214,11 +339,15 @@ export const baseReadStub = <T>(slug: string, scenario?: IStubScenario | null): 
   };
 };
 
-export const baseUpdateStub = <T>(slug: string, handler?: any, scenario?: IStubScenario | null): IResponse => {
+export const baseUpdateStub = <T>(slug: string | IRepository<any>, handler?: any, scenario?: IStubScenario | null): IResponse => {
+  const repository = (slug as IRepository<any>);
+  if (repository) {
+    slug = repository.slug;
+  }
   return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
     return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
-        console.log('read', slug, input, init);
+        console.log('update', slug, input, init);
         if (scenario) {
           resolve(scenario);
         } else {
@@ -274,11 +403,15 @@ export const baseUpdateStub = <T>(slug: string, handler?: any, scenario?: IStubS
   };
 };
 
-export const baseDeleteStub = <T>(slug: string, scenario?: IStubScenario | null): IResponse => {
+export const baseDeleteStub = <T>(slug: string | IRepository<any>, scenario?: IStubScenario | null): IResponse => {
+  const repository = (slug as IRepository<any>);
+  if (repository) {
+    slug = repository.slug;
+  }
   return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
     return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
-        console.log('read', slug, input, init);
+        console.log('delete', slug, input, init);
         if (scenario) {
           resolve(scenario);
         } else {
@@ -319,7 +452,11 @@ export const baseDeleteStub = <T>(slug: string, scenario?: IStubScenario | null)
   };
 };
 
-export const baseBulkStub = <T>(slug: string, recordHandler?: IBulkStubScenarioHandler, scenario?: IStubScenario | null): IResponse => {
+export const baseBulkStub = <T>(slug: string | IRepository<any>, recordHandler?: IBulkStubScenarioHandler, scenario?: IStubScenario | null): IResponse => {
+  const repository = (slug as IRepository<any>);
+  if (repository) {
+    slug = repository.slug;
+  }
   return (input: RequestInfo, init?: RequestInit): Promise<Response> => {
     return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
@@ -371,37 +508,49 @@ export const baseBulkStub = <T>(slug: string, recordHandler?: IBulkStubScenarioH
   };
 };
 
-export const baseListLoad = <T>(list: T[], entity: string): T[] => {
+export const baseListLoad = <T>(list: T[], slug: string | IRepository<any>): T[] => {
+  const repository = (slug as IRepository<any>);
+  if (repository) {
+    slug = repository.slug;
+  }
   if (window.localStorage) {
-    const data = window.localStorage.getItem(`stub.${entity}`);
+    const data = window.localStorage.getItem(`stub.${slug}`);
     if (data) {
       const items = JSON.parse(data);
       if (items) {
         return items;
       }
     }
-    window.localStorage.setItem(`stub.${entity}`, JSON.stringify(list));
+    window.localStorage.setItem(`stub.${slug}`, JSON.stringify(list));
   }
   return list;
 }
 
-export const baseStoreLoad = <T>(item: T, entity: string): T => {
+export const baseStoreLoad = <T>(item: T, slug: string | IRepository<any>): T => {
+  const repository = (slug as IRepository<any>);
+  if (repository) {
+    slug = repository.slug;
+  }
   if (window.localStorage) {
-    const data = window.localStorage.getItem(`stub.${entity}`);
+    const data = window.localStorage.getItem(`stub.${slug}`);
     if (data) {
       const items = JSON.parse(data);
       if (items) {
         return items;
       }
     }
-    window.localStorage.setItem(`stub.${entity}`, JSON.stringify(item));
+    window.localStorage.setItem(`stub.${slug}`, JSON.stringify(item));
   }
   return item;
 }
 
-export const baseStoreSave = <T>(item: T, entity: string): T => {
+export const baseStoreSave = <T>(item: T, slug: string | IRepository<any>): T => {
+  const repository = (slug as IRepository<any>);
+  if (repository) {
+    slug = repository.slug;
+  }
   if (window.localStorage) {
-    window.localStorage.setItem(`stub.${entity}`, JSON.stringify(item));
+    window.localStorage.setItem(`stub.${slug}`, JSON.stringify(item));
   }
   return item;
 }

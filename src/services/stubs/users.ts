@@ -31,7 +31,7 @@ export const UsersList: User[] = baseListLoad([
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
-], users.entity);
+], users);
 
 const recordAssemblyHandler = (item: User) => {
   if (item.userRole) {
@@ -60,12 +60,12 @@ const recordAssemblyHandler = (item: User) => {
 const stub = {
   repository: users,
   handlers: {
-    'GET /users': baseListStub(users.entity),
-    'POST /users': baseCreateStub(users.entity, recordAssemblyHandler),
-    'GET /users/:id': baseReadStub(users.entity),
-    'PUT /users/:id': baseUpdateStub(users.entity, recordAssemblyHandler),
-    'DELETE /users/:id': baseDeleteStub(users.entity),
-    'POST /users/bulk': baseBulkStub(users.entity, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
+    'GET /users': baseListStub(users),
+    'POST /users': baseCreateStub(users, recordAssemblyHandler),
+    'GET /users/:id': baseReadStub(users),
+    'PUT /users/:id': baseUpdateStub(users, recordAssemblyHandler),
+    'DELETE /users/:id': baseDeleteStub(users),
+    'POST /users/bulk': baseBulkStub(users, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
       switch (action) {
         case 'delete':
           return {

@@ -23,29 +23,79 @@ export const UserRolesList: IUserRole[] = baseListLoad([
     id: generateUuid(),
     status: 'pending',
     name: 'Editors',
+    super: false,
     description: 'This user role can edit most data',
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
   {
     id: generateUuid(),
-    status: 'rejected',
+    status: 'viewers',
     name: 'Viewers',
+    super: false,
     description: 'This user role can view most data',
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
-], userRoles.entity);
+  {
+    id: generateUuid(),
+    status: 'test1',
+    name: 'Test1',
+    description: 'This is a test',
+    modifiedAt: new Date(),
+    createdAt: new Date(),
+  },
+  {
+    id: generateUuid(),
+    status: 'test2',
+    name: 'Test2',
+    description: 'This is a test',
+    modifiedAt: new Date(),
+    createdAt: new Date(),
+  },
+  {
+    id: generateUuid(),
+    status: 'test3',
+    name: 'Test3',
+    description: 'This is a test',
+    modifiedAt: new Date(),
+    createdAt: new Date(),
+  },
+  {
+    id: generateUuid(),
+    status: 'test4',
+    name: 'Test4',
+    description: 'This is a test',
+    modifiedAt: new Date(),
+    createdAt: new Date(),
+  },
+  {
+    id: generateUuid(),
+    status: 'test5',
+    name: 'Test5',
+    description: 'This is a test',
+    modifiedAt: new Date(),
+    createdAt: new Date(),
+  },
+  {
+    id: generateUuid(),
+    status: 'test6',
+    name: 'Test6',
+    description: 'This is a test',
+    modifiedAt: new Date(),
+    createdAt: new Date(),
+  },
+], userRoles);
 
 const stub = {
   repository: userRoles,
   handlers: {
-    'GET /user-roles': baseListStub(userRoles.entity),
-    'POST /user-roles': baseCreateStub(userRoles.entity),
-    'GET /user-roles/:id': baseReadStub(userRoles.entity),
-    'PUT /user-roles/:id': baseUpdateStub(userRoles.entity),
-    'DELETE /user-roles/:id': baseDeleteStub(userRoles.entity),
-    'POST /user-roles/bulk': baseBulkStub(userRoles.entity, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
+    'GET /user-roles': baseListStub(userRoles),
+    'POST /user-roles': baseCreateStub(userRoles),
+    'GET /user-roles/:id': baseReadStub(userRoles),
+    'PUT /user-roles/:id': baseUpdateStub(userRoles),
+    'DELETE /user-roles/:id': baseDeleteStub(userRoles),
+    'POST /user-roles/bulk': baseBulkStub(userRoles, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
       switch (action) {
         case 'delete':
           return {

@@ -83,22 +83,22 @@ export const ReportsList: Report[] = baseListLoad([
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
-], reports.entity);
+], reports);
 
 const stub = {
   repository: reports,
   handlers: {
-    'GET /reports': baseListStub(reports.entity),
-    'POST /reports': baseCreateStub(reports.entity, (record: any) => {
+    'GET /reports': baseListStub(reports),
+    'POST /reports': baseCreateStub(reports, (record: any) => {
       record.urlThumbnail = 'https://via.placeholder.com/800x600';
       record.urlView = `https://en.wikipedia.org/wiki/${encodeURIComponent(record.title)}`;
       record.urlEdit = `https://en.wikipedia.org/w/index.php?title=${encodeURIComponent(record.title)}&action=history`;
       return record;
     }),
-    'GET /reports/:id': baseReadStub(reports.entity),
-    'PUT /reports/:id': baseUpdateStub(reports.entity),
-    'DELETE /reports/:id': baseDeleteStub(reports.entity),
-    'POST /reports/bulk': baseBulkStub(reports.entity, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
+    'GET /reports/:id': baseReadStub(reports),
+    'PUT /reports/:id': baseUpdateStub(reports),
+    'DELETE /reports/:id': baseDeleteStub(reports),
+    'POST /reports/bulk': baseBulkStub(reports, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
       switch (action) {
         case 'delete':
           return {

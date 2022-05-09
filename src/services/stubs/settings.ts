@@ -61,7 +61,7 @@ export let SettingsValues: Settings = baseStoreLoad({
   authentication: {
     resetLinkExpiryHours: 4,
   },
-}, settings.entity);
+}, settings.slug);
 
 const stub = {
   repository: settings,

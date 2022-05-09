@@ -22,7 +22,7 @@ export const PermissionsList: IAttribute[] = baseListLoad([
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
-], permissions.entity);
+], permissions);
 
 const stub = {
   repository: permissions,
@@ -30,7 +30,7 @@ const stub = {
     return item;
   },
   handlers: {
-    'GET /permissions': baseListStub(permissions.entity),
+    'GET /permissions': baseListStub(permissions),
   },
   initialData: PermissionsList,
 };
