@@ -103,6 +103,12 @@ export const translate = (text: string | null | undefined, ...args: any[]): stri
     return '';
   }
   if (text.startsWith('$vuetify.')) {
+    args = args.map(arg => {
+      if (arg && arg.startsWith('$vuetify.')) {
+        return translate(arg);
+      }
+      return arg;
+    });
     const translated = instance.framework.lang.t(text, ...args);
     if (translated !== text && !translated.startsWith('$vuetify.')) {
       text = translated;

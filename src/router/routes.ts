@@ -45,7 +45,7 @@ const routes: RouteConfig[] = [
     component: () => import('../views/base/EntityCards.vue'),
     meta: {
       repository: reports,
-      title: translate('$vuetify.entity.list', dashboards.title.plural),
+      title: translate('$vuetify.entity.list', reports.title.plural),
       permissions: [],
     }
   },
