@@ -3,7 +3,7 @@ import {EnumValueType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
 
 const entity = 'dashboards';
-const slug = entity;
+const slug = 'dashboards';
 
 export interface Dashboard {
   id: string;

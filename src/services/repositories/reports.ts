@@ -3,7 +3,7 @@ import {EnumValueType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
 
 const entity = 'reports';
-const slug = entity;
+const slug = 'reports';
 
 export interface Report {
   id: string;

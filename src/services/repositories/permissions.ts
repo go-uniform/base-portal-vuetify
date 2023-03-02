@@ -5,7 +5,7 @@ import {baseBulk} from '@/services/base/entity.bulk';
 import {baseCreate, baseDelete, baseList, baseRead, baseUpdate} from '@/services/base/entity.crud';
 
 const entity = 'permissions';
-const slug = entity;
+const slug = 'permissions';
 
 export const permissions: IRepository<IAttribute> = {
   freeTextSearch: true,

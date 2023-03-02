@@ -7,7 +7,7 @@ import {permissions} from '@/services/repositories/permissions';
 import {Attributes, Link} from '@/services/base/global.types';
 
 const entity = 'users';
-const slug = entity;
+const slug = 'users';
 
 export interface User {
   id: string;
