@@ -416,6 +416,13 @@ export class Repository<T> implements  IRepository<T> {
       }
     }
 
+    const selfReferenceField = (field as ISelfReference);
+    if (selfReferenceField && selfReferenceField.type === EnumValueType.SelfReference) {
+      if (boolField.optional === undefined || boolField.optional === null) {
+        boolField.optional = true;
+      }
+    }
+
     this.fields[key] = field;
   }
 

@@ -15,7 +15,7 @@
       />
     </div>
     <div
-      v-else-if="field.type === 'selfReference'"
+      v-else-if="field.type === 'self-reference'"
     >
       <a
         :href="`${translate(repository.viewPage,value)}`"

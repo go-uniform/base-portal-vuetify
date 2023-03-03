@@ -19,7 +19,7 @@
 
     </div>
     <div
-      v-else-if="field.type === 'selfReference'"
+      v-else-if="field.type === 'self-reference'"
     >
 
       <entity-field-view-label

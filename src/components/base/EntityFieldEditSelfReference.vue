@@ -7,6 +7,7 @@
     :items="linkItems"
     clearable
     :rules="[rules.required(field.optional)]"
+    :multiple="field.multiple"
     @input="input"
     filled
   ></v-autocomplete>
