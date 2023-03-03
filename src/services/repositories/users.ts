@@ -27,37 +27,26 @@ export interface User {
 
 const repository = new Repository<User>(slug, {}, {});
 
-repository.addField('id', {
-  label: '',
-  type: EnumValueType.Uuid,
-  readonly: true,
-});
 repository.addField('firstName', {
-  label: '',
   type: EnumValueType.Text,
 });
 repository.addField('lastName', {
-  label: '',
   type: EnumValueType.Text,
 });
 repository.addField('username', {
-  label: '',
   type: EnumValueType.Text,
 });
 repository.addField('email', {
-  label: '',
   type: EnumValueType.Text,
   pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   patternMessage: '$vuetify.validations.email',
   optional: true,
 });
 repository.addField('userRole', {
-  label: '',
   type: EnumValueType.Link,
   linkRepository: userRoles,
 });
 repository.addField('parentUser', {
-  label: '',
   type: EnumValueType.SelfReference,
   textAssemblyCallback: (item) => {
     return `${item.firstName} ${item.lastName}`;
@@ -65,12 +54,10 @@ repository.addField('parentUser', {
   optional: true,
 });
 repository.addField('attributes', {
-  label: '',
   type: EnumValueType.Attributes,
   attributeRepository: userAttributes,
 });
 repository.addField('permissions', {
-  label: '',
   type: EnumValueType.Attributes,
   attributeRepository: permissions,
 });

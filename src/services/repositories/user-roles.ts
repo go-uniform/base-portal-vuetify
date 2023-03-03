@@ -18,13 +18,7 @@ export interface UserRole {
 
 const repository = new Repository<UserRole>(slug, {}, {});
 
-repository.addField('id', {
-  label: '',
-  type: EnumValueType.Uuid,
-  readonly: true,
-});
 repository.addField('status', {
-  label: '',
   type: EnumValueType.Enumeration,
   defaultValue: 'pending',
   values: [
@@ -51,16 +45,13 @@ repository.addField('status', {
   filterable: true,
 });
 repository.addField('name', {
-  label: '',
   type: EnumValueType.Text,
 });
 repository.addField('description', {
-  label: '',
   type: EnumValueType.TextArea,
   optional: true,
 });
 repository.addField('super', {
-  label: '',
   type: EnumValueType.Boolean,
   optional: true,
   hint: `$vuetify.${entity}.hints.super`,
@@ -68,7 +59,6 @@ repository.addField('super', {
   filterable: true,
 });
 repository.addField('permissions', {
-  label: '',
   type: EnumValueType.Attributes,
   attributeRepository: permissions,
 });

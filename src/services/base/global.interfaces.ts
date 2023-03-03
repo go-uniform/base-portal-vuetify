@@ -106,7 +106,7 @@ export interface IEnum {
 }
 
 export interface IFieldNormal {
-  label: string;
+  label?: string;
   type: EnumValueType;
   optional?: boolean;
   readonly?: boolean;
@@ -117,7 +117,7 @@ export interface IFieldNormal {
 }
 
 export interface IFieldEnum {
-  label: string;
+  label?: string;
   type: EnumValueType;
   optional?: boolean;
   readonly?: boolean;
@@ -131,7 +131,7 @@ export interface IFieldEnum {
 }
 
 export interface IFieldBoolean {
-  label: string;
+  label?: string;
   type: EnumValueType;
   optional?: boolean;
   readonly?: boolean;
@@ -143,7 +143,7 @@ export interface IFieldBoolean {
 }
 
 export interface IFieldLink {
-  label: string;
+  label?: string;
   type: EnumValueType;
   optional?: boolean;
   readonly?: boolean;
@@ -156,7 +156,7 @@ export interface IFieldLink {
 }
 
 export interface ISelfReference {
-  label: string;
+  label?: string;
   type: EnumValueType;
   optional?: boolean;
   readonly?: boolean;
@@ -168,7 +168,7 @@ export interface ISelfReference {
 }
 
 export interface IFieldAttribute {
-  label: string;
+  label?: string;
   type: EnumValueType;
   attributeRepository: IRepository<any>;
   hint?: string;
@@ -342,7 +342,7 @@ export class Repository<T> implements  IRepository<T> {
   }
 
   addField(key: string, field: IField) {
-    if (field.label.trim() === '') {
+    if (field.label === null || field.label === undefined || field.label.trim() === '') {
       field.label = `$vuetify.${this.entity}.fields.${key}`;
     }
     this.fields[key] = field;

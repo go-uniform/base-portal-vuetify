@@ -22,21 +22,17 @@ const repository = new Repository<Dashboard>(slug, {}, {
 });
 
 repository.addField('title', {
-  label: '',
   type: EnumValueType.Text,
 });
 repository.addField('urlView', {
-  label: '',
   type: EnumValueType.Text,
   readonly: true,
 });
 repository.addField('urlEdit', {
-  label: '',
   type: EnumValueType.Text,
   readonly: true,
 });
 repository.addField('description', {
-  label: '',
   type: EnumValueType.TextArea,
   optional: true,
 });

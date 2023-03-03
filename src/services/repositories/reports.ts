@@ -22,26 +22,21 @@ const repository = new Repository<Report>(slug, {}, {
 });
 
 repository.addField('title', {
-  label: '',
   type: EnumValueType.Text,
 });
 repository.addField('urlThumbnail', {
-  label: '',
   type: EnumValueType.Text,
   readonly: true,
 });
 repository.addField('urlView', {
-  label: '',
   type: EnumValueType.Text,
   readonly: true,
 });
 repository.addField('urlEdit', {
-  label: '',
   type: EnumValueType.Text,
   readonly: true,
 });
 repository.addField('description', {
-  label: '',
   type: EnumValueType.TextArea,
   optional: true,
 });

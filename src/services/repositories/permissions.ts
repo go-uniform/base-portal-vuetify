@@ -7,13 +7,7 @@ const slug = 'permissions';
 
 const repository = new Repository<IAttribute>(slug, {}, {});
 
-repository.addField('id', {
-  label: '',
-  type: EnumValueType.Uuid,
-  readonly: true,
-});
 repository.addField('type', {
-  label: '',
   type: EnumValueType.Enumeration,
   defaultValue: 'inherit',
   values: [
@@ -38,17 +32,14 @@ repository.addField('type', {
   ],
 });
 repository.addField('key', {
-  label: '',
   type: EnumValueType.Text,
   pattern: /^[a-zA-z0-9]+$/,
   patternMessage: '$vuetify.validations.jsonKey',
 });
 repository.addField('name', {
-  label: '',
   type: EnumValueType.Text,
 });
 repository.addField('description', {
-  label: '',
   type: EnumValueType.Text,
 });
 
