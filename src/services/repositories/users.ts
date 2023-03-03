@@ -4,7 +4,7 @@ import {EnumValueType, EnumHeaderAlign} from '@/services/base/global.enums';
 import {Section} from '@/services/base/global.classes.section';
 import {userAttributes} from '@/services/repositories/user-attributes';
 import {permissions} from '@/services/repositories/permissions';
-import {Attributes, Link} from '@/services/base/global.types';
+import {Attributes} from '@/services/base/global.types';
 
 const entity = 'users';
 const slug = 'users';
@@ -16,8 +16,8 @@ export interface User {
   username: string;
   email: string;
   password: string;
-  userRole: Link;
-  parentUser?: Link;
+  userRole: string;
+  parentUser?: string;
   attributes: Attributes;
   permissions: Attributes;
   allowPermissionByDefault?: boolean;

@@ -18,10 +18,7 @@ export const UsersList: User[] = baseListLoad([
     username: 'johns@go-uniform.org',
     email: 'johns@go-uniform.org',
     password: '$aMUqSrc7N3v',
-    userRole: {
-      id: UserRolesList[0].id,
-      label: UserRolesList[0].name,
-    },
+    userRole: UserRolesList[0].id,
     attributes: {
       sex: "male",
     },
@@ -33,37 +30,13 @@ export const UsersList: User[] = baseListLoad([
   },
 ], users);
 
-const recordAssemblyHandler = (item: User) => {
-  if (item.userRole) {
-    const userRoleId = item.userRole.id;
-    const userRoles = UserRolesList.filter((userRole) => userRole.id === userRoleId)
-    if (userRoles && userRoles.length > 0) {
-      item.userRole = {
-        id: userRoles[0].id,
-        label: userRoles[0].name,
-      };
-    }
-  }
-  if (item.parentUser) {
-    const userId = item.parentUser.id;
-    const users = UsersList.filter((user) => user.id === userId)
-    if (users && users.length > 0) {
-      item.parentUser = {
-        id: users[0].id,
-        label: `${users[0].firstName} ${users[0].lastName}`,
-      };
-    }
-  }
-  return item;
-};
-
 const stub = {
   repository: users,
   handlers: {
     'GET /users': baseListStub(users),
-    'POST /users': baseCreateStub(users, recordAssemblyHandler),
+    'POST /users': baseCreateStub(users),
     'GET /users/:id': baseReadStub(users),
-    'PUT /users/:id': baseUpdateStub(users, recordAssemblyHandler),
+    'PUT /users/:id': baseUpdateStub(users),
     'DELETE /users/:id': baseDeleteStub(users),
     'POST /users/bulk': baseBulkStub(users, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
       switch (action) {

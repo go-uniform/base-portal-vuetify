@@ -1,7 +1,12 @@
 <template>
   <div>
+    <v-progress-circular
+      :size="10"
+      indeterminate
+      v-if="loading"
+    ></v-progress-circular>
     <span
-      v-for="(valueItem, index) in getMultiValue(value)"
+      v-for="(item, index) in items"
       v-bind:key="index"
     >
       <span
@@ -11,13 +16,13 @@
         ,
       </span>
       <a
-        :href="`${translate(repository.viewPage,valueItem)}`"
+        :href="`${translate(repository.viewPage,item.value)}`"
       >
-        {{ getMultiValue(item[field.selfReferenceLabelFieldKey])[index] }}
+        {{ item.text }}
       </a>
     </span>
     <small
-      v-if="!value || value.length <= 0"
+      v-if="!loading && (!value || value.length <= 0)"
     >
       <i>
         &lt;{{ translate('$vuetify.empty') }}&gt;
@@ -37,6 +42,11 @@ export default {
     item: null,
   },
 
+  data: () => ({
+    items: [],
+    loading: true,
+  }),
+
   methods: {
     getMultiValue(subValue) {
       if (!subValue) {
@@ -48,5 +58,29 @@ export default {
       return [subValue];
     },
   },
+
+  mounted() {
+    const values = this.getMultiValue(this.value);
+    this.items = [];
+    if (!values || values.length <= 0) {
+      this.loading = false;
+      return;
+    }
+    for (let i = 0; i < values.length; i++) {
+      this.repository.read(values[i]).then((response) => {
+        let text = '';
+        if (this.field.textAssemblyCallback) {
+          text = this.field.textAssemblyCallback(response.item);
+        } else {
+          text = response.item.name || response.item.text;
+        }
+        this.items.push({
+          value: response.item.id,
+          text: text,
+        });
+        this.loading = false;
+      });
+    }
+  }
 };
 </script>

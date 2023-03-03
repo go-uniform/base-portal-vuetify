@@ -10,6 +10,7 @@
     :multiple="field.multiple"
     @input="input"
     filled
+    :loading="loading"
   ></v-autocomplete>
 
 </template>
@@ -27,6 +28,7 @@ export default {
   },
 
   data: () => ({
+    loading: true,
     linkItems: null,
     rules: {
       required: validations.required,
@@ -66,6 +68,7 @@ export default {
       this.linkItems = this.linkItems.filter((item) => {
         return item.value !== this.item.id;
       });
+      this.loading = false;
       this.$forceUpdate();
     });
   },

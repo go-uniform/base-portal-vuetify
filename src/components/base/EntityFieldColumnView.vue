@@ -17,11 +17,13 @@
     <div
       v-else-if="field.type === 'self-reference'"
     >
-      <a
-        :href="`${translate(repository.viewPage,value)}`"
-      >
-        {{ item[field.selfReferenceLabelFieldKey] }}
-      </a>
+      <entity-field-view-self-reference
+        :tabular="true"
+        :repository="repository"
+        :item="item"
+        :value="value"
+        :field="field"
+      />
     </div>
     <div
       v-else-if="field.type === 'attributes'"
@@ -85,10 +87,14 @@
 <script>
 import {formatBoolean, formatDate, formatDatetime} from '../../plugins/base/vuetify';
 import EntityFieldViewLink from './EntityFieldViewLink';
+import EntityFieldViewSelfReference from './EntityFieldViewSelfReference';
 
 export default {
   name: 'entity-field-column-view',
-  components: {EntityFieldViewLink},
+  components: {
+    EntityFieldViewLink,
+    EntityFieldViewSelfReference,
+  },
   props: {
     repository: null,
     field: null,
