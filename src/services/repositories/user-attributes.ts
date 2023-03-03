@@ -11,12 +11,7 @@ repository.addField('type', {
   type: EnumValueType.Enumeration,
   defaultValue: 'text',
   values: [
-    {
-      value: 'text',
-      title: `$vuetify.${entity}.enums.type.text.title`,
-      icon: `$vuetify.${entity}.enums.type.text.icon`,
-      color: `$vuetify.${entity}.enums.type.text.color`,
-    },
+    'text',
   ]
 });
 repository.addField('key', {
@@ -33,15 +28,9 @@ repository.addField('description', {
 });
 
 repository.setHeaders([
-  {
-    fieldKey: 'key',
-  },
-  {
-    fieldKey: 'name',
-  },
-  {
-    fieldKey: 'description',
-  },
+  'key',
+  'name',
+  'description',
   {
     fieldKey: 'createdAt',
     align: EnumHeaderAlign.End,

@@ -270,6 +270,13 @@ export default extend(en, {
       modifiedAt: 'Modified At',
       createdAt: 'Created At',
     },
+    enums: {
+      type: {
+        text: {
+          title: 'Type',
+        }
+      }
+    }
   },
   permissions: {
     singular: 'Permission',

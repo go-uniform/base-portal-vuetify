@@ -32,6 +32,7 @@
       />
     </slot>
     <v-data-table
+      :footer-props="{'items-per-page-options':[5, 10, 30, 60, 100, -1]}"
       :loading="loading"
       :loading-text="translate('$vuetify.app.loading')"
       :show-select="showSelect"

@@ -207,7 +207,7 @@ export default {
     sortBy: null,
     sortDesc: null,
     page: 1,
-    pageSize: 15,
+    pageSize: 10,
     filters: {},
     loading: true,
     hasMore: false,

@@ -38,9 +38,7 @@ repository.addField('description', {
 });
 
 repository.setHeaders([
-  {
-    fieldKey: 'title',
-  },
+  'title',
   {
     fieldKey: 'createdAt',
     align: EnumHeaderAlign.End,

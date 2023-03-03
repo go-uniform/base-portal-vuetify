@@ -40,7 +40,6 @@ repository.addField('email', {
   type: EnumValueType.Text,
   pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   patternMessage: '$vuetify.validations.email',
-  optional: true,
 });
 repository.addField('userRole', {
   type: EnumValueType.Link,
@@ -70,18 +69,10 @@ repository.setHeaders([
     },
     sortable: false,
   },
-  {
-    fieldKey: 'username',
-  },
-  {
-    fieldKey: 'email',
-  },
-  {
-    fieldKey: 'userRole',
-  },
-  {
-    fieldKey: 'parentUser',
-  },
+  'username',
+  'email',
+  'userRole',
+  'parentUser',
   {
     fieldKey: 'createdAt',
     align: EnumHeaderAlign.End,
@@ -99,31 +90,19 @@ repository.addSection(
     'parentUser',
     'modifiedAt',
     'createdAt',
-  ], {
-    childXl: 3,
-    childLg: 4,
-    childMd: 6,
-  })
+  ])
 );
 
 repository.addSection(
   new Section(`$vuetify.${entity}.sections.attributes`, [
     'attributes',
-  ], {
-    childXl: 3,
-    childLg: 4,
-    childMd: 6,
-  })
+  ])
 );
 
 repository.addSection(
   new Section(`$vuetify.${entity}.sections.permissions`, [
     'permissions',
-  ], {
-    childXl: 3,
-    childLg: 4,
-    childMd: 6,
-  })
+  ])
 );
 
 repository.bulkActions = [

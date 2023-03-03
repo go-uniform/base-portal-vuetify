@@ -11,24 +11,9 @@ repository.addField('type', {
   type: EnumValueType.Enumeration,
   defaultValue: 'inherit',
   values: [
-    {
-      value: 'inherit',
-      title: `$vuetify.${entity}.enums.type.inherit.title`,
-      icon: `$vuetify.${entity}.enums.type.inherit.icon`,
-      color: `$vuetify.${entity}.enums.type.inherit.color`,
-    },
-    {
-      value: 'allow',
-      title: `$vuetify.${entity}.enums.type.allow.title`,
-      icon: `$vuetify.${entity}.enums.type.allow.icon`,
-      color: `$vuetify.${entity}.enums.type.allow.color`,
-    },
-    {
-      value: 'deny',
-      title: `$vuetify.${entity}.enums.type.deny.title`,
-      icon: `$vuetify.${entity}.enums.type.deny.icon`,
-      color: `$vuetify.${entity}.enums.type.deny.color`,
-    },
+    'inherit',
+    'allow',
+    'deny',
   ],
 });
 repository.addField('key', {
@@ -40,7 +25,8 @@ repository.addField('name', {
   type: EnumValueType.Text,
 });
 repository.addField('description', {
-  type: EnumValueType.Text,
+  type: EnumValueType.TextArea,
+  optional: true,
 });
 
 repository.setHeaders([

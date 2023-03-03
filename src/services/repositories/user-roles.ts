@@ -22,27 +22,10 @@ repository.addField('status', {
   type: EnumValueType.Enumeration,
   defaultValue: 'pending',
   values: [
-    {
-      value: 'pending',
-      title: `$vuetify.${entity}.enums.status.pending.title`,
-      icon: `$vuetify.${entity}.enums.status.pending.icon`,
-      color: `$vuetify.${entity}.enums.status.pending.color`,
-    },
-    {
-      value: 'approved',
-      title: `$vuetify.${entity}.enums.status.approved.title`,
-      icon: `$vuetify.${entity}.enums.status.approved.icon`,
-      color: `$vuetify.${entity}.enums.status.approved.color`,
-    },
-    {
-      value: 'rejected',
-      title: `$vuetify.${entity}.enums.status.rejected.title`,
-      icon: `$vuetify.${entity}.enums.status.rejected.icon`,
-      color: `$vuetify.${entity}.enums.status.rejected.color`,
-    }
-  ],
-  textOnly: true,
-  filterable: true,
+    'pending',
+    'approved',
+    'rejected',
+  ]
 });
 repository.addField('name', {
   type: EnumValueType.Text,
@@ -53,10 +36,7 @@ repository.addField('description', {
 });
 repository.addField('super', {
   type: EnumValueType.Boolean,
-  optional: true,
   hint: `$vuetify.${entity}.hints.super`,
-  iconOnly: true,
-  filterable: true,
 });
 repository.addField('permissions', {
   type: EnumValueType.Attributes,
@@ -64,18 +44,10 @@ repository.addField('permissions', {
 });
 
 repository.setHeaders([
-  {
-    fieldKey: 'status',
-  },
-  {
-    fieldKey: 'name',
-  },
-  {
-    fieldKey: 'description',
-  },
-  {
-    fieldKey: 'super',
-  },
+  'status',
+  'name',
+  'description',
+  'super',
   {
     fieldKey: 'createdAt',
     align: EnumHeaderAlign.End,
@@ -91,21 +63,13 @@ repository.addSection(
       'super',
       'modifiedAt',
       'createdAt',
-    ], {
-      childXl: 3,
-      childLg: 4,
-      childMd: 6,
-    })
+    ])
 );
 
 repository.addSection(
     new Section(`$vuetify.${entity}.sections.permissions`, [
       'permissions',
-    ], {
-      childXl: 3,
-      childLg: 4,
-      childMd: 6,
-    })
+    ])
 );
 
 repository.bulkActions = [

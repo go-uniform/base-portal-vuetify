@@ -1,5 +1,5 @@
 import {AuthToken, AuthTokenJwt, generic} from './global.types';
-import {EnumValueType, EnumHeaderAlign} from '@/services/base/global.enums';
+import {EnumHeaderAlign, EnumValueType} from '@/services/base/global.enums';
 import {baseCreate, baseDelete, baseList, baseRead, baseUpdate} from '@/services/base/entity.crud';
 import {baseBulk} from '@/services/base/entity.bulk';
 import {camelize} from '@/plugins/base/vuetify';
@@ -100,10 +100,11 @@ export interface IBulkPromise {
 
 export interface IEnum {
   value: string;
-  title: string;
+  title?: string;
   icon?: string;
   color?: string;
 }
+export type IEnumQuick = IEnum | string;
 
 export interface IFieldNormal {
   label?: string;
@@ -123,7 +124,7 @@ export interface IFieldEnum {
   readonly?: boolean;
   filterable?: boolean;
   defaultValue: string;
-  values?: IEnum[];
+  values: IEnumQuick[];
   textOnly?: boolean;
   iconOnly?: boolean;
   hint?: string;
@@ -200,6 +201,7 @@ export interface IHeaderLinked {
 }
 
 export type IHeader = IHeaderCustom | IHeaderLinked;
+export type IHeaderQuick = IHeader | string;
 
 export interface ISection {
   title: string;
@@ -337,14 +339,83 @@ export class Repository<T> implements  IRepository<T> {
     this.bulk = baseBulk(slug);
   }
 
-  setHeaders(headers: IHeader[]) {
-    this.headers = headers;
+  setHeaders(headers: IHeaderQuick[]) {
+    const normalizedHeaders: IHeader[] = [];
+    headers.forEach((header) => {
+      if (typeof header === 'string') {
+        normalizedHeaders.push({
+          fieldKey: header,
+        });
+      } else {
+        normalizedHeaders.push(header as IHeader);
+      }
+    });
+    this.headers = normalizedHeaders;
   }
 
   addField(key: string, field: IField) {
     if (field.label === null || field.label === undefined || field.label.trim() === '') {
       field.label = `$vuetify.${this.entity}.fields.${key}`;
     }
+
+    const enumField = (field as IFieldEnum);
+    if (enumField && enumField.type === EnumValueType.Enumeration && enumField.values) {
+      const normalizedValues: IEnum[] = [];
+      enumField.values.forEach((value) => {
+        let enumValue: string;
+        if (typeof value === 'string') {
+          enumValue = value;
+        } else {
+          const item = (value as IEnum);
+          enumValue = item.value;
+        }
+        let title = `$vuetify.${this.entity}.enums.${key}.${enumValue}.title`;
+        let icon = `$vuetify.${this.entity}.enums.${key}.${enumValue}.icon`;
+        let color = `$vuetify.${this.entity}.enums.${key}.${enumValue}.color`;
+        if (typeof value !== 'string') {
+          const item = (value as IEnum);
+          enumValue = item.value;
+          if (!(item.title === null || item.title === undefined || item.title.trim() === '')) {
+            title = item.title;
+          }
+          if (!(item.icon === null || item.icon === undefined || item.icon.trim() === '')) {
+            icon = item.icon;
+          }
+          if (!(item.color === null || item.color === undefined || item.color.trim() === '')) {
+            color = item.color;
+          }
+        }
+        normalizedValues.push({
+          value: enumValue,
+          title: title,
+          icon: icon,
+          color: color,
+        });
+        enumField.values = normalizedValues;
+
+        if (enumField.filterable === undefined || enumField.filterable === null) {
+          enumField.filterable = true;
+        }
+
+        if (enumField.textOnly === undefined || enumField.textOnly === null) {
+          enumField.textOnly = true;
+        }
+      });
+    }
+
+    const boolField = (field as IFieldBoolean);
+    if (boolField && boolField.type === EnumValueType.Boolean) {
+      if (boolField.optional === undefined || boolField.optional === null) {
+        boolField.optional = false;
+      }
+      if (boolField.iconOnly === undefined || boolField.iconOnly === null && boolField.textOnly === undefined || boolField.textOnly === null) {
+        boolField.iconOnly = true;
+      }
+      if (boolField.filterable === undefined || boolField.filterable === null) {
+        boolField.filterable = true;
+      }
+    }
+
     this.fields[key] = field;
   }
 
