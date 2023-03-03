@@ -7,9 +7,9 @@ import {
   baseUpdateStub,
   generateUuid, IBulkStubScenarioResponse, stubScenario
 } from '@/services/base/stub';
-import {IUserRole, userRoles} from '@/services/repositories/user-roles';
+import {UserRole, userRoles} from '@/services/repositories/user-roles';
 
-export const UserRolesList: IUserRole[] = baseListLoad([
+export const UserRolesList: UserRole[] = baseListLoad([
   {
     id: generateUuid(),
     status: 'approved',
@@ -95,12 +95,12 @@ const stub = {
     'GET /user-roles/:id': baseReadStub(userRoles),
     'PUT /user-roles/:id': baseUpdateStub(userRoles),
     'DELETE /user-roles/:id': baseDeleteStub(userRoles),
-    'POST /user-roles/bulk': baseBulkStub(userRoles, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
+    'POST /user-roles/bulk': baseBulkStub(userRoles, (action: string, indexes: number[], list: UserRole[]): IBulkStubScenarioResponse => {
       switch (action) {
         case 'delete':
           return {
             scenario: stubScenario({}),
-            list: list.filter(function(value, index, arr){
+            list: list.filter(function(value, index){
               return !indexes.includes(index);
             }),
           };
