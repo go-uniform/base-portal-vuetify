@@ -42,6 +42,16 @@
         </v-expansion-panel-content>
 
       </v-expansion-panel>
+      <v-expansion-panel>
+
+        <v-expansion-panel-header>
+          DatetimeSelector
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <datetime-selector />
+        </v-expansion-panel-content>
+
+      </v-expansion-panel>
 
     </v-expansion-panels>
 
@@ -55,6 +65,7 @@ import MainLayout from '../../layouts/base/Main';
 import ThemeSelector from "../../components/base/ThemeSelector";
 import LanguageSelector from "../../components/base/LanguageSelector";
 import TimezoneSelector from "../../components/base/TimezoneSelector";
+import DatetimeSelector from "../../components/base/DatetimeSelector";
 
 export default {
   name: 'DevelopmentPage',
@@ -62,6 +73,7 @@ export default {
     LanguageSelector,
     ThemeSelector,
     TimezoneSelector,
+    DatetimeSelector,
     MainLayout,
   },
 
