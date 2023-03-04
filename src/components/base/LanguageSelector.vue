@@ -9,7 +9,7 @@
         <div
           v-bind="attrs"
           v-on="on"
-          class="language-selector"
+          :class="{'language-selector': true, 'language-selector-inline': inline }"
         >
           <v-btn
             class="hidden-xs-only"
@@ -56,6 +56,12 @@
   bottom: 10px;
   z-index: 5;
 }
+.language-selector-inline {
+  position: relative;
+  right: auto;
+  top: auto;
+  z-index: auto;
+}
 </style>
 
 <script>
@@ -63,6 +69,10 @@ import {languages} from '@/plugins/locales';
 
 export default {
   name: 'language-selector',
+
+  props: {
+    inline: Boolean,
+  },
 
   data: () => ({
     show: true,

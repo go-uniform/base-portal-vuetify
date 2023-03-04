@@ -12,7 +12,7 @@
           color="secondary"
           v-bind="attrs"
           v-on="on"
-          class="language-selector"
+          :class="{'theme-selector': true, 'theme-selector-inline': inline }"
         >
           <v-icon>
             mdi-theme-light-dark
@@ -45,19 +45,29 @@
 </template>
 
 <style lang="scss" scoped>
-.language-selector {
+.theme-selector {
   position: fixed;
   right: 10px;
   top: 10px;
   z-index: 5;
 }
+.theme-selector-inline {
+  position: relative;
+  right: auto;
+  top: auto;
+  z-index: auto;
+}
 </style>
 
 <script>
-import theme, {hasDark, hasLight} from '@/plugins/theme';
+import {hasDark, hasLight} from '@/plugins/theme';
 
 export default {
   name: 'theme-selector',
+
+  props: {
+    inline: Boolean,
+  },
 
   data: () => ({
     hasThemes: hasDark && hasLight,
