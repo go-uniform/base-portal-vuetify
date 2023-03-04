@@ -6,6 +6,7 @@ import {StubAuth} from '@/services/stubs/auth';
 import {StubSettings} from '@/services/stubs/settings';
 import {StubDashboards} from '@/services/stubs/dashboards';
 import {StubReports} from '@/services/stubs/reports';
+import {StubEvents} from "@/services/stubs/events";
 
 export default [
   StubAuth,
@@ -16,4 +17,5 @@ export default [
   StubSettings,
   StubDashboards,
   StubReports,
+  StubEvents,
 ];

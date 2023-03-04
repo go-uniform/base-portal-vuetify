@@ -5,7 +5,7 @@ import {
   baseListStub,
   baseReadStub,
   baseUpdateStub,
-  generateUuid, IBulkStubScenarioResponse, IStubScenario, stubScenario
+  generateUuid, IBulkStubScenarioResponse, stubScenario
 } from '@/services/base/stub';
 import {Report, reports} from '@/services/repositories/reports';
 

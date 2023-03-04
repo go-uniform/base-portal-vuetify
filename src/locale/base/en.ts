@@ -177,6 +177,10 @@ export default extend(en, {
       title: 'Users',
       icon: 'mdi-account',
     },
+    events: {
+      title: 'Events',
+      icon: 'mdi-calendar',
+    },
   },
   users: {
     singular: 'User',
@@ -339,5 +343,21 @@ export default extend(en, {
   customizations: {
     pageTitle: 'Customizations',
     icon: 'mdi-application-cog-outline'
+  },
+  events: {
+    singular: 'Event',
+    plural: 'Events',
+    sections: {
+      general: 'General',
+    },
+    fields: {
+      id: 'Id',
+      title: 'Title',
+      description: 'Description',
+      startAt: 'Start At',
+      endAt: 'End At',
+      modifiedAt: 'Modified At',
+      createdAt: 'Created At',
+    },
   },
 });

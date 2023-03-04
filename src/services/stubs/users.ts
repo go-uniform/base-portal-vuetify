@@ -5,7 +5,7 @@ import {
   baseListStub,
   baseReadStub,
   baseUpdateStub,
-  generateUuid, IBulkStubScenarioResponse, IStubScenario, stubScenario
+  generateUuid, IBulkStubScenarioResponse, stubScenario
 } from '@/services/base/stub';
 import {User, users} from '@/services/repositories/users';
 import {UserRolesList} from '@/services/stubs/user-roles';
@@ -20,7 +20,7 @@ export const UsersList: User[] = baseListLoad([
     password: '$aMUqSrc7N3v',
     userRole: UserRolesList[0].id,
     attributes: {
-      sex: "male",
+      sex: 'male',
     },
     permissions: {
       'usersListOwner': 'allow',

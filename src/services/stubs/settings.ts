@@ -2,7 +2,7 @@ import {
   baseRestItemStub,
   baseRestListStub,
   baseStoreLoad,
-  baseStoreSave, generateUuid,
+  baseStoreSave,
   stubScenario
 } from '@/services/base/stub';
 import {ISettingsGroup, Settings, settings} from '@/services/repositories/settings';

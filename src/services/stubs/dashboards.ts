@@ -5,7 +5,7 @@ import {
   baseListStub,
   baseReadStub,
   baseUpdateStub,
-  generateUuid, IBulkStubScenarioResponse, IStubScenario, stubScenario
+  generateUuid, IBulkStubScenarioResponse, stubScenario
 } from '@/services/base/stub';
 import {Dashboard, dashboards} from '@/services/repositories/dashboards';
 

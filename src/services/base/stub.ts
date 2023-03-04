@@ -136,7 +136,7 @@ export const baseListStub = <T>(slug: string | IRepository<any>, scenario?: IStu
             }
           }
           const filters: any = {};
-          const url = new URL("http://example.com/"+ input.toString());
+          const url = new URL('http://example.com/' + input.toString());
           url.searchParams.forEach((value, key) => {
             if (key === '-order') {
               order = value;
@@ -557,14 +557,14 @@ export const baseStoreSave = <T>(item: T, slug: string | IRepository<any>): T =>
 
 export const generateFakeJwt = (claims: any): string => {
   const header = {
-    "alg": "HS256",
-    "typ": "JWT",
+    'alg': 'HS256',
+    'typ': 'JWT',
   }
   const encodedHeaders = btoa(JSON.stringify(header))
 
   if (!claims) {
     claims = {
-      "iat": Math.round((new Date()).getTime() / 1000),
+      'iat': Math.round((new Date()).getTime() / 1000),
     }
   } else {
     claims.iat = Math.round((new Date()).getTime() / 1000);

@@ -78,8 +78,8 @@ const stub = {
         const user = UsersList[parseInt(body.otpRequestId)]
         if (user) {
           const jwt = generateFakeJwt({
-            "name": `${user.firstName} ${user.lastName}`,
-            "sub": user.id,
+            'name': `${user.firstName} ${user.lastName}`,
+            'sub': user.id,
           });
           scenario = stubScenario({
             token: 'e47b6d46-a0b6-446f-a520-86e5fc82b364',

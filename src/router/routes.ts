@@ -6,6 +6,7 @@ import {RouteConfig} from 'vue-router';
 import {dashboards} from '@/services/repositories/dashboards';
 import {reports} from '@/services/repositories/reports';
 import {translate} from '@/plugins/base/vuetify';
+import {events} from "@/services/repositories/events";
 
 // custom/override routes should be added here
 const routes: RouteConfig[] = [
@@ -81,9 +82,10 @@ const routes: RouteConfig[] = [
   },
 ];
 
-// Users Section
+// Crud Routes Section
 createRepositoryCrudRoutes(routes, users);
 createRepositoryCrudRoutes(routes, userRoles);
 createRepositoryCrudRoutes(routes, userAttributes);
+createRepositoryCrudRoutes(routes, events);
 
 export const customRoutes = routes;
