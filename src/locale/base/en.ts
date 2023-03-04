@@ -340,6 +340,10 @@ export default extend(en, {
     pageTitle: 'Settings',
     icon: 'mdi-cogs'
   },
+  development: {
+    pageTitle: 'Development',
+    icon: 'mdi-bug'
+  },
   customizations: {
     pageTitle: 'Customizations',
     icon: 'mdi-application-cog-outline'

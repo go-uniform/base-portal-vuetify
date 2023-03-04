@@ -69,6 +69,15 @@ const routes: Array<RouteConfig> = [
       title: '$vuetify.settings.pageTitle',
     }
   },
+  {
+    path: '/development',
+    name: 'development',
+    component: () => import('../../views/base/Development.vue'),
+    meta: {
+      title: '$vuetify.development.pageTitle',
+      permissions: [],
+    }
+  },
 ];
 
 routes.push(...customRoutes)

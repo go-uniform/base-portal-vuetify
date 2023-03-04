@@ -3,7 +3,6 @@ import {userRoles} from '@/services/repositories/user-roles';
 import {translate} from '@/plugins/base/vuetify';
 import {userAttributes} from '@/services/repositories/user-attributes';
 import {createMenuItem} from '@/services/base/entity.crud';
-import {events} from "@/services/repositories/events";
 
 export const mainMenuItems = [
   {
@@ -20,6 +19,11 @@ export const mainMenuItems = [
     title: translate('$vuetify.menu.events.title'),
     icon: translate('$vuetify.menu.events.icon'),
     location: '/events'
+  },
+  {
+    title: translate('$vuetify.development.pageTitle'),
+    icon: translate('$vuetify.development.icon'),
+    location: '/development'
   },
   {
     title: translate('$vuetify.menu.users.title'),
