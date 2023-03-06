@@ -45,10 +45,36 @@
       <v-expansion-panel>
 
         <v-expansion-panel-header>
-          DatetimeSelector
+          DatetimeSelector | Full
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <datetime-selector />
+        </v-expansion-panel-content>
+
+      </v-expansion-panel>
+      <v-expansion-panel>
+
+        <v-expansion-panel-header>
+          DatetimeSelector | Full + Seconds
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <datetime-selector use-seconds />
+        </v-expansion-panel-content>
+
+      </v-expansion-panel>
+      <v-expansion-panel>
+
+        <v-expansion-panel-header>
+          DatetimeSelector | Shared Timezone
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <timezone-selector
+            ref="sharedTimezone1"
+          />
+          <datetime-selector
+            :refs="this.$refs"
+            timezone-selector="sharedTimezone1"
+          />
         </v-expansion-panel-content>
 
       </v-expansion-panel>
