@@ -151,7 +151,11 @@ export default {
   }),
   mounted () {
     this.load();
-    this.$refs.calendar.checkChange();
+  },
+  updated() {
+    if(!this.loading) {
+      this.$refs.calendar.move(0)
+    }
   },
   methods: {
     viewDay ({ date }) {
