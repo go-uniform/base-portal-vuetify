@@ -32,6 +32,16 @@
         </v-expansion-panel-content>
 
       </v-expansion-panel>
+      <v-expansion-panel>
+
+        <v-expansion-panel-header>
+          Calendar
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <entity-calendar :repository="events"></entity-calendar>
+        </v-expansion-panel-content>
+
+      </v-expansion-panel>
 
     </v-expansion-panels>
 
@@ -44,6 +54,8 @@
 import MainLayout from '../../layouts/base/Main';
 import ThemeSelector from "../../components/base/ThemeSelector";
 import LanguageSelector from "../../components/base/LanguageSelector";
+import EntityCalendar from "@/components/base/EntityCalendar.vue";
+import {events} from '@/services/repositories/events';
 
 export default {
   name: 'DevelopmentPage',
@@ -51,12 +63,14 @@ export default {
     LanguageSelector,
     ThemeSelector,
     MainLayout,
+    EntityCalendar
   },
 
   data: () => ({
     crumbs: [],
     actions: [],
     loading: true,
+    events: events,
   }),
 
   methods: {

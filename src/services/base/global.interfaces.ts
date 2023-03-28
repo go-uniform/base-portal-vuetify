@@ -177,8 +177,16 @@ export interface IFieldAttribute {
 
 export type IField = IFieldNormal | IFieldEnum | IFieldBoolean | IFieldLink | IFieldAttribute | ISelfReference;
 
-export type IFields = { [key: string]: IField }
+export type CalendarTypes = 'start' | 'end' | 'name';
 
+export type CalendarCallback = (item: any) => string;
+
+export interface ICalendarField {
+  type: CalendarTypes;
+  displayCallback: CalendarCallback;
+}
+
+export type IFields = { [key: string]: IField }
 export type HeaderCallback = (item: any) => string;
 
 export interface IHeaderCustom {
@@ -260,6 +268,7 @@ export interface IRepository<T> {
   fields: IFields;
   headers: IHeader[];
   sections: ISection[];
+  calendarFields: ICalendarField[];
   bulkActions?: IBulkActionButton[];
 
   list?: IListPromise<T>;
@@ -285,6 +294,7 @@ export class Repository<T> implements  IRepository<T> {
   fields: IFields;
   headers: IHeader[];
   sections: ISection[];
+  calendarFields: ICalendarField[];
   bulkActions?: IBulkActionButton[];
 
   list?: IListPromise<T>;
@@ -330,6 +340,7 @@ export class Repository<T> implements  IRepository<T> {
     };
     this.headers = [];
     this.sections = [];
+    this.calendarFields = [];
 
     this.list = baseList<T>(slug);
     this.create = baseCreate<T>(slug);
@@ -351,6 +362,14 @@ export class Repository<T> implements  IRepository<T> {
       }
     });
     this.headers = normalizedHeaders;
+  }
+
+  setCalendarFields(fields: ICalendarField[]) {
+    const calendarFields: ICalendarField[] = [];
+    fields.forEach((field) => {
+      calendarFields.push(field as ICalendarField);
+    });
+    this.calendarFields = calendarFields;
   }
 
   addField(key: string, field: IField) {

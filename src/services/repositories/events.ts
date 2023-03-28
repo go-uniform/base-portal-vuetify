@@ -62,4 +62,25 @@ repository.bulkActions = [
   }
 ];
 
+repository.setCalendarFields([
+  {
+    type: "start",
+    displayCallback: (item) => {
+      return `${item.startAt}`;
+    },
+  },
+  {
+    type: "end",
+    displayCallback: (item) => {
+      return `${item.endAt}`;
+    },
+  },
+  {
+    type: "name",
+    displayCallback: (item) => {
+      return `${item.title}`;
+    },
+  },
+])
+
 export const events = repository;

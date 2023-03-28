@@ -3,6 +3,7 @@ import {auth} from './auth';
 import {toastError, toastSuccess, translate} from '@/plugins/base/vuetify';
 import {IStubScenario} from './stub';
 import {
+  ICalendarField,
   IErrorResponse,
   IGeneric, IHeaderCustom,
   IHeaderLinked,
@@ -263,6 +264,35 @@ export const processStandardListResponse = <T>(
   }, reject);
 };
 
+export const baseCalendarFields = (repository: IRepository<any>): object[] => {
+  const response: object[] = [];
+  if (repository.calendarFields) {
+    repository.calendarFields.forEach((field) => {
+      response.push({
+        type: field.type,
+        displayCallback: field.displayCallback,
+      });
+    });
+  }
+  return response;
+};
+
+export const processCalendarEvents = (fields: ICalendarField[], items: any): object[] => {
+  const response: object[] = [];
+  items.forEach((item: any) => {
+    const keyValues : {[key: string]: any} = {};
+    fields.forEach((field) => {
+      keyValues[field.type] = field.displayCallback(item)
+      if(field.type === 'start' || field.type === 'end') {
+        keyValues[field.type] = formatCalendarDate(keyValues[field.type]);
+      }
+    });
+    keyValues['id'] = item.id;
+    response.push(keyValues);
+  });
+  return response;
+};
+
 export const baseTableHeaders = (repository: IRepository<any>): object[] => {
   const response: object[] = [];
   if (repository.headers) {
@@ -295,3 +325,14 @@ export const baseTableHeaders = (repository: IRepository<any>): object[] => {
   }
   return response;
 };
+
+export const formatCalendarDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
+  const hours = ('0' + date.getHours()).slice(-2);
+  const minutes = ('0' + date.getMinutes()).slice(-2);
+  const seconds = ('0' + date.getSeconds()).slice(-2);
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
