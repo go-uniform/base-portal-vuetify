@@ -7,21 +7,20 @@
   >
     {{ translate('$vuetify.app.loading') }}
   </v-layout>
-  <v-layout
-      v-else-if="!records || records.length === 0"
-      class="fill-content"
-      justify-center
-      align-center
-      column
-  >
-    <p>
-      {{ translate('$vuetify.app.noData') }}
-    </p>
-  </v-layout>
   <div
       v-else
       class="fill-width"
   >
+    <slot
+        name="filters"
+    >
+      <entity-list-filters
+          :repository="repository"
+          v-model="filters"
+          @change="load()"
+          :disabled="loading"
+      />
+    </slot>
     <v-row class="fill-height">
       <v-col>
         <v-sheet height="64">
@@ -31,7 +30,7 @@
             <v-btn
                 outlined
                 class="mr-4"
-                color="grey darken-2"
+                color="primary"
                 @click="setToday"
             >
               Today
@@ -40,7 +39,7 @@
                 fab
                 text
                 small
-                color="grey darken-2"
+                color="primary"
                 @click="prev"
             >
               <v-icon small>
@@ -51,7 +50,7 @@
                 fab
                 text
                 small
-                color="grey darken-2"
+                color="primary"
                 @click="next"
             >
               <v-icon small>
@@ -82,7 +81,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                     outlined
-                    color="grey darken-2"
+                    color="primary"
                     v-bind="attrs"
                     v-on="on"
                 >
@@ -102,6 +101,9 @@
                 <v-list-item @click="type = 'month'">
                   <v-list-item-title>Month</v-list-item-title>
                 </v-list-item>
+                <v-list-item @click="type = 'category'">
+                  <v-list-item-title>Category</v-list-item-title>
+                </v-list-item>
               </v-list>
             </v-menu>
           </v-toolbar>
@@ -113,6 +115,7 @@
               color="primary"
               :events="events"
               :type="type"
+              :categories="categories"
               @click:time="createEvent"
               @click:event="editEvent"
               @click:more="viewDay"
@@ -127,9 +130,11 @@
 <script>
 import {baseCalendarFields, processCalendarEvents} from "@/services/base/base";
 import {translate} from "@/plugins/base/vuetify";
+import EntityListFilters from "@/components/base/EntityListFilters.vue";
 
 export default {
   name: "entity-calendar",
+  components: {EntityListFilters},
 
   props: {
     repository: null,
@@ -145,9 +150,11 @@ export default {
       month: 'Month',
       week: 'Week',
       day: 'Day',
+      category: 'Category',
     },
     calendarFields: [],
     events: [],
+    categories: []
   }),
   mounted () {
     this.load();
@@ -176,9 +183,14 @@ export default {
       this.$emit('loading', this.loading);
       this.calendarFields = baseCalendarFields(this.repository);
 
-      this.repository.list(null, this.filters).then((response) => {
+      this.repository.list(null, this.filters, null, null).then((response) => {
         this.records = response.items;
         this.events = processCalendarEvents(this.calendarFields, response.items);
+        this.events.forEach((event) => {
+          if(!this.categories.includes(event.category)) {
+            this.categories.push(event.category)
+          }
+        });
       }).finally(() => {
         this.loading = false;
         this.$emit('loading', this.loading);
