@@ -360,6 +360,7 @@ export default extend(en, {
       description: 'Description',
       startAt: 'Start At',
       endAt: 'End At',
+      user: 'User',
       modifiedAt: 'Modified At',
       createdAt: 'Created At',
     },

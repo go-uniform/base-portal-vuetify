@@ -8,6 +8,8 @@ import {
   generateUuid, IBulkStubScenarioResponse, stubScenario
 } from '@/services/base/stub';
 import {Event, events} from '@/services/repositories/events';
+import {UserRolesList} from "@/services/stubs/user-roles";
+import {UsersList} from "@/services/stubs/users";
 
 function today(hours: number, min: number) {
   const date = new Date();
@@ -21,6 +23,7 @@ export const EventsList: Event[] = baseListLoad([
     title: 'Wallow in self pity',
     startAt: today(13, 0),
     endAt: today(16, 30),
+    user: UsersList[0].id,
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -29,6 +32,7 @@ export const EventsList: Event[] = baseListLoad([
     title: 'Stare into the abyss',
     startAt: today(16, 30),
     endAt: today(17, 0),
+    user: UsersList[0].id,
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -37,6 +41,7 @@ export const EventsList: Event[] = baseListLoad([
     title: 'Solve world hunger; Tell no one',
     startAt: today(17, 0),
     endAt: today(17, 30),
+    user: UsersList[0].id,
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -45,6 +50,7 @@ export const EventsList: Event[] = baseListLoad([
     title: 'Jazz-ercise',
     startAt: today(17, 30),
     endAt: today(18, 30),
+    user: UsersList[0].id,
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -53,6 +59,7 @@ export const EventsList: Event[] = baseListLoad([
     title: 'Dinner with me',
     startAt: today(18, 30),
     endAt: today(19, 0),
+    user: UsersList[0].id,
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -61,6 +68,7 @@ export const EventsList: Event[] = baseListLoad([
     title: 'Wrestle with my self-loathing',
     startAt: today(19, 0),
     endAt: today(21, 0),
+    user: UsersList[0].id,
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
@@ -70,6 +78,7 @@ export const EventsList: Event[] = baseListLoad([
     description: 'Lay in bed and stare at the ceiling and slip slowly into madness',
     startAt: today(21, 0),
     endAt: today(22, 0),
+    user: UsersList[0].id,
     modifiedAt: new Date(),
     createdAt: new Date(),
   },
