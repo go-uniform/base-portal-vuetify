@@ -36,7 +36,9 @@ repository.addField('endAt', {
 repository.addField('user', {
     type: EnumValueType.Link,
     linkRepository: users,
-    linkLabelFieldKey: 'firstName'
+    textAssemblyCallback: (item) => {
+        return `${item.firstName} ${item.lastName}`;
+    },
 });
 
 repository.setHeaders([
@@ -55,7 +57,7 @@ repository.addSection(
         'description',
         'startAt',
         'endAt',
-        'userRole',
+        'user',
         'modifiedAt',
         'createdAt',
     ])
@@ -89,12 +91,6 @@ repository.setCalendarFields([
             return `${item.title}`;
         },
     },
-    {
-        type: "category",
-        displayCallback: (item) => {
-            return `${item.user}`
-        }
-    }
 ])
 
 export const events = repository;

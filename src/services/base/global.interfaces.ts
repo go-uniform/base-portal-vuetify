@@ -177,7 +177,7 @@ export interface IFieldAttribute {
 
 export type IField = IFieldNormal | IFieldEnum | IFieldBoolean | IFieldLink | IFieldAttribute | ISelfReference;
 
-export type CalendarTypes = 'start' | 'end' | 'name' | 'category';
+export type CalendarTypes = 'start' | 'end' | 'name';
 
 export type CalendarCallback = (item: any) => string;
 

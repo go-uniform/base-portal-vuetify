@@ -101,9 +101,6 @@
                 <v-list-item @click="type = 'month'">
                   <v-list-item-title>Month</v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="type = 'category'">
-                  <v-list-item-title>Category</v-list-item-title>
-                </v-list-item>
               </v-list>
             </v-menu>
           </v-toolbar>
@@ -115,7 +112,6 @@
               color="primary"
               :events="events"
               :type="type"
-              :categories="categories"
               @click:time="createEvent"
               @click:event="editEvent"
               @click:more="viewDay"
@@ -150,11 +146,9 @@ export default {
       month: 'Month',
       week: 'Week',
       day: 'Day',
-      category: 'Category',
     },
     calendarFields: [],
     events: [],
-    categories: []
   }),
   mounted () {
     this.load();
@@ -186,18 +180,13 @@ export default {
       this.repository.list(null, this.filters, null, null).then((response) => {
         this.records = response.items;
         this.events = processCalendarEvents(this.calendarFields, response.items);
-        this.events.forEach((event) => {
-          if(!this.categories.includes(event.category)) {
-            this.categories.push(event.category)
-          }
-        });
       }).finally(() => {
         this.loading = false;
         this.$emit('loading', this.loading);
       });
     },
     editEvent({ nativeEvent, event }) {
-      this.$router.push(`${translate(this.repository.viewPage,event.id)}`);
+      this.$router.push(`${translate(this.repository.viewPage, event.id)}`);
     },
     createEvent(tms) {
       this.$router.push(`${translate(this.repository.addPage)}`);
