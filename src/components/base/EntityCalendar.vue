@@ -189,7 +189,14 @@ export default {
       this.$router.push(`${translate(this.repository.viewPage, event.id)}`);
     },
     createEvent(tms) {
-      this.$router.push(`${translate(this.repository.addPage)}`);
+      this.$router.push({
+        path : `${translate(this.repository.addPage)}`,
+        query: {
+          values: {
+            title: 'test'
+          }
+        }
+      });
     }
   },
 }

@@ -9,6 +9,7 @@
     <entity-edit
       ref="editor"
       :repository="$route.meta.repository"
+      :values="$route.query.values"
       :id="$route.params.id"
       @loading="updateLoadingIndicator"
       @submitting="updateSubmittingIndicator"

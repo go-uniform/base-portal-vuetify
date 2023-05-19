@@ -144,6 +144,7 @@ export default {
   props: {
     repository: null,
     id: null,
+    values: null
   },
   data: () => ({
     submitting: false,
@@ -222,6 +223,10 @@ export default {
 
   mounted() {
     this.item = {...this.repository.default};
+    if(this.values) {
+      this.item = this.values
+    }
+    console.log(this.item)
 
     if (this.id) {
       this.loading = true;
