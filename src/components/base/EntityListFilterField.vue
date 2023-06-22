@@ -77,6 +77,23 @@
       >
       </v-autocomplete>
     </div>
+    <div
+            v-else-if="field.type === 'text'"
+    >
+      <entity-field-view-label
+              :field="field"
+              hide-required
+      />
+      <v-text-field
+              item-color="accent white--text"
+              color="accent"
+              :value="value"
+              clearable
+              filled
+              @change="update"
+      >
+      </v-text-field>
+    </div>
     <span
       v-else
     >

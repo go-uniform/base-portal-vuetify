@@ -155,34 +155,23 @@ export const baseListStub = <T>(slug: string | IRepository<any>, scenario?: IStu
               Object.keys(filters).forEach((key: string) => {
                 const value = filters[key];
                 if (key === '-text') {
-                  let text = '';
-                  if (item.text) {
-                    text = item.text;
+                  const text = Object.keys(item).reduce((result: string, key: string) => {
+                    if (item[key] !== undefined && item[key] !== null) {
+                      if (result !== undefined && result !== null) {
+                        return result + " " + item[key].toString();
+                      }
+                      return item[key].toString();
+                    }
+                  }, "");
+                  if (value.startsWith('"') && value.endsWith('"')) {
+                    if (text.indexOf(value.substring(1, value.length - 1)) == -1) {
+                      include = false;
+                    }
                   }
-                  else if (item.name) {
-                    text = item.name;
-                  }
-                  else if (item.title) {
-                    text = item.title;
-                  }
-                  else if (item.firstName) {
-                    text += text ? ' ' : '';
-                    text += item.firstName;
-                  }
-                  else if (item.firstNames) {
-                    text += text ? ' ' : '';
-                    text += item.firstNames;
-                  }
-                  else if (item.lastName) {
-                    text += text ? ' ' : '';
-                    text += item.lastName;
-                  }
-                  text = text.toLowerCase();
-                  if (text.length > value.length) {
-                    text = text.substring(0, value.length)
-                  }
-                  if (text !== value.toLowerCase()) {
-                    include = false;
+                  else {
+                    if (text.toLowerCase().indexOf(value.toString().toLowerCase()) == -1) {
+                      include = false;
+                    }
                   }
                 } else {
                   let itemValue = item[key];
@@ -198,10 +187,25 @@ export const baseListStub = <T>(slug: string | IRepository<any>, scenario?: IStu
                   });
                   let from: Date = new Date();
                   let to: Date = new Date();
+                  const text = itemValue.toString();
                   switch (repository.fields[key].type) {
                     default:
                       if (!values.includes(itemValue.toString().toLowerCase())) {
                         include = false;
+                      }
+                      break;
+                    case EnumValueType.Text:
+                    case EnumValueType.TextArea:
+                      if (value != 'null' && value != '##null##' && value !== null && value !== undefined) {
+                        if (value.startsWith('"') && value.endsWith('"')) {
+                          if (text.indexOf(value.substring(1, value.length - 1)) == -1) {
+                            include = false;
+                          }
+                        } else {
+                          if (text.toLowerCase().indexOf(value.toString().toLowerCase()) == -1) {
+                            include = false;
+                          }
+                        }
                       }
                       break;
                     case EnumValueType.Time:
