@@ -41,15 +41,28 @@ loadAuthDetails();
 
 export const auth: IAuthRepository =  {
     isAuthenticated: (): boolean => {
+        if (
+            authToken != null && authToken.length <= 0
+            || authJwt != null && authJwt.length <= 0
+        )
+        {
+            toastError('$vuetify.errors.corruptedAuthenticationToken');
+            return false;
+        }
         return authToken != null && authToken.length > 0;
     },
     getToken: (): string | null => {
+        auth.isAuthenticated();
         return authToken;
     },
     getJwt: (): string | null => {
+        auth.isAuthenticated();
         return authJwt;
     },
     meta: (): object => {
+        if (!auth.isAuthenticated()) {
+            toastError('Unable to decode your token locally, please try to logout and back in again.');
+        }
         if (authJwtMeta !== null) {
             return authJwtMeta;
         }

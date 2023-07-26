@@ -112,6 +112,7 @@ const AuthGuard: NavigationGuard = (to, from, next) => {
       if (to.path && to.path !== '/') {
         query = { redirect: encodeURI(to.fullPath) };
       }
+      console.log(to, query);
       next({ name: 'login', query: query });
     }
   }

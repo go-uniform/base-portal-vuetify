@@ -13,7 +13,8 @@ import {
   getBaseUrl,
   mergeHeaders,
   processStandardItemResponse,
-  processStandardListResponse
+  processStandardListResponse,
+  processException,
 } from '@/services/base/base';
 import {RouteConfig} from 'vue-router';
 import {translate} from '@/plugins/base/vuetify';
@@ -40,6 +41,10 @@ export const baseList = <T>(slug: string): IListPromise<T> => {
 
       }).catch((reason) => {
 
+        if (reject == null) {
+          processException(reason);
+          return;
+        }
         reject(reason);
 
       });
@@ -64,6 +69,10 @@ export const baseCreate = <T>(slug: string): ICreatePromise<T> => {
 
       }).catch((reason) => {
 
+        if (reject == null) {
+          processException(reason);
+          return;
+        }
         reject(reason);
 
       });
@@ -82,6 +91,10 @@ export const baseRead = <T>(slug: string): IReadPromise<T> => {
       }).then((response) => {
         processStandardItemResponse<T>(response, resolve, reject);
       }).catch((reason) => {
+        if (reject == null) {
+          processException(reason);
+          return;
+        }
         reject(reason);
       });
     });
@@ -101,6 +114,10 @@ export const baseUpdate = <T>(slug: string): IUpdatePromise<T> => {
       }).then((response) => {
         processStandardItemResponse<T>(response, resolve, reject);
       }).catch((reason) => {
+        if (reject == null) {
+          processException(reason);
+          return;
+        }
         reject(reason);
       });
     });
@@ -118,6 +135,10 @@ export const baseDelete = <T>(slug: string): IDeletePromise<T> => {
       }).then((response) => {
         processStandardItemResponse<T>(response, resolve, reject);
       }).catch((reason) => {
+        if (reject == null) {
+          processException(reason);
+          return;
+        }
         reject(reason);
       });
     });

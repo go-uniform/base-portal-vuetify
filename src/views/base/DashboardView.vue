@@ -92,7 +92,7 @@
           >
             mdi-plus-box
           </v-icon>
-          {{ translate('$vuetify.dashboards.noData') }}
+          {{ translate('$vuetify.entityList.new') }}
 
         </v-btn>
       </v-layout>
