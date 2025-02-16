@@ -280,7 +280,7 @@ export default extend(en, {
     enums: {
       type: {
         text: {
-          title: 'Type',
+          title: 'Text',
         }
       }
     }

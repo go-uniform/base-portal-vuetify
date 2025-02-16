@@ -28,6 +28,7 @@ repository.addField('description', {
 });
 
 repository.setHeaders([
+  'type',
   'key',
   'name',
   'description',
