@@ -1,11 +1,8 @@
 import {
-  baseBulkStub,
-  baseCreateStub, baseDeleteStub,
+  baseCreateStub,
+  baseHandlers,
   baseListLoad,
-  baseListStub,
-  baseReadStub,
-  baseUpdateStub,
-  generateUuid, IBulkStubScenarioResponse, stubScenario
+  generateUuid,
 } from '@/services/base/stub';
 import {Report, reports} from '@/services/repositories/reports';
 
@@ -85,34 +82,17 @@ export const ReportsList: Report[] = baseListLoad([
   },
 ], reports);
 
+const handlers = baseHandlers(reports);
+handlers['POST /reports'] = baseCreateStub(reports, (record: any) => {
+  record.urlThumbnail = 'https://via.placeholder.com/800x600';
+  record.urlView = `https://en.wikipedia.org/wiki/${encodeURIComponent(record.title)}`;
+  record.urlEdit = `https://en.wikipedia.org/w/index.php?title=${encodeURIComponent(record.title)}&action=history`;
+  return record;
+});
+
 const stub = {
   repository: reports,
-  handlers: {
-    'GET /reports': baseListStub(reports),
-    'POST /reports': baseCreateStub(reports, (record: any) => {
-      record.urlThumbnail = 'https://via.placeholder.com/800x600';
-      record.urlView = `https://en.wikipedia.org/wiki/${encodeURIComponent(record.title)}`;
-      record.urlEdit = `https://en.wikipedia.org/w/index.php?title=${encodeURIComponent(record.title)}&action=history`;
-      return record;
-    }),
-    'GET /reports/:id': baseReadStub(reports),
-    'PUT /reports/:id': baseUpdateStub(reports),
-    'DELETE /reports/:id': baseDeleteStub(reports),
-    'POST /reports/bulk': baseBulkStub(reports, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
-      switch (action) {
-        case 'delete':
-          return {
-            scenario: stubScenario({}),
-            list: list.filter(function(value, index, arr){
-              return !indexes.includes(index);
-            }),
-          };
-      }
-      return {
-        scenario: stubScenario({}, 400, new Headers({'Message':'$vuetify.errors.unknownBulkAction','Message-Arguments':`${action}###${reports.entity}`}))
-      };
-    }),
-  },
+  handlers: baseHandlers(reports),
   initialData: ReportsList,
 };
 

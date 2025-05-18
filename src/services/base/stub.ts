@@ -99,6 +99,31 @@ export const getPathId = (path: string): string | null => {
   return id;
 }
 
+export const baseHandlers = <T>(repository: IRepository<any>): any => {
+  const handlers: { [key: string]: any } = {};
+  const slug: string = repository.slug;
+  handlers['GET /'+ slug] = baseListStub<T>(repository);
+  handlers['POST /'+ slug] = baseCreateStub<T>(repository);
+  handlers['GET /'+ slug + '/:id'] = baseReadStub<T>(repository);
+  handlers['PUT /'+ slug + '/:id'] = baseUpdateStub<T>(repository);
+  handlers['DELETE /'+ slug + '/:id'] = baseDeleteStub<T>(repository);
+  handlers['POST /'+ slug + '/bulk'] = baseBulkStub<T>(repository, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
+    switch (action) {
+      case 'delete':
+        return {
+          scenario: stubScenario({}),
+          list: list.filter(function(value, index, arr){
+            return !indexes.includes(index);
+          }),
+        };
+    }
+    return {
+      scenario: stubScenario({}, 400, new Headers({'Message':'$vuetify.errors.unknownBulkAction','Message-Arguments':`${action}###${repository.entity}`}))
+    };
+  });
+  return handlers;
+}
+
 export const baseListStub = <T>(slug: string | IRepository<any>, scenario?: IStubScenario | null, filter?: any): IResponse => {
   const repository = (slug as IRepository<any>);
   if (repository) {
