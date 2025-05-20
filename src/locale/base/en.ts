@@ -12,11 +12,14 @@ export default extend(en, {
     unknownBulkAction: 'Unknown bulk action \'{0}\' request received on entity \'{1}\'',
     missingFilterType: 'A filter control for \'{0}\' has not bee implemented yet',
     general: 'Something went wrong',
-    recordNotFound: 'The record could not be found',
+    recordNotFound: 'The record or function could not be found',
     accountDoesNotExist: 'No account could be found for the given username/email',
     invalidCredentials: 'Invalid username/email or password given',
     unknownOtpType: 'Unknown OTP type \'{0}\' detected',
     incorrectOtpPin: 'Incorrect OTP supplied',
+    apiUnknownIssue: 'Something went wrong communicating with the server',
+    apiUnableToConnect: 'Unable to connect to server',
+    corruptedAuthenticationToken: 'You have been logged out due to a corrupted authentication token',
   },
   app: {
     title: process.env.VUE_APP_TITLE,
@@ -277,7 +280,7 @@ export default extend(en, {
     enums: {
       type: {
         text: {
-          title: 'Type',
+          title: 'Text',
         }
       }
     }

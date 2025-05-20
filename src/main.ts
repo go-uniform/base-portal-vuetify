@@ -4,7 +4,7 @@ import router from './router/base'
 import vuetify from './plugins/base/vuetify';
 import {bus} from '@/services/base/bus';
 import {vueBus} from '@/plugins/base/vue-bus';
-import {setApiFetchHandler} from '@/services/base/base';
+import {setApiFetchHandler, setBaseUrl} from '@/services/base/base';
 import {baseStubHandlerAppend, baseStubHandlerRoutine} from '@/services/base/stub';
 import stubHandlers from '@/services/stubs';
 
@@ -14,6 +14,8 @@ Vue.config.errorHandler = function (err, vm, info) {
     error: err,
   }));
 };
+
+setBaseUrl('http://base-api:8000/');
 
 if (process.env.VUE_APP_USE_STUBS !== undefined) {
   const stubs = process.env.VUE_APP_USE_STUBS.toLowerCase();

@@ -1,12 +1,8 @@
 import {IAttribute} from '@/services/base/global.interfaces';
 import {
-  baseBulkStub,
-  baseCreateStub, baseDeleteStub,
+  baseHandlers,
   baseListLoad,
-  baseListStub,
-  baseReadStub,
-  baseUpdateStub,
-  generateUuid, IBulkStubScenarioResponse, stubScenario
+  generateUuid,
 } from '@/services/base/stub';
 import {EnumValueType} from '@/services/base/global.enums';
 import {userAttributes} from '@/services/repositories/user-attributes';
@@ -28,27 +24,7 @@ const stub = {
   recordAssemblyHandler: (item: IAttribute) => {
     return item;
   },
-  handlers: {
-    'GET /user-attributes': baseListStub(userAttributes),
-    'POST /user-attributes': baseCreateStub(userAttributes),
-    'GET /user-attributes/:id': baseReadStub(userAttributes),
-    'PUT /user-attributes/:id': baseUpdateStub(userAttributes),
-    'DELETE /user-attributes/:id': baseDeleteStub(userAttributes),
-    'POST /user-attributes/bulk': baseBulkStub(userAttributes, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
-      switch (action) {
-        case 'delete':
-          return {
-            scenario: stubScenario({}),
-            list: list.filter(function(value, index, arr){
-              return !indexes.includes(index);
-            }),
-          };
-      }
-      return {
-        scenario: stubScenario({}, 400, new Headers({'Message':'$vuetify.errors.unknownBulkAction','Message-Arguments':`${action}###${userAttributes.entity}`}))
-      };
-    }),
-  },
+  handlers: baseHandlers(userAttributes),
   initialData: UserAttributesList,
 };
 

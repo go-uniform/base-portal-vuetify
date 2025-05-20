@@ -82,9 +82,10 @@
 
 <script>
 import {auth} from '@/services/base/auth';
-import EmptyLayout from '../../layouts/base/Empty';
-import {validations} from '../../services/base/validations';
-import {translate} from '../../plugins/base/vuetify';
+import EmptyLayout from '@/layouts/base/Empty';
+import {validations} from '@/services/base/validations';
+import {translate} from '@/plugins/base/vuetify';
+import {processException} from "@/services/base/base";
 
 export default {
   name: 'LoginView',
@@ -124,8 +125,9 @@ export default {
           } else {
             this.$router.push('/');
           }
-        }).catch(() => {
+        }).catch((reason) => {
           this.submitting = false;
+          processException(reason);
         });
       }
     },

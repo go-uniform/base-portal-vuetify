@@ -1,11 +1,7 @@
 import {
-  baseBulkStub,
-  baseCreateStub, baseDeleteStub,
+  baseHandlers,
   baseListLoad,
-  baseListStub,
-  baseReadStub,
-  baseUpdateStub,
-  generateUuid, IBulkStubScenarioResponse, stubScenario
+  generateUuid,
 } from '@/services/base/stub';
 import {User, users} from '@/services/repositories/users';
 import {UserRolesList} from '@/services/stubs/user-roles';
@@ -32,27 +28,7 @@ export const UsersList: User[] = baseListLoad([
 
 const stub = {
   repository: users,
-  handlers: {
-    'GET /users': baseListStub(users),
-    'POST /users': baseCreateStub(users),
-    'GET /users/:id': baseReadStub(users),
-    'PUT /users/:id': baseUpdateStub(users),
-    'DELETE /users/:id': baseDeleteStub(users),
-    'POST /users/bulk': baseBulkStub(users, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
-      switch (action) {
-        case 'delete':
-          return {
-            scenario: stubScenario({}),
-            list: list.filter(function(value, index, arr){
-              return !indexes.includes(index);
-            }),
-          };
-      }
-      return {
-        scenario: stubScenario({}, 400, new Headers({'Message':'$vuetify.errors.unknownBulkAction','Message-Arguments':`${action}###${users.entity}`}))
-      };
-    }),
-  },
+  handlers: baseHandlers(users),
   initialData: UsersList,
 };
 
