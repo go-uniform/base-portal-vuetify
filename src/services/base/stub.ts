@@ -233,9 +233,6 @@ export const baseListStub = <T>(slug: string | IRepository<any>, scenario?: IStu
                         }
                       }
                       break;
-                    case EnumValueType.Time:
-                      break;
-                    case EnumValueType.Date:
                     case EnumValueType.DateTime:
                       if (values.length > 1) {
                         from = new Date(Date.parse(values[0]));

@@ -16,9 +16,7 @@ export enum EnumValueType {
   TextArea = 'textarea',
   Number = 'number',
   Boolean = 'boolean',
-  Date = 'date',
   DateTime = 'datetime',
-  Time = 'time',
   Attributes = 'attributes',
   Enumeration = 'enumeration',
 }
