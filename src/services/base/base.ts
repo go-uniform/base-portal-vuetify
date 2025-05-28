@@ -203,6 +203,10 @@ export const baseRestItem = <T>(callbackResolve: any, callbackReject: any, metho
       };
       processStandardItemResponse<T>(response, wrapperResolve, wrapperReject);
     }).catch((reason) => {
+      if (reject == null) {
+        processException(reason);
+        return;
+      }
       reject(reason);
     });
   });
@@ -231,9 +235,23 @@ export const baseRestList = <T>(callbackResolve: any, callbackReject: any, metho
       };
       processStandardListResponse<T>(response, wrapperResolve, wrapperReject);
     }).catch((reason) => {
+      if (reject == null) {
+        processException(reason);
+        return;
+      }
       reject(reason);
     });
   });
+};
+
+export const processException = <T>(
+    reason: any,
+): void => {
+  let message = '$vuetify.errors.apiUnknownIssue';
+  if (reason.message == 'Failed to fetch') {
+    message = '$vuetify.errors.apiUnableToConnect';
+  }
+  toastError(message);
 };
 
 export const processStandardItemResponse = <T>(

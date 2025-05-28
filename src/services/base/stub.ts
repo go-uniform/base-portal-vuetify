@@ -99,6 +99,31 @@ export const getPathId = (path: string): string | null => {
   return id;
 }
 
+export const baseHandlers = <T>(repository: IRepository<any>): any => {
+  const handlers: { [key: string]: any } = {};
+  const slug: string = repository.slug;
+  handlers['GET /'+ slug] = baseListStub<T>(repository);
+  handlers['POST /'+ slug] = baseCreateStub<T>(repository);
+  handlers['GET /'+ slug + '/:id'] = baseReadStub<T>(repository);
+  handlers['PUT /'+ slug + '/:id'] = baseUpdateStub<T>(repository);
+  handlers['DELETE /'+ slug + '/:id'] = baseDeleteStub<T>(repository);
+  handlers['POST /'+ slug + '/bulk'] = baseBulkStub<T>(repository, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
+    switch (action) {
+      case 'delete':
+        return {
+          scenario: stubScenario({}),
+          list: list.filter(function(value, index, arr){
+            return !indexes.includes(index);
+          }),
+        };
+    }
+    return {
+      scenario: stubScenario({}, 400, new Headers({'Message':'$vuetify.errors.unknownBulkAction','Message-Arguments':`${action}###${repository.entity}`}))
+    };
+  });
+  return handlers;
+}
+
 export const baseListStub = <T>(slug: string | IRepository<any>, scenario?: IStubScenario | null, filter?: any): IResponse => {
   const repository = (slug as IRepository<any>);
   if (repository) {
@@ -155,34 +180,23 @@ export const baseListStub = <T>(slug: string | IRepository<any>, scenario?: IStu
               Object.keys(filters).forEach((key: string) => {
                 const value = filters[key];
                 if (key === '-text') {
-                  let text = '';
-                  if (item.text) {
-                    text = item.text;
+                  const text = Object.keys(item).reduce((result: string, key: string) => {
+                    if (item[key] !== undefined && item[key] !== null) {
+                      if (result !== undefined && result !== null) {
+                        return result + " " + item[key].toString();
+                      }
+                      return item[key].toString();
+                    }
+                  }, "");
+                  if (value.startsWith('"') && value.endsWith('"')) {
+                    if (text.indexOf(value.substring(1, value.length - 1)) == -1) {
+                      include = false;
+                    }
                   }
-                  else if (item.name) {
-                    text = item.name;
-                  }
-                  else if (item.title) {
-                    text = item.title;
-                  }
-                  else if (item.firstName) {
-                    text += text ? ' ' : '';
-                    text += item.firstName;
-                  }
-                  else if (item.firstNames) {
-                    text += text ? ' ' : '';
-                    text += item.firstNames;
-                  }
-                  else if (item.lastName) {
-                    text += text ? ' ' : '';
-                    text += item.lastName;
-                  }
-                  text = text.toLowerCase();
-                  if (text.length > value.length) {
-                    text = text.substring(0, value.length)
-                  }
-                  if (text !== value.toLowerCase()) {
-                    include = false;
+                  else {
+                    if (text.toLowerCase().indexOf(value.toString().toLowerCase()) == -1) {
+                      include = false;
+                    }
                   }
                 } else {
                   let itemValue = item[key];
@@ -198,15 +212,27 @@ export const baseListStub = <T>(slug: string | IRepository<any>, scenario?: IStu
                   });
                   let from: Date = new Date();
                   let to: Date = new Date();
+                  const text = itemValue.toString();
                   switch (repository.fields[key].type) {
                     default:
                       if (!values.includes(itemValue.toString().toLowerCase())) {
                         include = false;
                       }
                       break;
-                    case EnumValueType.Time:
+                    case EnumValueType.Text:
+                    case EnumValueType.TextArea:
+                      if (value != 'null' && value != '##null##' && value !== null && value !== undefined) {
+                        if (value.startsWith('"') && value.endsWith('"')) {
+                          if (text.indexOf(value.substring(1, value.length - 1)) == -1) {
+                            include = false;
+                          }
+                        } else {
+                          if (text.toLowerCase().indexOf(value.toString().toLowerCase()) == -1) {
+                            include = false;
+                          }
+                        }
+                      }
                       break;
-                    case EnumValueType.Date:
                     case EnumValueType.DateTime:
                       if (values.length > 1) {
                         from = new Date(Date.parse(values[0]));

@@ -272,6 +272,16 @@ export default extend(nl, {
       modifiedAt: 'Gewijzigd Om',
       createdAt: 'Geskep Om',
     },
+    enums: {
+      type: {
+        text: {
+          title: 'Text',
+        },
+        datetime: {
+          title: 'DateTime',
+        }
+      }
+    }
   },
   permissions: {
     singular: 'Toestemming',

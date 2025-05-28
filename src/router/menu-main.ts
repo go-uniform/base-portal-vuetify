@@ -1,8 +1,9 @@
+import {translate} from '@/plugins/base/vuetify';
+import {createMenuItem} from '@/services/base/entity.crud';
+
 import {users} from '@/services/repositories/users';
 import {userRoles} from '@/services/repositories/user-roles';
-import {translate} from '@/plugins/base/vuetify';
 import {userAttributes} from '@/services/repositories/user-attributes';
-import {createMenuItem} from '@/services/base/entity.crud';
 
 export const mainMenuItems = [
   {

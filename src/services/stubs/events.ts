@@ -1,11 +1,7 @@
 import {
-  baseBulkStub,
-  baseCreateStub, baseDeleteStub,
+  baseHandlers,
   baseListLoad,
-  baseListStub,
-  baseReadStub,
-  baseUpdateStub,
-  generateUuid, IBulkStubScenarioResponse, stubScenario
+  generateUuid
 } from '@/services/base/stub';
 import {Event, events} from '@/services/repositories/events';
 import {UserRolesList} from "@/services/stubs/user-roles";
@@ -86,27 +82,7 @@ export const EventsList: Event[] = baseListLoad([
 
 const stub = {
   repository: events,
-  handlers: {
-    'GET /events': baseListStub(events),
-    'POST /events': baseCreateStub(events),
-    'GET /events/:id': baseReadStub(events),
-    'PUT /events/:id': baseUpdateStub(events),
-    'DELETE /events/:id': baseDeleteStub(events),
-    'POST /events/bulk': baseBulkStub(events, (action: string, indexes: number[], list: any[]): IBulkStubScenarioResponse => {
-      switch (action) {
-        case 'delete':
-          return {
-            scenario: stubScenario({}),
-            list: list.filter(function(value, index, arr){
-              return !indexes.includes(index);
-            }),
-          };
-      }
-      return {
-        scenario: stubScenario({}, 400, new Headers({'Message':'$vuetify.errors.unknownBulkAction','Message-Arguments':`${action}###${events.entity}`}))
-      };
-    }),
-  },
+  handlers: baseHandlers(events),
   initialData: EventsList,
 };
 

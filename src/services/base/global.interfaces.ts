@@ -115,6 +115,7 @@ export interface IFieldNormal {
   pattern?: RegExp;
   patternMessage?: string;
   hint?: string;
+  meta: any;
 }
 
 export interface IFieldEnum {
@@ -173,6 +174,7 @@ export interface IFieldAttribute {
   type: EnumValueType;
   attributeRepository: IRepository<any>;
   hint?: string;
+  meta: any;
 }
 
 export type IField = IFieldNormal | IFieldEnum | IFieldBoolean | IFieldLink | IFieldAttribute | ISelfReference;

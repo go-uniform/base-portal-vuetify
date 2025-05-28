@@ -272,6 +272,16 @@ export default extend(af, {
       modifiedAt: 'Gewysig Teen',
       createdAt: 'Geskep Teen',
     },
+    enums: {
+      type: {
+        text: {
+          title: 'Text',
+        },
+        datetime: {
+          title: 'DateTime',
+        }
+      }
+    }
   },
   permissions: {
     singular: 'Toestemming',
