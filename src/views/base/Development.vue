@@ -10,6 +10,9 @@
       This is where we test our developing components. It is a shared space so please be courteous to others.
     </v-alert>
 
+    <div>Timezone: {{timezone}}</div>
+    <div>Datetime: {{datetime}}</div>
+
     <v-expansion-panels>
 
       <v-expansion-panel>
@@ -38,42 +41,90 @@
           TimezoneSelector
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <timezone-selector />
-        </v-expansion-panel-content>
-
-      </v-expansion-panel>
-      <v-expansion-panel>
-
-        <v-expansion-panel-header>
-          DatetimeSelector | Full
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <datetime-selector />
-        </v-expansion-panel-content>
-
-      </v-expansion-panel>
-      <v-expansion-panel>
-
-        <v-expansion-panel-header>
-          DatetimeSelector | Full + Seconds
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <datetime-selector use-seconds />
-        </v-expansion-panel-content>
-
-      </v-expansion-panel>
-      <v-expansion-panel>
-
-        <v-expansion-panel-header>
-          DatetimeSelector | Shared Timezone
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
           <timezone-selector
-            ref="sharedTimezone1"
+              v-model="timezone"
           />
+        </v-expansion-panel-content>
+
+      </v-expansion-panel>
+      <v-expansion-panel>
+
+        <v-expansion-panel-header>
+          DatetimeSelector | Default
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
           <datetime-selector
-            :refs="this.$refs"
-            timezone-selector="sharedTimezone1"
+              v-model="datetime"
+          />
+        </v-expansion-panel-content>
+
+      </v-expansion-panel>
+      <v-expansion-panel>
+
+        <v-expansion-panel-header>
+          DatetimeSelector | Default | Seconds
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <datetime-selector
+              v-model="datetime"
+              show-seconds
+          />
+        </v-expansion-panel-content>
+
+      </v-expansion-panel>
+      <v-expansion-panel>
+
+        <v-expansion-panel-header>
+          DatetimeSelector | Default | Milliseconds
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <datetime-selector
+              v-model="datetime"
+              show-milliseconds
+          />
+        </v-expansion-panel-content>
+
+      </v-expansion-panel>
+      <v-expansion-panel>
+
+        <v-expansion-panel-header>
+          DatetimeSelector | Timezone
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <datetime-selector
+              v-model="datetime"
+              :timezone.sync="timezone"
+              show-timezone
+          />
+        </v-expansion-panel-content>
+
+      </v-expansion-panel>
+      <v-expansion-panel>
+
+        <v-expansion-panel-header>
+          DatetimeSelector | Timezone | Seconds
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <datetime-selector
+              v-model="datetime"
+              :timezone.sync="timezone"
+              show-timezone
+              show-seconds
+          />
+        </v-expansion-panel-content>
+
+      </v-expansion-panel>
+      <v-expansion-panel>
+
+        <v-expansion-panel-header>
+          DatetimeSelector | Timezone | Milliseconds
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <datetime-selector
+              v-model="datetime"
+              :timezone.sync="timezone"
+              show-timezone
+              show-milliseconds
           />
         </v-expansion-panel-content>
 
@@ -92,9 +143,15 @@ import ThemeSelector from "../../components/base/ThemeSelector";
 import LanguageSelector from "../../components/base/LanguageSelector";
 import TimezoneSelector from "../../components/base/TimezoneSelector";
 import DatetimeSelector from "../../components/base/DatetimeSelector";
+import moment from "moment";
 
 export default {
   name: 'DevelopmentPage',
+  computed: {
+    moment() {
+      return moment
+    }
+  },
   components: {
     LanguageSelector,
     ThemeSelector,
@@ -107,12 +164,14 @@ export default {
     crumbs: [],
     actions: [],
     loading: true,
+    timezone: null,
+    datetime: null,
   }),
 
   methods: {
     updateLoadingIndicator(value) {
       this.loading = value;
-    }
+    },
   },
 };
 </script>

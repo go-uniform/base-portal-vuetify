@@ -4,104 +4,104 @@
   <div>
 
     <div
-      v-if="field.type === 'link'"
+        v-if="field.type === 'link'"
     >
 
       <entity-field-view-label
-        :field="field"
+          :field="field"
       />
       <entity-field-view-link
-        :repository="repository"
-        :item="item"
-        :value="value"
-        :field="field"
+          :repository="repository"
+          :item="item"
+          :value="value"
+          :field="field"
       />
 
     </div>
     <div
-      v-else-if="field.type === 'self-reference'"
+        v-else-if="field.type === 'self-reference'"
     >
 
       <entity-field-view-label
-        :field="field"
+          :field="field"
       />
       <entity-field-view-self-reference
-        :repository="repository"
-        :item="item"
-        :value="value"
-        :field="field"
+          :repository="repository"
+          :item="item"
+          :value="value"
+          :field="field"
       />
 
     </div>
     <div
-      v-else-if="field.type === 'attributes'"
+        v-else-if="field.type === 'attributes'"
     >
       <slot
-        v-if="attribute.key"
-        :name="`${fieldKey}.${attribute.key}`"
-        :set="val = value[attribute.key]"
+          v-if="attribute.key"
+          :name="`${fieldKey}.${attribute.key}`"
+          :set="val = value[attribute.key]"
       >
 
         <entity-field-view-label
-          :field="{...field,...{label:`${field.label}.${attribute.key}`,optional:true}}"
+            :field="{...field,...{label:`${field.label}.${attribute.key}`,optional:true}}"
         />
         <small
-          v-if="!val || val.length <= 0"
+            v-if="!val || val.length <= 0"
         >
           <i>
             &lt;{{ translate('$vuetify.empty') }}&gt;
           </i>
         </small>
         <span
-          v-else
+            v-else
         >
           {{ val }}
         </span>
       </slot>
       <slot
-        v-else
-        :name="`${fieldKey}.skeleton-loader`"
-        :set="val = value[attribute.key]"
+          v-else
+          :name="`${fieldKey}.skeleton-loader`"
+          :set="val = value[attribute.key]"
       >
-        <v-skeleton-loader type="sentences" />
+        <v-skeleton-loader type="sentences"/>
       </slot>
     </div>
     <div
-      v-else-if="field.type === 'boolean'"
+        v-else-if="field.type === 'boolean'"
     >
 
       <entity-field-view-label
-        :field="field"
+          :field="field"
       />
       {{ translate(value ? '$vuetify.app.boolean.trueTitle' : '$vuetify.app.boolean.falseTitle') }}
 
     </div>
     <div
-      v-else-if="field.type === 'enumeration'"
+        v-else-if="field.type === 'enumeration'"
     >
 
       <entity-field-view-label
-        :field="field"
+          :field="field"
       />
       {{ translate(getEnumValue(value).title) }}
 
     </div>
     <div
-      v-else
+        v-else
     >
 
       <entity-field-view-label
-        :field="field"
+          :field="field"
       />
       <small
-        v-if="!value || value.length <= 0"
+          v-if="value === undefined || value === null || !value || value.length <= 0"
       >
         <i>
           &lt;{{ translate('$vuetify.empty') }}&gt;
         </i>
       </small>
       <span
-        v-else
+          v-else
       >
         {{ doFormat(field, value) }}
       </span>
@@ -132,9 +132,13 @@ export default {
 
   methods: {
     getEnumValue(subValue) {
-      let enumValue = this.field.values.filter((item) => { return item.value === subValue })[0];
+      let enumValue = this.field.values.filter((item) => {
+        return item.value === subValue
+      })[0];
       if (!enumValue) {
-        enumValue = this.field.values.filter((item) => { return item.value === this.field.defaultValue })[0];
+        enumValue = this.field.values.filter((item) => {
+          return item.value === this.field.defaultValue
+        })[0];
       }
       return enumValue;
     },
@@ -153,9 +157,6 @@ export default {
       switch (field.type) {
         case "boolean":
           value = formatBoolean(value);
-          break
-        case "date":
-          value = formatDate(value);
           break
         case "datetime":
           value = formatDatetime(value);

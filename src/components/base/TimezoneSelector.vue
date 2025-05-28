@@ -6,7 +6,8 @@
       label="Timezone"
       prepend-icon="mdi-map-clock"
       :items="timezones"
-      v-model="timezone"
+      :value="value"
+      @input="$emit('input', $event)"
     >
       <template v-slot:item="data">
         <template v-if="typeof data.item !== 'object'">
@@ -32,39 +33,17 @@
 </template>
 
 <script>
-import {loadTimezones} from "../../locale/base/timezones";
+import {loadTimezones} from "@/locale/base/timezones";
 
 export default {
   name: 'timezone-selector',
 
-  data: () => ({
-    timezones: loadTimezones(),
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  }),
-
-  methods: {
-    setThemeModeDark() {
-      this.$vuetify.theme.dark = true;
-      if (window && window.localStorage) {
-        window.localStorage.setItem('theme.dark', this.$vuetify.theme.dark.toString());
-      }
-    },
-
-    setThemeModeLight() {
-      this.$vuetify.theme.dark = false;
-      if (window && window.localStorage) {
-        window.localStorage.setItem('theme.dark', this.$vuetify.theme.dark.toString());
-      }
-    },
+  props: {
+    value: String,
   },
 
-  created() {
-    if (window && window.localStorage) {
-      const themeDark = window.localStorage.getItem('theme.dark');
-      if (themeDark === null) {
-        window.localStorage.setItem('theme.dark', this.$vuetify.theme.dark.toString());
-      }
-    }
-  }
+  data: () => ({
+    timezones: loadTimezones(),
+  }),
 }
 </script>

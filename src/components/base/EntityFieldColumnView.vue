@@ -5,35 +5,35 @@
   <div>
 
     <div
-      v-if="field.type === 'link'"
+        v-if="field.type === 'link'"
     >
       <entity-field-view-link
-        :tabular="true"
-        :item="item"
-        :value="value"
-        :field="field"
+          :tabular="true"
+          :item="item"
+          :value="value"
+          :field="field"
       />
     </div>
     <div
-      v-else-if="field.type === 'self-reference'"
+        v-else-if="field.type === 'self-reference'"
     >
       <entity-field-view-self-reference
-        :tabular="true"
-        :repository="repository"
-        :item="item"
-        :value="value"
-        :field="field"
+          :tabular="true"
+          :repository="repository"
+          :item="item"
+          :value="value"
+          :field="field"
       />
     </div>
     <div
-      v-else-if="field.type === 'attributes'"
+        v-else-if="field.type === 'attributes'"
     >
       <small><i>attributes are not supported on table list views</i></small>
     </div>
     <div
-      v-else-if="field.type === 'enumeration' || field.type === 'boolean'"
-      :set:strValue="strValue = value === true && !field.inverted ? 'true' : 'false'"
-      :set:enumValue="enumValue = field.type === 'enumeration' ?  getEnumValue(value) : {
+        v-else-if="field.type === 'enumeration' || field.type === 'boolean'"
+        :set:strValue="strValue = value === true && !field.inverted ? 'true' : 'false'"
+        :set:enumValue="enumValue = field.type === 'enumeration' ?  getEnumValue(value) : {
         title: `$vuetify.app.boolean.${strValue}Title`,
         icon: `$vuetify.app.boolean.${strValue}Icon`,
         color: `$vuetify.app.boolean.${strValue}Color`
@@ -41,10 +41,10 @@
     >
 
       <div
-        v-if="!field.textOnly && !field.iconOnly"
+          v-if="!field.textOnly && !field.iconOnly"
       >
         <v-icon
-          :color="translate(enumValue.color)"
+            :color="translate(enumValue.color)"
         >
           {{ translate(enumValue.icon) }}
         </v-icon>
@@ -53,14 +53,14 @@
         </span>
       </div>
       <v-tooltip
-        v-else-if="field.iconOnly"
-        right
+          v-else-if="field.iconOnly"
+          right
       >
         <template v-slot:activator="{ on, attrs }">
           <v-icon
-            v-bind="attrs"
-            v-on="on"
-            :color="translate(enumValue.color)"
+              v-bind="attrs"
+              v-on="on"
+              :color="translate(enumValue.color)"
           >
             {{ translate(enumValue.icon) }}
           </v-icon>
@@ -68,16 +68,27 @@
         <span>{{ translate(enumValue.title) }}</span>
       </v-tooltip>
       <span
-        v-else
+          v-else
       >
         {{ translate(enumValue.title) }}
       </span>
 
     </div>
     <div
-      v-else
+        v-else
     >
-      {{ doFormat() }}
+      <small
+          v-if="value === undefined || value === null || !value || value.length <= 0"
+      >
+        <i>
+          &lt;{{ translate('$vuetify.empty') }}&gt;
+        </i>
+      </small>
+      <span
+          v-else
+      >
+        {{ doFormat(field, value) }}
+      </span>
     </div>
 
   </div>
@@ -130,8 +141,6 @@ export default {
       switch (this.field.type) {
         case "boolean":
           return formatBoolean(this.value);
-        case "date":
-          return formatDate(this.value);
         case "datetime":
           return formatDatetime(this.value);
       }

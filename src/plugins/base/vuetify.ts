@@ -152,13 +152,6 @@ Vue.filter('boolean', (value: any) => {
   return formatBoolean(value);
 });
 
-export const formatDate = (value: any) => {
-  return moment(value).local().format('YYYY-MM-DD');
-};
-Vue.filter('date', (value: any) => {
-  return formatDate(value);
-});
-
 export const formatDatetime = (value: any) => {
   return moment(value).local().format('YYYY-MM-DD HH:mm:ss');
 };

@@ -2969,7 +2969,7 @@ export function loadTimezones(): Timezone[] {
         const offsetSign = offset < 0 ? '-' : '+';
         const offsetHours = Math.floor(Math.abs(offset) / 3600);
         const offsetMinutes = Math.floor(Math.abs(offset) % 3600 / 60);
-        const utc = 'UTC' + offsetSign + padLeft(offsetHours) + ':' + padLeft(offsetMinutes);
+        const utc = offsetSign + padLeft(offsetHours) + ':' + padLeft(offsetMinutes);
         const timestamp = new Date().getTime() + (offset * 1000);
         const date = new Date(timestamp);
         let dateHours = date.getUTCHours();
@@ -2995,4 +2995,14 @@ export function loadTimezones(): Timezone[] {
         })
     })
     return list;
+}
+
+export function findTimezoneByName(name: string): Timezone|null {
+    const filteredList = loadTimezones().filter(
+      (timezone) => {
+        return timezone.name === name;
+      }
+    );
+    if (filteredList.length === 0) return null;
+    return filteredList[0];
 }
