@@ -12,6 +12,7 @@ repository.addField('type', {
   defaultValue: 'text',
   values: [
     'text',
+    'datetime'
   ]
 });
 repository.addField('key', {

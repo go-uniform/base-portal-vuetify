@@ -281,6 +281,9 @@ export default extend(en, {
       type: {
         text: {
           title: 'Text',
+        },
+        datetime: {
+          title: 'DateTime',
         }
       }
     }
