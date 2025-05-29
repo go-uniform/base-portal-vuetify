@@ -63,9 +63,9 @@
           :value="value"
           :rules="[rules.required(field.optional),rules.pattern(field.pattern, field.patternMessage),rules.length(field.length)]"
           @input="input"
-          :show-timezone="field.meta.showTimezone"
-          :show-seconds="field.meta.showSeconds"
-          :show-milliseconds="field.meta.showMilliseconds"
+          :show-timezone="field.meta && field.meta.showTimezone"
+          :show-seconds="field.meta && field.meta.showSeconds"
+          :show-milliseconds="field.meta && field.meta.showMilliseconds"
       />
 
     </div>
