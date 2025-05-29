@@ -1,12 +1,7 @@
 import {translate} from '@/plugins/base/vuetify';
 import {IRepository} from '@/services/base/global.interfaces';
 
-export const defaultEditActions = (repository: IRepository<any>, id: string, saveHandler: any) => {
-  let cancelUrl = repository.listPage;
-  if (id) {
-    cancelUrl = `${translate(repository.viewPage,id)}`;
-  }
-
+export const defaultEditActions = (repository: IRepository<any>, id: string, saveHandler: any, cancelHandler: any) => {
   const actions = [];
 
   if (saveHandler) {
@@ -28,9 +23,8 @@ export const defaultEditActions = (repository: IRepository<any>, id: string, sav
       class: 'white--text',
       color: 'grey',
       title: translate('$vuetify.app.cancel'),
-      location: cancelUrl,
       callback: (item: any) => {
-        // do nothing since location will redirect us
+        cancelHandler(item);
       }
     },
   );

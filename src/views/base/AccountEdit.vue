@@ -3,17 +3,19 @@
   <main-layout
     :crumbs="crumbs"
     :actions="actions"
-    :loading="loading"
+    :loading="loading || submitting"
   >
 
-    <entity-view
-      ref="viewer"
+    <entity-edit
+      ref="editor"
       :repository="users"
       :id="me"
       @loading="updateLoadingIndicator"
-      :custom-actions="customActions"
+      @submitting="updateSubmittingIndicator"
+      view-page-redirect="/account/"
+      list-page-redirect="/account/"
     >
-    </entity-view>
+    </entity-edit>
 
   </main-layout>
 
@@ -22,13 +24,13 @@
 <script>
 // @ is an alias to /src
 import MainLayout from '../../layouts/base/Main';
-import EntityView from "@/components/base/EntityView.vue";
 import { users } from "@/services/repositories/users";
 import { auth } from "@/services/base/auth";
 import { translate } from "@/plugins/base/vuetify";
+import EntityEdit from "@/components/base/EntityEdit.vue";
 
 export default {
-  name: 'AccountPage',
+  name: 'AccountEditPage',
 
   computed: {
     users() {
@@ -36,23 +38,11 @@ export default {
     },
     me() {
       return auth.meta()['sub'];
-    },
-    customActions() {
-      return [
-        {
-          icon: 'mdi-pencil',
-          title: translate('$vuetify.entityView.edit'),
-          color: 'warning',
-          callback: (item) => {
-            this.$router.push('/account/edit');
-          },
-        },
-      ];
     }
   },
 
   components: {
-    EntityView,
+    EntityEdit,
     MainLayout,
   },
 
@@ -64,16 +54,26 @@ export default {
         location: '/',
       },
       {
+        icon: translate('$vuetify.account.icon'),
         title: translate('$vuetify.account.pageTitle'),
+        location: '/account',
+      },
+      {
+        title: translate('$vuetify.accountEdit.pageTitle'),
       }
     ],
     actions: [],
     loading: true,
+    submitting: false,
   }),
 
   methods: {
     updateLoadingIndicator(value) {
       this.loading = value;
+    },
+
+    updateSubmittingIndicator(value) {
+      this.submitting = value;
     }
   },
 };

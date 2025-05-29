@@ -89,7 +89,9 @@
       </v-expansion-panels>
 
     </v-row>
-    <v-row>
+    <v-row
+      justify="center"
+    >
 
       <v-col
         cols="12"
@@ -138,6 +140,7 @@ export default {
   props: {
     repository: null,
     id: null,
+    customActions: null,
   },
 
   computed: {
@@ -159,6 +162,8 @@ export default {
     },
 
     actions() {
+      if (this.customActions)
+        return this.customActions;
       return defaultViewActions(this.remove, this.edit, this.list);
     },
   },

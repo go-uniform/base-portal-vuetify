@@ -342,6 +342,10 @@ export default extend(en, {
     pageTitle: 'My Account',
     icon: 'mdi-account'
   },
+  accountEdit: {
+    pageTitle: 'Edit My Account',
+    icon: 'mdi-account'
+  },
   settings: {
     pageTitle: 'Settings',
     icon: 'mdi-cogs'

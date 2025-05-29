@@ -338,7 +338,11 @@ export default extend(nl, {
     },
   },
   account: {
-    pageTitle: 'My Rekening',
+    pageTitle: 'Mijn Rekening',
+    icon: 'mdi-account'
+  },
+  accountEdit: {
+    pageTitle: 'Bewerk Mijn Rekening',
     icon: 'mdi-account'
   },
   settings: {

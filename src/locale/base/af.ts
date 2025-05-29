@@ -341,6 +341,10 @@ export default extend(af, {
     pageTitle: 'My Rekening',
     icon: 'mdi-account'
   },
+  accountEdit: {
+    pageTitle: 'Wysig My Rekening',
+    icon: 'mdi-account'
+  },
   settings: {
     pageTitle: 'Instellings',
     icon: 'mdi-cogs'

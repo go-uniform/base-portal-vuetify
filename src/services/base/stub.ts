@@ -407,7 +407,7 @@ export const baseUpdateStub = <T>(slug: string | IRepository<any>, handler?: any
               if (index >= 0) {
                 const record: any = {
                   ...list[index],
-                  ...document
+                  ...body
                 };
                 record.modifiedAt = new Date();
                 if (handler) {

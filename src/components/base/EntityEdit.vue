@@ -97,7 +97,9 @@
         </v-col>
       </v-expansion-panels>
     </v-row>
-    <v-row>
+    <v-row
+      justify="center"
+    >
       <v-col
         cols="12"
         md="6"
@@ -144,6 +146,8 @@ export default {
   props: {
     repository: null,
     id: null,
+    viewPageRedirect: null,
+    listPageRedirect: null,
   },
   data: () => ({
     submitting: false,
@@ -155,7 +159,7 @@ export default {
 
   computed: {
     actions() {
-      return defaultEditActions(this.repository, this.$route.params.id, this.save);
+      return defaultEditActions(this.repository, this.id, this.save, this.cancel);
     }
   },
 
@@ -181,10 +185,14 @@ export default {
         });
         this.submitting = true;
         this.$emit('submitting', this.submitting);
-        if (this.$route.params.id) {
-          this.repository.update(this.$route.params.id, this.item).then(() => {
+        if (this.id) {
+          this.repository.update(this.id, this.item).then(() => {
             toastSuccess('$vuetify.app.submittedSuccessfully');
-            this.$router.push(`${translate(this.repository.viewPage,this.$route.params.id)}`);
+            if (this.viewPageRedirect) {
+              this.$router.push(this.viewPageRedirect);
+              return;
+            }
+            this.$router.push(`${translate(this.repository.viewPage,this.id)}`);
           }).finally(() => {
             this.submitting = false;
             this.$emit('submitting', this.submitting);
@@ -193,6 +201,10 @@ export default {
         }
         this.repository.create(this.item).then((response) => {
           toastSuccess('$vuetify.app.submittedSuccessfully');
+          if (this.viewPageRedirect) {
+            this.$router.push(this.viewPageRedirect);
+            return;
+          }
           this.$router.push(`${translate(this.repository.viewPage,response.item.id)}`);
         }).finally(() => {
           this.submitting = false;
@@ -204,19 +216,27 @@ export default {
     },
 
     cancel() {
-      if (this.$route.params.id) {
-        this.$router.push(`${translate(this.repository.viewPage,this.$route.params.id)}`);
+      if (this.id) {
+        if (this.viewPageRedirect) {
+          this.$router.push(this.viewPageRedirect);
+          return;
+        }
+        this.$router.push(`${translate(this.repository.viewPage,this.id)}`);
+        return;
+      }
+      if (this.listPageRedirect) {
+        this.$router.push(this.listPageRedirect);
         return;
       }
       this.$router.push(`${this.repository.listPage}`);
     },
 
     defaultCrumbs() {
-      return defaultEditCrumbs(this.repository, this.$route.params.id);
+      return defaultEditCrumbs(this.repository, this.id);
     },
 
     defaultActions() {
-      return defaultEditActions(this.repository, this.$route.params.id, this.save);
+      return defaultEditActions(this.repository, this.id, this.save);
     },
   },
 

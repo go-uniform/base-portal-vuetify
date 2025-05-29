@@ -62,6 +62,14 @@ const routes: Array<RouteConfig> = [
     }
   },
   {
+    path: '/account/edit',
+    name: 'account-edit',
+    component: () => import('../../views/base/AccountEdit.vue'),
+    meta: {
+      title: '$vuetify.accountEdit.pageTitle',
+    }
+  },
+  {
     path: '/settings',
     name: 'settings',
     component: () => import('../../views/base/Settings.vue'),
