@@ -236,7 +236,7 @@ export default {
     },
 
     defaultActions() {
-      return defaultEditActions(this.repository, this.id, this.save);
+      return defaultEditActions(this.repository, this.id, this.save, this.cancel);
     },
   },
 
